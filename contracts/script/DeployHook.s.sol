@@ -12,7 +12,7 @@ import {HookMiner} from "../test/utils/HookMiner.sol";
 
 contract DeployHookScript is Script {
     address constant CREATE2_DEPLOYER = address(0x4e59b44847b379578588920cA78FbF26c0B4956C);
-    PoolManager manager = PoolManager(payable(vm.envAddress("POOL_MANAGER_ADDRESS")));
+    PoolManager manager = PoolManager(payable(vm.envAddress("POOL_MANAGER_ADDR")));
 
     function setUp() public {}
 
