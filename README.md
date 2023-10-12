@@ -1,10 +1,12 @@
 This is a [Next.js](https://nextjs.org) + [Foundry](https://book.getfoundry.sh/) + [wagmi](https://wagmi.sh) project bootstrapped with [`create-wagmi`](https://github.com/wagmi-dev/wagmi/tree/main/packages/create-wagmi)
 
-# Getting Started
+# Setup
 
-Run `npm run dev` in your terminal, and then open [localhost:3000](http://localhost:3000) in your browser.
+```bash
+forge install
 
-Once the webpage has loaded, changes made to files inside the `src/` directory (e.g. `src/pages/index.tsx`) will automatically update the webpage.
+cp .env.sample .env
+```
 
 # Generating ABIs & React Hooks
 
@@ -32,13 +34,21 @@ This will use the wagmi config (`wagmi.config.ts`) to generate a `src/generated.
 
 [Here is an example](./src/components/Counter.tsx) of where Hooks from the generated file is being used.
 
-# Deploying Contracts
+# Deploying Hooks
 
-To deploy your contracts to a network, you can use Foundry's [Forge](https://book.getfoundry.sh/forge/) – a command-line tool to tests, build, and deploy your smart contracts.
+## Local (Anvil)
 
-You can read a more in-depth guide on using Forge to deploy a smart contract [here](https://book.getfoundry.sh/forge/deploying), but we have included a simple script in the `package.json` to get you started.
+`scaffold-hook` will initiate a local anvil instance with predeployments of V4 PoolManager and periphery routers.
 
-Below are the steps to deploying a smart contract to Ethereum Mainnet using Forge:
+start anvil with
+```bash
+yarn anvil
+```
+
+To deploy your hook to anvil:
+```bash
+yarn deploy:anvil
+```
 
 ## Install Foundry
 
