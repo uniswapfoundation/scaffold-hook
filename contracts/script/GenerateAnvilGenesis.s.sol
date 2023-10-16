@@ -7,13 +7,27 @@ import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.s
 import {PoolModifyPositionTest} from "@uniswap/v4-core/contracts/test/PoolModifyPositionTest.sol";
 import {PoolSwapTest} from "@uniswap/v4-core/contracts/test/PoolSwapTest.sol";
 import {PoolDonateTest} from "@uniswap/v4-core/contracts/test/PoolDonateTest.sol";
+import {MockERC20} from "solmate/test/utils/mocks/MockERC20.sol";
 
 contract GenerateAnvilGenesisScript is Script {
-
+    
+    // 0x565506c573abfe24eb6abb7c0d8c809ace1f638d
     address MANAGER = address(uint160(uint256(keccak256(abi.encode("poolmanager")))));
+    
+    // 0xaf7ccf0ff7ef054a1db43330f5431958ab4a9441
     address SWAPROUTER = address(uint160(uint256(keccak256(abi.encode("swaprouter")))));
+    
+    // 0x3079c0319f8734239eb06765666468f7b76eb505
     address LPROUTER = address(uint160(uint256(keccak256(abi.encode("lprouter")))));
+    
+    // 0x4fa6c7a3a9b84f2a8340d4d33190f84e307b085c
     address DONATEROUTER = address(uint160(uint256(keccak256(abi.encode("donaterouter")))));
+    
+    // 0x2dafbdf11a8cf84c372539a38d781d8248399ae3
+    address TOKEN0 = address(uint160(uint256(keccak256(abi.encode("token0")))));
+    
+    // 0xa8ceafb1940244f2f022ff8440a42411b4f07fc4
+    address TOKEN1 = address(uint160(uint256(keccak256(abi.encode("token1")))));
 
     function setUp() public {}
 
@@ -34,6 +48,12 @@ contract GenerateAnvilGenesisScript is Script {
         anvilCopyCode(address(lpRouter), LPROUTER);
         anvilCopyCode(address(donateRouter), DONATEROUTER);
 
+        // Deploy test tokens
+        MockERC20 token0 = new MockERC20("Token0", "T0", 18);
+        MockERC20 token1 = new MockERC20("Token1", "T1", 18);
+        anvilCopyCode(address(token0), TOKEN0);
+        anvilCopyCode(address(token1), TOKEN1);
+
         generateGenesis();
     }
 
@@ -49,12 +69,39 @@ contract GenerateAnvilGenesisScript is Script {
         //         "0x456": {
         //             "balance": "0x0",
         //             "code": "0x608..."
-        //         }
+        //         },
+        //         "0xtoken1": {
+        //             "balance": "0x0",
+        //             "code": "0x608...",
+        //             "storage": {
+        //                 "0xstorageIndex": "0xstorageValue"
+        //             }
+        //         },
         //     }
         // }
         vm.serializeString("root", "gasLimit", "0xe4e1c0");
         vm.serializeString("root", "difficulty", "0x1");
 
+        // --- Write Mock Tokens to Genesis --- //
+        vm.serializeString("token0", "balance", "0x0");
+        // default anvil wallet 0xf39 will have 10_000e18 token0's preminted to it
+        // 0xc651 is the storage index of 0xf39's token balance (cast index address 0xf39 3) where `balanceOf` is storage slot 3 of MockERC20.sol
+        string memory token0BalanceStr = vm.serializeString("token0Bal", "0xc651ee22c6951bb8b5bd29e8210fb394645a94315fe10eff2cc73de1aa75c137", "0x00000000000000000000000000000000000000000000021e19e0c9bab2400000");
+        vm.serializeString("token0", "storage", token0BalanceStr);
+        string memory token0Child = vm.serializeString("token0", "code", vm.toString(TOKEN0.code));
+        string memory token0 = vm.serializeString("alloc", vm.toString(TOKEN0), token0Child);
+        vm.serializeString("root", "alloc", token0);
+
+        vm.serializeString("token1", "balance", "0x0");
+        // default anvil wallet 0xf39 will have 10_000e18 token1's preminted to it
+        // 0xc651 is the storage index of 0xf39's token balance (cast index address 0xf39 3) where `balanceOf` is storage slot 3 of MockERC20.sol
+        string memory token1BalanceStr = vm.serializeString("token1Bal", "0xc651ee22c6951bb8b5bd29e8210fb394645a94315fe10eff2cc73de1aa75c137", "0x00000000000000000000000000000000000000000000021e19e0c9bab2400000");
+        vm.serializeString("token1", "storage", token1BalanceStr);
+        string memory token1Child = vm.serializeString("token1", "code", vm.toString(TOKEN1.code));
+        string memory token1 = vm.serializeString("alloc", vm.toString(TOKEN1), token1Child);
+        vm.serializeString("root", "alloc", token1);
+
+        // --- Write V4 Contracts to Genesis --- //
         vm.serializeString("poolmanager", "balance", "0x0");
         string memory poolManagerChild = vm.serializeString("poolmanager", "code", vm.toString(MANAGER.code));
         string memory poolManager = vm.serializeString("alloc", vm.toString(MANAGER), poolManagerChild);
