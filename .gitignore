@@ -9,7 +9,7 @@
 # testing
 
 /coverage
-
+/broadcast
 # next.js
 
 /.next/
