@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 import SwapUI from "~~/components/example-ui/swapUI";
+import PoolInit from "~~/components/example-ui/PoolInit";
 
 // const SwapUI = () => {
 //   return (
@@ -86,6 +87,7 @@ const SwapUIPage: NextPage = () => {
   console.log(router, "router");
   const isSwap = router.query.page === "swap";
   const isLiquidity = router.query.page === "liquidity";
+  const isInitialize = router.query.page === "initialize";
 
   if (router.isFallback) {
     return <div>Loading...</div>;
@@ -93,6 +95,8 @@ const SwapUIPage: NextPage = () => {
     return <SwapUI />;
   } else if (router.isReady && isLiquidity) {
     return <SwapUI />;
+  } else if (router.isReady && isInitialize) {
+    return <PoolInit />;
   }
 
   return <></>;
