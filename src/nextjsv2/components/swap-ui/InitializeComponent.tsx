@@ -1,29 +1,27 @@
 import { Switch } from "@nextui-org/react";
 import React, { useState } from "react";
+import { usePoolManagerInitialize } from "~~/generated/generatedTypes";
 
 function InitializeComponent() {
   const [fromCurrency, setFromCurrency] = useState("ETH");
   const [toCurrency, setToCurrency] = useState("DAI");
-  const [fromAmount, setFromAmount] = useState("");
-  const [toAmount, setToAmount] = useState("");
-  const [liquidityAvailable, setLiquidityAvailable] = useState("1000 ETH");
-  const [fee, setFee] = useState("0.3%");
-  const [slippage, setSlippage] = useState("0.2%");
 
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
   const [hookAddress, setHookAddress] = useState("");
 
+  const { write } = usePoolManagerInitialize();
+
   const handleInitialize = () => {
-    // Implement swap logic here
-  };
-
-  const handleAddLiquidity = () => {
-    // Implement add liquidity logic here
-  };
-
-  const handleRemoveLiquidity = () => {
-    // Implement remove liquidity logic here
+    write({
+      variables: {
+        token0: fromCurrency,
+        token1: toCurrency,
+        swapFee: swapFee,
+        tickSpacing: tickSpacing,
+        hook: hookAddress
+      }
+    })
   };
 
   return (
