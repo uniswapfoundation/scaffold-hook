@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
-import SwapUI from "~~/components/example-ui/swapUI";
+import SwapUI from "~~/components/swap-ui/swapUI";
 
 // const SwapUI = () => {
 //   return (
