@@ -8,6 +8,7 @@ import {PoolModifyPositionTest} from "@uniswap/v4-core/contracts/test/PoolModify
 import {PoolSwapTest} from "@uniswap/v4-core/contracts/test/PoolSwapTest.sol";
 import {PoolDonateTest} from "@uniswap/v4-core/contracts/test/PoolDonateTest.sol";
 import {MockERC20} from "solmate/test/utils/mocks/MockERC20.sol";
+import {IERC20} from "forge-std/interfaces/IERC20.sol";
 
 contract GenerateAnvilGenesisScript is Script {
     
@@ -29,6 +30,9 @@ contract GenerateAnvilGenesisScript is Script {
     // 0xa8ceafb1940244f2f022ff8440a42411b4f07fc4
     address TOKEN1 = address(uint160(uint256(keccak256(abi.encode("token1")))));
 
+    MockERC20 token0;
+    MockERC20 token1;
+
     function setUp() public {}
 
     function run() public {
@@ -49,8 +53,10 @@ contract GenerateAnvilGenesisScript is Script {
         anvilCopyCode(address(donateRouter), DONATEROUTER);
 
         // Deploy test tokens
-        MockERC20 token0 = new MockERC20("Token0", "T0", 18);
-        MockERC20 token1 = new MockERC20("Token1", "T1", 18);
+        vm.startBroadcast();
+        token0 = new MockERC20("Token0", "T0", 18);
+        token1 = new MockERC20("Token1", "T1", 18);
+        vm.stopBroadcast();
         anvilCopyCode(address(token0), TOKEN0);
         anvilCopyCode(address(token1), TOKEN1);
 
@@ -83,23 +89,11 @@ contract GenerateAnvilGenesisScript is Script {
         vm.serializeString("root", "difficulty", "0x1");
 
         // --- Write Mock Tokens to Genesis --- //
-        vm.serializeString("token0", "balance", "0x0");
-        // default anvil wallet 0xf39 will have 10_000e18 token0's preminted to it
-        // 0xc651 is the storage index of 0xf39's token balance (cast index address 0xf39 3) where `balanceOf` is storage slot 3 of MockERC20.sol
-        string memory token0BalanceStr = vm.serializeString("token0Bal", "0xc651ee22c6951bb8b5bd29e8210fb394645a94315fe10eff2cc73de1aa75c137", "0x00000000000000000000000000000000000000000000021e19e0c9bab2400000");
-        vm.serializeString("token0", "storage", token0BalanceStr);
-        string memory token0Child = vm.serializeString("token0", "code", vm.toString(TOKEN0.code));
-        string memory token0 = vm.serializeString("alloc", vm.toString(TOKEN0), token0Child);
-        vm.serializeString("root", "alloc", token0);
+        string memory token0Genesis = createTokenGenesisJson(IERC20(address(token0)), TOKEN0);
+        vm.serializeString("root", "alloc", token0Genesis);
 
-        vm.serializeString("token1", "balance", "0x0");
-        // default anvil wallet 0xf39 will have 10_000e18 token1's preminted to it
-        // 0xc651 is the storage index of 0xf39's token balance (cast index address 0xf39 3) where `balanceOf` is storage slot 3 of MockERC20.sol
-        string memory token1BalanceStr = vm.serializeString("token1Bal", "0xc651ee22c6951bb8b5bd29e8210fb394645a94315fe10eff2cc73de1aa75c137", "0x00000000000000000000000000000000000000000000021e19e0c9bab2400000");
-        vm.serializeString("token1", "storage", token1BalanceStr);
-        string memory token1Child = vm.serializeString("token1", "code", vm.toString(TOKEN1.code));
-        string memory token1 = vm.serializeString("alloc", vm.toString(TOKEN1), token1Child);
-        vm.serializeString("root", "alloc", token1);
+        string memory token1Genesis = createTokenGenesisJson(IERC20(address(token1)), TOKEN1);
+        vm.serializeString("root", "alloc", token1Genesis);
 
         // --- Write V4 Contracts to Genesis --- //
         vm.serializeString("poolmanager", "balance", "0x0");
@@ -135,5 +129,22 @@ contract GenerateAnvilGenesisScript is Script {
         command[3] = vm.toString(destination);
         command[4] = vm.toString(source.code);
         vm.ffi(command);
+    }
+
+    function createTokenGenesisJson(IERC20 token, address tokenAddr) internal returns (string memory tokenJson) {
+        vm.serializeString("token", "balance", "0x0");
+        // default anvil wallet 0xf39 will have 10_000e18 token0's preminted to it
+        // 0xc651 is the storage index of 0xf39's token balance (cast index address 0xf39 3) where `balanceOf` is storage slot 3 of MockERC20.sol
+        vm.serializeString("storage", "0xc651ee22c6951bb8b5bd29e8210fb394645a94315fe10eff2cc73de1aa75c137", "0x00000000000000000000000000000000000000000000021e19e0c9bab2400000");
+        
+        // write token0's name (slot0): "Token0"
+        vm.serializeString("storage", "0x0000000000000000000000000000000000000000000000000000000000000000", vm.toString(vm.load(address(token), bytes32(uint256(0)))));
+        
+        // write token's symbol (slot1): "T0"
+        string memory tokenStorage = vm.serializeString("storage", "0x0000000000000000000000000000000000000000000000000000000000000001", vm.toString(vm.load(address(token), bytes32(uint256(1)))));
+        vm.serializeString("token", "storage", tokenStorage);
+        
+        string memory child = vm.serializeString("token", "code", vm.toString(tokenAddr.code));
+        tokenJson = vm.serializeString("alloc", vm.toString(tokenAddr), child);
     }
 }
