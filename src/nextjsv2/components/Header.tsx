@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import { Icons as icons } from "./assets/Icons";
 import {
   Button,
   Dropdown,
@@ -13,7 +14,6 @@ import {
   NavbarItem,
 } from "@nextui-org/react";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
-import { Icons as icons } from "./assets/Icons";
 
 const isActiveLink = (router: any, href: string) => router.pathname === href;
 /**
@@ -57,8 +57,8 @@ export const Header = () => {
               variant="light"
             >
               <NavbarItem
-                isActive={isActiveLink(router, "/example-ui")}
-                // onClick={(event: any) => redirectLink(event, "/example-ui")}
+                isActive={isActiveLink(router, "/swap-ui")}
+                // onClick={(event: any) => redirectLink(event, "/swap-ui")}
                 // // make clickable
                 className="cursor-pointer "
               >
@@ -78,7 +78,7 @@ export const Header = () => {
             key="swap"
             startContent={icons.flash}
             description="Swap tokens using Uniswap V4"
-            onClick={(event: any) => redirectLink(event, "/example-ui?page=swap")}
+            onClick={(event: any) => redirectLink(event, "/swap-ui?page=swap")}
           >
             Swap UI
           </DropdownItem>
@@ -86,7 +86,7 @@ export const Header = () => {
             key="Liquidity management"
             startContent={icons.activity}
             description="Manage liquidity in Uniswap V4 Pools"
-            onClick={(event: any) => redirectLink(event, "/example-ui?page=pool")}
+            onClick={(event: any) => redirectLink(event, "/swap-ui?page=pool")}
           >
             Add Liquidity
           </DropdownItem>

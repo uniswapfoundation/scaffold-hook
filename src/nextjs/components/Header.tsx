@@ -36,10 +36,7 @@ export const Header = () => {
         Debug Contracts
         {/* </NavLink> */}
       </NavbarItem>
-      <NavbarItem
-        isActive={isActiveLink(router, "/example-ui")}
-        onClick={(event: any) => redirectLink(event, "/example-ui")}
-      >
+      <NavbarItem isActive={isActiveLink(router, "/swap-ui")} onClick={(event: any) => redirectLink(event, "/swap-ui")}>
         Example UI
       </NavbarItem>
       <NavbarItem

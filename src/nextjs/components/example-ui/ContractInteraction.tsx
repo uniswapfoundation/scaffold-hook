@@ -37,7 +37,7 @@ export const ContractInteraction = () => {
               <div className="mt-2">
                 Check out{" "}
                 <code className="italic bg-base-300 text-base font-bold [word-spacing:-0.5rem]">
-                  packages / nextjs/pages / example-ui.tsx
+                  packages / nextjs/pages / swap-ui.tsx
                 </code>{" "}
                 and its underlying components.
               </div>
