@@ -1,26 +1,41 @@
-import { Switch } from "@nextui-org/react";
 import React, { useState } from "react";
-import { usePoolManagerInitialize } from "~~/generated/generatedTypes";
+import { counterAddress, useErc20Read, usePoolManagerInitialize } from "~~/generated/generated";
 
 function InitializeComponent() {
-  const [fromCurrency, setFromCurrency] = useState("ETH");
-  const [toCurrency, setToCurrency] = useState("DAI");
+
+  // TODO: remove all the hardcoded addresses
+  const getToken0Name = useErc20Read({
+    address: '0x2dafbdf11a8cf84c372539a38d781d8248399ae3',
+    functionName: 'name'
+  });
+
+  const getToken1Name = useErc20Read({
+    address: '0xa8ceafb1940244f2f022ff8440a42411b4f07fc4',
+    functionName: 'name'
+  });
+
+  const [token0, setToken0] = useState(getToken0Name.data);
+  const [token1, setToken1] = useState(getToken1Name.data);
 
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState("");
+  const [hookAddress, setHookAddress] = useState(counterAddress[31337]);
 
   const { write } = usePoolManagerInitialize();
 
   const handleInitialize = () => {
     write({
-      variables: {
-        token0: fromCurrency,
-        token1: toCurrency,
-        swapFee: swapFee,
-        tickSpacing: tickSpacing,
-        hook: hookAddress
-      }
+      args: [
+        {
+          currency0: '0x2dafbdf11a8cf84c372539a38d781d8248399ae3',
+          currency1: '0xa8ceafb1940244f2f022ff8440a42411b4f07fc4',
+          fee: Number(swapFee),
+          tickSpacing: Number(tickSpacing),
+          hooks: hookAddress
+        },
+        79228162514264337593543950336n,
+        "0x00"
+      ]
     })
   };
 
@@ -35,11 +50,11 @@ function InitializeComponent() {
             </label>
             <select
               className="select select-bordered w-full mt-2"
-              value={fromCurrency}
-              onChange={e => setFromCurrency(e.target.value)}
+              value={token0}
+              onChange={e => setToken0(e.target.value)}
             >
-              <option>ETH</option>
-              <option>DAI</option>
+              <option>{getToken0Name.data}</option>
+              <option>{getToken1Name.data}</option>
             </select>
           </div>
           <div className="flex flex-col justify-end">
@@ -48,11 +63,11 @@ function InitializeComponent() {
             </label>
             <select
               className="select select-bordered w-full mt-2"
-              value={toCurrency}
-              onChange={e => setToCurrency(e.target.value)}
+              value={token1}
+              onChange={e => setToken1(e.target.value)}
             >
-              <option>DAI</option>
-              <option>ETH</option>
+              <option>{getToken0Name.data}</option>
+              <option>{getToken1Name.data}</option>
             </select>
           </div>
         </div>

@@ -696,7 +696,7 @@ export const counterABI = [
 export const counterAddress = {
   1: '0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac',
   5: '0x78991BB1D194C1235fe285240af8489CFA552151',
-  31337: '0xbe18A1B61ceaF59aEB6A9bC81AB4FB87D56Ba167',
+  31337: '0x3C0AE26e3747F2Ad320a5f35f9781E2DBc8d0D40',
 } as const
 
 /**
@@ -2065,6 +2065,129 @@ export const ierc165ABI = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IERC20
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const ierc20ABI = [
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'value',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'value',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'decimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'symbol',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // IERC20Errors
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3284,10 +3407,9 @@ export const mockErc20ABI = [
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
-      { name: 'name', internalType: 'string', type: 'string' },
-      { name: 'symbol', internalType: 'string', type: 'string' },
-      { name: 'decimals', internalType: 'uint8', type: 'uint8' },
-      { name: 'amountToMint', internalType: 'uint256', type: 'uint256' },
+      { name: '_name', internalType: 'string', type: 'string' },
+      { name: '_symbol', internalType: 'string', type: 'string' },
+      { name: '_decimals', internalType: 'uint8', type: 'uint8' },
     ],
   },
   {
@@ -3365,6 +3487,16 @@ export const mockErc20ABI = [
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'burn',
+    outputs: [],
+  },
+  {
     stateMutability: 'view',
     type: 'function',
     inputs: [],
@@ -3375,19 +3507,8 @@ export const mockErc20ABI = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: '_from', internalType: 'address', type: 'address' },
-      { name: '_to', internalType: 'address', type: 'address' },
-      { name: '_amount', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'forceApprove',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: '_to', internalType: 'address', type: 'address' },
-      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'mint',
     outputs: [],
@@ -4832,6 +4953,189 @@ export const tickBitmapABI = [
 export const tickMathABI = [
   { type: 'error', inputs: [], name: 'InvalidSqrtRatio' },
   { type: 'error', inputs: [], name: 'InvalidTick' },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// UniMockERC20
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const uniMockErc20ABI = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+    inputs: [
+      { name: 'name', internalType: 'string', type: 'string' },
+      { name: 'symbol', internalType: 'string', type: 'string' },
+      { name: 'decimals', internalType: 'uint8', type: 'uint8' },
+      { name: 'amountToMint', internalType: 'uint256', type: 'uint256' },
+    ],
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'DOMAIN_SEPARATOR',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'address', type: 'address' },
+      { name: '', internalType: 'address', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'address', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'decimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: '_from', internalType: 'address', type: 'address' },
+      { name: '_to', internalType: 'address', type: 'address' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'forceApprove',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: '_to', internalType: 'address', type: 'address' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'mint',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'address', type: 'address' }],
+    name: 'nonces',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+      { name: 'deadline', internalType: 'uint256', type: 'uint256' },
+      { name: 'v', internalType: 'uint8', type: 'uint8' },
+      { name: 'r', internalType: 'bytes32', type: 'bytes32' },
+      { name: 's', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'permit',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'symbol',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -9379,6 +9683,349 @@ export function useIerc165SupportsInterface<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__.
+ */
+export function useIerc20Read<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractRead({ abi: ierc20ABI, ...config } as UseContractReadConfig<
+    typeof ierc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"allowance"`.
+ */
+export function useIerc20Allowance<
+  TFunctionName extends 'allowance',
+  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: ierc20ABI,
+    functionName: 'allowance',
+    ...config,
+  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"balanceOf"`.
+ */
+export function useIerc20BalanceOf<
+  TFunctionName extends 'balanceOf',
+  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: ierc20ABI,
+    functionName: 'balanceOf',
+    ...config,
+  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"decimals"`.
+ */
+export function useIerc20Decimals<
+  TFunctionName extends 'decimals',
+  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: ierc20ABI,
+    functionName: 'decimals',
+    ...config,
+  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"name"`.
+ */
+export function useIerc20Name<
+  TFunctionName extends 'name',
+  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: ierc20ABI,
+    functionName: 'name',
+    ...config,
+  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"symbol"`.
+ */
+export function useIerc20Symbol<
+  TFunctionName extends 'symbol',
+  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: ierc20ABI,
+    functionName: 'symbol',
+    ...config,
+  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"totalSupply"`.
+ */
+export function useIerc20TotalSupply<
+  TFunctionName extends 'totalSupply',
+  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: ierc20ABI,
+    functionName: 'totalSupply',
+    ...config,
+  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20ABI}__.
+ */
+export function useIerc20Write<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof ierc20ABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof ierc20ABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof ierc20ABI, TFunctionName, TMode>({
+    abi: ierc20ABI,
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"approve"`.
+ */
+export function useIerc20Approve<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof ierc20ABI,
+          'approve'
+        >['request']['abi'],
+        'approve',
+        TMode
+      > & { functionName?: 'approve' }
+    : UseContractWriteConfig<typeof ierc20ABI, 'approve', TMode> & {
+        abi?: never
+        functionName?: 'approve'
+      } = {} as any,
+) {
+  return useContractWrite<typeof ierc20ABI, 'approve', TMode>({
+    abi: ierc20ABI,
+    functionName: 'approve',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"transfer"`.
+ */
+export function useIerc20Transfer<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof ierc20ABI,
+          'transfer'
+        >['request']['abi'],
+        'transfer',
+        TMode
+      > & { functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof ierc20ABI, 'transfer', TMode> & {
+        abi?: never
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  return useContractWrite<typeof ierc20ABI, 'transfer', TMode>({
+    abi: ierc20ABI,
+    functionName: 'transfer',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"transferFrom"`.
+ */
+export function useIerc20TransferFrom<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof ierc20ABI,
+          'transferFrom'
+        >['request']['abi'],
+        'transferFrom',
+        TMode
+      > & { functionName?: 'transferFrom' }
+    : UseContractWriteConfig<typeof ierc20ABI, 'transferFrom', TMode> & {
+        abi?: never
+        functionName?: 'transferFrom'
+      } = {} as any,
+) {
+  return useContractWrite<typeof ierc20ABI, 'transferFrom', TMode>({
+    abi: ierc20ABI,
+    functionName: 'transferFrom',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__.
+ */
+export function usePrepareIerc20Write<TFunctionName extends string>(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof ierc20ABI, TFunctionName>,
+    'abi'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: ierc20ABI,
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof ierc20ABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"approve"`.
+ */
+export function usePrepareIerc20Approve(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof ierc20ABI, 'approve'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: ierc20ABI,
+    functionName: 'approve',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof ierc20ABI, 'approve'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"transfer"`.
+ */
+export function usePrepareIerc20Transfer(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof ierc20ABI, 'transfer'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: ierc20ABI,
+    functionName: 'transfer',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof ierc20ABI, 'transfer'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"transferFrom"`.
+ */
+export function usePrepareIerc20TransferFrom(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof ierc20ABI, 'transferFrom'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: ierc20ABI,
+    functionName: 'transferFrom',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof ierc20ABI, 'transferFrom'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20ABI}__.
+ */
+export function useIerc20Event<TEventName extends string>(
+  config: Omit<
+    UseContractEventConfig<typeof ierc20ABI, TEventName>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: ierc20ABI,
+    ...config,
+  } as UseContractEventConfig<typeof ierc20ABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20ABI}__ and `eventName` set to `"Approval"`.
+ */
+export function useIerc20ApprovalEvent(
+  config: Omit<
+    UseContractEventConfig<typeof ierc20ABI, 'Approval'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: ierc20ABI,
+    eventName: 'Approval',
+    ...config,
+  } as UseContractEventConfig<typeof ierc20ABI, 'Approval'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20ABI}__ and `eventName` set to `"Transfer"`.
+ */
+export function useIerc20TransferEvent(
+  config: Omit<
+    UseContractEventConfig<typeof ierc20ABI, 'Transfer'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: ierc20ABI,
+    eventName: 'Transfer',
+    ...config,
+  } as UseContractEventConfig<typeof ierc20ABI, 'Transfer'>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20MinimalABI}__.
  */
 export function useIerc20MinimalRead<
@@ -11804,28 +12451,26 @@ export function useMockErc20Approve<
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"forceApprove"`.
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"burn"`.
  */
-export function useMockErc20ForceApprove<
-  TMode extends WriteContractMode = undefined,
->(
+export function useMockErc20Burn<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
         PrepareWriteContractResult<
           typeof mockErc20ABI,
-          'forceApprove'
+          'burn'
         >['request']['abi'],
-        'forceApprove',
+        'burn',
         TMode
-      > & { functionName?: 'forceApprove' }
-    : UseContractWriteConfig<typeof mockErc20ABI, 'forceApprove', TMode> & {
+      > & { functionName?: 'burn' }
+    : UseContractWriteConfig<typeof mockErc20ABI, 'burn', TMode> & {
         abi?: never
-        functionName?: 'forceApprove'
+        functionName?: 'burn'
       } = {} as any,
 ) {
-  return useContractWrite<typeof mockErc20ABI, 'forceApprove', TMode>({
+  return useContractWrite<typeof mockErc20ABI, 'burn', TMode>({
     abi: mockErc20ABI,
-    functionName: 'forceApprove',
+    functionName: 'burn',
     ...config,
   } as any)
 }
@@ -11966,19 +12611,19 @@ export function usePrepareMockErc20Approve(
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"forceApprove"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"burn"`.
  */
-export function usePrepareMockErc20ForceApprove(
+export function usePrepareMockErc20Burn(
   config: Omit<
-    UsePrepareContractWriteConfig<typeof mockErc20ABI, 'forceApprove'>,
+    UsePrepareContractWriteConfig<typeof mockErc20ABI, 'burn'>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: mockErc20ABI,
-    functionName: 'forceApprove',
+    functionName: 'burn',
     ...config,
-  } as UsePrepareContractWriteConfig<typeof mockErc20ABI, 'forceApprove'>)
+  } as UsePrepareContractWriteConfig<typeof mockErc20ABI, 'burn'>)
 }
 
 /**
@@ -14666,4 +15311,556 @@ export function useTestErc20TransferEvent(
     eventName: 'Transfer',
     ...config,
   } as UseContractEventConfig<typeof testErc20ABI, 'Transfer'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link uniMockErc20ABI}__.
+ */
+export function useUniMockErc20Read<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof uniMockErc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof uniMockErc20ABI, TFunctionName, TSelectData>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: uniMockErc20ABI,
+    ...config,
+  } as UseContractReadConfig<
+    typeof uniMockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"DOMAIN_SEPARATOR"`.
+ */
+export function useUniMockErc20DomainSeparator<
+  TFunctionName extends 'DOMAIN_SEPARATOR',
+  TSelectData = ReadContractResult<typeof uniMockErc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof uniMockErc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: uniMockErc20ABI,
+    functionName: 'DOMAIN_SEPARATOR',
+    ...config,
+  } as UseContractReadConfig<
+    typeof uniMockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"allowance"`.
+ */
+export function useUniMockErc20Allowance<
+  TFunctionName extends 'allowance',
+  TSelectData = ReadContractResult<typeof uniMockErc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof uniMockErc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: uniMockErc20ABI,
+    functionName: 'allowance',
+    ...config,
+  } as UseContractReadConfig<
+    typeof uniMockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"balanceOf"`.
+ */
+export function useUniMockErc20BalanceOf<
+  TFunctionName extends 'balanceOf',
+  TSelectData = ReadContractResult<typeof uniMockErc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof uniMockErc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: uniMockErc20ABI,
+    functionName: 'balanceOf',
+    ...config,
+  } as UseContractReadConfig<
+    typeof uniMockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"decimals"`.
+ */
+export function useUniMockErc20Decimals<
+  TFunctionName extends 'decimals',
+  TSelectData = ReadContractResult<typeof uniMockErc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof uniMockErc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: uniMockErc20ABI,
+    functionName: 'decimals',
+    ...config,
+  } as UseContractReadConfig<
+    typeof uniMockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"name"`.
+ */
+export function useUniMockErc20Name<
+  TFunctionName extends 'name',
+  TSelectData = ReadContractResult<typeof uniMockErc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof uniMockErc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: uniMockErc20ABI,
+    functionName: 'name',
+    ...config,
+  } as UseContractReadConfig<
+    typeof uniMockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"nonces"`.
+ */
+export function useUniMockErc20Nonces<
+  TFunctionName extends 'nonces',
+  TSelectData = ReadContractResult<typeof uniMockErc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof uniMockErc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: uniMockErc20ABI,
+    functionName: 'nonces',
+    ...config,
+  } as UseContractReadConfig<
+    typeof uniMockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"symbol"`.
+ */
+export function useUniMockErc20Symbol<
+  TFunctionName extends 'symbol',
+  TSelectData = ReadContractResult<typeof uniMockErc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof uniMockErc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: uniMockErc20ABI,
+    functionName: 'symbol',
+    ...config,
+  } as UseContractReadConfig<
+    typeof uniMockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"totalSupply"`.
+ */
+export function useUniMockErc20TotalSupply<
+  TFunctionName extends 'totalSupply',
+  TSelectData = ReadContractResult<typeof uniMockErc20ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof uniMockErc20ABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: uniMockErc20ABI,
+    functionName: 'totalSupply',
+    ...config,
+  } as UseContractReadConfig<
+    typeof uniMockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__.
+ */
+export function useUniMockErc20Write<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof uniMockErc20ABI,
+          string
+        >['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof uniMockErc20ABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof uniMockErc20ABI, TFunctionName, TMode>({
+    abi: uniMockErc20ABI,
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"approve"`.
+ */
+export function useUniMockErc20Approve<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof uniMockErc20ABI,
+          'approve'
+        >['request']['abi'],
+        'approve',
+        TMode
+      > & { functionName?: 'approve' }
+    : UseContractWriteConfig<typeof uniMockErc20ABI, 'approve', TMode> & {
+        abi?: never
+        functionName?: 'approve'
+      } = {} as any,
+) {
+  return useContractWrite<typeof uniMockErc20ABI, 'approve', TMode>({
+    abi: uniMockErc20ABI,
+    functionName: 'approve',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"forceApprove"`.
+ */
+export function useUniMockErc20ForceApprove<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof uniMockErc20ABI,
+          'forceApprove'
+        >['request']['abi'],
+        'forceApprove',
+        TMode
+      > & { functionName?: 'forceApprove' }
+    : UseContractWriteConfig<typeof uniMockErc20ABI, 'forceApprove', TMode> & {
+        abi?: never
+        functionName?: 'forceApprove'
+      } = {} as any,
+) {
+  return useContractWrite<typeof uniMockErc20ABI, 'forceApprove', TMode>({
+    abi: uniMockErc20ABI,
+    functionName: 'forceApprove',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"mint"`.
+ */
+export function useUniMockErc20Mint<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof uniMockErc20ABI,
+          'mint'
+        >['request']['abi'],
+        'mint',
+        TMode
+      > & { functionName?: 'mint' }
+    : UseContractWriteConfig<typeof uniMockErc20ABI, 'mint', TMode> & {
+        abi?: never
+        functionName?: 'mint'
+      } = {} as any,
+) {
+  return useContractWrite<typeof uniMockErc20ABI, 'mint', TMode>({
+    abi: uniMockErc20ABI,
+    functionName: 'mint',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"permit"`.
+ */
+export function useUniMockErc20Permit<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof uniMockErc20ABI,
+          'permit'
+        >['request']['abi'],
+        'permit',
+        TMode
+      > & { functionName?: 'permit' }
+    : UseContractWriteConfig<typeof uniMockErc20ABI, 'permit', TMode> & {
+        abi?: never
+        functionName?: 'permit'
+      } = {} as any,
+) {
+  return useContractWrite<typeof uniMockErc20ABI, 'permit', TMode>({
+    abi: uniMockErc20ABI,
+    functionName: 'permit',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"transfer"`.
+ */
+export function useUniMockErc20Transfer<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof uniMockErc20ABI,
+          'transfer'
+        >['request']['abi'],
+        'transfer',
+        TMode
+      > & { functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof uniMockErc20ABI, 'transfer', TMode> & {
+        abi?: never
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  return useContractWrite<typeof uniMockErc20ABI, 'transfer', TMode>({
+    abi: uniMockErc20ABI,
+    functionName: 'transfer',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"transferFrom"`.
+ */
+export function useUniMockErc20TransferFrom<
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof uniMockErc20ABI,
+          'transferFrom'
+        >['request']['abi'],
+        'transferFrom',
+        TMode
+      > & { functionName?: 'transferFrom' }
+    : UseContractWriteConfig<typeof uniMockErc20ABI, 'transferFrom', TMode> & {
+        abi?: never
+        functionName?: 'transferFrom'
+      } = {} as any,
+) {
+  return useContractWrite<typeof uniMockErc20ABI, 'transferFrom', TMode>({
+    abi: uniMockErc20ABI,
+    functionName: 'transferFrom',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__.
+ */
+export function usePrepareUniMockErc20Write<TFunctionName extends string>(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, TFunctionName>,
+    'abi'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: uniMockErc20ABI,
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof uniMockErc20ABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"approve"`.
+ */
+export function usePrepareUniMockErc20Approve(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'approve'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: uniMockErc20ABI,
+    functionName: 'approve',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'approve'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"forceApprove"`.
+ */
+export function usePrepareUniMockErc20ForceApprove(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'forceApprove'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: uniMockErc20ABI,
+    functionName: 'forceApprove',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'forceApprove'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"mint"`.
+ */
+export function usePrepareUniMockErc20Mint(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'mint'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: uniMockErc20ABI,
+    functionName: 'mint',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'mint'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"permit"`.
+ */
+export function usePrepareUniMockErc20Permit(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'permit'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: uniMockErc20ABI,
+    functionName: 'permit',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'permit'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"transfer"`.
+ */
+export function usePrepareUniMockErc20Transfer(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'transfer'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: uniMockErc20ABI,
+    functionName: 'transfer',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'transfer'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"transferFrom"`.
+ */
+export function usePrepareUniMockErc20TransferFrom(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'transferFrom'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: uniMockErc20ABI,
+    functionName: 'transferFrom',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'transferFrom'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link uniMockErc20ABI}__.
+ */
+export function useUniMockErc20Event<TEventName extends string>(
+  config: Omit<
+    UseContractEventConfig<typeof uniMockErc20ABI, TEventName>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: uniMockErc20ABI,
+    ...config,
+  } as UseContractEventConfig<typeof uniMockErc20ABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link uniMockErc20ABI}__ and `eventName` set to `"Approval"`.
+ */
+export function useUniMockErc20ApprovalEvent(
+  config: Omit<
+    UseContractEventConfig<typeof uniMockErc20ABI, 'Approval'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: uniMockErc20ABI,
+    eventName: 'Approval',
+    ...config,
+  } as UseContractEventConfig<typeof uniMockErc20ABI, 'Approval'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link uniMockErc20ABI}__ and `eventName` set to `"Transfer"`.
+ */
+export function useUniMockErc20TransferEvent(
+  config: Omit<
+    UseContractEventConfig<typeof uniMockErc20ABI, 'Transfer'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: uniMockErc20ABI,
+    eventName: 'Transfer',
+    ...config,
+  } as UseContractEventConfig<typeof uniMockErc20ABI, 'Transfer'>)
 }
