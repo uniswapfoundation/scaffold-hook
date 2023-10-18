@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { counterAddress, useErc20Read, usePoolManagerInitialize } from "~~/generated/generated";
+import { notification } from "~~/utils/scaffold-eth";
 
 function InitializeComponent() {
-
   // TODO: remove all the hardcoded addresses
   const getToken0Name = useErc20Read({
-    address: '0x2dafbdf11a8cf84c372539a38d781d8248399ae3',
-    functionName: 'name'
+    address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
+    functionName: "name",
   });
 
   const getToken1Name = useErc20Read({
-    address: '0xa8ceafb1940244f2f022ff8440a42411b4f07fc4',
-    functionName: 'name'
+    address: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
+    functionName: "name",
   });
 
   const [token0, setToken0] = useState(getToken0Name.data);
@@ -21,28 +21,61 @@ function InitializeComponent() {
   const [tickSpacing, setTickSpacing] = useState(60n);
   const [hookAddress, setHookAddress] = useState(counterAddress[31337]);
 
-  const { write } = usePoolManagerInitialize();
+  const {
+    writeAsync: write,
+    isLoading: isLoadingInitialize,
+    isError: isErrorInitialize,
+    error: errorInitialize,
+    data: dataInitialize,
+  } = usePoolManagerInitialize({
+    address: "0x565506C573abFE24Eb6abb7c0D8C809aCe1f638D",
+  });
 
-  const handleInitialize = () => {
-    write({
-      args: [
-        {
-          currency0: '0x2dafbdf11a8cf84c372539a38d781d8248399ae3',
-          currency1: '0xa8ceafb1940244f2f022ff8440a42411b4f07fc4',
-          fee: Number(swapFee),
-          tickSpacing: Number(tickSpacing),
-          hooks: hookAddress
-        },
-        79228162514264337593543950336n,
-        "0x00"
-      ]
-    })
+  const handleInitialize = async () => {
+    try {
+      await write({
+        args: [
+          {
+            currency0: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
+            currency1: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
+            fee: Number(swapFee),
+            tickSpacing: Number(tickSpacing),
+            hooks: hookAddress,
+          },
+          79228162514264337593543950336n,
+          "0x0",
+        ],
+      });
+      notification.success(
+        <div className="text-left">
+          Initialized Pool
+          <br />
+          Token0: {getToken0Name.data}
+          <br />
+          Token1: {getToken1Name.data}
+          <br />
+          Swap Fee: {swapFee.toString()}
+          <br />
+          Tick Spacing: {tickSpacing.toString()}
+          <br />
+          Hook Address: {hookAddress}
+          <br />
+          Tx ID: {dataInitialize.hash}
+        </div>,
+      );
+    } catch (error) {
+      notification.error(
+        <div className="text-left">
+          Error Initializing Pool
+          {errorInitialize?.message}
+        </div>,
+      );
+    }
   };
 
   return (
     <div className="card shadow-2xl p-6 bg-white rounded-xl border-2 border-pink-400 min-w-[34rem] max-w-xl transition-shadow hover:shadow-none">
       <div className="space-y-6">
-
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col justify-end">
             <label className="label text-left block">
@@ -73,34 +106,34 @@ function InitializeComponent() {
         </div>
 
         <div className="flex flex-col justify-end">
-            <input
-              type="number"
-              className="input input-bordered w-full mt-6"
-              placeholder="Fee"
-              value={swapFee.toString()}
-              onChange={e => setSwapFee(BigInt(e.target.value))}
-            />
-          </div>
+          <input
+            type="number"
+            className="input input-bordered w-full mt-6"
+            placeholder="Fee"
+            value={swapFee.toString()}
+            onChange={e => setSwapFee(BigInt(e.target.value))}
+          />
+        </div>
 
-          <div className="flex flex-col justify-end">
-            <input
-              type="number"
-              className="input input-bordered w-full mt-6"
-              placeholder="Fee"
-              value={tickSpacing.toString()}
-              onChange={e => setTickSpacing(BigInt(e.target.value))}
-            />
-          </div>
+        <div className="flex flex-col justify-end">
+          <input
+            type="number"
+            className="input input-bordered w-full mt-6"
+            placeholder="Fee"
+            value={tickSpacing.toString()}
+            onChange={e => setTickSpacing(BigInt(e.target.value))}
+          />
+        </div>
 
-          <div className="flex flex-col justify-end">
-            <input
-              type="string"
-              className="input input-bordered w-full mt-6"
-              placeholder="Hook Address"
-              value={hookAddress}
-              onChange={e => setHookAddress(e.target.value)}
-            />
-          </div>
+        <div className="flex flex-col justify-end">
+          <input
+            type="string"
+            className="input input-bordered w-full mt-6"
+            placeholder="Hook Address"
+            value={hookAddress}
+            onChange={e => setHookAddress(e.target.value)}
+          />
+        </div>
 
         <button
           className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"

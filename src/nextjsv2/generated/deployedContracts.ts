@@ -2,7 +2,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 import { poolManagerABI } from "./PoolManager.sol/PoolManager";
 import { CounterHookABI } from "./Counter.sol/counterHook";
 import { abi } from "./HookMiner.sol/HookMiner.json"
-const deployedContracts: GenericContractsDeclaration = {
+export const deployedContracts: GenericContractsDeclaration = {
     31337: [
         {
             name: "Anvil",
@@ -13,7 +13,7 @@ const deployedContracts: GenericContractsDeclaration = {
                     abi: poolManagerABI,
                 },
                 Counter: {
-                    address: "0x3CB782DEF4588226A1b572C9F9a67B51aA29d3af",
+                    address: "0x3C215d42209e91B305b3c7bf09324f1d7a04e86E",
                     abi: CounterHookABI,
                 },
                 HookMiner: {
