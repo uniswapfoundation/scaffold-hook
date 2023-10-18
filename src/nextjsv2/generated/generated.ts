@@ -5,9 +5,6 @@ import {
   UseContractWriteConfig,
   usePrepareContractWrite,
   UsePrepareContractWriteConfig,
-  useNetwork,
-  useChainId,
-  Address,
   useContractEvent,
   UseContractEventConfig,
 } from 'wagmi'
@@ -359,11 +356,6 @@ export const constantsABI = [
 // Counter
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
- */
 export const counterABI = [
   {
     stateMutability: 'nonpayable',
@@ -687,27 +679,6 @@ export const counterABI = [
     ],
   },
 ] as const
-
-/**
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
- */
-export const counterAddress = {
-  1: '0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac',
-  5: '0x78991BB1D194C1235fe285240af8489CFA552151',
-  31337: '0xbe18A1B61ceaF59aEB6A9bC81AB4FB87D56Ba167',
-} as const
-
-/**
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
- */
-export const counterConfig = {
-  address: counterAddress,
-  abi: counterABI,
-} as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CurrencyLibrary
@@ -5467,10 +5438,6 @@ export function useConstantsSqrtRatio_4_1<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterRead<
   TFunctionName extends string,
@@ -5478,25 +5445,17 @@ export function useCounterRead<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterModifyPositionCount"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterAfterModifyPositionCount<
   TFunctionName extends 'afterModifyPositionCount',
@@ -5504,15 +5463,11 @@ export function useCounterAfterModifyPositionCount<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterModifyPositionCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5520,10 +5475,6 @@ export function useCounterAfterModifyPositionCount<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterSwapCount"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterAfterSwapCount<
   TFunctionName extends 'afterSwapCount',
@@ -5531,15 +5482,11 @@ export function useCounterAfterSwapCount<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterSwapCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5547,10 +5494,6 @@ export function useCounterAfterSwapCount<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeModifyPositionCount"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterBeforeModifyPositionCount<
   TFunctionName extends 'beforeModifyPositionCount',
@@ -5558,15 +5501,11 @@ export function useCounterBeforeModifyPositionCount<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeModifyPositionCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5574,10 +5513,6 @@ export function useCounterBeforeModifyPositionCount<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeSwapCount"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterBeforeSwapCount<
   TFunctionName extends 'beforeSwapCount',
@@ -5585,15 +5520,11 @@ export function useCounterBeforeSwapCount<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeSwapCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5601,10 +5532,6 @@ export function useCounterBeforeSwapCount<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"getHooksCalls"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterGetHooksCalls<
   TFunctionName extends 'getHooksCalls',
@@ -5612,15 +5539,11 @@ export function useCounterGetHooksCalls<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'getHooksCalls',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5628,10 +5551,6 @@ export function useCounterGetHooksCalls<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"poolManager"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterPoolManager<
   TFunctionName extends 'poolManager',
@@ -5639,15 +5558,11 @@ export function useCounterPoolManager<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'poolManager',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5655,48 +5570,32 @@ export function useCounterPoolManager<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterWrite<
   TFunctionName extends string,
   TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
         PrepareWriteContractResult<typeof counterABI, string>['request']['abi'],
         TFunctionName,
         TMode
-      > & { address?: Address; chainId?: TChainId }
+      >
     : UseContractWriteConfig<typeof counterABI, TFunctionName, TMode> & {
         abi?: never
-        address?: never
-        chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, TFunctionName, TMode>({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     ...config,
   } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterDonate"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterAfterDonate<
   TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
@@ -5706,24 +5605,14 @@ export function useCounterAfterDonate<
         >['request']['abi'],
         'afterDonate',
         TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'afterDonate'
-      }
+      > & { functionName?: 'afterDonate' }
     : UseContractWriteConfig<typeof counterABI, 'afterDonate', TMode> & {
         abi?: never
-        address?: never
-        chainId?: TChainId
         functionName?: 'afterDonate'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'afterDonate', TMode>({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterDonate',
     ...config,
   } as any)
@@ -5731,14 +5620,9 @@ export function useCounterAfterDonate<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterInitialize"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterAfterInitialize<
   TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
@@ -5748,24 +5632,14 @@ export function useCounterAfterInitialize<
         >['request']['abi'],
         'afterInitialize',
         TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'afterInitialize'
-      }
+      > & { functionName?: 'afterInitialize' }
     : UseContractWriteConfig<typeof counterABI, 'afterInitialize', TMode> & {
         abi?: never
-        address?: never
-        chainId?: TChainId
         functionName?: 'afterInitialize'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'afterInitialize', TMode>({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterInitialize',
     ...config,
   } as any)
@@ -5773,14 +5647,9 @@ export function useCounterAfterInitialize<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterModifyPosition"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterAfterModifyPosition<
   TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
@@ -5790,28 +5659,18 @@ export function useCounterAfterModifyPosition<
         >['request']['abi'],
         'afterModifyPosition',
         TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'afterModifyPosition'
-      }
+      > & { functionName?: 'afterModifyPosition' }
     : UseContractWriteConfig<
         typeof counterABI,
         'afterModifyPosition',
         TMode
       > & {
         abi?: never
-        address?: never
-        chainId?: TChainId
         functionName?: 'afterModifyPosition'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'afterModifyPosition', TMode>({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterModifyPosition',
     ...config,
   } as any)
@@ -5819,14 +5678,9 @@ export function useCounterAfterModifyPosition<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterSwap"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterAfterSwap<
   TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
@@ -5836,20 +5690,14 @@ export function useCounterAfterSwap<
         >['request']['abi'],
         'afterSwap',
         TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'afterSwap' }
+      > & { functionName?: 'afterSwap' }
     : UseContractWriteConfig<typeof counterABI, 'afterSwap', TMode> & {
         abi?: never
-        address?: never
-        chainId?: TChainId
         functionName?: 'afterSwap'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'afterSwap', TMode>({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterSwap',
     ...config,
   } as any)
@@ -5857,14 +5705,9 @@ export function useCounterAfterSwap<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeDonate"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterBeforeDonate<
   TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
@@ -5874,24 +5717,14 @@ export function useCounterBeforeDonate<
         >['request']['abi'],
         'beforeDonate',
         TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'beforeDonate'
-      }
+      > & { functionName?: 'beforeDonate' }
     : UseContractWriteConfig<typeof counterABI, 'beforeDonate', TMode> & {
         abi?: never
-        address?: never
-        chainId?: TChainId
         functionName?: 'beforeDonate'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'beforeDonate', TMode>({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeDonate',
     ...config,
   } as any)
@@ -5899,14 +5732,9 @@ export function useCounterBeforeDonate<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeInitialize"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterBeforeInitialize<
   TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
@@ -5916,24 +5744,14 @@ export function useCounterBeforeInitialize<
         >['request']['abi'],
         'beforeInitialize',
         TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'beforeInitialize'
-      }
+      > & { functionName?: 'beforeInitialize' }
     : UseContractWriteConfig<typeof counterABI, 'beforeInitialize', TMode> & {
         abi?: never
-        address?: never
-        chainId?: TChainId
         functionName?: 'beforeInitialize'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'beforeInitialize', TMode>({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeInitialize',
     ...config,
   } as any)
@@ -5941,14 +5759,9 @@ export function useCounterBeforeInitialize<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeModifyPosition"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterBeforeModifyPosition<
   TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
@@ -5958,28 +5771,18 @@ export function useCounterBeforeModifyPosition<
         >['request']['abi'],
         'beforeModifyPosition',
         TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'beforeModifyPosition'
-      }
+      > & { functionName?: 'beforeModifyPosition' }
     : UseContractWriteConfig<
         typeof counterABI,
         'beforeModifyPosition',
         TMode
       > & {
         abi?: never
-        address?: never
-        chainId?: TChainId
         functionName?: 'beforeModifyPosition'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'beforeModifyPosition', TMode>({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeModifyPosition',
     ...config,
   } as any)
@@ -5987,14 +5790,9 @@ export function useCounterBeforeModifyPosition<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeSwap"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterBeforeSwap<
   TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
@@ -6004,20 +5802,14 @@ export function useCounterBeforeSwap<
         >['request']['abi'],
         'beforeSwap',
         TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'beforeSwap' }
+      > & { functionName?: 'beforeSwap' }
     : UseContractWriteConfig<typeof counterABI, 'beforeSwap', TMode> & {
         abi?: never
-        address?: never
-        chainId?: TChainId
         functionName?: 'beforeSwap'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'beforeSwap', TMode>({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeSwap',
     ...config,
   } as any)
@@ -6025,14 +5817,9 @@ export function useCounterBeforeSwap<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"lockAcquired"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function useCounterLockAcquired<
   TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
@@ -6042,24 +5829,14 @@ export function useCounterLockAcquired<
         >['request']['abi'],
         'lockAcquired',
         TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'lockAcquired'
-      }
+      > & { functionName?: 'lockAcquired' }
     : UseContractWriteConfig<typeof counterABI, 'lockAcquired', TMode> & {
         abi?: never
-        address?: never
-        chainId?: TChainId
         functionName?: 'lockAcquired'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'lockAcquired', TMode>({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'lockAcquired',
     ...config,
   } as any)
@@ -6067,46 +5844,30 @@ export function useCounterLockAcquired<
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function usePrepareCounterWrite<TFunctionName extends string>(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, TFunctionName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, TFunctionName>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterDonate"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function usePrepareCounterAfterDonate(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'afterDonate'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterDonate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterDonate'>)
@@ -6114,23 +5875,15 @@ export function usePrepareCounterAfterDonate(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterInitialize"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function usePrepareCounterAfterInitialize(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'afterInitialize'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterInitialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterInitialize'>)
@@ -6138,23 +5891,15 @@ export function usePrepareCounterAfterInitialize(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterModifyPosition"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function usePrepareCounterAfterModifyPosition(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'afterModifyPosition'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterModifyPosition',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterModifyPosition'>)
@@ -6162,23 +5907,15 @@ export function usePrepareCounterAfterModifyPosition(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterSwap"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function usePrepareCounterAfterSwap(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'afterSwap'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterSwap',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterSwap'>)
@@ -6186,23 +5923,15 @@ export function usePrepareCounterAfterSwap(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeDonate"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function usePrepareCounterBeforeDonate(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'beforeDonate'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeDonate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeDonate'>)
@@ -6210,23 +5939,15 @@ export function usePrepareCounterBeforeDonate(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeInitialize"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function usePrepareCounterBeforeInitialize(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'beforeInitialize'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeInitialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeInitialize'>)
@@ -6234,23 +5955,15 @@ export function usePrepareCounterBeforeInitialize(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeModifyPosition"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function usePrepareCounterBeforeModifyPosition(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'beforeModifyPosition'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeModifyPosition',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeModifyPosition'>)
@@ -6258,23 +5971,15 @@ export function usePrepareCounterBeforeModifyPosition(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeSwap"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function usePrepareCounterBeforeSwap(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'beforeSwap'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeSwap',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeSwap'>)
@@ -6282,23 +5987,15 @@ export function usePrepareCounterBeforeSwap(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"lockAcquired"`.
- *
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x78991BB1D194C1235fe285240af8489CFA552151)
- * -
  */
 export function usePrepareCounterLockAcquired(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'lockAcquired'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof counterAddress } = {} as any,
+    'abi' | 'functionName'
+  > = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'lockAcquired',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'lockAcquired'>)

@@ -4,6 +4,8 @@ import {
   useErc20Decimals,
   useErc20Name,
   useErc20Symbol,
+  useMockErc20Name,
+  useMockErc20Symbol,
   usePoolManagerGetLiquidity,
   usePoolManagerPools,
 } from "~~/generated/generated";
@@ -47,21 +49,21 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
     data: Token0Data1,
     isLoading: isLoadingToken01,
     isError: isErrorToken01,
-  } = useErc20Symbol({
+  } = useMockErc20Name({
     address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
   });
 
-  // const {
-  //   data: Token0Data2,
-  //   isLoading: isLoadingToken02,
-  //   isError: isErrorToken02,
-  // } = useErc20Decimals({
-  //   address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
-  // });
+  const {
+    data: Token0Data2,
+    isLoading: isLoadingToken02,
+    isError: isErrorToken02,
+  } = useMockErc20Symbol({
+    address: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
+  });
 
-  // console.log(Token0Data, "Token0Data", isLoadingToken0, isErrorToken0);
-  // console.log(Token0Data2, "Token0Data1", isLoadingToken01, isErrorToken01);
-  // console.log(poolLiquidity, "poolManagerPools2", isLoadingLiq, isErrorLiq);
+  console.log(Token0Data, "Token0Data", isLoadingToken0, isErrorToken0);
+  console.log(Token0Data2, "Token0Data1", isLoadingToken01, isErrorToken01);
+  console.log(poolLiquidity, "poolManagerPools2", isLoadingLiq, isErrorLiq);
 
   console.log(poolData, "poolManagerPools", isLoadingPool, isErrorPool);
 
