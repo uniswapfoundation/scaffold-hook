@@ -68,7 +68,7 @@ export const Header = () => {
           </DropdownTrigger>
         </NavbarItem>
         <DropdownMenu
-          aria-label="Uniswao features"
+          aria-label="Uniswap features"
           className="w-[340px]"
           itemClasses={{
             base: "gap-4",
@@ -76,11 +76,11 @@ export const Header = () => {
         >
           <DropdownItem
             key="swap"
-            startContent={icons.flash}
-            description="Swap tokens using Uniswap V4"
-            onClick={(event: any) => redirectLink(event, "/swap-ui?page=swap")}
+            startContent={icons.scale}
+            description="Create a Pool on Uniswap V4"
+            onClick={(event: any) => redirectLink(event, "/swap-ui?page=initialize")}
           >
-            Swap UI
+            Initialize Pool
           </DropdownItem>
           <DropdownItem
             key="Liquidity management"
@@ -89,6 +89,14 @@ export const Header = () => {
             onClick={(event: any) => redirectLink(event, "/swap-ui?page=pool")}
           >
             Add Liquidity
+          </DropdownItem>
+          <DropdownItem
+            key="swap"
+            startContent={icons.flash}
+            description="Swap tokens using Uniswap V4"
+            onClick={(event: any) => redirectLink(event, "/swap-ui?page=swap")}
+          >
+            Swap
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>

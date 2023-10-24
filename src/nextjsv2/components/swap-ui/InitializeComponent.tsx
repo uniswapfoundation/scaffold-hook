@@ -4,13 +4,16 @@ import { notification } from "~~/utils/scaffold-eth";
 
 function InitializeComponent() {
   // TODO: remove all the hardcoded addresses
+  const token0Addr = "0x2dafbdf11a8cf84c372539a38d781d8248399ae3";
+  const token1Addr = "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4";
+
   const getToken0Name = useErc20Read({
-    address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
+    address: token0Addr,
     functionName: "name",
   });
 
   const getToken1Name = useErc20Read({
-    address: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
+    address: token1Addr,
     functionName: "name",
   });
 
@@ -36,8 +39,8 @@ function InitializeComponent() {
       await write({
         args: [
           {
-            currency0: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
-            currency1: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
+            currency0: token0Addr,
+            currency1: token1Addr,
             fee: Number(swapFee),
             tickSpacing: Number(tickSpacing),
             hooks: hookAddress,
