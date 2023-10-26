@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { counterAddress, useErc20Read, usePoolManagerInitialize } from "~~/generated/generated";
+import deployedContracts from "~~/generated/deployedContracts";
+import { useErc20Read, usePoolManagerInitialize } from "~~/generated/generated";
 import { notification } from "~~/utils/scaffold-eth";
 
 function InitializeComponent() {
@@ -22,7 +23,7 @@ function InitializeComponent() {
 
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState(counterAddress[31337]);
+  const [hookAddress, setHookAddress] = useState(deployedContracts[31337][0].contracts.Counter.address);
 
   const {
     writeAsync: write,
