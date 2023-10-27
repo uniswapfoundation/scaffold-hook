@@ -1,9 +1,10 @@
 import { useMemo } from "react";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
-import { MetaHeader } from "~~/components/MetaHeader";
-import PoolInit from "~~/components/swap-ui/PoolInit";
 import SwapUI from "~~/components/swap-ui/SwapUI";
+import PoolInit from "~~/components/swap-ui/PoolInit";
+import LiquidityUI from "~~/components/swap-ui/LiquidityUI";
+
 
 const SwapUIPage: NextPage = () => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const SwapUIPage: NextPage = () => {
   } else if (router.isReady && isSwap) {
     return <SwapUI />;
   } else if (router.isReady && isLiquidity) {
-    return <SwapUI />;
+    return <LiquidityUI />;
   } else if (router.isReady && isInitialize) {
     return <PoolInit />;
   }
