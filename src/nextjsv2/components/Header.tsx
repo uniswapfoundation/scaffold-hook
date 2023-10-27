@@ -86,7 +86,7 @@ export const Header = () => {
             key="Liquidity management"
             startContent={icons.activity}
             description="Manage liquidity in Uniswap V4 Pools"
-            onClick={(event: any) => redirectLink(event, "/swap-ui?page=pool")}
+            onClick={(event: any) => redirectLink(event, "/swap-ui?page=liquidity")}
           >
             Add Liquidity
           </DropdownItem>
