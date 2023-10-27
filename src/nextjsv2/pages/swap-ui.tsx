@@ -1,15 +1,17 @@
+import { useMemo } from "react";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
-import SwapUI from "~~/components/swap-ui/SwapUI";
 import PoolInit from "~~/components/swap-ui/PoolInit";
+import SwapUI from "~~/components/swap-ui/SwapUI";
 
 const SwapUIPage: NextPage = () => {
   const router = useRouter();
   console.log(router, "router");
-  const isSwap = router.query.page === "swap";
-  const isLiquidity = router.query.page === "liquidity";
-  const isInitialize = router.query.page === "initialize";
+  const { query } = router;
+  const isSwap = useMemo(() => query.page === "swap", [query.page]);
+  const isLiquidity = useMemo(() => query.page === "liquidity", [query.page]);
+  const isInitialize = useMemo(() => query.page === "initialize", [query.page]);
 
   if (router.isFallback) {
     return <div>Loading...</div>;

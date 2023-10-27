@@ -1,12 +1,13 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { ContractReadMethods } from "./ContractReadMethods";
 import { ContractVariables } from "./ContractVariables";
 import { ContractWriteMethods } from "./ContractWriteMethods";
 import { Spinner } from "~~/components/assets/Spinner";
 import { Address, Balance } from "~~/components/scaffold-eth";
-import { useDeployedContractInfo, useNetworkColor } from "~~/hooks/scaffold-eth";
-import { getTargetNetwork } from "~~/utils/scaffold-eth";
+import { useDeployedContractInfo, useNetworkColor, useEventWatch } from "~~/hooks/scaffold-eth";
+import { getTargetNetwork, notification } from "~~/utils/scaffold-eth";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
+import { EventsEmitted } from "./ContractEvents";
 
 type ContractUIProps = {
   contractName: ContractName;
@@ -19,10 +20,20 @@ type ContractUIProps = {
 export const ContractUI = ({ contractName, className = "" }: ContractUIProps) => {
   const [refreshDisplayVariables, triggerRefreshDisplayVariables] = useReducer(value => !value, false);
   const configuredNetwork = getTargetNetwork();
+  const [eventLogs, setEventLogs] = useState<any[]>([]);
 
   const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo(contractName);
   const networkColor = useNetworkColor();
 
+  useEventWatch({
+    deployedContractData,
+    onEvent: logs => {
+      const eventNames = logs.map((log: { eventName: any }) => log.eventName);
+      notification.info(`Event(s) ${eventNames.join(", ")} emitted`);
+      setEventLogs([...logs]);
+    },
+    chainId: configuredNetwork.id,
+  });
   if (deployedContractLoading) {
     return (
       <div className="mt-14">
@@ -60,6 +71,10 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
                 <span style={{ color: networkColor }}>{configuredNetwork.name}</span>
               </p>
             )}
+          </div>
+          <div className="bg-base-300 rounded-3xl px-6 lg:px-8 py-4 shadow-lg shadow-base-300 mb-6">
+            <h2 className="font-semibold">Contract Events</h2>
+            <EventsEmitted logs={eventLogs} />
           </div>
           <div className="bg-base-300 rounded-3xl px-6 lg:px-8 py-4 shadow-lg shadow-base-300">
             <ContractVariables
