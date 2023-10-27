@@ -32,7 +32,7 @@ function InitializeComponent() {
     error: errorInitialize,
     data: dataInitialize,
   } = usePoolManagerInitialize({
-    address: "0x565506C573abFE24Eb6abb7c0D8C809aCe1f638D",
+    address: deployedContracts[31337][0].contracts.PoolManager.address,
   });
 
   const handleInitialize = async () => {
