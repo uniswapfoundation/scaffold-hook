@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import convertSqrtPriceX96ToPrice from "./helpers/utils";
 import { Switch, Tab, Tabs } from "@nextui-org/react";
 import {
   useErc20Decimals,
@@ -8,11 +9,11 @@ import {
   useMockErc20Symbol,
   usePoolManagerGetLiquidity,
   usePoolManagerPools,
-} from "~~/generated/generated";
+} from "~~/generated/generated-old";
 
 function SwapComponent({ poolKey }: { poolKey: any }) {
-  const [fromCurrency, setFromCurrency] = useState("ETH");
-  const [toCurrency, setToCurrency] = useState("DAI");
+  const [fromCurrency, setFromCurrency] = useState("");
+  const [toCurrency, setToCurrency] = useState("");
   const [fromAmount, setFromAmount] = useState("");
   const [toAmount, setToAmount] = useState("");
   const [liquidityAvailable, setLiquidityAvailable] = useState("1000 ETH");
@@ -25,7 +26,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
     isError: isErrorLiq,
   } = usePoolManagerGetLiquidity({
     address: "0x565506C573abFE24Eb6abb7c0D8C809aCe1f638D",
-    args: ["0xfd5760f27378b822bb5a39d2b76e3523cc538841e47ca97b08ee1a34a037ad89"],
+    args: ["0xadd0d7bffbfdc526544c1cf8f069a0ffc255b570212d7139c2ba11cac3f1b644"],
   });
 
   const {
@@ -34,7 +35,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
     isError: isErrorPool,
   } = usePoolManagerPools({
     address: "0x565506C573abFE24Eb6abb7c0D8C809aCe1f638D",
-    args: ["0xfd5760f27378b822bb5a39d2b76e3523cc538841e47ca97b08ee1a34a037ad89"],
+    args: ["0xadd0d7bffbfdc526544c1cf8f069a0ffc255b570212d7139c2ba11cac3f1b644"],
   });
 
   const {
@@ -46,23 +47,26 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
   });
 
   const {
-    data: Token0Data1,
-    isLoading: isLoadingToken01,
-    isError: isErrorToken01,
-  } = useMockErc20Name({
-    address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
-  });
-
-  const {
-    data: Token0Data2,
-    isLoading: isLoadingToken02,
-    isError: isErrorToken02,
-  } = useMockErc20Symbol({
+    data: Token1Data,
+    isLoading: isLoadingToken1,
+    isError: isErrorToken1,
+  } = useErc20Name({
     address: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
   });
 
+  // update fromCurrency and toCurrency
+
+  useEffect(() => {
+    if (!isLoadingToken0 && !isErrorToken0) {
+      setFromCurrency(Token0Data!);
+    }
+    if (!isLoadingToken1 && !isErrorToken1) {
+      setToCurrency(Token1Data!);
+    }
+  }, [Token0Data && Token1Data]);
+
   console.log(Token0Data, "Token0Data", isLoadingToken0, isErrorToken0);
-  console.log(Token0Data2, "Token0Data1", isLoadingToken01, isErrorToken01);
+  console.log(Token1Data, "Token0Data1", isLoadingToken1, isErrorToken1);
   console.log(poolLiquidity, "poolManagerPools2", isLoadingLiq, isErrorLiq);
 
   console.log(poolData, "poolManagerPools", isLoadingPool, isErrorPool);
@@ -97,8 +101,8 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
               value={fromCurrency}
               onChange={e => setFromCurrency(e.target.value)}
             >
-              <option>ETH</option>
-              <option>DAI</option>
+              <option>{fromCurrency}</option>
+              <option>{toCurrency}</option>
             </select>
           </div>
           <div className="flex flex-col justify-end">
@@ -119,8 +123,8 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
               value={toCurrency}
               onChange={e => setToCurrency(e.target.value)}
             >
-              <option>DAI</option>
-              <option>ETH</option>
+              <option>{toCurrency}</option>
+              <option>{fromCurrency}</option>
             </select>
           </div>
           <div className="flex flex-col justify-end">
@@ -147,7 +151,8 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
               <span>Price:</span>
               <span className="font-bold ml-2">
                 {" "}
-                {!isLoadingPool && !isErrorPool ? poolData[0].sqrtPriceX96.toString() : "NaN"}
+                {/* {!isLoadingPool && !isErrorPool ? poolData[0].sqrtPriceX96.toString() : "NaN"} */}
+                {!isLoadingPool && !isErrorPool ? convertSqrtPriceX96ToPrice(poolData[0].sqrtPriceX96) : "10"}
               </span>
             </div>
             <div className="flex items-center justify-between">

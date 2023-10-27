@@ -1,8 +1,10 @@
 import PoolModifyPositionTestABI from "../../../contracts/out/PoolModifyPositionTest.sol/PoolModifyPositionTest.json";
 import { CounterHookABI } from "./Counter.sol/counterHook";
+<<<<<<< lp-ui
 import { abi } from "./HookMiner.sol/HookMiner.json";
 import { poolManagerABI } from "./PoolManager.sol/PoolManager";
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
+=======
 
 export const deployedContracts: GenericContractsDeclaration = {
   31337: [

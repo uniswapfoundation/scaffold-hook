@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
+import { Button } from "@nextui-org/react";
+import { watchContractEvent } from "@wagmi/core";
 import type { NextPage } from "next";
 import { useLocalStorage } from "usehooks-ts";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { ContractUI } from "~~/components/scaffold-eth";
+import { poolManagerABI } from "~~/generated/PoolManager.sol/PoolManager";
+import { notification } from "~~/utils/scaffold-eth";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
 import { getContractNames } from "~~/utils/scaffold-eth/contractNames";
-import { Button } from "@nextui-org/react";
-import { poolManagerABI } from "~~/generated/PoolManager.sol/PoolManager";
-import { watchContractEvent } from "@wagmi/core";
-import { notification } from "~~/utils/scaffold-eth";
 
 const selectedContractStorageKey = "scaffoldEth2.selectedContract";
 const contractNames = getContractNames();
@@ -36,11 +36,12 @@ const Debug: NextPage = () => {
         const successMsg = (
           <div className="w-full overflow auto">
             <p className="font-bold mt-0 mb-1">New Pool Created!</p>
-            <p className="m-0 overflow-hidden flex-wrap">
+            <p className="m-0 overflow-hidden flex-wrap break-all">
               - Pool ID: <code className="italic bg-base-300 text-base font-bold">{log[0].args.id}</code>
             </p>
             <p className="mt-1 break-normal">
-              - Hook Address: <code className="italic bg-base-300 text-base font-bold">{log[0].args.hooks}</code>
+              - Hook Address:{" "}
+              <code className="italic bg-base-300 text-base font-bold break-all">{log[0].args.hooks}</code>
             </p>
           </div>
         );
