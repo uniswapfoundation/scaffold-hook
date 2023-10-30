@@ -1,4 +1,5 @@
 import { Address } from "../Address";
+import { v4 as uuidv4 } from "uuid";
 
 type ContractEventEntryProps = {
   name: string;
@@ -18,7 +19,7 @@ const ContractEventEntry = ({ name, args }: ContractEventEntryProps) => {
     <div className="text-gray-500">
       <div>{name}</div>
       {keys.map(key => (
-        <div key={key} className="text-xs mb-2 flex text-ellipsis">
+        <div key={uuidv4()} className="text-xs mb-2 flex text-ellipsis">
           <div
             className="
             text-gray-800
@@ -47,7 +48,7 @@ const ContractEventEntry = ({ name, args }: ContractEventEntryProps) => {
               break-all
               "
             >
-              {args[key]}
+              {args[key].toString()}
             </div>
           )}
         </div>

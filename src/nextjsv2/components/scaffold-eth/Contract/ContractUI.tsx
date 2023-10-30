@@ -3,6 +3,7 @@ import { EventsEmitted } from "./ContractEvents";
 import { ContractReadMethods } from "./ContractReadMethods";
 import { ContractVariables } from "./ContractVariables";
 import { ContractWriteMethods } from "./ContractWriteMethods";
+import { usePublicClient } from "wagmi";
 import { Spinner } from "~~/components/assets/Spinner";
 import { Address, Balance } from "~~/components/scaffold-eth";
 import { useDeployedContractInfo, useEventWatch, useNetworkColor } from "~~/hooks/scaffold-eth";
@@ -20,22 +21,40 @@ type ContractUIProps = {
 export const ContractUI = ({ contractName, className = "" }: ContractUIProps) => {
   const [refreshDisplayVariables, triggerRefreshDisplayVariables] = useReducer(value => !value, false);
   const configuredNetwork = getTargetNetwork();
-  const [eventLogs, setEventLogs] = useState<any[]>([]);
+  const publicClient = usePublicClient();
 
+  const [eventLogs, setEventLogs] = useState<any[]>([]);
+  // console.log("eventslogs for contract", contractName, eventLogs);
   const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo(contractName);
+
   const networkColor = useNetworkColor();
 
-  useEventWatch({
-    deployedContractData,
-    onEvent: logs => {
-      console.log("Event(s) emitted:", logs);
-      const eventNames = logs.map((log: { eventName: any }) => log.eventName);
-      // set events, append to existing
-      const logsAppended = [...eventLogs, ...logs];
-      setEventLogs(logsAppended);
-    },
-    chainId: configuredNetwork.id,
-  });
+  useEffect(() => {
+    if (!deployedContractData) {
+      return;
+    }
+    const fetchEvents = async () => {
+      const events = await publicClient.getContractEvents({
+        address: deployedContractData.address,
+        abi: deployedContractData.abi,
+      });
+      console.log("events found", events, deployedContractData.address, contractName);
+      setEventLogs(events);
+    };
+    fetchEvents();
+  }, [deployedContractData]);
+
+  // useEventWatch({
+  //   deployedContractData,
+  //   onEvent: logs => {
+  //     console.log("Event(s) emitted:", logs);
+  //     const eventNames = logs.map((log: { eventName: any }) => log.eventName);
+  //     // set events, append to existing
+  //     const logsAppended = [...eventLogs, ...logs];
+  //     setEventLogs(logsAppended);
+  //   },
+  //   chainId: configuredNetwork.id,
+  // });
 
   if (deployedContractLoading) {
     return (

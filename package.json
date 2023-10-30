@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "deployalllocal": "forge build --force && yarn anvil && yarn deploy:anvil && cd /src/nextjsv2 && npm run dev",
     "anvil": "source .env && anvil --fork-url $ANVIL_FORK_URL --chain-id $ANVIL_CHAIN_ID --code-size-limit 30000 --init genesis.json",
     "build": "npm run wagmi && next build",
     "deploy": "source .env && forge create contracts/src/Counter.sol:Counter --rpc-url $FORGE_RPC_URL --private-key $FORGE_PRIVATE_KEY",

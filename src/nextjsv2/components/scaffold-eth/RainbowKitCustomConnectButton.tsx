@@ -35,20 +35,6 @@ export const RainbowKitCustomConnectButton = () => {
   const { switchNetwork } = useSwitchNetwork();
   const [addressCopied, setAddressCopied] = useState(false);
   const [address, setAddress] = useState<string>(undefined);
-  const { data: balanceToken0 } = useContractRead({
-    chainId: getTargetNetwork().id,
-    address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
-    abi: erc20ABI as Abi,
-    functionName: "balanceOf",
-    args: [address],
-  });
-  const { data: balanceToken1 } = useContractRead({
-    chainId: getTargetNetwork().id,
-    address: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
-    abi: erc20ABI as Abi,
-    functionName: "balanceOf",
-    args: [address],
-  });
 
   return (
     <ConnectButton.Custom>
@@ -57,6 +43,22 @@ export const RainbowKitCustomConnectButton = () => {
         const blockExplorerAddressLink = account
           ? getBlockExplorerAddressLink(getTargetNetwork(), account.address)
           : undefined;
+        const { data: balanceToken0 } = useContractRead({
+          chainId: getTargetNetwork().id,
+          address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
+          abi: erc20ABI as Abi,
+          functionName: "balanceOf",
+          args: [address],
+          watch: true,
+        });
+        const { data: balanceToken1 } = useContractRead({
+          chainId: getTargetNetwork().id,
+          address: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
+          abi: erc20ABI as Abi,
+          functionName: "balanceOf",
+          args: [address],
+        });
+
         useEffect(() => {
           if (account) {
             setAddress(account.address);

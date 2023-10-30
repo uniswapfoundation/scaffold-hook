@@ -1,10 +1,8 @@
 import PoolModifyPositionTestABI from "../../../contracts/out/PoolModifyPositionTest.sol/PoolModifyPositionTest.json";
 import { CounterHookABI } from "./Counter.sol/counterHook";
-<<<<<<< lp-ui
 import { abi } from "./HookMiner.sol/HookMiner.json";
 import { poolManagerABI } from "./PoolManager.sol/PoolManager";
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
-=======
 
 export const deployedContracts: GenericContractsDeclaration = {
   31337: [
@@ -17,11 +15,11 @@ export const deployedContracts: GenericContractsDeclaration = {
           abi: poolManagerABI,
         },
         Counter: {
-          address: "0x3C42F03BeA94498c64516465901cf25C43A262EF",
+          address: "0x3C215d42209e91B305b3c7bf09324f1d7a04e86E",
           abi: CounterHookABI,
         },
         HookMiner: {
-          address: "0x1B25157F05B25438441bF7CDe38A95A55ccf8E50",
+          address: "0x32cd5ecdA7f2B8633C00A0434DE28Db111E60636",
           abi: abi,
         },
         PoolModifyPositionTest: {
