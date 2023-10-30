@@ -1,7 +1,65 @@
 import React, { useState } from "react";
+import { Select, SelectItem, Tooltip } from "@nextui-org/react";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import deployedContracts from "~~/generated/deployedContracts";
 import { useErc20Read, usePoolManagerInitialize } from "~~/generated/generated";
 import { notification } from "~~/utils/scaffold-eth";
+
+// Example tooltip package
+
+function TokenDropdown({ label, tooltipText, value, options, onChange }) {
+  return (
+    <div className="flex flex-col justify-end">
+      <label className="label text-left  flex justify-between">
+        <span className="label-text">{label}</span>
+        <Tooltip content={tooltipText}>
+          <QuestionMarkCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+        </Tooltip>
+      </label>
+      <Select onChange={onChange} defaultValue={value}>
+        {options.map((option, index) => (
+          <SelectItem key={index} value={option}>
+            {option}
+          </SelectItem>
+        ))}
+      </Select>
+    </div>
+  );
+}
+
+function NumericInput({ type, placeholder, tooltipText, value, onChange }) {
+  return (
+    <div className="flex flex-col justify-end">
+      <label className="label text-left  flex justify-between">
+        <span className="label-text">{placeholder}</span>
+        <Tooltip content={tooltipText}>
+          <QuestionMarkCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+        </Tooltip>
+      </label>
+      {/* <Tooltip /> */}
+      <input
+        type={type}
+        className="input input-bordered w-full"
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
+      {/* <small className="text-gray-600">More info about {placeholder}.</small> */}
+    </div>
+  );
+}
+
+function InitializePoolButton({ isLoading, onClick }) {
+  return (
+    <button
+      className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
+      disabled={isLoading}
+      onClick={onClick}
+    >
+      {isLoading ? "Initializing..." : "Initialize Pool"}
+    </button>
+  );
+}
 
 function InitializeComponent() {
   // TODO: remove all the hardcoded addresses
@@ -79,72 +137,51 @@ function InitializeComponent() {
 
   return (
     <div className="card shadow-2xl p-6 bg-white rounded-xl border-2 border-pink-400 min-w-[34rem] max-w-xl transition-shadow hover:shadow-none">
+      <h2 className="text-2xl font-bold mb-4">Initialize a New Pool</h2>
+      <p className="text-gray-600 mb-6">Fill out the details below to create a new liquidity pool.</p>
       <div className="space-y-6">
         <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col justify-end">
-            <label className="label text-left block">
-              <span className="label-text">Token0</span>
-            </label>
-            <select
-              className="select select-bordered w-full mt-2"
-              value={token0}
-              onChange={e => setToken0(e.target.value)}
-            >
-              <option>{getToken0Name.data}</option>
-              <option>{getToken1Name.data}</option>
-            </select>
-          </div>
-          <div className="flex flex-col justify-end">
-            <label className="label text-left block">
-              <span className="label-text">Token1</span>
-            </label>
-            <select
-              className="select select-bordered w-full mt-2"
-              value={token1}
-              onChange={e => setToken1(e.target.value)}
-            >
-              <option>{getToken0Name.data}</option>
-              <option>{getToken1Name.data}</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-end">
-          <input
-            type="number"
-            className="input input-bordered w-full mt-6"
-            placeholder="Fee"
-            value={swapFee.toString()}
-            onChange={e => setSwapFee(BigInt(e.target.value))}
+          <TokenDropdown
+            label="Base Token"
+            tooltipText="The first token in the liquidity pool."
+            value={token0}
+            options={[getToken0Name.data, getToken1Name.data]}
+            onChange={e => setToken0(e.target.value)}
+          />
+          <TokenDropdown
+            label="Quote Token"
+            tooltipText="The second token in the liquidity pool."
+            value={token1}
+            options={[getToken0Name.data, getToken1Name.data]}
+            onChange={e => setToken1(e.target.value)}
           />
         </div>
 
-        <div className="flex flex-col justify-end">
-          <input
-            type="number"
-            className="input input-bordered w-full mt-6"
-            placeholder="Fee"
-            value={tickSpacing.toString()}
-            onChange={e => setTickSpacing(BigInt(e.target.value))}
-          />
-        </div>
+        <NumericInput
+          type="number"
+          placeholder="Swap Fee"
+          tooltipText="Transaction fee for swapping tokens."
+          value={swapFee.toString()}
+          onChange={e => setSwapFee(BigInt(e.target.value))}
+        />
 
-        <div className="flex flex-col justify-end">
-          <input
-            type="string"
-            className="input input-bordered w-full mt-6"
-            placeholder="Hook Address"
-            value={hookAddress}
-            onChange={e => setHookAddress(e.target.value)}
-          />
-        </div>
+        <NumericInput
+          type="number"
+          placeholder="Tick Spacing"
+          tooltipText="The minimum price movement between ticks."
+          value={tickSpacing.toString()}
+          onChange={e => setTickSpacing(BigInt(e.target.value))}
+        />
 
-        <button
-          className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
-          onClick={handleInitialize}
-        >
-          Initialize
-        </button>
+        <NumericInput
+          type="text"
+          placeholder="Hook Address"
+          tooltipText="Smart contract address for custom logic."
+          value={hookAddress}
+          onChange={e => setHookAddress(e.target.value)}
+        />
+
+        <InitializePoolButton isLoading={isLoadingInitialize} onClick={handleInitialize} />
       </div>
     </div>
   );
