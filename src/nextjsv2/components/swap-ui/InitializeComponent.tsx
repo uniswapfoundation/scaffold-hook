@@ -10,16 +10,21 @@ import { notification } from "~~/utils/scaffold-eth";
 function TokenDropdown({ label, tooltipText, value, options, onChange }) {
   return (
     <div className="flex flex-col justify-end">
-      <label className="label text-left  flex justify-between">
+      <label className="label text-left flex justify-between">
         <span className="label-text">{label}</span>
         <Tooltip content={tooltipText}>
           <QuestionMarkCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
         </Tooltip>
       </label>
-      <Select onChange={onChange} defaultValue={value}>
+      <Select
+        onChange={onChange}
+        placeholder="
+      Select a token"
+        variant="flat"
+      >
         {options.map((option, index) => (
-          <SelectItem key={index} value={option}>
-            {option}
+          <SelectItem key={index} value={option.value}>
+            {option.label}
           </SelectItem>
         ))}
       </Select>
@@ -62,23 +67,12 @@ function InitializePoolButton({ isLoading, onClick }) {
 }
 
 function InitializeComponent() {
-  // TODO: remove all the hardcoded addresses
-  const token0Addr = "0x2dafbdf11a8cf84c372539a38d781d8248399ae3";
-  const token1Addr = "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4";
-
-  const getToken0Name = useErc20Read({
-    address: token0Addr,
-    functionName: "name",
-  });
-
-  const getToken1Name = useErc20Read({
-    address: token1Addr,
-    functionName: "name",
-  });
-
-  const [token0, setToken0] = useState(getToken0Name.data);
-  const [token1, setToken1] = useState(getToken1Name.data);
-
+  const tokenOptions = [
+    { value: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3", label: "Token0" },
+    { value: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4", label: "Token1" },
+  ];
+  const [token0, setToken0] = useState(undefined);
+  const [token1, setToken1] = useState(undefined);
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
   const [hookAddress, setHookAddress] = useState(deployedContracts[31337][0].contracts.Counter.address);
@@ -95,11 +89,19 @@ function InitializeComponent() {
 
   const handleInitialize = async () => {
     try {
+      console.log(
+        "Initializing pool with the following parameters:",
+        tokenOptions[token0].value,
+        tokenOptions[token1].value,
+        Number(swapFee),
+        Number(tickSpacing),
+        hookAddress,
+      );
       await write({
         args: [
           {
-            currency0: token0Addr,
-            currency1: token1Addr,
+            currency0: tokenOptions[token0].value,
+            currency1: tokenOptions[token1].value,
             fee: Number(swapFee),
             tickSpacing: Number(tickSpacing),
             hooks: hookAddress,
@@ -112,9 +114,9 @@ function InitializeComponent() {
         <div className="text-left">
           Initialized Pool
           <br />
-          Token0: {getToken0Name.data}
+          Token0: {tokenOptions[token0].value}
           <br />
-          Token1: {getToken1Name.data}
+          Token1: {tokenOptions[token1].value}
           <br />
           Swap Fee: {swapFee.toString()}
           <br />
@@ -122,14 +124,13 @@ function InitializeComponent() {
           <br />
           Hook Address: {hookAddress}
           <br />
-          Tx ID: {dataInitialize.hash}
         </div>,
       );
     } catch (error) {
       notification.error(
         <div className="text-left">
           Error Initializing Pool
-          {errorInitialize?.message}
+          {error.message}
         </div>,
       );
     }
@@ -144,19 +145,18 @@ function InitializeComponent() {
           <TokenDropdown
             label="Base Token"
             tooltipText="The first token in the liquidity pool."
-            value={token0}
-            options={[getToken0Name.data, getToken1Name.data]}
+            value={tokenOptions[0].value}
+            options={tokenOptions}
             onChange={e => setToken0(e.target.value)}
           />
           <TokenDropdown
             label="Quote Token"
             tooltipText="The second token in the liquidity pool."
-            value={token1}
-            options={[getToken0Name.data, getToken1Name.data]}
+            value={tokenOptions[1].value}
+            options={tokenOptions}
             onChange={e => setToken1(e.target.value)}
           />
         </div>
-
         <NumericInput
           type="number"
           placeholder="Swap Fee"

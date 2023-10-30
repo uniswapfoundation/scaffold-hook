@@ -22,6 +22,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
   const [refreshDisplayVariables, triggerRefreshDisplayVariables] = useReducer(value => !value, false);
   const configuredNetwork = getTargetNetwork();
   const publicClient = usePublicClient();
+  const latestBlock = publicClient.getBlockNumber();
 
   const [eventLogs, setEventLogs] = useState<any[]>([]);
   // console.log("eventslogs for contract", contractName, eventLogs);
@@ -34,9 +35,12 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
       return;
     }
     const fetchEvents = async () => {
+      const lastblock = await latestBlock;
       const events = await publicClient.getContractEvents({
         address: deployedContractData.address,
         abi: deployedContractData.abi,
+        fromBlock: lastblock - 100n,
+        toBlock: lastblock,
       });
       console.log("events found", events, deployedContractData.address, contractName);
       setEventLogs(events);
