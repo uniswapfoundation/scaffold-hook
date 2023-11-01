@@ -15,7 +15,7 @@ export const deployedContracts: GenericContractsDeclaration = {
           abi: poolManagerABI,
         },
         Counter: {
-          address: "0x3C215d42209e91B305b3c7bf09324f1d7a04e86E",
+          address: "0x3CD600F51e2df53786ed8F67472f337cB5c398C8",
           abi: CounterHookABI,
         },
         HookMiner: {

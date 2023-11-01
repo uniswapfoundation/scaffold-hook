@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Divider, Select, SelectItem, Tooltip } from "@nextui-org/react";
+import { Accordion, AccordionItem } from "@nextui-org/react";
 import { formatEther, parseEther } from "viem";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import deployedContracts from "~~/generated/deployedContracts";
@@ -59,6 +60,22 @@ function NumericInput({ type, placeholder, tooltipText, value, onChange }) {
   );
 }
 
+function PoolKeyId2({ label, tooltipText, value, onChange }) {
+  return (
+    <Accordion variant="bordered">
+      <AccordionItem key="1" aria-label="Accordion 1" title="Accordion 1">
+        {defaultContent}
+      </AccordionItem>
+      <AccordionItem key="2" aria-label="Accordion 2" title="Accordion 2">
+        {defaultContent}
+      </AccordionItem>
+      <AccordionItem key="3" aria-label="Accordion 3" title="Accordion 3">
+        {defaultContent}
+      </AccordionItem>
+    </Accordion>
+  );
+}
+
 function LiquidityComponent() {
   // TODO: remove all the hardcoded addresses
   const tokenOptions = [
@@ -88,7 +105,7 @@ function LiquidityComponent() {
   const [tickLower, setTickLower] = useState(-(tickSpacing * 10n));
   const [tickUpper, setTickUpper] = useState(tickSpacing * 10n);
   const [liquidityDelta, setLiquidityDelta] = useState(10000000000000000000n);
-  const [hookData, setHookData] = useState<`0x${string}`>();
+  const [hookData, setHookData] = useState<`0x${string}`>("0x");
 
   const { data: token0Allowance, refetch: refetchT0Allowance } = useErc20Allowance({
     address: token0Addr,
@@ -172,90 +189,48 @@ function LiquidityComponent() {
 
   return (
     <div className="card shadow-2xl p-6 bg-white rounded-xl border-2 border-pink-400 min-w-[34rem] max-w-xl transition-shadow hover:shadow-none">
-      <div className="space-y-0">
-        <div className="border-dashed border-pink-300 border p-4  hover:border-pink-500 hover:border-solid hover:shadow-sm hover:transition-all">
-          <h3 className="text-lg font-normal mb-2">PoolKey Identifier</h3>
+      <h2 className="text-2xl font-bold mb-2">Provision Liquidity</h2>
+      <p className="text-gray-600 mb-6">Fill out the details below to provision liquidity to a pool. .</p>
+      {PoolKeyId(swapFee, setSwapFee, tickSpacing, setTickSpacing, hookAddress, setHookAddress)}
 
-          <NumericInput
-            type="number"
-            placeholder="Swap Fee"
-            tooltipText="Transaction fee for swapping tokens."
-            value={swapFee.toString()}
-            onChange={e => setSwapFee(BigInt(e.target.value))}
-          />
+      <div className="grid grid-cols-2 gap-2">
+        <NumericInput
+          type="number"
+          placeholder="Lower Bound"
+          tooltipText="Lower bound of the price range."
+          value={Number(tickLower)}
+          onChange={e => setTickLower(BigInt(e.target.value))}
+        />
 
-          <NumericInput
-            type="number"
-            placeholder="Tick Spacing"
-            tooltipText="The minimum price movement between ticks."
-            value={tickSpacing.toString()}
-            onChange={e => setTickSpacing(BigInt(e.target.value))}
-          />
+        <NumericInput
+          type="number"
+          placeholder="Upper Bound"
+          tooltipText="Upper bound of the price range."
+          value={Number(tickUpper)}
+          onChange={e => setTickUpper(BigInt(e.target.value))}
+        />
+      </div>
 
-          <NumericInput
-            type="text"
-            placeholder="Hook Address"
-            tooltipText="Smart contract address for custom logic."
-            value={hookAddress}
-            onChange={e => setHookAddress(e.target.value)}
-          />
-        </div>
-        <Divider />
+      <NumericInput
+        type="number"
+        placeholder="Liquidity Delta"
+        tooltipText="Amount of liquidity to add/remove."
+        value={liquidityDelta}
+        onChange={e => setLiquidityDelta(BigInt(e.target.value))}
+      />
 
-        <div className="grid grid-cols-2 gap-2">
-          <div className="flex flex-col justify-end">
-            <label className="label text-left block">
-              <span className="label-text">Lower Bound</span>
-            </label>
-            <input
-              type="number"
-              className="input input-bordered w-full mt-6"
-              placeholder="Lower Bound"
-              value={Number(tickLower)}
-              onChange={e => setTickLower(BigInt(e.target.value))}
-            />
-          </div>
+      <NumericInput
+        type="text"
+        placeholder="Hook Data"
+        tooltipText="Data to pass to the hook."
+        value={hookData}
+        onChange={e => setHookData(e.target.value)}
+      />
 
-          <div className="flex flex-col justify-end">
-            <label className="label text-left block">
-              <span className="label-text">Upper Bound</span>
-            </label>
-            <input
-              type="number"
-              className="input input-bordered w-full mt-6"
-              placeholder="Upper Bound"
-              value={Number(tickUpper)}
-              onChange={e => setTickUpper(BigInt(e.target.value))}
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-end">
-          <label className="label text-left block">
-            <span className="label-text">Liquidity Amount</span>
-          </label>
-          <input
-            type="number"
-            className="input input-bordered w-full mt-6"
-            placeholder="Liquidity Amount"
-            value={formatEther(liquidityDelta)}
-            onChange={e => setLiquidityDelta(parseEther(e.target.value))}
-          />
-        </div>
-
-        <div className="flex flex-col justify-end">
-          <input
-            type="string"
-            className="input input-bordered w-full mt-6"
-            placeholder="(optional) Hook Data"
-            value={hookData}
-            onChange={e => setHookData(e.target.value as `0x${string}`)}
-          />
-        </div>
-
+      <div className="grid w-full  grid-cols-2  gap-4">
         {token0Allowance === 0n && (
           <button
-            className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
+            className="btn  btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
             onClick={handleToken0Approve}
           >
             Approve Token0
@@ -270,16 +245,79 @@ function LiquidityComponent() {
             Approve Token1
           </button>
         )}
-
-        <button
-          className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
-          onClick={handleInitialize}
-        >
-          Provision
-        </button>
       </div>
+      <button
+        className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
+        onClick={handleInitialize}
+      >
+        Provision
+      </button>
     </div>
   );
 }
 
 export default LiquidityComponent;
+function PoolKeyId(
+  swapFee: bigint,
+  setSwapFee: React.Dispatch<React.SetStateAction<bigint>>,
+  tickSpacing: bigint,
+  setTickSpacing: React.Dispatch<React.SetStateAction<bigint>>,
+  hookAddress: any,
+  setHookAddress: React.Dispatch<any>,
+) {
+  // return (
+  //   <div className="border-dashed border-pink-300 border p-4  hover:border-pink-500 hover:border-solid hover:shadow-sm hover:transition-all">
+  //     <h3 className="text-md font-normal mb-2">PoolKey Identifier</h3>
+  //     <NumericInput
+  //       type="number"
+  //       placeholder="Swap Fee"
+  //       tooltipText="Transaction fee for swapping tokens."
+  //       value={swapFee.toString()}
+  //       onChange={e => setSwapFee(BigInt(e.target.value))}
+  //     />
+  //     <NumericInput
+  //       type="number"
+  //       placeholder="Tick Spacing"
+  //       tooltipText="The minimum price movement between ticks."
+  //       value={tickSpacing.toString()}
+  //       onChange={e => setTickSpacing(BigInt(e.target.value))}
+  //     />
+  //     <NumericInput
+  //       type="text"
+  //       placeholder="Hook Address"
+  //       tooltipText="Smart contract address for custom logic."
+  //       value={hookAddress}
+  //       onChange={e => setHookAddress(e.target.value)}
+  //     />
+  //   </div>
+  // );
+  return (
+    <Accordion variant="light">
+      <AccordionItem key="1" aria-label="PoolKey Identifier" title="PoolKey Identifier">
+        <NumericInput
+          type="number"
+          placeholder="Swap Fee"
+          tooltipText="Transaction fee for swapping tokens."
+          value={swapFee.toString()}
+          onChange={e => setSwapFee(BigInt(e.target.value))}
+        />
+
+        <NumericInput
+          type="number"
+          placeholder="Tick Spacing"
+          tooltipText="The minimum price movement between ticks."
+          value={tickSpacing.toString()}
+          onChange={e => setTickSpacing(BigInt(e.target.value))}
+        />
+
+        <NumericInput
+          type="text"
+          placeholder="Hook Address"
+          tooltipText="Smart contract address for custom logic."
+          value={hookAddress}
+          onChange={e => setHookAddress(e.target.value)}
+        />
+      </AccordionItem>
+    </Accordion>
+  );
+}
