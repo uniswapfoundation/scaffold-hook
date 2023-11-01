@@ -60,22 +60,6 @@ function NumericInput({ type, placeholder, tooltipText, value, onChange }) {
   );
 }
 
-function PoolKeyId2({ label, tooltipText, value, onChange }) {
-  return (
-    <Accordion variant="bordered">
-      <AccordionItem key="1" aria-label="Accordion 1" title="Accordion 1">
-        {defaultContent}
-      </AccordionItem>
-      <AccordionItem key="2" aria-label="Accordion 2" title="Accordion 2">
-        {defaultContent}
-      </AccordionItem>
-      <AccordionItem key="3" aria-label="Accordion 3" title="Accordion 3">
-        {defaultContent}
-      </AccordionItem>
-    </Accordion>
-  );
-}
-
 function LiquidityComponent() {
   // TODO: remove all the hardcoded addresses
   const tokenOptions = [
@@ -255,8 +239,6 @@ function LiquidityComponent() {
     </div>
   );
 }
-
-export default LiquidityComponent;
 function PoolKeyId(
   swapFee: bigint,
   setSwapFee: React.Dispatch<React.SetStateAction<bigint>>,
@@ -265,34 +247,8 @@ function PoolKeyId(
   hookAddress: any,
   setHookAddress: React.Dispatch<any>,
 ) {
-  // return (
-  //   <div className="border-dashed border-pink-300 border p-4  hover:border-pink-500 hover:border-solid hover:shadow-sm hover:transition-all">
-  //     <h3 className="text-md font-normal mb-2">PoolKey Identifier</h3>
-  //     <NumericInput
-  //       type="number"
-  //       placeholder="Swap Fee"
-  //       tooltipText="Transaction fee for swapping tokens."
-  //       value={swapFee.toString()}
-  //       onChange={e => setSwapFee(BigInt(e.target.value))}
-  //     />
-  //     <NumericInput
-  //       type="number"
-  //       placeholder="Tick Spacing"
-  //       tooltipText="The minimum price movement between ticks."
-  //       value={tickSpacing.toString()}
-  //       onChange={e => setTickSpacing(BigInt(e.target.value))}
-  //     />
-  //     <NumericInput
-  //       type="text"
-  //       placeholder="Hook Address"
-  //       tooltipText="Smart contract address for custom logic."
-  //       value={hookAddress}
-  //       onChange={e => setHookAddress(e.target.value)}
-  //     />
-  //   </div>
-  // );
   return (
-    <Accordion variant="light">
+    <Accordion variant="bordered">
       <AccordionItem key="1" aria-label="PoolKey Identifier" title="PoolKey Identifier">
         <NumericInput
           type="number"
@@ -321,3 +277,5 @@ function PoolKeyId(
     </Accordion>
   );
 }
+
+export default LiquidityComponent;
