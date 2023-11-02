@@ -7,7 +7,7 @@ import { notification } from "~~/utils/scaffold-eth";
 
 // Example tooltip package
 
-function TokenDropdown({ label, tooltipText, value, options, onChange }) {
+export function TokenDropdown({ label, tooltipText, value, options, onChange }) {
   return (
     <div className="flex flex-col justify-end">
       <label className="label text-left flex justify-between">
