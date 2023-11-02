@@ -1,4 +1,5 @@
 import PoolModifyPositionTestABI from "../../../contracts/out/PoolModifyPositionTest.sol/PoolModifyPositionTest.json";
+import PoolSwapTestABI from "../../../contracts/out/PoolSwapTest.sol/PoolSwapTest.json";
 import { CounterHookABI } from "./Counter.sol/counterHook";
 import { abi } from "./HookMiner.sol/HookMiner.json";
 import { poolManagerABI } from "./PoolManager.sol/PoolManager";
@@ -15,7 +16,7 @@ export const deployedContracts: GenericContractsDeclaration = {
           abi: poolManagerABI,
         },
         Counter: {
-          address: "0x3CD600F51e2df53786ed8F67472f337cB5c398C8",
+          address: "0x3c3514a364278C43AC2Da7db1e44b4cc702CeFD7",
           abi: CounterHookABI,
         },
         HookMiner: {
@@ -25,6 +26,10 @@ export const deployedContracts: GenericContractsDeclaration = {
         PoolModifyPositionTest: {
           address: "0x3079c0319f8734239eb06765666468f7b76eb505",
           abi: PoolModifyPositionTestABI.abi,
+        },
+        PoolSwapTest: {
+          address: "0xaf7ccf0ff7ef054a1db43330f5431958ab4a9441",
+          abi: PoolSwapTestABI.abi,
         },
       },
     },
