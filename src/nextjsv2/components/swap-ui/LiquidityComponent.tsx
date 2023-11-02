@@ -199,8 +199,8 @@ function LiquidityComponent() {
         type="number"
         placeholder="Liquidity Delta"
         tooltipText="Amount of liquidity to add/remove."
-        value={liquidityDelta}
-        onChange={e => setLiquidityDelta(BigInt(e.target.value))}
+        value={Number(formatEther(liquidityDelta))}
+        onChange={e => setLiquidityDelta(parseEther(String(e.target.value)))}
       />
 
       <NumericInput
@@ -239,7 +239,7 @@ function LiquidityComponent() {
     </div>
   );
 }
-function PoolKeyId(
+export function PoolKeyId(
   swapFee: bigint,
   setSwapFee: React.Dispatch<React.SetStateAction<bigint>>,
   tickSpacing: bigint,
