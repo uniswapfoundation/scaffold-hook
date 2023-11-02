@@ -1,23 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TokenDropdown } from "./InitializeComponent";
 import { PoolKeyId } from "./LiquidityComponent";
-import convertSqrtPriceX96ToPrice from "./helpers/utils";
-import { Switch, Tab, Tabs } from "@nextui-org/react";
+import { Tab, Tabs } from "@nextui-org/react";
 import { parseEther } from "viem";
 import { useAccount } from "wagmi";
 import deployedContracts from "~~/generated/deployedContracts";
-import { useErc20Allowance } from "~~/generated/generated";
-import {
-  useErc20Approve,
-  useErc20Decimals,
-  useErc20Name,
-  useErc20Symbol,
-  useMockErc20Name,
-  useMockErc20Symbol,
-  usePoolManagerGetLiquidity,
-  usePoolManagerPools,
-} from "~~/generated/generated-old";
-import { usePoolSwapTestSwap } from "~~/generated/generatedTypes";
+import { useErc20Allowance, useErc20Approve, usePoolSwapTestSwap } from "~~/generated/generatedTypes";
 import { MAX_SQRT_PRICE_LIMIT, MAX_UINT, MIN_SQRT_PRICE_LIMIT } from "~~/utils/constants";
 
 function SwapComponent({ poolKey }: { poolKey: any }) {
@@ -34,9 +22,6 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
   const [fromCurrency, setFromCurrency] = useState("");
   const [toCurrency, setToCurrency] = useState("");
   const [fromAmount, setFromAmount] = useState("");
-  const [liquidityAvailable, setLiquidityAvailable] = useState("1000 ETH");
-  const [fee, setFee] = useState("0.3%");
-  const [slippage, setSlippage] = useState("0.2%");
 
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
@@ -74,51 +59,6 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
       "0x0", // TODO: support hookData
     ],
   });
-
-  const {
-    data: poolLiquidity,
-    isLoading: isLoadingLiq,
-    isError: isErrorLiq,
-  } = usePoolManagerGetLiquidity({
-    address: "0x565506C573abFE24Eb6abb7c0D8C809aCe1f638D",
-    args: ["0xadd0d7bffbfdc526544c1cf8f069a0ffc255b570212d7139c2ba11cac3f1b644"],
-  });
-
-  const {
-    data: poolData,
-    isLoading: isLoadingPool,
-    isError: isErrorPool,
-  } = usePoolManagerPools({
-    address: "0x565506C573abFE24Eb6abb7c0D8C809aCe1f638D",
-    args: ["0xadd0d7bffbfdc526544c1cf8f069a0ffc255b570212d7139c2ba11cac3f1b644"],
-  });
-
-  const {
-    data: Token0Data,
-    isLoading: isLoadingToken0,
-    isError: isErrorToken0,
-  } = useErc20Name({
-    address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
-  });
-
-  const {
-    data: Token1Data,
-    isLoading: isLoadingToken1,
-    isError: isErrorToken1,
-  } = useErc20Name({
-    address: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
-  });
-
-  // update fromCurrency and toCurrency
-
-  useEffect(() => {
-    if (!isLoadingToken0 && !isErrorToken0) {
-      setFromCurrency(Token0Data!);
-    }
-    if (!isLoadingToken1 && !isErrorToken1) {
-      setToCurrency(Token1Data!);
-    }
-  }, [Token0Data && Token1Data]);
 
   const handleSwap = () => {
     console.log(fromCurrency);
@@ -182,29 +122,6 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
         >
           Swap
         </button>
-
-        <div className="border-t-2 border-gray-200 pt-4 mt-4">
-          <div className="grid grid-rows-3 gap-4 text-sm">
-            <div className="flex items-center justify-between">
-              <span>Price:</span>
-              <span className="font-bold ml-2">
-                {" "}
-                {/* {!isLoadingPool && !isErrorPool ? poolData[0].sqrtPriceX96.toString() : "NaN"} */}
-                {!isLoadingPool && !isErrorPool ? convertSqrtPriceX96ToPrice(poolData[0].sqrtPriceX96) : "10"}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Liquidity:</span>
-              <span className="font-bold ml-2">{!isLoadingLiq && !isErrorLiq ? poolLiquidity?.toString() : "NaN"}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Fee:</span>
-              <span className="font-bold ml-2">
-                {!isLoadingPool && !isErrorPool ? poolData[0].protocolFees : "NaN"}
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
