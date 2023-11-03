@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NumericInput } from "../base/numeric-input";
-import { Accordion, AccordionItem } from "@nextui-org/react";
+import { PoolKeyId } from "../base/pool-key";
 import { formatEther, parseEther } from "viem";
 import { useAccount, useChainId } from "wagmi";
 import {
@@ -27,7 +27,7 @@ function LiquidityComponent() {
   // State Variables
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState(counterAddress[chainId as keyof typeof counterAddress]);
+  const [hookAddress, setHookAddress] = useState<`0x${string}`>(counterAddress[chainId as keyof typeof counterAddress]);
 
   const [tickLower, setTickLower] = useState(-(tickSpacing * 10n));
   const [tickUpper, setTickUpper] = useState(tickSpacing * 10n);
@@ -117,7 +117,14 @@ function LiquidityComponent() {
     <div className="card shadow-2xl p-6 bg-white rounded-xl border-2 border-pink-400 min-w-[34rem] max-w-xl transition-shadow hover:shadow-none">
       <h2 className="text-2xl font-bold mb-2">Provision Liquidity</h2>
       <p className="text-gray-600 mb-6">Fill out the details below to provision liquidity to a pool. .</p>
-      {PoolKeyId(swapFee, setSwapFee, tickSpacing, setTickSpacing, hookAddress, setHookAddress)}
+      <PoolKeyId
+        swapFee={swapFee}
+        setSwapFee={setSwapFee}
+        tickSpacing={tickSpacing}
+        setTickSpacing={setTickSpacing}
+        hookAddress={hookAddress}
+        setHookAddress={setHookAddress}
+      />
 
       <div className="grid grid-cols-2 gap-2">
         <NumericInput
@@ -179,44 +186,6 @@ function LiquidityComponent() {
         Provision
       </button>
     </div>
-  );
-}
-export function PoolKeyId(
-  swapFee: bigint,
-  setSwapFee: React.Dispatch<React.SetStateAction<bigint>>,
-  tickSpacing: bigint,
-  setTickSpacing: React.Dispatch<React.SetStateAction<bigint>>,
-  hookAddress: any,
-  setHookAddress: React.Dispatch<any>,
-) {
-  return (
-    <Accordion variant="bordered">
-      <AccordionItem key="1" aria-label="PoolKey Identifier" title="PoolKey Identifier">
-        <NumericInput
-          type="number"
-          placeholder="Swap Fee"
-          tooltipText="Transaction fee for swapping tokens."
-          value={swapFee.toString()}
-          onChange={e => setSwapFee(BigInt(e.target.value))}
-        />
-
-        <NumericInput
-          type="number"
-          placeholder="Tick Spacing"
-          tooltipText="The minimum price movement between ticks."
-          value={tickSpacing.toString()}
-          onChange={e => setTickSpacing(BigInt(e.target.value))}
-        />
-
-        <NumericInput
-          type="text"
-          placeholder="Hook Address"
-          tooltipText="Smart contract address for custom logic."
-          value={hookAddress}
-          onChange={e => setHookAddress(e.target.value)}
-        />
-      </AccordionItem>
-    </Accordion>
   );
 }
 

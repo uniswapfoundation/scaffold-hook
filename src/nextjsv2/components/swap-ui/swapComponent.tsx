@@ -1,10 +1,9 @@
 import React, { useState } from "react";
+import { PoolKeyId } from "../base/pool-key";
 import { TokenDropdown } from "../base/token-dropdown";
-import { PoolKeyId } from "./LiquidityComponent";
 import { Tab, Tabs } from "@nextui-org/react";
 import { parseEther } from "viem";
 import { useAccount, useChainId, useToken } from "wagmi";
-import { FetchTokenResult } from "wagmi/dist/actions";
 import {
   counterAddress,
   poolSwapTestAddress,
@@ -29,7 +28,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
 
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState(counterAddress[chainId as keyof typeof counterAddress]);
+  const [hookAddress, setHookAddress] = useState<`0x${string}`>(counterAddress[chainId as keyof typeof counterAddress]);
 
   const fromTokenAllowance = useErc20Allowance({
     address: fromCurrency,
@@ -79,7 +78,14 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
           <Tab key="liquidity" title="Liquidity" />
         </Tabs>
 
-        {PoolKeyId(swapFee, setSwapFee, tickSpacing, setTickSpacing, hookAddress, setHookAddress)}
+        <PoolKeyId
+          swapFee={swapFee}
+          setSwapFee={setSwapFee}
+          tickSpacing={tickSpacing}
+          setTickSpacing={setTickSpacing}
+          hookAddress={hookAddress}
+          setHookAddress={setHookAddress}
+        />
 
         <div className="grid grid-cols-2 gap-4">
           <TokenDropdown
