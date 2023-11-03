@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Select, SelectItem, Tooltip } from "@nextui-org/react";
+import { useChainId } from "wagmi";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
-import deployedContracts from "~~/generated/deployedContracts";
-import { useErc20Read, usePoolManagerInitialize } from "~~/generated/generated";
+import { counterAddress, usePoolManagerInitialize } from "~~/generated/generated";
 import { notification } from "~~/utils/scaffold-eth";
 
 // Example tooltip package
@@ -71,11 +71,12 @@ function InitializeComponent() {
     { value: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3", label: "Token0" },
     { value: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4", label: "Token1" },
   ];
+  const chainId = useChainId();
   const [token0, setToken0] = useState(undefined);
   const [token1, setToken1] = useState(undefined);
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState(deployedContracts[31337][0].contracts.Counter.address);
+  const [hookAddress, setHookAddress] = useState(counterAddress[chainId as keyof typeof counterAddress]);
 
   const {
     writeAsync: write,
@@ -83,9 +84,7 @@ function InitializeComponent() {
     isError: isErrorInitialize,
     error: errorInitialize,
     data: dataInitialize,
-  } = usePoolManagerInitialize({
-    address: deployedContracts[31337][0].contracts.PoolManager.address,
-  });
+  } = usePoolManagerInitialize();
 
   const handleInitialize = async () => {
     try {
