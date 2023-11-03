@@ -1,43 +1,28 @@
 import React, { useState } from "react";
 import { NumericInput } from "../base/numeric-input";
-import { Select, SelectItem, Tooltip } from "@nextui-org/react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { formatEther, parseEther } from "viem";
-import { useChainId } from "wagmi";
-import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { useAccount, useChainId } from "wagmi";
 import {
   counterAddress,
   poolModifyPositionTestAddress,
   useErc20Allowance,
   useErc20Approve,
-  useErc20Read,
   usePoolModifyPositionTestModifyPosition,
 } from "~~/generated/generated";
+import { TOKEN_ADDRESSES } from "~~/utils/config";
 import { MAX_UINT } from "~~/utils/constants";
 import { notification } from "~~/utils/scaffold-eth";
 
 function LiquidityComponent() {
-  // TODO: remove all the hardcoded addresses
-  const tokenOptions = [
-    { value: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3", label: "Token0" },
-    { value: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4", label: "Token1" },
-  ];
-
   const chainId = useChainId();
+  const { address: walletAddress } = useAccount();
 
   // Token & Wallet Configuration
-  const token0Addr = tokenOptions[0].value;
-  const token1Addr = tokenOptions[1].value;
-  const walletAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
+  // TODO: allow users to select tokens?
+  const token0Addr = TOKEN_ADDRESSES[0][chainId as keyof (typeof TOKEN_ADDRESSES)[0]];
+  const token1Addr = TOKEN_ADDRESSES[1][chainId as keyof (typeof TOKEN_ADDRESSES)[1]];
   const lpRouterAddress = poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress];
-
-  // Fetch Token Names
-  const getToken0Name = useErc20Read({ address: token0Addr, functionName: "name" });
-  const getToken1Name = useErc20Read({ address: token1Addr, functionName: "name" });
-
-  // State Variables
-  const [token0, setToken0] = useState(0);
-  const [token1, setToken1] = useState(1);
 
   // State Variables
   const [swapFee, setSwapFee] = useState(3000n);
@@ -51,12 +36,12 @@ function LiquidityComponent() {
 
   const { data: token0Allowance, refetch: refetchT0Allowance } = useErc20Allowance({
     address: token0Addr,
-    args: [walletAddress, lpRouterAddress],
+    args: [walletAddress ?? "0x0", lpRouterAddress],
   });
 
   const { data: token1Allowance, refetch: refetchT1Allowance } = useErc20Allowance({
     address: token1Addr,
-    args: [walletAddress, lpRouterAddress],
+    args: [walletAddress ?? "0x0", lpRouterAddress],
   });
 
   const { writeAsync: writeToken0Approve, error: errorToken0Approve } = useErc20Approve({
