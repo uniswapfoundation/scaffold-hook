@@ -1,36 +1,10 @@
 import React, { useState } from "react";
-import { Select, SelectItem, Tooltip } from "@nextui-org/react";
-import { useChainId } from "wagmi";
+import { TokenDropdown } from "../base/token-dropdown";
+import { Tooltip } from "@nextui-org/react";
+import { useChainId, useToken } from "wagmi";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { counterAddress, usePoolManagerInitialize } from "~~/generated/generated";
 import { notification } from "~~/utils/scaffold-eth";
-
-// Example tooltip package
-
-export function TokenDropdown({ label, tooltipText, value, options, onChange }) {
-  return (
-    <div className="flex flex-col justify-end">
-      <label className="label text-left flex justify-between">
-        <span className="label-text">{label}</span>
-        <Tooltip content={tooltipText}>
-          <QuestionMarkCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </Tooltip>
-      </label>
-      <Select
-        onChange={onChange}
-        placeholder="
-      Select a token"
-        variant="flat"
-      >
-        {options.map((option, index) => (
-          <SelectItem key={index} value={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </Select>
-    </div>
-  );
-}
 
 function NumericInput({ type, placeholder, tooltipText, value, onChange }) {
   return (
@@ -144,14 +118,12 @@ function InitializeComponent() {
           <TokenDropdown
             label="Base Token"
             tooltipText="The first token in the liquidity pool."
-            value={tokenOptions[0].value}
             options={tokenOptions}
             onChange={e => setToken0(e.target.value)}
           />
           <TokenDropdown
             label="Quote Token"
             tooltipText="The second token in the liquidity pool."
-            value={tokenOptions[1].value}
             options={tokenOptions}
             onChange={e => setToken1(e.target.value)}
           />
