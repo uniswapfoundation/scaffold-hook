@@ -10,14 +10,14 @@ export default defineConfig({
       address: {
         31337: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
       },
-      name: "MockToken0",
+      name: "Token0",
     },
     {
       abi: erc20ABI,
       address: {
         31337: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
       },
-      name: "MockToken1",
+      name: "Token1",
     },
   ],
   plugins: [

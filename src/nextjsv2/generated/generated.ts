@@ -1,15 +1,15 @@
 import {
-  useContractRead,
-  UseContractReadConfig,
-  useContractWrite,
-  UseContractWriteConfig,
-  usePrepareContractWrite,
-  UsePrepareContractWriteConfig,
   Address,
-  useContractEvent,
   UseContractEventConfig,
+  UseContractReadConfig,
+  UseContractWriteConfig,
+  UsePrepareContractWriteConfig,
+  useContractEvent,
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
 } from 'wagmi'
-import { ReadContractResult, WriteContractMode, PrepareWriteContractResult } from 'wagmi/actions'
+import { PrepareWriteContractResult, ReadContractResult, WriteContractMode } from 'wagmi/actions'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BaseHook
@@ -3075,202 +3075,6 @@ export const mockErc20ABI = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// MockToken0
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- *
- */
-export const mockToken0ABI = [
-  {
-    type: 'event',
-    inputs: [
-      { name: 'owner', type: 'address', indexed: true },
-      { name: 'spender', type: 'address', indexed: true },
-      { name: 'value', type: 'uint256', indexed: false },
-    ],
-    name: 'Approval',
-  },
-  {
-    type: 'event',
-    inputs: [
-      { name: 'from', type: 'address', indexed: true },
-      { name: 'to', type: 'address', indexed: true },
-      { name: 'value', type: 'uint256', indexed: false },
-    ],
-    name: 'Transfer',
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'owner', type: 'address' },
-      { name: 'spender', type: 'address' },
-    ],
-    name: 'allowance',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'spender', type: 'address' },
-      { name: 'amount', type: 'uint256' },
-    ],
-    name: 'approve',
-    outputs: [{ name: '', type: 'bool' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'account', type: 'address' }],
-    name: 'balanceOf',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  { stateMutability: 'view', type: 'function', inputs: [], name: 'decimals', outputs: [{ name: '', type: 'uint8' }] },
-  { stateMutability: 'view', type: 'function', inputs: [], name: 'name', outputs: [{ name: '', type: 'string' }] },
-  { stateMutability: 'view', type: 'function', inputs: [], name: 'symbol', outputs: [{ name: '', type: 'string' }] },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'totalSupply',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'recipient', type: 'address' },
-      { name: 'amount', type: 'uint256' },
-    ],
-    name: 'transfer',
-    outputs: [{ name: '', type: 'bool' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'sender', type: 'address' },
-      { name: 'recipient', type: 'address' },
-      { name: 'amount', type: 'uint256' },
-    ],
-    name: 'transferFrom',
-    outputs: [{ name: '', type: 'bool' }],
-  },
-] as const
-
-/**
- *
- */
-export const mockToken0Address = {
-  31337: '0x2DAFBDF11A8Cf84c372539A38D781D8248399AE3',
-} as const
-
-/**
- *
- */
-export const mockToken0Config = { address: mockToken0Address, abi: mockToken0ABI } as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// MockToken1
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- *
- */
-export const mockToken1ABI = [
-  {
-    type: 'event',
-    inputs: [
-      { name: 'owner', type: 'address', indexed: true },
-      { name: 'spender', type: 'address', indexed: true },
-      { name: 'value', type: 'uint256', indexed: false },
-    ],
-    name: 'Approval',
-  },
-  {
-    type: 'event',
-    inputs: [
-      { name: 'from', type: 'address', indexed: true },
-      { name: 'to', type: 'address', indexed: true },
-      { name: 'value', type: 'uint256', indexed: false },
-    ],
-    name: 'Transfer',
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'owner', type: 'address' },
-      { name: 'spender', type: 'address' },
-    ],
-    name: 'allowance',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'spender', type: 'address' },
-      { name: 'amount', type: 'uint256' },
-    ],
-    name: 'approve',
-    outputs: [{ name: '', type: 'bool' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'account', type: 'address' }],
-    name: 'balanceOf',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  { stateMutability: 'view', type: 'function', inputs: [], name: 'decimals', outputs: [{ name: '', type: 'uint8' }] },
-  { stateMutability: 'view', type: 'function', inputs: [], name: 'name', outputs: [{ name: '', type: 'string' }] },
-  { stateMutability: 'view', type: 'function', inputs: [], name: 'symbol', outputs: [{ name: '', type: 'string' }] },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'totalSupply',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'recipient', type: 'address' },
-      { name: 'amount', type: 'uint256' },
-    ],
-    name: 'transfer',
-    outputs: [{ name: '', type: 'bool' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'sender', type: 'address' },
-      { name: 'recipient', type: 'address' },
-      { name: 'amount', type: 'uint256' },
-    ],
-    name: 'transferFrom',
-    outputs: [{ name: '', type: 'bool' }],
-  },
-] as const
-
-/**
- *
- */
-export const mockToken1Address = {
-  31337: '0xa8cEAFb1940244F2f022FF8440a42411B4F07fC4',
-} as const
-
-/**
- *
- */
-export const mockToken1Config = { address: mockToken1Address, abi: mockToken1ABI } as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NoDelegateCall
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -4453,6 +4257,202 @@ export const tickMathABI = [
   { type: 'error', inputs: [], name: 'InvalidSqrtRatio' },
   { type: 'error', inputs: [], name: 'InvalidTick' },
 ] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Token0
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ */
+export const token0ABI = [
+  {
+    type: 'event',
+    inputs: [
+      { name: 'owner', type: 'address', indexed: true },
+      { name: 'spender', type: 'address', indexed: true },
+      { name: 'value', type: 'uint256', indexed: false },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    inputs: [
+      { name: 'from', type: 'address', indexed: true },
+      { name: 'to', type: 'address', indexed: true },
+      { name: 'value', type: 'uint256', indexed: false },
+    ],
+    name: 'Transfer',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'owner', type: 'address' },
+      { name: 'spender', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'spender', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'account', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'decimals', outputs: [{ name: '', type: 'uint8' }] },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'name', outputs: [{ name: '', type: 'string' }] },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'symbol', outputs: [{ name: '', type: 'string' }] },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'recipient', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'sender', type: 'address' },
+      { name: 'recipient', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+] as const
+
+/**
+ *
+ */
+export const token0Address = {
+  31337: '0x2DAFBDF11A8Cf84c372539A38D781D8248399AE3',
+} as const
+
+/**
+ *
+ */
+export const token0Config = { address: token0Address, abi: token0ABI } as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Token1
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ */
+export const token1ABI = [
+  {
+    type: 'event',
+    inputs: [
+      { name: 'owner', type: 'address', indexed: true },
+      { name: 'spender', type: 'address', indexed: true },
+      { name: 'value', type: 'uint256', indexed: false },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    inputs: [
+      { name: 'from', type: 'address', indexed: true },
+      { name: 'to', type: 'address', indexed: true },
+      { name: 'value', type: 'uint256', indexed: false },
+    ],
+    name: 'Transfer',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'owner', type: 'address' },
+      { name: 'spender', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'spender', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'account', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'decimals', outputs: [{ name: '', type: 'uint8' }] },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'name', outputs: [{ name: '', type: 'string' }] },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'symbol', outputs: [{ name: '', type: 'string' }] },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'recipient', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'sender', type: 'address' },
+      { name: 'recipient', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+] as const
+
+/**
+ *
+ */
+export const token1Address = {
+  31337: '0xa8cEAFb1940244F2f022FF8440a42411B4F07fC4',
+} as const
+
+/**
+ *
+ */
+export const token1Config = { address: token1Address, abi: token1ABI } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UniMockERC20
@@ -10642,798 +10642,6 @@ export function useMockErc20TransferEvent(
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__.
- *
- *
- */
-export function useMockToken0Read<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
->(
-  config: Omit<UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>, 'abi' | 'address'> & {
-    chainId?: keyof typeof mockToken0Address
-  } = {} as any,
-) {
-  return useContractRead({ abi: mockToken0ABI, address: mockToken0Address[31337], ...config } as UseContractReadConfig<
-    typeof mockToken0ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"allowance"`.
- *
- *
- */
-export function useMockToken0Allowance<
-  TFunctionName extends 'allowance',
-  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'allowance',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"balanceOf"`.
- *
- *
- */
-export function useMockToken0BalanceOf<
-  TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"decimals"`.
- *
- *
- */
-export function useMockToken0Decimals<
-  TFunctionName extends 'decimals',
-  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'decimals',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"name"`.
- *
- *
- */
-export function useMockToken0Name<
-  TFunctionName extends 'name',
-  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'name',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"symbol"`.
- *
- *
- */
-export function useMockToken0Symbol<
-  TFunctionName extends 'symbol',
-  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'symbol',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"totalSupply"`.
- *
- *
- */
-export function useMockToken0TotalSupply<
-  TFunctionName extends 'totalSupply',
-  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'totalSupply',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken0ABI}__.
- *
- *
- */
-export function useMockToken0Write<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof mockToken0Address,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof mockToken0ABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      > & { address?: Address; chainId?: TChainId }
-    : UseContractWriteConfig<typeof mockToken0ABI, TFunctionName, TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-      } = {} as any,
-) {
-  return useContractWrite<typeof mockToken0ABI, TFunctionName, TMode>({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"approve"`.
- *
- *
- */
-export function useMockToken0Approve<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof mockToken0Address,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof mockToken0ABI, 'approve'>['request']['abi'],
-        'approve',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'approve' }
-    : UseContractWriteConfig<typeof mockToken0ABI, 'approve', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'approve'
-      } = {} as any,
-) {
-  return useContractWrite<typeof mockToken0ABI, 'approve', TMode>({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'approve',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"transfer"`.
- *
- *
- */
-export function useMockToken0Transfer<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof mockToken0Address,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof mockToken0ABI, 'transfer'>['request']['abi'],
-        'transfer',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
-    : UseContractWriteConfig<typeof mockToken0ABI, 'transfer', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transfer'
-      } = {} as any,
-) {
-  return useContractWrite<typeof mockToken0ABI, 'transfer', TMode>({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'transfer',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"transferFrom"`.
- *
- *
- */
-export function useMockToken0TransferFrom<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof mockToken0Address,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof mockToken0ABI, 'transferFrom'>['request']['abi'],
-        'transferFrom',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'transferFrom' }
-    : UseContractWriteConfig<typeof mockToken0ABI, 'transferFrom', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof mockToken0ABI, 'transferFrom', TMode>({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'transferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken0ABI}__.
- *
- *
- */
-export function usePrepareMockToken0Write<TFunctionName extends string>(
-  config: Omit<UsePrepareContractWriteConfig<typeof mockToken0ABI, TFunctionName>, 'abi' | 'address'> & {
-    chainId?: keyof typeof mockToken0Address
-  } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof mockToken0ABI, TFunctionName>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"approve"`.
- *
- *
- */
-export function usePrepareMockToken0Approve(
-  config: Omit<UsePrepareContractWriteConfig<typeof mockToken0ABI, 'approve'>, 'abi' | 'address' | 'functionName'> & {
-    chainId?: keyof typeof mockToken0Address
-  } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'approve',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof mockToken0ABI, 'approve'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"transfer"`.
- *
- *
- */
-export function usePrepareMockToken0Transfer(
-  config: Omit<UsePrepareContractWriteConfig<typeof mockToken0ABI, 'transfer'>, 'abi' | 'address' | 'functionName'> & {
-    chainId?: keyof typeof mockToken0Address
-  } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'transfer',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof mockToken0ABI, 'transfer'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"transferFrom"`.
- *
- *
- */
-export function usePrepareMockToken0TransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof mockToken0ABI, 'transferFrom'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    functionName: 'transferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof mockToken0ABI, 'transferFrom'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken0ABI}__.
- *
- *
- */
-export function useMockToken0Event<TEventName extends string>(
-  config: Omit<UseContractEventConfig<typeof mockToken0ABI, TEventName>, 'abi' | 'address'> & {
-    chainId?: keyof typeof mockToken0Address
-  } = {} as any,
-) {
-  return useContractEvent({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    ...config,
-  } as UseContractEventConfig<typeof mockToken0ABI, TEventName>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken0ABI}__ and `eventName` set to `"Approval"`.
- *
- *
- */
-export function useMockToken0ApprovalEvent(
-  config: Omit<UseContractEventConfig<typeof mockToken0ABI, 'Approval'>, 'abi' | 'address' | 'eventName'> & {
-    chainId?: keyof typeof mockToken0Address
-  } = {} as any,
-) {
-  return useContractEvent({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    eventName: 'Approval',
-    ...config,
-  } as UseContractEventConfig<typeof mockToken0ABI, 'Approval'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken0ABI}__ and `eventName` set to `"Transfer"`.
- *
- *
- */
-export function useMockToken0TransferEvent(
-  config: Omit<UseContractEventConfig<typeof mockToken0ABI, 'Transfer'>, 'abi' | 'address' | 'eventName'> & {
-    chainId?: keyof typeof mockToken0Address
-  } = {} as any,
-) {
-  return useContractEvent({
-    abi: mockToken0ABI,
-    address: mockToken0Address[31337],
-    eventName: 'Transfer',
-    ...config,
-  } as UseContractEventConfig<typeof mockToken0ABI, 'Transfer'>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__.
- *
- *
- */
-export function useMockToken1Read<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
->(
-  config: Omit<UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>, 'abi' | 'address'> & {
-    chainId?: keyof typeof mockToken1Address
-  } = {} as any,
-) {
-  return useContractRead({ abi: mockToken1ABI, address: mockToken1Address[31337], ...config } as UseContractReadConfig<
-    typeof mockToken1ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"allowance"`.
- *
- *
- */
-export function useMockToken1Allowance<
-  TFunctionName extends 'allowance',
-  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'allowance',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"balanceOf"`.
- *
- *
- */
-export function useMockToken1BalanceOf<
-  TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"decimals"`.
- *
- *
- */
-export function useMockToken1Decimals<
-  TFunctionName extends 'decimals',
-  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'decimals',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"name"`.
- *
- *
- */
-export function useMockToken1Name<
-  TFunctionName extends 'name',
-  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'name',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"symbol"`.
- *
- *
- */
-export function useMockToken1Symbol<
-  TFunctionName extends 'symbol',
-  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'symbol',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"totalSupply"`.
- *
- *
- */
-export function useMockToken1TotalSupply<
-  TFunctionName extends 'totalSupply',
-  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
-) {
-  return useContractRead({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'totalSupply',
-    ...config,
-  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken1ABI}__.
- *
- *
- */
-export function useMockToken1Write<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof mockToken1Address,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof mockToken1ABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      > & { address?: Address; chainId?: TChainId }
-    : UseContractWriteConfig<typeof mockToken1ABI, TFunctionName, TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-      } = {} as any,
-) {
-  return useContractWrite<typeof mockToken1ABI, TFunctionName, TMode>({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"approve"`.
- *
- *
- */
-export function useMockToken1Approve<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof mockToken1Address,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof mockToken1ABI, 'approve'>['request']['abi'],
-        'approve',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'approve' }
-    : UseContractWriteConfig<typeof mockToken1ABI, 'approve', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'approve'
-      } = {} as any,
-) {
-  return useContractWrite<typeof mockToken1ABI, 'approve', TMode>({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'approve',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"transfer"`.
- *
- *
- */
-export function useMockToken1Transfer<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof mockToken1Address,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof mockToken1ABI, 'transfer'>['request']['abi'],
-        'transfer',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
-    : UseContractWriteConfig<typeof mockToken1ABI, 'transfer', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transfer'
-      } = {} as any,
-) {
-  return useContractWrite<typeof mockToken1ABI, 'transfer', TMode>({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'transfer',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"transferFrom"`.
- *
- *
- */
-export function useMockToken1TransferFrom<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof mockToken1Address,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof mockToken1ABI, 'transferFrom'>['request']['abi'],
-        'transferFrom',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'transferFrom' }
-    : UseContractWriteConfig<typeof mockToken1ABI, 'transferFrom', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof mockToken1ABI, 'transferFrom', TMode>({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'transferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken1ABI}__.
- *
- *
- */
-export function usePrepareMockToken1Write<TFunctionName extends string>(
-  config: Omit<UsePrepareContractWriteConfig<typeof mockToken1ABI, TFunctionName>, 'abi' | 'address'> & {
-    chainId?: keyof typeof mockToken1Address
-  } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof mockToken1ABI, TFunctionName>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"approve"`.
- *
- *
- */
-export function usePrepareMockToken1Approve(
-  config: Omit<UsePrepareContractWriteConfig<typeof mockToken1ABI, 'approve'>, 'abi' | 'address' | 'functionName'> & {
-    chainId?: keyof typeof mockToken1Address
-  } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'approve',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof mockToken1ABI, 'approve'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"transfer"`.
- *
- *
- */
-export function usePrepareMockToken1Transfer(
-  config: Omit<UsePrepareContractWriteConfig<typeof mockToken1ABI, 'transfer'>, 'abi' | 'address' | 'functionName'> & {
-    chainId?: keyof typeof mockToken1Address
-  } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'transfer',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof mockToken1ABI, 'transfer'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"transferFrom"`.
- *
- *
- */
-export function usePrepareMockToken1TransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof mockToken1ABI, 'transferFrom'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    functionName: 'transferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof mockToken1ABI, 'transferFrom'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken1ABI}__.
- *
- *
- */
-export function useMockToken1Event<TEventName extends string>(
-  config: Omit<UseContractEventConfig<typeof mockToken1ABI, TEventName>, 'abi' | 'address'> & {
-    chainId?: keyof typeof mockToken1Address
-  } = {} as any,
-) {
-  return useContractEvent({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    ...config,
-  } as UseContractEventConfig<typeof mockToken1ABI, TEventName>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken1ABI}__ and `eventName` set to `"Approval"`.
- *
- *
- */
-export function useMockToken1ApprovalEvent(
-  config: Omit<UseContractEventConfig<typeof mockToken1ABI, 'Approval'>, 'abi' | 'address' | 'eventName'> & {
-    chainId?: keyof typeof mockToken1Address
-  } = {} as any,
-) {
-  return useContractEvent({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    eventName: 'Approval',
-    ...config,
-  } as UseContractEventConfig<typeof mockToken1ABI, 'Approval'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken1ABI}__ and `eventName` set to `"Transfer"`.
- *
- *
- */
-export function useMockToken1TransferEvent(
-  config: Omit<UseContractEventConfig<typeof mockToken1ABI, 'Transfer'>, 'abi' | 'address' | 'eventName'> & {
-    chainId?: keyof typeof mockToken1Address
-  } = {} as any,
-) {
-  return useContractEvent({
-    abi: mockToken1ABI,
-    address: mockToken1Address[31337],
-    eventName: 'Transfer',
-    ...config,
-  } as UseContractEventConfig<typeof mockToken1ABI, 'Transfer'>)
-}
-
-/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link ownedABI}__.
  */
 export function useOwnedRead<
@@ -14026,6 +13234,794 @@ export function useTestErc20TransferEvent(
     typeof testErc20ABI,
     'Transfer'
   >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__.
+ *
+ *
+ */
+export function useToken0Read<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof token0ABI, TFunctionName>,
+>(
+  config: Omit<UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>, 'abi' | 'address'> & {
+    chainId?: keyof typeof token0Address
+  } = {} as any,
+) {
+  return useContractRead({ abi: token0ABI, address: token0Address[31337], ...config } as UseContractReadConfig<
+    typeof token0ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"allowance"`.
+ *
+ *
+ */
+export function useToken0Allowance<
+  TFunctionName extends 'allowance',
+  TSelectData = ReadContractResult<typeof token0ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'allowance',
+    ...config,
+  } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"balanceOf"`.
+ *
+ *
+ */
+export function useToken0BalanceOf<
+  TFunctionName extends 'balanceOf',
+  TSelectData = ReadContractResult<typeof token0ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'balanceOf',
+    ...config,
+  } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"decimals"`.
+ *
+ *
+ */
+export function useToken0Decimals<
+  TFunctionName extends 'decimals',
+  TSelectData = ReadContractResult<typeof token0ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'decimals',
+    ...config,
+  } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"name"`.
+ *
+ *
+ */
+export function useToken0Name<
+  TFunctionName extends 'name',
+  TSelectData = ReadContractResult<typeof token0ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'name',
+    ...config,
+  } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"symbol"`.
+ *
+ *
+ */
+export function useToken0Symbol<
+  TFunctionName extends 'symbol',
+  TSelectData = ReadContractResult<typeof token0ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'symbol',
+    ...config,
+  } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"totalSupply"`.
+ *
+ *
+ */
+export function useToken0TotalSupply<
+  TFunctionName extends 'totalSupply',
+  TSelectData = ReadContractResult<typeof token0ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'totalSupply',
+    ...config,
+  } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token0ABI}__.
+ *
+ *
+ */
+export function useToken0Write<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof token0Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof token0ABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      > & { address?: Address; chainId?: TChainId }
+    : UseContractWriteConfig<typeof token0ABI, TFunctionName, TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+      } = {} as any,
+) {
+  return useContractWrite<typeof token0ABI, TFunctionName, TMode>({
+    abi: token0ABI,
+    address: token0Address[31337],
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"approve"`.
+ *
+ *
+ */
+export function useToken0Approve<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof token0Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof token0ABI, 'approve'>['request']['abi'],
+        'approve',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'approve' }
+    : UseContractWriteConfig<typeof token0ABI, 'approve', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'approve'
+      } = {} as any,
+) {
+  return useContractWrite<typeof token0ABI, 'approve', TMode>({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'approve',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"transfer"`.
+ *
+ *
+ */
+export function useToken0Transfer<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof token0Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof token0ABI, 'transfer'>['request']['abi'],
+        'transfer',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof token0ABI, 'transfer', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  return useContractWrite<typeof token0ABI, 'transfer', TMode>({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'transfer',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"transferFrom"`.
+ *
+ *
+ */
+export function useToken0TransferFrom<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof token0Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof token0ABI, 'transferFrom'>['request']['abi'],
+        'transferFrom',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'transferFrom' }
+    : UseContractWriteConfig<typeof token0ABI, 'transferFrom', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transferFrom'
+      } = {} as any,
+) {
+  return useContractWrite<typeof token0ABI, 'transferFrom', TMode>({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'transferFrom',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token0ABI}__.
+ *
+ *
+ */
+export function usePrepareToken0Write<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof token0ABI, TFunctionName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof token0Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: token0ABI,
+    address: token0Address[31337],
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof token0ABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"approve"`.
+ *
+ *
+ */
+export function usePrepareToken0Approve(
+  config: Omit<UsePrepareContractWriteConfig<typeof token0ABI, 'approve'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof token0Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'approve',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof token0ABI, 'approve'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"transfer"`.
+ *
+ *
+ */
+export function usePrepareToken0Transfer(
+  config: Omit<UsePrepareContractWriteConfig<typeof token0ABI, 'transfer'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof token0Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'transfer',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof token0ABI, 'transfer'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"transferFrom"`.
+ *
+ *
+ */
+export function usePrepareToken0TransferFrom(
+  config: Omit<UsePrepareContractWriteConfig<typeof token0ABI, 'transferFrom'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof token0Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: token0ABI,
+    address: token0Address[31337],
+    functionName: 'transferFrom',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof token0ABI, 'transferFrom'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token0ABI}__.
+ *
+ *
+ */
+export function useToken0Event<TEventName extends string>(
+  config: Omit<UseContractEventConfig<typeof token0ABI, TEventName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof token0Address
+  } = {} as any,
+) {
+  return useContractEvent({ abi: token0ABI, address: token0Address[31337], ...config } as UseContractEventConfig<
+    typeof token0ABI,
+    TEventName
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token0ABI}__ and `eventName` set to `"Approval"`.
+ *
+ *
+ */
+export function useToken0ApprovalEvent(
+  config: Omit<UseContractEventConfig<typeof token0ABI, 'Approval'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof token0Address
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: token0ABI,
+    address: token0Address[31337],
+    eventName: 'Approval',
+    ...config,
+  } as UseContractEventConfig<typeof token0ABI, 'Approval'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token0ABI}__ and `eventName` set to `"Transfer"`.
+ *
+ *
+ */
+export function useToken0TransferEvent(
+  config: Omit<UseContractEventConfig<typeof token0ABI, 'Transfer'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof token0Address
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: token0ABI,
+    address: token0Address[31337],
+    eventName: 'Transfer',
+    ...config,
+  } as UseContractEventConfig<typeof token0ABI, 'Transfer'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__.
+ *
+ *
+ */
+export function useToken1Read<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof token1ABI, TFunctionName>,
+>(
+  config: Omit<UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>, 'abi' | 'address'> & {
+    chainId?: keyof typeof token1Address
+  } = {} as any,
+) {
+  return useContractRead({ abi: token1ABI, address: token1Address[31337], ...config } as UseContractReadConfig<
+    typeof token1ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"allowance"`.
+ *
+ *
+ */
+export function useToken1Allowance<
+  TFunctionName extends 'allowance',
+  TSelectData = ReadContractResult<typeof token1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'allowance',
+    ...config,
+  } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"balanceOf"`.
+ *
+ *
+ */
+export function useToken1BalanceOf<
+  TFunctionName extends 'balanceOf',
+  TSelectData = ReadContractResult<typeof token1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'balanceOf',
+    ...config,
+  } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"decimals"`.
+ *
+ *
+ */
+export function useToken1Decimals<
+  TFunctionName extends 'decimals',
+  TSelectData = ReadContractResult<typeof token1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'decimals',
+    ...config,
+  } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"name"`.
+ *
+ *
+ */
+export function useToken1Name<
+  TFunctionName extends 'name',
+  TSelectData = ReadContractResult<typeof token1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'name',
+    ...config,
+  } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"symbol"`.
+ *
+ *
+ */
+export function useToken1Symbol<
+  TFunctionName extends 'symbol',
+  TSelectData = ReadContractResult<typeof token1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'symbol',
+    ...config,
+  } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"totalSupply"`.
+ *
+ *
+ */
+export function useToken1TotalSupply<
+  TFunctionName extends 'totalSupply',
+  TSelectData = ReadContractResult<typeof token1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof token1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'totalSupply',
+    ...config,
+  } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token1ABI}__.
+ *
+ *
+ */
+export function useToken1Write<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof token1Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof token1ABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      > & { address?: Address; chainId?: TChainId }
+    : UseContractWriteConfig<typeof token1ABI, TFunctionName, TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+      } = {} as any,
+) {
+  return useContractWrite<typeof token1ABI, TFunctionName, TMode>({
+    abi: token1ABI,
+    address: token1Address[31337],
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"approve"`.
+ *
+ *
+ */
+export function useToken1Approve<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof token1Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof token1ABI, 'approve'>['request']['abi'],
+        'approve',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'approve' }
+    : UseContractWriteConfig<typeof token1ABI, 'approve', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'approve'
+      } = {} as any,
+) {
+  return useContractWrite<typeof token1ABI, 'approve', TMode>({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'approve',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"transfer"`.
+ *
+ *
+ */
+export function useToken1Transfer<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof token1Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof token1ABI, 'transfer'>['request']['abi'],
+        'transfer',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof token1ABI, 'transfer', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  return useContractWrite<typeof token1ABI, 'transfer', TMode>({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'transfer',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"transferFrom"`.
+ *
+ *
+ */
+export function useToken1TransferFrom<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof token1Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof token1ABI, 'transferFrom'>['request']['abi'],
+        'transferFrom',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'transferFrom' }
+    : UseContractWriteConfig<typeof token1ABI, 'transferFrom', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transferFrom'
+      } = {} as any,
+) {
+  return useContractWrite<typeof token1ABI, 'transferFrom', TMode>({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'transferFrom',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token1ABI}__.
+ *
+ *
+ */
+export function usePrepareToken1Write<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof token1ABI, TFunctionName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof token1Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: token1ABI,
+    address: token1Address[31337],
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof token1ABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"approve"`.
+ *
+ *
+ */
+export function usePrepareToken1Approve(
+  config: Omit<UsePrepareContractWriteConfig<typeof token1ABI, 'approve'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof token1Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'approve',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof token1ABI, 'approve'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"transfer"`.
+ *
+ *
+ */
+export function usePrepareToken1Transfer(
+  config: Omit<UsePrepareContractWriteConfig<typeof token1ABI, 'transfer'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof token1Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'transfer',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof token1ABI, 'transfer'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"transferFrom"`.
+ *
+ *
+ */
+export function usePrepareToken1TransferFrom(
+  config: Omit<UsePrepareContractWriteConfig<typeof token1ABI, 'transferFrom'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof token1Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: token1ABI,
+    address: token1Address[31337],
+    functionName: 'transferFrom',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof token1ABI, 'transferFrom'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token1ABI}__.
+ *
+ *
+ */
+export function useToken1Event<TEventName extends string>(
+  config: Omit<UseContractEventConfig<typeof token1ABI, TEventName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof token1Address
+  } = {} as any,
+) {
+  return useContractEvent({ abi: token1ABI, address: token1Address[31337], ...config } as UseContractEventConfig<
+    typeof token1ABI,
+    TEventName
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token1ABI}__ and `eventName` set to `"Approval"`.
+ *
+ *
+ */
+export function useToken1ApprovalEvent(
+  config: Omit<UseContractEventConfig<typeof token1ABI, 'Approval'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof token1Address
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: token1ABI,
+    address: token1Address[31337],
+    eventName: 'Approval',
+    ...config,
+  } as UseContractEventConfig<typeof token1ABI, 'Approval'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token1ABI}__ and `eventName` set to `"Transfer"`.
+ *
+ *
+ */
+export function useToken1TransferEvent(
+  config: Omit<UseContractEventConfig<typeof token1ABI, 'Transfer'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof token1Address
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: token1ABI,
+    address: token1Address[31337],
+    eventName: 'Transfer',
+    ...config,
+  } as UseContractEventConfig<typeof token1ABI, 'Transfer'>)
 }
 
 /**

@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { TokenDropdown } from "../base/token-dropdown";
 import { Tooltip } from "@nextui-org/react";
 import { useChainId, useToken } from "wagmi";
+import { FetchTokenResult } from "wagmi/dist/actions";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { counterAddress, usePoolManagerInitialize } from "~~/generated/generated";
+import { TOKEN_ADDRESSES } from "~~/utils/config";
+import { BLANK_TOKEN } from "~~/utils/constants";
 import { notification } from "~~/utils/scaffold-eth";
 
 function NumericInput({ type, placeholder, tooltipText, value, onChange }) {
@@ -41,13 +44,13 @@ function InitializePoolButton({ isLoading, onClick }) {
 }
 
 function InitializeComponent() {
-  const tokenOptions = [
-    { value: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3", label: "Token0" },
-    { value: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4", label: "Token1" },
-  ];
   const chainId = useChainId();
-  const [token0, setToken0] = useState(undefined);
-  const [token1, setToken1] = useState(undefined);
+
+  const tokens = TOKEN_ADDRESSES.map(address => useToken({ address: address[chainId as keyof typeof address] }));
+
+  const [currency0, setCurrency0] = useState<FetchTokenResult>(tokens[0]?.data ?? BLANK_TOKEN);
+  const [currency1, setCurrency1] = useState<FetchTokenResult>(tokens[1]?.data ?? BLANK_TOKEN);
+
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
   const [hookAddress, setHookAddress] = useState(counterAddress[chainId as keyof typeof counterAddress]);
@@ -61,52 +64,39 @@ function InitializeComponent() {
   } = usePoolManagerInitialize();
 
   const handleInitialize = async () => {
-    try {
-      console.log(
-        "Initializing pool with the following parameters:",
-        tokenOptions[token0].value,
-        tokenOptions[token1].value,
-        Number(swapFee),
-        Number(tickSpacing),
-        hookAddress,
-      );
-      await write({
-        args: [
-          {
-            currency0: tokenOptions[token0].value,
-            currency1: tokenOptions[token1].value,
-            fee: Number(swapFee),
-            tickSpacing: Number(tickSpacing),
-            hooks: hookAddress,
-          },
-          79228162514264337593543950336n,
-          "0x0",
-        ],
-      });
-      notification.success(
-        <div className="text-left">
-          Initialized Pool
-          <br />
-          Token0: {tokenOptions[token0].value}
-          <br />
-          Token1: {tokenOptions[token1].value}
-          <br />
-          Swap Fee: {swapFee.toString()}
-          <br />
-          Tick Spacing: {tickSpacing.toString()}
-          <br />
-          Hook Address: {hookAddress}
-          <br />
-        </div>,
-      );
-    } catch (error) {
-      notification.error(
-        <div className="text-left">
-          Error Initializing Pool
-          {error.message}
-        </div>,
-      );
-    }
+    // sort tokens
+    const c0 = currency0.address < currency1.address ? currency0.address : currency1.address;
+    const c1 = currency0.address < currency1.address ? currency1.address : currency0.address;
+    console.log({ c0, c1 });
+    await write({
+      args: [
+        {
+          currency0: c0,
+          currency1: c1,
+          fee: Number(swapFee),
+          tickSpacing: Number(tickSpacing),
+          hooks: hookAddress,
+        },
+        79228162514264337593543950336n,
+        "0x0",
+      ],
+    });
+    notification.success(
+      <div className="text-left">
+        Initialized Pool
+        <br />
+        Token0: {c0}
+        <br />
+        Token1: {c1}
+        <br />
+        Swap Fee: {swapFee.toString()}
+        <br />
+        Tick Spacing: {tickSpacing.toString()}
+        <br />
+        Hook Address: {hookAddress}
+        <br />
+      </div>,
+    );
   };
 
   return (
@@ -116,16 +106,20 @@ function InitializeComponent() {
       <div className="space-y-6">
         <div className="grid grid-cols-2 gap-4">
           <TokenDropdown
-            label="Base Token"
+            label="Token 0"
             tooltipText="The first token in the liquidity pool."
-            options={tokenOptions}
-            onChange={e => setToken0(e.target.value)}
+            options={tokens.map(token => token.data ?? BLANK_TOKEN)}
+            onChange={e =>
+              setCurrency0(tokens.find(token => token.data?.address === e.target.value)?.data ?? BLANK_TOKEN)
+            }
           />
           <TokenDropdown
-            label="Quote Token"
+            label="Token 1"
             tooltipText="The second token in the liquidity pool."
-            options={tokenOptions}
-            onChange={e => setToken1(e.target.value)}
+            options={tokens.map(token => token.data ?? BLANK_TOKEN)}
+            onChange={e =>
+              setCurrency1(tokens.find(token => token.data?.address === e.target.value)?.data ?? BLANK_TOKEN)
+            }
           />
         </div>
         <NumericInput

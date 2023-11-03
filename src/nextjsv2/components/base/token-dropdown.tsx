@@ -1,4 +1,5 @@
 import { Select, SelectItem, Tooltip } from "@nextui-org/react";
+import { FetchTokenResult } from "wagmi/dist/actions";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 
 export function TokenDropdown({
@@ -9,7 +10,7 @@ export function TokenDropdown({
 }: {
   label: string;
   tooltipText: string;
-  options: { label: string; value: string }[];
+  options: FetchTokenResult[];
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }) {
   return (
@@ -20,15 +21,10 @@ export function TokenDropdown({
           <QuestionMarkCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
         </Tooltip>
       </label>
-      <Select
-        onChange={onChange}
-        placeholder="
-        Select a token"
-        variant="flat"
-      >
-        {options.map((option, index) => (
-          <SelectItem key={index} value={option.value}>
-            {option.label}
+      <Select onChange={onChange} placeholder="Select a token" variant="flat">
+        {options.map(option => (
+          <SelectItem key={option.address} value={option.address}>
+            {option.name}
           </SelectItem>
         ))}
       </Select>

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { TokenDropdown } from "./InitializeComponent";
+import { TokenDropdown } from "../base/token-dropdown";
 import { PoolKeyId } from "./LiquidityComponent";
 import { Tab, Tabs } from "@nextui-org/react";
 import { parseEther } from "viem";
-import { useAccount, useChainId } from "wagmi";
+import { useAccount, useChainId, useToken } from "wagmi";
+import { FetchTokenResult } from "wagmi/dist/actions";
 import {
   counterAddress,
   poolSwapTestAddress,
@@ -11,22 +12,19 @@ import {
   useErc20Approve,
   usePoolSwapTestSwap,
 } from "~~/generated/generated";
-import { MAX_SQRT_PRICE_LIMIT, MAX_UINT, MIN_SQRT_PRICE_LIMIT } from "~~/utils/constants";
+import { TOKEN_ADDRESSES } from "~~/utils/config";
+import { BLANK_TOKEN, MAX_SQRT_PRICE_LIMIT, MAX_UINT, MIN_SQRT_PRICE_LIMIT } from "~~/utils/constants";
 
 function SwapComponent({ poolKey }: { poolKey: any }) {
   const { address } = useAccount();
   const chainId = useChainId();
 
-  // TODO: remove all the hardcoded addresses
-  const tokenOptions = [
-    { value: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3", label: "Token0" },
-    { value: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4", label: "Token1" },
-  ];
+  const tokens = TOKEN_ADDRESSES.map(address => useToken({ address: address[chainId as keyof typeof address] }));
 
   const swapRouterAddress = poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress];
 
-  const [fromCurrency, setFromCurrency] = useState("");
-  const [toCurrency, setToCurrency] = useState("");
+  const [fromCurrency, setFromCurrency] = useState(BLANK_TOKEN.address);
+  const [toCurrency, setToCurrency] = useState(BLANK_TOKEN.address);
   const [fromAmount, setFromAmount] = useState("");
 
   const [swapFee, setSwapFee] = useState(3000n);
@@ -46,16 +44,16 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
   const swap = usePoolSwapTestSwap({
     args: [
       {
-        currency0: tokenOptions[0].value,
-        currency1: tokenOptions[1].value,
+        currency0: fromCurrency < toCurrency ? fromCurrency : toCurrency,
+        currency1: fromCurrency < toCurrency ? toCurrency : fromCurrency,
         fee: Number(swapFee),
         tickSpacing: Number(tickSpacing),
         hooks: hookAddress,
       },
       {
-        zeroForOne: fromCurrency === tokenOptions[0].value,
+        zeroForOne: fromCurrency < toCurrency,
         amountSpecified: parseEther(fromAmount), // TODO: assumes tokens are always 18 decimals
-        sqrtPriceLimitX96: fromCurrency === tokenOptions[0].value ? MIN_SQRT_PRICE_LIMIT : MAX_SQRT_PRICE_LIMIT, // unlimited impact
+        sqrtPriceLimitX96: fromCurrency < toCurrency ? MIN_SQRT_PRICE_LIMIT : MAX_SQRT_PRICE_LIMIT, // unlimited impact
       },
       {
         withdrawTokens: true,
@@ -87,18 +85,16 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
           <TokenDropdown
             label="From"
             tooltipText={"The token you are sending"}
-            value={"TODO: UNUSED"}
-            options={tokenOptions}
+            options={tokens.map(token => token.data ?? BLANK_TOKEN)}
             onChange={e => {
-              setFromCurrency(tokenOptions[e.target.value as number].value);
+              setFromCurrency(e.target.value);
               fromTokenAllowance.refetch();
             }}
           />
           <TokenDropdown
             label="To"
             tooltipText="The token you are receiving"
-            value={tokenOptions[1].value}
-            options={tokenOptions}
+            options={tokens.map(token => token.data ?? BLANK_TOKEN)}
             onChange={e => setToCurrency(e.target.value)}
           />
           <div className="flex flex-col justify-end">
@@ -117,7 +113,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
             className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
             onClick={() => tokenApprove.writeAsync().then(() => fromTokenAllowance.refetch())}
           >
-            Approve {fromCurrency === tokenOptions[0].value ? tokenOptions[0].label : tokenOptions[1].label}
+            Approve {tokens.find(token => token.data?.address === fromCurrency)?.data?.symbol}
           </button>
         )}
 
