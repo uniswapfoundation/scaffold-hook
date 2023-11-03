@@ -5,25 +5,18 @@ import {
   UseContractWriteConfig,
   usePrepareContractWrite,
   UsePrepareContractWriteConfig,
+  Address,
   useContractEvent,
   UseContractEventConfig,
 } from 'wagmi'
-import {
-  ReadContractResult,
-  WriteContractMode,
-  PrepareWriteContractResult,
-} from 'wagmi/actions'
+import { ReadContractResult, WriteContractMode, PrepareWriteContractResult } from 'wagmi/actions'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BaseHook
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const baseHookABI = [
-  {
-    type: 'error',
-    inputs: [{ name: 'hooks', internalType: 'address', type: 'address' }],
-    name: 'HookAddressNotValid',
-  },
+  { type: 'error', inputs: [{ name: 'hooks', internalType: 'address', type: 'address' }], name: 'HookAddressNotValid' },
   { type: 'error', inputs: [], name: 'HookNotImplemented' },
   { type: 'error', inputs: [], name: 'InvalidPool' },
   { type: 'error', inputs: [], name: 'LockFailure' },
@@ -134,11 +127,7 @@ export const baseHookABI = [
         components: [
           { name: 'zeroForOne', internalType: 'bool', type: 'bool' },
           { name: 'amountSpecified', internalType: 'int256', type: 'int256' },
-          {
-            name: 'sqrtPriceLimitX96',
-            internalType: 'uint160',
-            type: 'uint160',
-          },
+          { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
         ],
       },
       { name: '', internalType: 'BalanceDelta', type: 'int256' },
@@ -250,11 +239,7 @@ export const baseHookABI = [
         components: [
           { name: 'zeroForOne', internalType: 'bool', type: 'bool' },
           { name: 'amountSpecified', internalType: 'int256', type: 'int256' },
-          {
-            name: 'sqrtPriceLimitX96',
-            internalType: 'uint160',
-            type: 'uint160',
-          },
+          { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
         ],
       },
       { name: '', internalType: 'bytes', type: 'bytes' },
@@ -297,9 +282,7 @@ export const baseHookABI = [
     type: 'function',
     inputs: [],
     name: 'poolManager',
-    outputs: [
-      { name: '', internalType: 'contract IPoolManager', type: 'address' },
-    ],
+    outputs: [{ name: '', internalType: 'contract IPoolManager', type: 'address' }],
   },
 ] as const
 
@@ -356,23 +339,16 @@ export const constantsABI = [
 // Counter
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *
+ */
 export const counterABI = [
   {
     stateMutability: 'nonpayable',
     type: 'constructor',
-    inputs: [
-      {
-        name: '_poolManager',
-        internalType: 'contract IPoolManager',
-        type: 'address',
-      },
-    ],
+    inputs: [{ name: '_poolManager', internalType: 'contract IPoolManager', type: 'address' }],
   },
-  {
-    type: 'error',
-    inputs: [{ name: 'hooks', internalType: 'address', type: 'address' }],
-    name: 'HookAddressNotValid',
-  },
+  { type: 'error', inputs: [{ name: 'hooks', internalType: 'address', type: 'address' }], name: 'HookAddressNotValid' },
   { type: 'error', inputs: [], name: 'HookNotImplemented' },
   { type: 'error', inputs: [], name: 'InvalidPool' },
   { type: 'error', inputs: [], name: 'LockFailure' },
@@ -490,11 +466,7 @@ export const counterABI = [
         components: [
           { name: 'zeroForOne', internalType: 'bool', type: 'bool' },
           { name: 'amountSpecified', internalType: 'int256', type: 'int256' },
-          {
-            name: 'sqrtPriceLimitX96',
-            internalType: 'uint160',
-            type: 'uint160',
-          },
+          { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
         ],
       },
       { name: '', internalType: 'BalanceDelta', type: 'int256' },
@@ -620,11 +592,7 @@ export const counterABI = [
         components: [
           { name: 'zeroForOne', internalType: 'bool', type: 'bool' },
           { name: 'amountSpecified', internalType: 'int256', type: 'int256' },
-          {
-            name: 'sqrtPriceLimitX96',
-            internalType: 'uint160',
-            type: 'uint160',
-          },
+          { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
         ],
       },
       { name: '', internalType: 'bytes', type: 'bytes' },
@@ -674,11 +642,21 @@ export const counterABI = [
     type: 'function',
     inputs: [],
     name: 'poolManager',
-    outputs: [
-      { name: '', internalType: 'contract IPoolManager', type: 'address' },
-    ],
+    outputs: [{ name: '', internalType: 'contract IPoolManager', type: 'address' }],
   },
 ] as const
+
+/**
+ *
+ */
+export const counterAddress = {
+  31337: '0x3c3514a364278C43AC2Da7db1e44b4cc702CeFD7',
+} as const
+
+/**
+ *
+ */
+export const counterConfig = { address: counterAddress, abi: counterABI } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CurrencyLibrary
@@ -751,18 +729,8 @@ export const erc1155ABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'account',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'account', internalType: 'address', type: 'address', indexed: true },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
     ],
     name: 'ApprovalForAll',
@@ -771,26 +739,11 @@ export const erc1155ABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'ids',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
-      {
-        name: 'values',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
+      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+      { name: 'values', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
     ],
     name: 'TransferBatch',
   },
@@ -798,21 +751,11 @@ export const erc1155ABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
       { name: 'id', internalType: 'uint256', type: 'uint256', indexed: false },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'TransferSingle',
   },
@@ -930,24 +873,9 @@ export const erc20ABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'owner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'spender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'amount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'owner', internalType: 'address', type: 'address', indexed: true },
+      { name: 'spender', internalType: 'address', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Approval',
   },
@@ -957,12 +885,7 @@ export const erc20ABI = [
     inputs: [
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'amount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Transfer',
   },
@@ -1122,32 +1045,15 @@ export const feesABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'oldOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'newOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'oldOwner', internalType: 'address', type: 'address', indexed: true },
+      { name: 'newOwner', internalType: 'address', type: 'address', indexed: true },
     ],
     name: 'OwnerChanged',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      {
-        name: 'protocolFeeController',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-    ],
+    inputs: [{ name: 'protocolFeeController', internalType: 'address', type: 'address', indexed: false }],
     name: 'ProtocolFeeControllerUpdated',
   },
   {
@@ -1166,9 +1072,7 @@ export const feesABI = [
       { name: 'amount', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'collectHookFees',
-    outputs: [
-      { name: 'amountCollected', internalType: 'uint256', type: 'uint256' },
-    ],
+    outputs: [{ name: 'amountCollected', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -1179,9 +1083,7 @@ export const feesABI = [
       { name: 'amount', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'collectProtocolFees',
-    outputs: [
-      { name: 'amountCollected', internalType: 'uint256', type: 'uint256' },
-    ],
+    outputs: [{ name: 'amountCollected', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'view',
@@ -1205,13 +1107,7 @@ export const feesABI = [
     type: 'function',
     inputs: [],
     name: 'protocolFeeController',
-    outputs: [
-      {
-        name: '',
-        internalType: 'contract IProtocolFeeController',
-        type: 'address',
-      },
-    ],
+    outputs: [{ name: '', internalType: 'contract IProtocolFeeController', type: 'address' }],
   },
   {
     stateMutability: 'view',
@@ -1230,13 +1126,7 @@ export const feesABI = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [
-      {
-        name: 'controller',
-        internalType: 'contract IProtocolFeeController',
-        type: 'address',
-      },
-    ],
+    inputs: [{ name: 'controller', internalType: 'contract IProtocolFeeController', type: 'address' }],
     name: 'setProtocolFeeController',
     outputs: [],
   },
@@ -1256,9 +1146,7 @@ export const hookMinerABI = [
       { name: 'creationCode', internalType: 'bytes', type: 'bytes' },
     ],
     name: 'computeAddress',
-    outputs: [
-      { name: 'hookAddress', internalType: 'address', type: 'address' },
-    ],
+    outputs: [{ name: 'hookAddress', internalType: 'address', type: 'address' }],
   },
   {
     stateMutability: 'pure',
@@ -1286,80 +1174,49 @@ export const hookTestABI = [
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      { name: '', internalType: 'string', type: 'string', indexed: false },
-    ],
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
     name: 'log',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      { name: '', internalType: 'address', type: 'address', indexed: false },
-    ],
+    inputs: [{ name: '', internalType: 'address', type: 'address', indexed: false }],
     name: 'log_address',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      {
-        name: 'val',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
-    ],
+    inputs: [{ name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false }],
     name: 'log_array',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      {
-        name: 'val',
-        internalType: 'int256[]',
-        type: 'int256[]',
-        indexed: false,
-      },
-    ],
+    inputs: [{ name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false }],
     name: 'log_array',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      {
-        name: 'val',
-        internalType: 'address[]',
-        type: 'address[]',
-        indexed: false,
-      },
-    ],
+    inputs: [{ name: 'val', internalType: 'address[]', type: 'address[]', indexed: false }],
     name: 'log_array',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      { name: '', internalType: 'bytes', type: 'bytes', indexed: false },
-    ],
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
     name: 'log_bytes',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      { name: '', internalType: 'bytes32', type: 'bytes32', indexed: false },
-    ],
+    inputs: [{ name: '', internalType: 'bytes32', type: 'bytes32', indexed: false }],
     name: 'log_bytes32',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      { name: '', internalType: 'int256', type: 'int256', indexed: false },
-    ],
+    inputs: [{ name: '', internalType: 'int256', type: 'int256', indexed: false }],
     name: 'log_int',
   },
   {
@@ -1376,12 +1233,7 @@ export const hookTestABI = [
     anonymous: false,
     inputs: [
       { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      {
-        name: 'val',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
+      { name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
     ],
     name: 'log_named_array',
   },
@@ -1390,12 +1242,7 @@ export const hookTestABI = [
     anonymous: false,
     inputs: [
       { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      {
-        name: 'val',
-        internalType: 'int256[]',
-        type: 'int256[]',
-        indexed: false,
-      },
+      { name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false },
     ],
     name: 'log_named_array',
   },
@@ -1404,12 +1251,7 @@ export const hookTestABI = [
     anonymous: false,
     inputs: [
       { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      {
-        name: 'val',
-        internalType: 'address[]',
-        type: 'address[]',
-        indexed: false,
-      },
+      { name: 'val', internalType: 'address[]', type: 'address[]', indexed: false },
     ],
     name: 'log_named_array',
   },
@@ -1437,12 +1279,7 @@ export const hookTestABI = [
     inputs: [
       { name: 'key', internalType: 'string', type: 'string', indexed: false },
       { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
-      {
-        name: 'decimals',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'log_named_decimal_int',
   },
@@ -1452,12 +1289,7 @@ export const hookTestABI = [
     inputs: [
       { name: 'key', internalType: 'string', type: 'string', indexed: false },
       { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
-      {
-        name: 'decimals',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'log_named_decimal_uint',
   },
@@ -1491,25 +1323,19 @@ export const hookTestABI = [
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      { name: '', internalType: 'string', type: 'string', indexed: false },
-    ],
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
     name: 'log_string',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      { name: '', internalType: 'uint256', type: 'uint256', indexed: false },
-    ],
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256', indexed: false }],
     name: 'log_uint',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      { name: '', internalType: 'bytes', type: 'bytes', indexed: false },
-    ],
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
     name: 'logs',
   },
   {
@@ -1540,13 +1366,7 @@ export const hookTestABI = [
     name: 'failed',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
   },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'initHookTestEnv',
-    outputs: [],
-  },
+  { stateMutability: 'nonpayable', type: 'function', inputs: [], name: 'initHookTestEnv', outputs: [] },
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1554,11 +1374,7 @@ export const hookTestABI = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const hooksABI = [
-  {
-    type: 'error',
-    inputs: [{ name: 'hooks', internalType: 'address', type: 'address' }],
-    name: 'HookAddressNotValid',
-  },
+  { type: 'error', inputs: [{ name: 'hooks', internalType: 'address', type: 'address' }], name: 'HookAddressNotValid' },
   { type: 'error', inputs: [], name: 'InvalidHookResponse' },
 ] as const
 
@@ -1591,11 +1407,7 @@ export const iDynamicFeeManagerABI = [
         components: [
           { name: 'zeroForOne', internalType: 'bool', type: 'bool' },
           { name: 'amountSpecified', internalType: 'int256', type: 'int256' },
-          {
-            name: 'sqrtPriceLimitX96',
-            internalType: 'uint160',
-            type: 'uint160',
-          },
+          { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
         ],
       },
       { name: 'data', internalType: 'bytes', type: 'bytes' },
@@ -1614,18 +1426,8 @@ export const ierc1155ABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'account',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'account', internalType: 'address', type: 'address', indexed: true },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
     ],
     name: 'ApprovalForAll',
@@ -1634,26 +1436,11 @@ export const ierc1155ABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'ids',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
-      {
-        name: 'values',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
+      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+      { name: 'values', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
     ],
     name: 'TransferBatch',
   },
@@ -1661,21 +1448,11 @@ export const ierc1155ABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
       { name: 'id', internalType: 'uint256', type: 'uint256', indexed: false },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'TransferSingle',
   },
@@ -1825,18 +1602,8 @@ export const ierc1155MetadataUriABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'account',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'account', internalType: 'address', type: 'address', indexed: true },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
     ],
     name: 'ApprovalForAll',
@@ -1845,26 +1612,11 @@ export const ierc1155MetadataUriABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'ids',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
-      {
-        name: 'values',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
+      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+      { name: 'values', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
     ],
     name: 'TransferBatch',
   },
@@ -1872,21 +1624,11 @@ export const ierc1155MetadataUriABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
       { name: 'id', internalType: 'uint256', type: 'uint256', indexed: false },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'TransferSingle',
   },
@@ -2044,24 +1786,9 @@ export const ierc20ABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'owner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'spender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'owner', internalType: 'address', type: 'address', indexed: true },
+      { name: 'spender', internalType: 'address', type: 'address', indexed: true },
+      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Approval',
   },
@@ -2071,12 +1798,7 @@ export const ierc20ABI = [
     inputs: [
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Transfer',
   },
@@ -2191,11 +1913,7 @@ export const ierc20ErrorsABI = [
     inputs: [{ name: 'receiver', internalType: 'address', type: 'address' }],
     name: 'ERC20InvalidReceiver',
   },
-  {
-    type: 'error',
-    inputs: [{ name: 'sender', internalType: 'address', type: 'address' }],
-    name: 'ERC20InvalidSender',
-  },
+  { type: 'error', inputs: [{ name: 'sender', internalType: 'address', type: 'address' }], name: 'ERC20InvalidSender' },
   {
     type: 'error',
     inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
@@ -2212,24 +1930,9 @@ export const ierc20MinimalABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'owner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'spender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'owner', internalType: 'address', type: 'address', indexed: true },
+      { name: 'spender', internalType: 'address', type: 'address', indexed: true },
+      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Approval',
   },
@@ -2239,12 +1942,7 @@ export const ierc20MinimalABI = [
     inputs: [
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Transfer',
   },
@@ -2330,11 +2028,7 @@ export const ierc721ErrorsABI = [
     inputs: [{ name: 'operator', internalType: 'address', type: 'address' }],
     name: 'ERC721InvalidOperator',
   },
-  {
-    type: 'error',
-    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
-    name: 'ERC721InvalidOwner',
-  },
+  { type: 'error', inputs: [{ name: 'owner', internalType: 'address', type: 'address' }], name: 'ERC721InvalidOwner' },
   {
     type: 'error',
     inputs: [{ name: 'receiver', internalType: 'address', type: 'address' }],
@@ -2362,14 +2056,7 @@ export const iFeesABI = [
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      {
-        name: 'protocolFeeController',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-    ],
+    inputs: [{ name: 'protocolFeeController', internalType: 'address', type: 'address', indexed: false }],
     name: 'ProtocolFeeControllerUpdated',
   },
   {
@@ -2535,11 +2222,7 @@ export const iHooksABI = [
         components: [
           { name: 'zeroForOne', internalType: 'bool', type: 'bool' },
           { name: 'amountSpecified', internalType: 'int256', type: 'int256' },
-          {
-            name: 'sqrtPriceLimitX96',
-            internalType: 'uint160',
-            type: 'uint160',
-          },
+          { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
         ],
       },
       { name: 'delta', internalType: 'BalanceDelta', type: 'int256' },
@@ -2651,11 +2334,7 @@ export const iHooksABI = [
         components: [
           { name: 'zeroForOne', internalType: 'bool', type: 'bool' },
           { name: 'amountSpecified', internalType: 'int256', type: 'int256' },
-          {
-            name: 'sqrtPriceLimitX96',
-            internalType: 'uint160',
-            type: 'uint160',
-          },
+          { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
         ],
       },
       { name: 'hookData', internalType: 'bytes', type: 'bytes' },
@@ -2687,11 +2366,7 @@ export const iPoolManagerABI = [
   { type: 'error', inputs: [], name: 'CurrenciesInitializedOutOfOrder' },
   { type: 'error', inputs: [], name: 'CurrencyNotSettled' },
   { type: 'error', inputs: [], name: 'FeeTooLarge' },
-  {
-    type: 'error',
-    inputs: [{ name: 'locker', internalType: 'address', type: 'address' }],
-    name: 'LockedBy',
-  },
+  { type: 'error', inputs: [{ name: 'locker', internalType: 'address', type: 'address' }], name: 'LockedBy' },
   { type: 'error', inputs: [], name: 'MaxCurrenciesTouched' },
   { type: 'error', inputs: [], name: 'NotPoolManagerToken' },
   { type: 'error', inputs: [], name: 'ProtocolFeeCannotBeFetched' },
@@ -2701,18 +2376,8 @@ export const iPoolManagerABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'account',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'account', internalType: 'address', type: 'address', indexed: true },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
     ],
     name: 'ApprovalForAll',
@@ -2722,12 +2387,7 @@ export const iPoolManagerABI = [
     anonymous: false,
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32', indexed: true },
-      {
-        name: 'hookFees',
-        internalType: 'uint24',
-        type: 'uint24',
-        indexed: false,
-      },
+      { name: 'hookFees', internalType: 'uint24', type: 'uint24', indexed: false },
     ],
     name: 'HookFeeUpdated',
   },
@@ -2736,31 +2396,11 @@ export const iPoolManagerABI = [
     anonymous: false,
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32', indexed: true },
-      {
-        name: 'currency0',
-        internalType: 'Currency',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'currency1',
-        internalType: 'Currency',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'currency0', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'currency1', internalType: 'Currency', type: 'address', indexed: true },
       { name: 'fee', internalType: 'uint24', type: 'uint24', indexed: false },
-      {
-        name: 'tickSpacing',
-        internalType: 'int24',
-        type: 'int24',
-        indexed: false,
-      },
-      {
-        name: 'hooks',
-        internalType: 'contract IHooks',
-        type: 'address',
-        indexed: false,
-      },
+      { name: 'tickSpacing', internalType: 'int24', type: 'int24', indexed: false },
+      { name: 'hooks', internalType: 'contract IHooks', type: 'address', indexed: false },
     ],
     name: 'Initialize',
   },
@@ -2769,44 +2409,17 @@ export const iPoolManagerABI = [
     anonymous: false,
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32', indexed: true },
-      {
-        name: 'sender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'tickLower',
-        internalType: 'int24',
-        type: 'int24',
-        indexed: false,
-      },
-      {
-        name: 'tickUpper',
-        internalType: 'int24',
-        type: 'int24',
-        indexed: false,
-      },
-      {
-        name: 'liquidityDelta',
-        internalType: 'int256',
-        type: 'int256',
-        indexed: false,
-      },
+      { name: 'sender', internalType: 'address', type: 'address', indexed: true },
+      { name: 'tickLower', internalType: 'int24', type: 'int24', indexed: false },
+      { name: 'tickUpper', internalType: 'int24', type: 'int24', indexed: false },
+      { name: 'liquidityDelta', internalType: 'int256', type: 'int256', indexed: false },
     ],
     name: 'ModifyPosition',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      {
-        name: 'protocolFeeController',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-    ],
+    inputs: [{ name: 'protocolFeeController', internalType: 'address', type: 'address', indexed: false }],
     name: 'ProtocolFeeControllerUpdated',
   },
   {
@@ -2814,12 +2427,7 @@ export const iPoolManagerABI = [
     anonymous: false,
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32', indexed: true },
-      {
-        name: 'protocolFees',
-        internalType: 'uint24',
-        type: 'uint24',
-        indexed: false,
-      },
+      { name: 'protocolFees', internalType: 'uint24', type: 'uint24', indexed: false },
     ],
     name: 'ProtocolFeeUpdated',
   },
@@ -2828,36 +2436,11 @@ export const iPoolManagerABI = [
     anonymous: false,
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32', indexed: true },
-      {
-        name: 'sender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'amount0',
-        internalType: 'int128',
-        type: 'int128',
-        indexed: false,
-      },
-      {
-        name: 'amount1',
-        internalType: 'int128',
-        type: 'int128',
-        indexed: false,
-      },
-      {
-        name: 'sqrtPriceX96',
-        internalType: 'uint160',
-        type: 'uint160',
-        indexed: false,
-      },
-      {
-        name: 'liquidity',
-        internalType: 'uint128',
-        type: 'uint128',
-        indexed: false,
-      },
+      { name: 'sender', internalType: 'address', type: 'address', indexed: true },
+      { name: 'amount0', internalType: 'int128', type: 'int128', indexed: false },
+      { name: 'amount1', internalType: 'int128', type: 'int128', indexed: false },
+      { name: 'sqrtPriceX96', internalType: 'uint160', type: 'uint160', indexed: false },
+      { name: 'liquidity', internalType: 'uint128', type: 'uint128', indexed: false },
       { name: 'tick', internalType: 'int24', type: 'int24', indexed: false },
       { name: 'fee', internalType: 'uint24', type: 'uint24', indexed: false },
     ],
@@ -2867,26 +2450,11 @@ export const iPoolManagerABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'ids',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
-      {
-        name: 'values',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
+      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+      { name: 'values', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
     ],
     name: 'TransferBatch',
   },
@@ -2894,21 +2462,11 @@ export const iPoolManagerABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
       { name: 'id', internalType: 'uint256', type: 'uint256', indexed: false },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'TransferSingle',
   },
@@ -3055,16 +2613,8 @@ export const iPoolManagerABI = [
         type: 'tuple',
         components: [
           { name: 'liquidity', internalType: 'uint128', type: 'uint128' },
-          {
-            name: 'feeGrowthInside0LastX128',
-            internalType: 'uint256',
-            type: 'uint256',
-          },
-          {
-            name: 'feeGrowthInside1LastX128',
-            internalType: 'uint256',
-            type: 'uint256',
-          },
+          { name: 'feeGrowthInside0LastX128', internalType: 'uint256', type: 'uint256' },
+          { name: 'feeGrowthInside1LastX128', internalType: 'uint256', type: 'uint256' },
         ],
       },
     ],
@@ -3309,11 +2859,7 @@ export const iPoolManagerABI = [
         components: [
           { name: 'zeroForOne', internalType: 'bool', type: 'bool' },
           { name: 'amountSpecified', internalType: 'int256', type: 'int256' },
-          {
-            name: 'sqrtPriceLimitX96',
-            internalType: 'uint160',
-            type: 'uint160',
-          },
+          { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
         ],
       },
       { name: 'hookData', internalType: 'bytes', type: 'bytes' },
@@ -3365,9 +2911,7 @@ export const iProtocolFeeControllerABI = [
 // Math
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const mathABI = [
-  { type: 'error', inputs: [], name: 'MathOverflowedMulDiv' },
-] as const
+export const mathABI = [{ type: 'error', inputs: [], name: 'MathOverflowedMulDiv' }] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MockERC20
@@ -3387,24 +2931,9 @@ export const mockErc20ABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'owner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'spender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'amount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'owner', internalType: 'address', type: 'address', indexed: true },
+      { name: 'spender', internalType: 'address', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Approval',
   },
@@ -3414,12 +2943,7 @@ export const mockErc20ABI = [
     inputs: [
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'amount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Transfer',
   },
@@ -3551,12 +3075,206 @@ export const mockErc20ABI = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MockToken0
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ */
+export const mockToken0ABI = [
+  {
+    type: 'event',
+    inputs: [
+      { name: 'owner', type: 'address', indexed: true },
+      { name: 'spender', type: 'address', indexed: true },
+      { name: 'value', type: 'uint256', indexed: false },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    inputs: [
+      { name: 'from', type: 'address', indexed: true },
+      { name: 'to', type: 'address', indexed: true },
+      { name: 'value', type: 'uint256', indexed: false },
+    ],
+    name: 'Transfer',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'owner', type: 'address' },
+      { name: 'spender', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'spender', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'account', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'decimals', outputs: [{ name: '', type: 'uint8' }] },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'name', outputs: [{ name: '', type: 'string' }] },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'symbol', outputs: [{ name: '', type: 'string' }] },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'recipient', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'sender', type: 'address' },
+      { name: 'recipient', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+] as const
+
+/**
+ *
+ */
+export const mockToken0Address = {
+  31337: '0x2DAFBDF11A8Cf84c372539A38D781D8248399AE3',
+} as const
+
+/**
+ *
+ */
+export const mockToken0Config = { address: mockToken0Address, abi: mockToken0ABI } as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MockToken1
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ */
+export const mockToken1ABI = [
+  {
+    type: 'event',
+    inputs: [
+      { name: 'owner', type: 'address', indexed: true },
+      { name: 'spender', type: 'address', indexed: true },
+      { name: 'value', type: 'uint256', indexed: false },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    inputs: [
+      { name: 'from', type: 'address', indexed: true },
+      { name: 'to', type: 'address', indexed: true },
+      { name: 'value', type: 'uint256', indexed: false },
+    ],
+    name: 'Transfer',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'owner', type: 'address' },
+      { name: 'spender', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'spender', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'account', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'decimals', outputs: [{ name: '', type: 'uint8' }] },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'name', outputs: [{ name: '', type: 'string' }] },
+  { stateMutability: 'view', type: 'function', inputs: [], name: 'symbol', outputs: [{ name: '', type: 'string' }] },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'recipient', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'sender', type: 'address' },
+      { name: 'recipient', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', type: 'bool' }],
+  },
+] as const
+
+/**
+ *
+ */
+export const mockToken1Address = {
+  31337: '0xa8cEAFb1940244F2f022FF8440a42411B4F07fC4',
+} as const
+
+/**
+ *
+ */
+export const mockToken1Config = { address: mockToken1Address, abi: mockToken1ABI } as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NoDelegateCall
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const noDelegateCallABI = [
-  { type: 'error', inputs: [], name: 'DelegateCallNotAllowed' },
-] as const
+export const noDelegateCallABI = [{ type: 'error', inputs: [], name: 'DelegateCallNotAllowed' }] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Owned
@@ -3569,18 +3287,8 @@ export const ownedABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'oldOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'newOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'oldOwner', internalType: 'address', type: 'address', indexed: true },
+      { name: 'newOwner', internalType: 'address', type: 'address', indexed: true },
     ],
     name: 'OwnerChanged',
   },
@@ -3618,27 +3326,17 @@ export const poolABI = [
   },
   {
     type: 'error',
-    inputs: [
-      { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
-    ],
+    inputs: [{ name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' }],
     name: 'PriceLimitOutOfBounds',
   },
   { type: 'error', inputs: [], name: 'SwapAmountCannotBeZero' },
-  {
-    type: 'error',
-    inputs: [{ name: 'tick', internalType: 'int24', type: 'int24' }],
-    name: 'TickLiquidityOverflow',
-  },
+  { type: 'error', inputs: [{ name: 'tick', internalType: 'int24', type: 'int24' }], name: 'TickLiquidityOverflow' },
   {
     type: 'error',
     inputs: [{ name: 'tickLower', internalType: 'int24', type: 'int24' }],
     name: 'TickLowerOutOfBounds',
   },
-  {
-    type: 'error',
-    inputs: [{ name: 'tick', internalType: 'int24', type: 'int24' }],
-    name: 'TickNotInitialized',
-  },
+  { type: 'error', inputs: [{ name: 'tick', internalType: 'int24', type: 'int24' }], name: 'TickNotInitialized' },
   {
     type: 'error',
     inputs: [{ name: 'tickUpper', internalType: 'int24', type: 'int24' }],
@@ -3658,17 +3356,14 @@ export const poolABI = [
 // PoolDonateTest
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *
+ */
 export const poolDonateTestABI = [
   {
     stateMutability: 'nonpayable',
     type: 'constructor',
-    inputs: [
-      {
-        name: '_manager',
-        internalType: 'contract IPoolManager',
-        type: 'address',
-      },
-    ],
+    inputs: [{ name: '_manager', internalType: 'contract IPoolManager', type: 'address' }],
   },
   { type: 'error', inputs: [], name: 'ERC20TransferFailed' },
   { type: 'error', inputs: [], name: 'NativeTransferFailed' },
@@ -3707,23 +3402,34 @@ export const poolDonateTestABI = [
     type: 'function',
     inputs: [],
     name: 'manager',
-    outputs: [
-      { name: '', internalType: 'contract IPoolManager', type: 'address' },
-    ],
+    outputs: [{ name: '', internalType: 'contract IPoolManager', type: 'address' }],
   },
 ] as const
+
+/**
+ *
+ */
+export const poolDonateTestAddress = {
+  31337: '0x4FA6C7a3A9b84F2A8340D4d33190F84e307B085c',
+} as const
+
+/**
+ *
+ */
+export const poolDonateTestConfig = { address: poolDonateTestAddress, abi: poolDonateTestABI } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PoolManager
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *
+ */
 export const poolManagerABI = [
   {
     stateMutability: 'nonpayable',
     type: 'constructor',
-    inputs: [
-      { name: 'controllerGasLimit', internalType: 'uint256', type: 'uint256' },
-    ],
+    inputs: [{ name: 'controllerGasLimit', internalType: 'uint256', type: 'uint256' }],
   },
   { type: 'error', inputs: [], name: 'CannotUpdateEmptyPosition' },
   { type: 'error', inputs: [], name: 'CurrenciesInitializedOutOfOrder' },
@@ -3777,20 +3483,12 @@ export const poolManagerABI = [
   },
   { type: 'error', inputs: [], name: 'ERC20TransferFailed' },
   { type: 'error', inputs: [], name: 'FeeTooLarge' },
-  {
-    type: 'error',
-    inputs: [{ name: 'hooks', internalType: 'address', type: 'address' }],
-    name: 'HookAddressNotValid',
-  },
+  { type: 'error', inputs: [{ name: 'hooks', internalType: 'address', type: 'address' }], name: 'HookAddressNotValid' },
   { type: 'error', inputs: [], name: 'InvalidCaller' },
   { type: 'error', inputs: [], name: 'InvalidHookResponse' },
   { type: 'error', inputs: [], name: 'InvalidSqrtRatio' },
   { type: 'error', inputs: [], name: 'InvalidTick' },
-  {
-    type: 'error',
-    inputs: [{ name: 'locker', internalType: 'address', type: 'address' }],
-    name: 'LockedBy',
-  },
+  { type: 'error', inputs: [{ name: 'locker', internalType: 'address', type: 'address' }], name: 'LockedBy' },
   { type: 'error', inputs: [], name: 'MaxCurrenciesTouched' },
   { type: 'error', inputs: [], name: 'NativeTransferFailed' },
   { type: 'error', inputs: [], name: 'NoLiquidityToReceiveFees' },
@@ -3807,18 +3505,12 @@ export const poolManagerABI = [
   },
   {
     type: 'error',
-    inputs: [
-      { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
-    ],
+    inputs: [{ name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' }],
     name: 'PriceLimitOutOfBounds',
   },
   { type: 'error', inputs: [], name: 'ProtocolFeeCannotBeFetched' },
   { type: 'error', inputs: [], name: 'SwapAmountCannotBeZero' },
-  {
-    type: 'error',
-    inputs: [{ name: 'tick', internalType: 'int24', type: 'int24' }],
-    name: 'TickLiquidityOverflow',
-  },
+  { type: 'error', inputs: [{ name: 'tick', internalType: 'int24', type: 'int24' }], name: 'TickLiquidityOverflow' },
   {
     type: 'error',
     inputs: [{ name: 'tickLower', internalType: 'int24', type: 'int24' }],
@@ -3851,18 +3543,8 @@ export const poolManagerABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'account',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'account', internalType: 'address', type: 'address', indexed: true },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
     ],
     name: 'ApprovalForAll',
@@ -3872,12 +3554,7 @@ export const poolManagerABI = [
     anonymous: false,
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32', indexed: true },
-      {
-        name: 'hookFees',
-        internalType: 'uint24',
-        type: 'uint24',
-        indexed: false,
-      },
+      { name: 'hookFees', internalType: 'uint24', type: 'uint24', indexed: false },
     ],
     name: 'HookFeeUpdated',
   },
@@ -3886,31 +3563,11 @@ export const poolManagerABI = [
     anonymous: false,
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32', indexed: true },
-      {
-        name: 'currency0',
-        internalType: 'Currency',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'currency1',
-        internalType: 'Currency',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'currency0', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'currency1', internalType: 'Currency', type: 'address', indexed: true },
       { name: 'fee', internalType: 'uint24', type: 'uint24', indexed: false },
-      {
-        name: 'tickSpacing',
-        internalType: 'int24',
-        type: 'int24',
-        indexed: false,
-      },
-      {
-        name: 'hooks',
-        internalType: 'contract IHooks',
-        type: 'address',
-        indexed: false,
-      },
+      { name: 'tickSpacing', internalType: 'int24', type: 'int24', indexed: false },
+      { name: 'hooks', internalType: 'contract IHooks', type: 'address', indexed: false },
     ],
     name: 'Initialize',
   },
@@ -3919,30 +3576,10 @@ export const poolManagerABI = [
     anonymous: false,
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32', indexed: true },
-      {
-        name: 'sender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'tickLower',
-        internalType: 'int24',
-        type: 'int24',
-        indexed: false,
-      },
-      {
-        name: 'tickUpper',
-        internalType: 'int24',
-        type: 'int24',
-        indexed: false,
-      },
-      {
-        name: 'liquidityDelta',
-        internalType: 'int256',
-        type: 'int256',
-        indexed: false,
-      },
+      { name: 'sender', internalType: 'address', type: 'address', indexed: true },
+      { name: 'tickLower', internalType: 'int24', type: 'int24', indexed: false },
+      { name: 'tickUpper', internalType: 'int24', type: 'int24', indexed: false },
+      { name: 'liquidityDelta', internalType: 'int256', type: 'int256', indexed: false },
     ],
     name: 'ModifyPosition',
   },
@@ -3950,32 +3587,15 @@ export const poolManagerABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'oldOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'newOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'oldOwner', internalType: 'address', type: 'address', indexed: true },
+      { name: 'newOwner', internalType: 'address', type: 'address', indexed: true },
     ],
     name: 'OwnerChanged',
   },
   {
     type: 'event',
     anonymous: false,
-    inputs: [
-      {
-        name: 'protocolFeeController',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-    ],
+    inputs: [{ name: 'protocolFeeController', internalType: 'address', type: 'address', indexed: false }],
     name: 'ProtocolFeeControllerUpdated',
   },
   {
@@ -3983,12 +3603,7 @@ export const poolManagerABI = [
     anonymous: false,
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32', indexed: true },
-      {
-        name: 'protocolFees',
-        internalType: 'uint24',
-        type: 'uint24',
-        indexed: false,
-      },
+      { name: 'protocolFees', internalType: 'uint24', type: 'uint24', indexed: false },
     ],
     name: 'ProtocolFeeUpdated',
   },
@@ -3997,36 +3612,11 @@ export const poolManagerABI = [
     anonymous: false,
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32', indexed: true },
-      {
-        name: 'sender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'amount0',
-        internalType: 'int128',
-        type: 'int128',
-        indexed: false,
-      },
-      {
-        name: 'amount1',
-        internalType: 'int128',
-        type: 'int128',
-        indexed: false,
-      },
-      {
-        name: 'sqrtPriceX96',
-        internalType: 'uint160',
-        type: 'uint160',
-        indexed: false,
-      },
-      {
-        name: 'liquidity',
-        internalType: 'uint128',
-        type: 'uint128',
-        indexed: false,
-      },
+      { name: 'sender', internalType: 'address', type: 'address', indexed: true },
+      { name: 'amount0', internalType: 'int128', type: 'int128', indexed: false },
+      { name: 'amount1', internalType: 'int128', type: 'int128', indexed: false },
+      { name: 'sqrtPriceX96', internalType: 'uint160', type: 'uint160', indexed: false },
+      { name: 'liquidity', internalType: 'uint128', type: 'uint128', indexed: false },
       { name: 'tick', internalType: 'int24', type: 'int24', indexed: false },
       { name: 'fee', internalType: 'uint24', type: 'uint24', indexed: false },
     ],
@@ -4036,26 +3626,11 @@ export const poolManagerABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'ids',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
-      {
-        name: 'values',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
+      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+      { name: 'values', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
     ],
     name: 'TransferBatch',
   },
@@ -4063,21 +3638,11 @@ export const poolManagerABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'operator',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
+      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
       { name: 'id', internalType: 'uint256', type: 'uint256', indexed: false },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'TransferSingle',
   },
@@ -4140,9 +3705,7 @@ export const poolManagerABI = [
       { name: 'amount', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'collectHookFees',
-    outputs: [
-      { name: 'amountCollected', internalType: 'uint256', type: 'uint256' },
-    ],
+    outputs: [{ name: 'amountCollected', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -4153,9 +3716,7 @@ export const poolManagerABI = [
       { name: 'amount', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'collectProtocolFees',
-    outputs: [
-      { name: 'amountCollected', internalType: 'uint256', type: 'uint256' },
-    ],
+    outputs: [{ name: 'amountCollected', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'view',
@@ -4165,9 +3726,7 @@ export const poolManagerABI = [
       { name: 'currency', internalType: 'Currency', type: 'address' },
     ],
     name: 'currencyDelta',
-    outputs: [
-      { name: 'currencyDelta', internalType: 'int256', type: 'int256' },
-    ],
+    outputs: [{ name: 'currencyDelta', internalType: 'int256', type: 'int256' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -4252,16 +3811,8 @@ export const poolManagerABI = [
         type: 'tuple',
         components: [
           { name: 'liquidity', internalType: 'uint128', type: 'uint128' },
-          {
-            name: 'feeGrowthInside0LastX128',
-            internalType: 'uint256',
-            type: 'uint256',
-          },
-          {
-            name: 'feeGrowthInside1LastX128',
-            internalType: 'uint256',
-            type: 'uint256',
-          },
+          { name: 'feeGrowthInside0LastX128', internalType: 'uint256', type: 'uint256' },
+          { name: 'feeGrowthInside1LastX128', internalType: 'uint256', type: 'uint256' },
         ],
       },
     ],
@@ -4429,16 +3980,8 @@ export const poolManagerABI = [
           { name: 'hookFees', internalType: 'uint24', type: 'uint24' },
         ],
       },
-      {
-        name: 'feeGrowthGlobal0X128',
-        internalType: 'uint256',
-        type: 'uint256',
-      },
-      {
-        name: 'feeGrowthGlobal1X128',
-        internalType: 'uint256',
-        type: 'uint256',
-      },
+      { name: 'feeGrowthGlobal0X128', internalType: 'uint256', type: 'uint256' },
+      { name: 'feeGrowthGlobal1X128', internalType: 'uint256', type: 'uint256' },
       { name: 'liquidity', internalType: 'uint128', type: 'uint128' },
     ],
   },
@@ -4447,13 +3990,7 @@ export const poolManagerABI = [
     type: 'function',
     inputs: [],
     name: 'protocolFeeController',
-    outputs: [
-      {
-        name: '',
-        internalType: 'contract IProtocolFeeController',
-        type: 'address',
-      },
-    ],
+    outputs: [{ name: '', internalType: 'contract IProtocolFeeController', type: 'address' }],
   },
   {
     stateMutability: 'view',
@@ -4535,13 +4072,7 @@ export const poolManagerABI = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [
-      {
-        name: 'controller',
-        internalType: 'contract IProtocolFeeController',
-        type: 'address',
-      },
-    ],
+    inputs: [{ name: 'controller', internalType: 'contract IProtocolFeeController', type: 'address' }],
     name: 'setProtocolFeeController',
     outputs: [],
   },
@@ -4602,11 +4133,7 @@ export const poolManagerABI = [
         components: [
           { name: 'zeroForOne', internalType: 'bool', type: 'bool' },
           { name: 'amountSpecified', internalType: 'int256', type: 'int256' },
-          {
-            name: 'sqrtPriceLimitX96',
-            internalType: 'uint160',
-            type: 'uint160',
-          },
+          { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
         ],
       },
       { name: 'hookData', internalType: 'bytes', type: 'bytes' },
@@ -4635,21 +4162,30 @@ export const poolManagerABI = [
   { stateMutability: 'payable', type: 'receive' },
 ] as const
 
+/**
+ *
+ */
+export const poolManagerAddress = {
+  31337: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+} as const
+
+/**
+ *
+ */
+export const poolManagerConfig = { address: poolManagerAddress, abi: poolManagerABI } as const
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PoolModifyPositionTest
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *
+ */
 export const poolModifyPositionTestABI = [
   {
     stateMutability: 'nonpayable',
     type: 'constructor',
-    inputs: [
-      {
-        name: '_manager',
-        internalType: 'contract IPoolManager',
-        type: 'address',
-      },
-    ],
+    inputs: [{ name: '_manager', internalType: 'contract IPoolManager', type: 'address' }],
   },
   { type: 'error', inputs: [], name: 'ERC20TransferFailed' },
   { type: 'error', inputs: [], name: 'NativeTransferFailed' },
@@ -4665,9 +4201,7 @@ export const poolModifyPositionTestABI = [
     type: 'function',
     inputs: [],
     name: 'manager',
-    outputs: [
-      { name: '', internalType: 'contract IPoolManager', type: 'address' },
-    ],
+    outputs: [{ name: '', internalType: 'contract IPoolManager', type: 'address' }],
   },
   {
     stateMutability: 'payable',
@@ -4702,21 +4236,33 @@ export const poolModifyPositionTestABI = [
   },
 ] as const
 
+/**
+ *
+ */
+export const poolModifyPositionTestAddress = {
+  31337: '0x3079c0319F8734239eB06765666468F7B76Eb505',
+} as const
+
+/**
+ *
+ */
+export const poolModifyPositionTestConfig = {
+  address: poolModifyPositionTestAddress,
+  abi: poolModifyPositionTestABI,
+} as const
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PoolSwapTest
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *
+ */
 export const poolSwapTestABI = [
   {
     stateMutability: 'nonpayable',
     type: 'constructor',
-    inputs: [
-      {
-        name: '_manager',
-        internalType: 'contract IPoolManager',
-        type: 'address',
-      },
-    ],
+    inputs: [{ name: '_manager', internalType: 'contract IPoolManager', type: 'address' }],
   },
   { type: 'error', inputs: [], name: 'ERC20TransferFailed' },
   { type: 'error', inputs: [], name: 'NativeTransferFailed' },
@@ -4732,9 +4278,7 @@ export const poolSwapTestABI = [
     type: 'function',
     inputs: [],
     name: 'manager',
-    outputs: [
-      { name: '', internalType: 'contract IPoolManager', type: 'address' },
-    ],
+    outputs: [{ name: '', internalType: 'contract IPoolManager', type: 'address' }],
   },
   {
     stateMutability: 'payable',
@@ -4759,11 +4303,7 @@ export const poolSwapTestABI = [
         components: [
           { name: 'zeroForOne', internalType: 'bool', type: 'bool' },
           { name: 'amountSpecified', internalType: 'int256', type: 'int256' },
-          {
-            name: 'sqrtPriceLimitX96',
-            internalType: 'uint160',
-            type: 'uint160',
-          },
+          { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
         ],
       },
       {
@@ -4782,13 +4322,23 @@ export const poolSwapTestABI = [
   },
 ] as const
 
+/**
+ *
+ */
+export const poolSwapTestAddress = {
+  31337: '0xAf7CCF0Ff7Ef054A1db43330F5431958Ab4A9441',
+} as const
+
+/**
+ *
+ */
+export const poolSwapTestConfig = { address: poolSwapTestAddress, abi: poolSwapTestABI } as const
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Position
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const positionABI = [
-  { type: 'error', inputs: [], name: 'CannotUpdateEmptyPosition' },
-] as const
+export const positionABI = [{ type: 'error', inputs: [], name: 'CannotUpdateEmptyPosition' }] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TestERC20
@@ -4798,32 +4348,15 @@ export const testErc20ABI = [
   {
     stateMutability: 'nonpayable',
     type: 'constructor',
-    inputs: [
-      { name: 'amountToMint', internalType: 'uint256', type: 'uint256' },
-    ],
+    inputs: [{ name: 'amountToMint', internalType: 'uint256', type: 'uint256' }],
   },
   {
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'owner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'spender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'owner', internalType: 'address', type: 'address', indexed: true },
+      { name: 'spender', internalType: 'address', type: 'address', indexed: true },
+      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Approval',
   },
@@ -4833,12 +4366,7 @@ export const testErc20ABI = [
     inputs: [
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Transfer',
   },
@@ -4945,24 +4473,9 @@ export const uniMockErc20ABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'owner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'spender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'amount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'owner', internalType: 'address', type: 'address', indexed: true },
+      { name: 'spender', internalType: 'address', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Approval',
   },
@@ -4972,12 +4485,7 @@ export const uniMockErc20ABI = [
     inputs: [
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'amount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
     name: 'Transfer',
   },
@@ -5119,16 +4627,12 @@ export const uniMockErc20ABI = [
 export function useBaseHookRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof baseHookABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof baseHookABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: baseHookABI,
-    ...config,
-  } as UseContractReadConfig<typeof baseHookABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof baseHookABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: baseHookABI, ...config } as UseContractReadConfig<
+    typeof baseHookABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -5143,11 +4647,11 @@ export function useBaseHookGetHooksCalls<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: baseHookABI,
-    functionName: 'getHooksCalls',
-    ...config,
-  } as UseContractReadConfig<typeof baseHookABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: baseHookABI, functionName: 'getHooksCalls', ...config } as UseContractReadConfig<
+    typeof baseHookABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -5162,26 +4666,20 @@ export function useBaseHookPoolManager<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: baseHookABI,
-    functionName: 'poolManager',
-    ...config,
-  } as UseContractReadConfig<typeof baseHookABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: baseHookABI, functionName: 'poolManager', ...config } as UseContractReadConfig<
+    typeof baseHookABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link baseHookABI}__.
  */
-export function useBaseHookWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useBaseHookWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof baseHookABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof baseHookABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
@@ -5189,24 +4687,16 @@ export function useBaseHookWrite<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof baseHookABI, TFunctionName, TMode>({
-    abi: baseHookABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof baseHookABI, TFunctionName, TMode>({ abi: baseHookABI, ...config } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"afterDonate"`.
  */
-export function useBaseHookAfterDonate<
-  TMode extends WriteContractMode = undefined,
->(
+export function useBaseHookAfterDonate<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof baseHookABI,
-          'afterDonate'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof baseHookABI, 'afterDonate'>['request']['abi'],
         'afterDonate',
         TMode
       > & { functionName?: 'afterDonate' }
@@ -5225,15 +4715,10 @@ export function useBaseHookAfterDonate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"afterInitialize"`.
  */
-export function useBaseHookAfterInitialize<
-  TMode extends WriteContractMode = undefined,
->(
+export function useBaseHookAfterInitialize<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof baseHookABI,
-          'afterInitialize'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof baseHookABI, 'afterInitialize'>['request']['abi'],
         'afterInitialize',
         TMode
       > & { functionName?: 'afterInitialize' }
@@ -5252,23 +4737,14 @@ export function useBaseHookAfterInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"afterModifyPosition"`.
  */
-export function useBaseHookAfterModifyPosition<
-  TMode extends WriteContractMode = undefined,
->(
+export function useBaseHookAfterModifyPosition<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof baseHookABI,
-          'afterModifyPosition'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof baseHookABI, 'afterModifyPosition'>['request']['abi'],
         'afterModifyPosition',
         TMode
       > & { functionName?: 'afterModifyPosition' }
-    : UseContractWriteConfig<
-        typeof baseHookABI,
-        'afterModifyPosition',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof baseHookABI, 'afterModifyPosition', TMode> & {
         abi?: never
         functionName?: 'afterModifyPosition'
       } = {} as any,
@@ -5283,15 +4759,10 @@ export function useBaseHookAfterModifyPosition<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"afterSwap"`.
  */
-export function useBaseHookAfterSwap<
-  TMode extends WriteContractMode = undefined,
->(
+export function useBaseHookAfterSwap<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof baseHookABI,
-          'afterSwap'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof baseHookABI, 'afterSwap'>['request']['abi'],
         'afterSwap',
         TMode
       > & { functionName?: 'afterSwap' }
@@ -5310,15 +4781,10 @@ export function useBaseHookAfterSwap<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"beforeDonate"`.
  */
-export function useBaseHookBeforeDonate<
-  TMode extends WriteContractMode = undefined,
->(
+export function useBaseHookBeforeDonate<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof baseHookABI,
-          'beforeDonate'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof baseHookABI, 'beforeDonate'>['request']['abi'],
         'beforeDonate',
         TMode
       > & { functionName?: 'beforeDonate' }
@@ -5337,15 +4803,10 @@ export function useBaseHookBeforeDonate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"beforeInitialize"`.
  */
-export function useBaseHookBeforeInitialize<
-  TMode extends WriteContractMode = undefined,
->(
+export function useBaseHookBeforeInitialize<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof baseHookABI,
-          'beforeInitialize'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof baseHookABI, 'beforeInitialize'>['request']['abi'],
         'beforeInitialize',
         TMode
       > & { functionName?: 'beforeInitialize' }
@@ -5364,23 +4825,14 @@ export function useBaseHookBeforeInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"beforeModifyPosition"`.
  */
-export function useBaseHookBeforeModifyPosition<
-  TMode extends WriteContractMode = undefined,
->(
+export function useBaseHookBeforeModifyPosition<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof baseHookABI,
-          'beforeModifyPosition'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof baseHookABI, 'beforeModifyPosition'>['request']['abi'],
         'beforeModifyPosition',
         TMode
       > & { functionName?: 'beforeModifyPosition' }
-    : UseContractWriteConfig<
-        typeof baseHookABI,
-        'beforeModifyPosition',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof baseHookABI, 'beforeModifyPosition', TMode> & {
         abi?: never
         functionName?: 'beforeModifyPosition'
       } = {} as any,
@@ -5395,15 +4847,10 @@ export function useBaseHookBeforeModifyPosition<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"beforeSwap"`.
  */
-export function useBaseHookBeforeSwap<
-  TMode extends WriteContractMode = undefined,
->(
+export function useBaseHookBeforeSwap<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof baseHookABI,
-          'beforeSwap'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof baseHookABI, 'beforeSwap'>['request']['abi'],
         'beforeSwap',
         TMode
       > & { functionName?: 'beforeSwap' }
@@ -5422,15 +4869,10 @@ export function useBaseHookBeforeSwap<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"lockAcquired"`.
  */
-export function useBaseHookLockAcquired<
-  TMode extends WriteContractMode = undefined,
->(
+export function useBaseHookLockAcquired<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof baseHookABI,
-          'lockAcquired'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof baseHookABI, 'lockAcquired'>['request']['abi'],
         'lockAcquired',
         TMode
       > & { functionName?: 'lockAcquired' }
@@ -5450,25 +4892,19 @@ export function useBaseHookLockAcquired<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link baseHookABI}__.
  */
 export function usePrepareBaseHookWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof baseHookABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof baseHookABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: baseHookABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof baseHookABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: baseHookABI, ...config } as UsePrepareContractWriteConfig<
+    typeof baseHookABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"afterDonate"`.
  */
 export function usePrepareBaseHookAfterDonate(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof baseHookABI, 'afterDonate'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof baseHookABI, 'afterDonate'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: baseHookABI,
@@ -5513,10 +4949,7 @@ export function usePrepareBaseHookAfterModifyPosition(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"afterSwap"`.
  */
 export function usePrepareBaseHookAfterSwap(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof baseHookABI, 'afterSwap'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof baseHookABI, 'afterSwap'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: baseHookABI,
@@ -5529,10 +4962,7 @@ export function usePrepareBaseHookAfterSwap(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"beforeDonate"`.
  */
 export function usePrepareBaseHookBeforeDonate(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof baseHookABI, 'beforeDonate'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof baseHookABI, 'beforeDonate'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: baseHookABI,
@@ -5570,20 +5000,14 @@ export function usePrepareBaseHookBeforeModifyPosition(
     abi: baseHookABI,
     functionName: 'beforeModifyPosition',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof baseHookABI,
-    'beforeModifyPosition'
-  >)
+  } as UsePrepareContractWriteConfig<typeof baseHookABI, 'beforeModifyPosition'>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"beforeSwap"`.
  */
 export function usePrepareBaseHookBeforeSwap(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof baseHookABI, 'beforeSwap'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof baseHookABI, 'beforeSwap'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: baseHookABI,
@@ -5596,10 +5020,7 @@ export function usePrepareBaseHookBeforeSwap(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link baseHookABI}__ and `functionName` set to `"lockAcquired"`.
  */
 export function usePrepareBaseHookLockAcquired(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof baseHookABI, 'lockAcquired'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof baseHookABI, 'lockAcquired'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: baseHookABI,
@@ -5614,16 +5035,12 @@ export function usePrepareBaseHookLockAcquired(
 export function useConstantsRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof constantsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof constantsABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: constantsABI,
-    ...config,
-  } as UseContractReadConfig<typeof constantsABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof constantsABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: constantsABI, ...config } as UseContractReadConfig<
+    typeof constantsABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -5638,11 +5055,11 @@ export function useConstantsSqrtRatio_121_100<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: constantsABI,
-    functionName: 'SQRT_RATIO_121_100',
-    ...config,
-  } as UseContractReadConfig<typeof constantsABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: constantsABI, functionName: 'SQRT_RATIO_121_100', ...config } as UseContractReadConfig<
+    typeof constantsABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -5657,11 +5074,11 @@ export function useConstantsSqrtRatio_1_1<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: constantsABI,
-    functionName: 'SQRT_RATIO_1_1',
-    ...config,
-  } as UseContractReadConfig<typeof constantsABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: constantsABI, functionName: 'SQRT_RATIO_1_1', ...config } as UseContractReadConfig<
+    typeof constantsABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -5676,11 +5093,11 @@ export function useConstantsSqrtRatio_1_2<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: constantsABI,
-    functionName: 'SQRT_RATIO_1_2',
-    ...config,
-  } as UseContractReadConfig<typeof constantsABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: constantsABI, functionName: 'SQRT_RATIO_1_2', ...config } as UseContractReadConfig<
+    typeof constantsABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -5695,11 +5112,11 @@ export function useConstantsSqrtRatio_1_4<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: constantsABI,
-    functionName: 'SQRT_RATIO_1_4',
-    ...config,
-  } as UseContractReadConfig<typeof constantsABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: constantsABI, functionName: 'SQRT_RATIO_1_4', ...config } as UseContractReadConfig<
+    typeof constantsABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -5714,11 +5131,11 @@ export function useConstantsSqrtRatio_2_1<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: constantsABI,
-    functionName: 'SQRT_RATIO_2_1',
-    ...config,
-  } as UseContractReadConfig<typeof constantsABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: constantsABI, functionName: 'SQRT_RATIO_2_1', ...config } as UseContractReadConfig<
+    typeof constantsABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -5733,33 +5150,37 @@ export function useConstantsSqrtRatio_4_1<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: constantsABI,
-    functionName: 'SQRT_RATIO_4_1',
-    ...config,
-  } as UseContractReadConfig<typeof constantsABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: constantsABI, functionName: 'SQRT_RATIO_4_1', ...config } as UseContractReadConfig<
+    typeof constantsABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__.
+ *
+ *
  */
 export function useCounterRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof counterABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>, 'abi' | 'address'> & {
+    chainId?: keyof typeof counterAddress
+  } = {} as any,
 ) {
-  return useContractRead({
-    abi: counterABI,
-    ...config,
-  } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: counterABI, address: counterAddress[31337], ...config } as UseContractReadConfig<
+    typeof counterABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterModifyPositionCount"`.
+ *
+ *
  */
 export function useCounterAfterModifyPositionCount<
   TFunctionName extends 'afterModifyPositionCount',
@@ -5767,11 +5188,12 @@ export function useCounterAfterModifyPositionCount<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
   return useContractRead({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'afterModifyPositionCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5779,6 +5201,8 @@ export function useCounterAfterModifyPositionCount<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterSwapCount"`.
+ *
+ *
  */
 export function useCounterAfterSwapCount<
   TFunctionName extends 'afterSwapCount',
@@ -5786,11 +5210,12 @@ export function useCounterAfterSwapCount<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
   return useContractRead({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'afterSwapCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5798,6 +5223,8 @@ export function useCounterAfterSwapCount<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeModifyPositionCount"`.
+ *
+ *
  */
 export function useCounterBeforeModifyPositionCount<
   TFunctionName extends 'beforeModifyPositionCount',
@@ -5805,11 +5232,12 @@ export function useCounterBeforeModifyPositionCount<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
   return useContractRead({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'beforeModifyPositionCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5817,6 +5245,8 @@ export function useCounterBeforeModifyPositionCount<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeSwapCount"`.
+ *
+ *
  */
 export function useCounterBeforeSwapCount<
   TFunctionName extends 'beforeSwapCount',
@@ -5824,11 +5254,12 @@ export function useCounterBeforeSwapCount<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
   return useContractRead({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'beforeSwapCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5836,6 +5267,8 @@ export function useCounterBeforeSwapCount<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"getHooksCalls"`.
+ *
+ *
  */
 export function useCounterGetHooksCalls<
   TFunctionName extends 'getHooksCalls',
@@ -5843,11 +5276,12 @@ export function useCounterGetHooksCalls<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
   return useContractRead({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'getHooksCalls',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5855,6 +5289,8 @@ export function useCounterGetHooksCalls<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"poolManager"`.
+ *
+ *
  */
 export function useCounterPoolManager<
   TFunctionName extends 'poolManager',
@@ -5862,11 +5298,12 @@ export function useCounterPoolManager<
 >(
   config: Omit<
     UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
   return useContractRead({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'poolManager',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5874,49 +5311,58 @@ export function useCounterPoolManager<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__.
+ *
+ *
  */
 export function useCounterWrite<
   TFunctionName extends string,
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
         PrepareWriteContractResult<typeof counterABI, string>['request']['abi'],
         TFunctionName,
         TMode
-      >
+      > & { address?: Address; chainId?: TChainId }
     : UseContractWriteConfig<typeof counterABI, TFunctionName, TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
       } = {} as any,
 ) {
   return useContractWrite<typeof counterABI, TFunctionName, TMode>({
     abi: counterABI,
+    address: counterAddress[31337],
     ...config,
   } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterDonate"`.
+ *
+ *
  */
 export function useCounterAfterDonate<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof counterABI,
-          'afterDonate'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof counterABI, 'afterDonate'>['request']['abi'],
         'afterDonate',
         TMode
-      > & { functionName?: 'afterDonate' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'afterDonate' }
     : UseContractWriteConfig<typeof counterABI, 'afterDonate', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'afterDonate'
       } = {} as any,
 ) {
   return useContractWrite<typeof counterABI, 'afterDonate', TMode>({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'afterDonate',
     ...config,
   } as any)
@@ -5924,26 +5370,29 @@ export function useCounterAfterDonate<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterInitialize"`.
+ *
+ *
  */
 export function useCounterAfterInitialize<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof counterABI,
-          'afterInitialize'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof counterABI, 'afterInitialize'>['request']['abi'],
         'afterInitialize',
         TMode
-      > & { functionName?: 'afterInitialize' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'afterInitialize' }
     : UseContractWriteConfig<typeof counterABI, 'afterInitialize', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'afterInitialize'
       } = {} as any,
 ) {
   return useContractWrite<typeof counterABI, 'afterInitialize', TMode>({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'afterInitialize',
     ...config,
   } as any)
@@ -5951,30 +5400,29 @@ export function useCounterAfterInitialize<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterModifyPosition"`.
+ *
+ *
  */
 export function useCounterAfterModifyPosition<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof counterABI,
-          'afterModifyPosition'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof counterABI, 'afterModifyPosition'>['request']['abi'],
         'afterModifyPosition',
         TMode
-      > & { functionName?: 'afterModifyPosition' }
-    : UseContractWriteConfig<
-        typeof counterABI,
-        'afterModifyPosition',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'afterModifyPosition' }
+    : UseContractWriteConfig<typeof counterABI, 'afterModifyPosition', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'afterModifyPosition'
       } = {} as any,
 ) {
   return useContractWrite<typeof counterABI, 'afterModifyPosition', TMode>({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'afterModifyPosition',
     ...config,
   } as any)
@@ -5982,26 +5430,29 @@ export function useCounterAfterModifyPosition<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterSwap"`.
+ *
+ *
  */
 export function useCounterAfterSwap<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof counterABI,
-          'afterSwap'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof counterABI, 'afterSwap'>['request']['abi'],
         'afterSwap',
         TMode
-      > & { functionName?: 'afterSwap' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'afterSwap' }
     : UseContractWriteConfig<typeof counterABI, 'afterSwap', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'afterSwap'
       } = {} as any,
 ) {
   return useContractWrite<typeof counterABI, 'afterSwap', TMode>({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'afterSwap',
     ...config,
   } as any)
@@ -6009,26 +5460,29 @@ export function useCounterAfterSwap<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeDonate"`.
+ *
+ *
  */
 export function useCounterBeforeDonate<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof counterABI,
-          'beforeDonate'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof counterABI, 'beforeDonate'>['request']['abi'],
         'beforeDonate',
         TMode
-      > & { functionName?: 'beforeDonate' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'beforeDonate' }
     : UseContractWriteConfig<typeof counterABI, 'beforeDonate', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'beforeDonate'
       } = {} as any,
 ) {
   return useContractWrite<typeof counterABI, 'beforeDonate', TMode>({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'beforeDonate',
     ...config,
   } as any)
@@ -6036,26 +5490,29 @@ export function useCounterBeforeDonate<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeInitialize"`.
+ *
+ *
  */
 export function useCounterBeforeInitialize<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof counterABI,
-          'beforeInitialize'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof counterABI, 'beforeInitialize'>['request']['abi'],
         'beforeInitialize',
         TMode
-      > & { functionName?: 'beforeInitialize' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'beforeInitialize' }
     : UseContractWriteConfig<typeof counterABI, 'beforeInitialize', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'beforeInitialize'
       } = {} as any,
 ) {
   return useContractWrite<typeof counterABI, 'beforeInitialize', TMode>({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'beforeInitialize',
     ...config,
   } as any)
@@ -6063,30 +5520,29 @@ export function useCounterBeforeInitialize<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeModifyPosition"`.
+ *
+ *
  */
 export function useCounterBeforeModifyPosition<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof counterABI,
-          'beforeModifyPosition'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof counterABI, 'beforeModifyPosition'>['request']['abi'],
         'beforeModifyPosition',
         TMode
-      > & { functionName?: 'beforeModifyPosition' }
-    : UseContractWriteConfig<
-        typeof counterABI,
-        'beforeModifyPosition',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'beforeModifyPosition' }
+    : UseContractWriteConfig<typeof counterABI, 'beforeModifyPosition', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'beforeModifyPosition'
       } = {} as any,
 ) {
   return useContractWrite<typeof counterABI, 'beforeModifyPosition', TMode>({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'beforeModifyPosition',
     ...config,
   } as any)
@@ -6094,26 +5550,29 @@ export function useCounterBeforeModifyPosition<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeSwap"`.
+ *
+ *
  */
 export function useCounterBeforeSwap<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof counterABI,
-          'beforeSwap'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof counterABI, 'beforeSwap'>['request']['abi'],
         'beforeSwap',
         TMode
-      > & { functionName?: 'beforeSwap' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'beforeSwap' }
     : UseContractWriteConfig<typeof counterABI, 'beforeSwap', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'beforeSwap'
       } = {} as any,
 ) {
   return useContractWrite<typeof counterABI, 'beforeSwap', TMode>({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'beforeSwap',
     ...config,
   } as any)
@@ -6121,26 +5580,29 @@ export function useCounterBeforeSwap<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"lockAcquired"`.
+ *
+ *
  */
 export function useCounterLockAcquired<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof counterAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof counterABI,
-          'lockAcquired'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof counterABI, 'lockAcquired'>['request']['abi'],
         'lockAcquired',
         TMode
-      > & { functionName?: 'lockAcquired' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'lockAcquired' }
     : UseContractWriteConfig<typeof counterABI, 'lockAcquired', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'lockAcquired'
       } = {} as any,
 ) {
   return useContractWrite<typeof counterABI, 'lockAcquired', TMode>({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'lockAcquired',
     ...config,
   } as any)
@@ -6148,30 +5610,34 @@ export function useCounterLockAcquired<
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__.
+ *
+ *
  */
 export function usePrepareCounterWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof counterABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof counterABI, TFunctionName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof counterAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: counterABI,
+    address: counterAddress[31337],
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, TFunctionName>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterDonate"`.
+ *
+ *
  */
 export function usePrepareCounterAfterDonate(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof counterABI, 'afterDonate'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof counterABI, 'afterDonate'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof counterAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'afterDonate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterDonate'>)
@@ -6179,15 +5645,18 @@ export function usePrepareCounterAfterDonate(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterInitialize"`.
+ *
+ *
  */
 export function usePrepareCounterAfterInitialize(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'afterInitialize'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'afterInitialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterInitialize'>)
@@ -6195,15 +5664,18 @@ export function usePrepareCounterAfterInitialize(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterModifyPosition"`.
+ *
+ *
  */
 export function usePrepareCounterAfterModifyPosition(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'afterModifyPosition'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'afterModifyPosition',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterModifyPosition'>)
@@ -6211,15 +5683,17 @@ export function usePrepareCounterAfterModifyPosition(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterSwap"`.
+ *
+ *
  */
 export function usePrepareCounterAfterSwap(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof counterABI, 'afterSwap'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof counterABI, 'afterSwap'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof counterAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'afterSwap',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterSwap'>)
@@ -6227,15 +5701,17 @@ export function usePrepareCounterAfterSwap(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeDonate"`.
+ *
+ *
  */
 export function usePrepareCounterBeforeDonate(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof counterABI, 'beforeDonate'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof counterABI, 'beforeDonate'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof counterAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'beforeDonate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeDonate'>)
@@ -6243,15 +5719,18 @@ export function usePrepareCounterBeforeDonate(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeInitialize"`.
+ *
+ *
  */
 export function usePrepareCounterBeforeInitialize(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'beforeInitialize'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'beforeInitialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeInitialize'>)
@@ -6259,15 +5738,18 @@ export function usePrepareCounterBeforeInitialize(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeModifyPosition"`.
+ *
+ *
  */
 export function usePrepareCounterBeforeModifyPosition(
   config: Omit<
     UsePrepareContractWriteConfig<typeof counterABI, 'beforeModifyPosition'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'beforeModifyPosition',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeModifyPosition'>)
@@ -6275,15 +5757,17 @@ export function usePrepareCounterBeforeModifyPosition(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeSwap"`.
+ *
+ *
  */
 export function usePrepareCounterBeforeSwap(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof counterABI, 'beforeSwap'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof counterABI, 'beforeSwap'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof counterAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'beforeSwap',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeSwap'>)
@@ -6291,15 +5775,17 @@ export function usePrepareCounterBeforeSwap(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"lockAcquired"`.
+ *
+ *
  */
 export function usePrepareCounterLockAcquired(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof counterABI, 'lockAcquired'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof counterABI, 'lockAcquired'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof counterAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: counterABI,
+    address: counterAddress[31337],
     functionName: 'lockAcquired',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'lockAcquired'>)
@@ -6311,20 +5797,8 @@ export function usePrepareCounterLockAcquired(
 export function useCurrencyLibraryRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof currencyLibraryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof currencyLibraryABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: currencyLibraryABI,
-    ...config,
-  } as UseContractReadConfig<
+>(config: Omit<UseContractReadConfig<typeof currencyLibraryABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: currencyLibraryABI, ...config } as UseContractReadConfig<
     typeof currencyLibraryABI,
     TFunctionName,
     TSelectData
@@ -6339,19 +5813,11 @@ export function useCurrencyLibraryNative<
   TSelectData = ReadContractResult<typeof currencyLibraryABI, TFunctionName>,
 >(
   config: Omit<
-    UseContractReadConfig<
-      typeof currencyLibraryABI,
-      TFunctionName,
-      TSelectData
-    >,
+    UseContractReadConfig<typeof currencyLibraryABI, TFunctionName, TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: currencyLibraryABI,
-    functionName: 'NATIVE',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: currencyLibraryABI, functionName: 'NATIVE', ...config } as UseContractReadConfig<
     typeof currencyLibraryABI,
     TFunctionName,
     TSelectData
@@ -6364,16 +5830,12 @@ export function useCurrencyLibraryNative<
 export function useErc1155Read<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof erc1155ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: erc1155ABI,
-    ...config,
-  } as UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: erc1155ABI, ...config } as UseContractReadConfig<
+    typeof erc1155ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6388,11 +5850,11 @@ export function useErc1155BalanceOf<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: erc1155ABI,
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc1155ABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
+    typeof erc1155ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6407,11 +5869,11 @@ export function useErc1155BalanceOfBatch<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: erc1155ABI,
-    functionName: 'balanceOfBatch',
-    ...config,
-  } as UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc1155ABI, functionName: 'balanceOfBatch', ...config } as UseContractReadConfig<
+    typeof erc1155ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6426,11 +5888,11 @@ export function useErc1155IsApprovedForAll<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: erc1155ABI,
-    functionName: 'isApprovedForAll',
-    ...config,
-  } as UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc1155ABI, functionName: 'isApprovedForAll', ...config } as UseContractReadConfig<
+    typeof erc1155ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6445,11 +5907,11 @@ export function useErc1155SupportsInterface<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: erc1155ABI,
-    functionName: 'supportsInterface',
-    ...config,
-  } as UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc1155ABI, functionName: 'supportsInterface', ...config } as UseContractReadConfig<
+    typeof erc1155ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6464,20 +5926,17 @@ export function useErc1155Uri<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: erc1155ABI,
-    functionName: 'uri',
-    ...config,
-  } as UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc1155ABI, functionName: 'uri', ...config } as UseContractReadConfig<
+    typeof erc1155ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link erc1155ABI}__.
  */
-export function useErc1155Write<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useErc1155Write<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
         PrepareWriteContractResult<typeof erc1155ABI, string>['request']['abi'],
@@ -6488,32 +5947,20 @@ export function useErc1155Write<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof erc1155ABI, TFunctionName, TMode>({
-    abi: erc1155ABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof erc1155ABI, TFunctionName, TMode>({ abi: erc1155ABI, ...config } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
  */
-export function useErc1155SafeBatchTransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useErc1155SafeBatchTransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc1155ABI,
-          'safeBatchTransferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof erc1155ABI, 'safeBatchTransferFrom'>['request']['abi'],
         'safeBatchTransferFrom',
         TMode
       > & { functionName?: 'safeBatchTransferFrom' }
-    : UseContractWriteConfig<
-        typeof erc1155ABI,
-        'safeBatchTransferFrom',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof erc1155ABI, 'safeBatchTransferFrom', TMode> & {
         abi?: never
         functionName?: 'safeBatchTransferFrom'
       } = {} as any,
@@ -6528,15 +5975,10 @@ export function useErc1155SafeBatchTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"safeTransferFrom"`.
  */
-export function useErc1155SafeTransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useErc1155SafeTransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc1155ABI,
-          'safeTransferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof erc1155ABI, 'safeTransferFrom'>['request']['abi'],
         'safeTransferFrom',
         TMode
       > & { functionName?: 'safeTransferFrom' }
@@ -6555,15 +5997,10 @@ export function useErc1155SafeTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"setApprovalForAll"`.
  */
-export function useErc1155SetApprovalForAll<
-  TMode extends WriteContractMode = undefined,
->(
+export function useErc1155SetApprovalForAll<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc1155ABI,
-          'setApprovalForAll'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof erc1155ABI, 'setApprovalForAll'>['request']['abi'],
         'setApprovalForAll',
         TMode
       > & { functionName?: 'setApprovalForAll' }
@@ -6583,15 +6020,12 @@ export function useErc1155SetApprovalForAll<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link erc1155ABI}__.
  */
 export function usePrepareErc1155Write<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof erc1155ABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof erc1155ABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: erc1155ABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof erc1155ABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: erc1155ABI, ...config } as UsePrepareContractWriteConfig<
+    typeof erc1155ABI,
+    TFunctionName
+  >)
 }
 
 /**
@@ -6607,10 +6041,7 @@ export function usePrepareErc1155SafeBatchTransferFrom(
     abi: erc1155ABI,
     functionName: 'safeBatchTransferFrom',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof erc1155ABI,
-    'safeBatchTransferFrom'
-  >)
+  } as UsePrepareContractWriteConfig<typeof erc1155ABI, 'safeBatchTransferFrom'>)
 }
 
 /**
@@ -6649,79 +6080,57 @@ export function usePrepareErc1155SetApprovalForAll(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc1155ABI}__.
  */
 export function useErc1155Event<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof erc1155ABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof erc1155ABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: erc1155ABI,
-    ...config,
-  } as UseContractEventConfig<typeof erc1155ABI, TEventName>)
+  return useContractEvent({ abi: erc1155ABI, ...config } as UseContractEventConfig<typeof erc1155ABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc1155ABI}__ and `eventName` set to `"ApprovalForAll"`.
  */
 export function useErc1155ApprovalForAllEvent(
-  config: Omit<
-    UseContractEventConfig<typeof erc1155ABI, 'ApprovalForAll'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof erc1155ABI, 'ApprovalForAll'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: erc1155ABI,
-    eventName: 'ApprovalForAll',
-    ...config,
-  } as UseContractEventConfig<typeof erc1155ABI, 'ApprovalForAll'>)
+  return useContractEvent({ abi: erc1155ABI, eventName: 'ApprovalForAll', ...config } as UseContractEventConfig<
+    typeof erc1155ABI,
+    'ApprovalForAll'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc1155ABI}__ and `eventName` set to `"TransferBatch"`.
  */
 export function useErc1155TransferBatchEvent(
-  config: Omit<
-    UseContractEventConfig<typeof erc1155ABI, 'TransferBatch'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof erc1155ABI, 'TransferBatch'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: erc1155ABI,
-    eventName: 'TransferBatch',
-    ...config,
-  } as UseContractEventConfig<typeof erc1155ABI, 'TransferBatch'>)
+  return useContractEvent({ abi: erc1155ABI, eventName: 'TransferBatch', ...config } as UseContractEventConfig<
+    typeof erc1155ABI,
+    'TransferBatch'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc1155ABI}__ and `eventName` set to `"TransferSingle"`.
  */
 export function useErc1155TransferSingleEvent(
-  config: Omit<
-    UseContractEventConfig<typeof erc1155ABI, 'TransferSingle'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof erc1155ABI, 'TransferSingle'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: erc1155ABI,
-    eventName: 'TransferSingle',
-    ...config,
-  } as UseContractEventConfig<typeof erc1155ABI, 'TransferSingle'>)
+  return useContractEvent({ abi: erc1155ABI, eventName: 'TransferSingle', ...config } as UseContractEventConfig<
+    typeof erc1155ABI,
+    'TransferSingle'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc1155ABI}__ and `eventName` set to `"URI"`.
  */
 export function useErc1155UriEvent(
-  config: Omit<
-    UseContractEventConfig<typeof erc1155ABI, 'URI'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof erc1155ABI, 'URI'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: erc1155ABI,
-    eventName: 'URI',
-    ...config,
-  } as UseContractEventConfig<typeof erc1155ABI, 'URI'>)
+  return useContractEvent({ abi: erc1155ABI, eventName: 'URI', ...config } as UseContractEventConfig<
+    typeof erc1155ABI,
+    'URI'
+  >)
 }
 
 /**
@@ -6730,12 +6139,7 @@ export function useErc1155UriEvent(
 export function useErc165Read<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof erc165ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof erc165ABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
+>(config: Omit<UseContractReadConfig<typeof erc165ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
   return useContractRead({ abi: erc165ABI, ...config } as UseContractReadConfig<
     typeof erc165ABI,
     TFunctionName,
@@ -6750,16 +6154,13 @@ export function useErc165SupportsInterface<
   TFunctionName extends 'supportsInterface',
   TSelectData = ReadContractResult<typeof erc165ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof erc165ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof erc165ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: erc165ABI,
-    functionName: 'supportsInterface',
-    ...config,
-  } as UseContractReadConfig<typeof erc165ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc165ABI, functionName: 'supportsInterface', ...config } as UseContractReadConfig<
+    typeof erc165ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6768,12 +6169,7 @@ export function useErc165SupportsInterface<
 export function useErc20Read<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof erc20ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
+>(config: Omit<UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
   return useContractRead({ abi: erc20ABI, ...config } as UseContractReadConfig<
     typeof erc20ABI,
     TFunctionName,
@@ -6788,16 +6184,13 @@ export function useErc20DomainSeparator<
   TFunctionName extends 'DOMAIN_SEPARATOR',
   TSelectData = ReadContractResult<typeof erc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: erc20ABI,
-    functionName: 'DOMAIN_SEPARATOR',
-    ...config,
-  } as UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc20ABI, functionName: 'DOMAIN_SEPARATOR', ...config } as UseContractReadConfig<
+    typeof erc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6807,16 +6200,13 @@ export function useErc20Allowance<
   TFunctionName extends 'allowance',
   TSelectData = ReadContractResult<typeof erc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: erc20ABI,
-    functionName: 'allowance',
-    ...config,
-  } as UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc20ABI, functionName: 'allowance', ...config } as UseContractReadConfig<
+    typeof erc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6826,16 +6216,13 @@ export function useErc20BalanceOf<
   TFunctionName extends 'balanceOf',
   TSelectData = ReadContractResult<typeof erc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: erc20ABI,
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc20ABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
+    typeof erc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6845,16 +6232,13 @@ export function useErc20Decimals<
   TFunctionName extends 'decimals',
   TSelectData = ReadContractResult<typeof erc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: erc20ABI,
-    functionName: 'decimals',
-    ...config,
-  } as UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc20ABI, functionName: 'decimals', ...config } as UseContractReadConfig<
+    typeof erc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6864,16 +6248,13 @@ export function useErc20Name<
   TFunctionName extends 'name',
   TSelectData = ReadContractResult<typeof erc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: erc20ABI,
-    functionName: 'name',
-    ...config,
-  } as UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc20ABI, functionName: 'name', ...config } as UseContractReadConfig<
+    typeof erc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6883,16 +6264,13 @@ export function useErc20Nonces<
   TFunctionName extends 'nonces',
   TSelectData = ReadContractResult<typeof erc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: erc20ABI,
-    functionName: 'nonces',
-    ...config,
-  } as UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc20ABI, functionName: 'nonces', ...config } as UseContractReadConfig<
+    typeof erc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6902,16 +6280,13 @@ export function useErc20Symbol<
   TFunctionName extends 'symbol',
   TSelectData = ReadContractResult<typeof erc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: erc20ABI,
-    functionName: 'symbol',
-    ...config,
-  } as UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc20ABI, functionName: 'symbol', ...config } as UseContractReadConfig<
+    typeof erc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -6921,25 +6296,19 @@ export function useErc20TotalSupply<
   TFunctionName extends 'totalSupply',
   TSelectData = ReadContractResult<typeof erc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: erc20ABI,
-    functionName: 'totalSupply',
-    ...config,
-  } as UseContractReadConfig<typeof erc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: erc20ABI, functionName: 'totalSupply', ...config } as UseContractReadConfig<
+    typeof erc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link erc20ABI}__.
  */
-export function useErc20Write<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useErc20Write<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
         PrepareWriteContractResult<typeof erc20ABI, string>['request']['abi'],
@@ -6950,10 +6319,7 @@ export function useErc20Write<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof erc20ABI, TFunctionName, TMode>({
-    abi: erc20ABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof erc20ABI, TFunctionName, TMode>({ abi: erc20ABI, ...config } as any)
 }
 
 /**
@@ -6962,10 +6328,7 @@ export function useErc20Write<
 export function useErc20Approve<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc20ABI,
-          'approve'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof erc20ABI, 'approve'>['request']['abi'],
         'approve',
         TMode
       > & { functionName?: 'approve' }
@@ -6996,11 +6359,7 @@ export function useErc20Permit<TMode extends WriteContractMode = undefined>(
         functionName?: 'permit'
       } = {} as any,
 ) {
-  return useContractWrite<typeof erc20ABI, 'permit', TMode>({
-    abi: erc20ABI,
-    functionName: 'permit',
-    ...config,
-  } as any)
+  return useContractWrite<typeof erc20ABI, 'permit', TMode>({ abi: erc20ABI, functionName: 'permit', ...config } as any)
 }
 
 /**
@@ -7009,10 +6368,7 @@ export function useErc20Permit<TMode extends WriteContractMode = undefined>(
 export function useErc20Transfer<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc20ABI,
-          'transfer'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof erc20ABI, 'transfer'>['request']['abi'],
         'transfer',
         TMode
       > & { functionName?: 'transfer' }
@@ -7031,15 +6387,10 @@ export function useErc20Transfer<TMode extends WriteContractMode = undefined>(
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link erc20ABI}__ and `functionName` set to `"transferFrom"`.
  */
-export function useErc20TransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useErc20TransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof erc20ABI,
-          'transferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof erc20ABI, 'transferFrom'>['request']['abi'],
         'transferFrom',
         TMode
       > & { functionName?: 'transferFrom' }
@@ -7059,57 +6410,43 @@ export function useErc20TransferFrom<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link erc20ABI}__.
  */
 export function usePrepareErc20Write<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof erc20ABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof erc20ABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: erc20ABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof erc20ABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: erc20ABI, ...config } as UsePrepareContractWriteConfig<
+    typeof erc20ABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link erc20ABI}__ and `functionName` set to `"approve"`.
  */
 export function usePrepareErc20Approve(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof erc20ABI, 'approve'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof erc20ABI, 'approve'>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: erc20ABI,
-    functionName: 'approve',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof erc20ABI, 'approve'>)
+  return usePrepareContractWrite({ abi: erc20ABI, functionName: 'approve', ...config } as UsePrepareContractWriteConfig<
+    typeof erc20ABI,
+    'approve'
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link erc20ABI}__ and `functionName` set to `"permit"`.
  */
 export function usePrepareErc20Permit(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof erc20ABI, 'permit'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof erc20ABI, 'permit'>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: erc20ABI,
-    functionName: 'permit',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof erc20ABI, 'permit'>)
+  return usePrepareContractWrite({ abi: erc20ABI, functionName: 'permit', ...config } as UsePrepareContractWriteConfig<
+    typeof erc20ABI,
+    'permit'
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link erc20ABI}__ and `functionName` set to `"transfer"`.
  */
 export function usePrepareErc20Transfer(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof erc20ABI, 'transfer'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof erc20ABI, 'transfer'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: erc20ABI,
@@ -7122,10 +6459,7 @@ export function usePrepareErc20Transfer(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link erc20ABI}__ and `functionName` set to `"transferFrom"`.
  */
 export function usePrepareErc20TransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof erc20ABI, 'transferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof erc20ABI, 'transferFrom'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: erc20ABI,
@@ -7138,47 +6472,33 @@ export function usePrepareErc20TransferFrom(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc20ABI}__.
  */
 export function useErc20Event<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof erc20ABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof erc20ABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: erc20ABI,
-    ...config,
-  } as UseContractEventConfig<typeof erc20ABI, TEventName>)
+  return useContractEvent({ abi: erc20ABI, ...config } as UseContractEventConfig<typeof erc20ABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc20ABI}__ and `eventName` set to `"Approval"`.
  */
 export function useErc20ApprovalEvent(
-  config: Omit<
-    UseContractEventConfig<typeof erc20ABI, 'Approval'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof erc20ABI, 'Approval'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: erc20ABI,
-    eventName: 'Approval',
-    ...config,
-  } as UseContractEventConfig<typeof erc20ABI, 'Approval'>)
+  return useContractEvent({ abi: erc20ABI, eventName: 'Approval', ...config } as UseContractEventConfig<
+    typeof erc20ABI,
+    'Approval'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc20ABI}__ and `eventName` set to `"Transfer"`.
  */
 export function useErc20TransferEvent(
-  config: Omit<
-    UseContractEventConfig<typeof erc20ABI, 'Transfer'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof erc20ABI, 'Transfer'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: erc20ABI,
-    eventName: 'Transfer',
-    ...config,
-  } as UseContractEventConfig<typeof erc20ABI, 'Transfer'>)
+  return useContractEvent({ abi: erc20ABI, eventName: 'Transfer', ...config } as UseContractEventConfig<
+    typeof erc20ABI,
+    'Transfer'
+  >)
 }
 
 /**
@@ -7187,16 +6507,12 @@ export function useErc20TransferEvent(
 export function useFeeLibraryRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof feeLibraryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof feeLibraryABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: feeLibraryABI,
-    ...config,
-  } as UseContractReadConfig<typeof feeLibraryABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof feeLibraryABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: feeLibraryABI, ...config } as UseContractReadConfig<
+    typeof feeLibraryABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7211,11 +6527,11 @@ export function useFeeLibraryDynamicFeeFlag<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: feeLibraryABI,
-    functionName: 'DYNAMIC_FEE_FLAG',
-    ...config,
-  } as UseContractReadConfig<typeof feeLibraryABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: feeLibraryABI, functionName: 'DYNAMIC_FEE_FLAG', ...config } as UseContractReadConfig<
+    typeof feeLibraryABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7230,11 +6546,11 @@ export function useFeeLibraryHookSwapFeeFlag<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: feeLibraryABI,
-    functionName: 'HOOK_SWAP_FEE_FLAG',
-    ...config,
-  } as UseContractReadConfig<typeof feeLibraryABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: feeLibraryABI, functionName: 'HOOK_SWAP_FEE_FLAG', ...config } as UseContractReadConfig<
+    typeof feeLibraryABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7268,11 +6584,11 @@ export function useFeeLibraryStaticFeeMask<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: feeLibraryABI,
-    functionName: 'STATIC_FEE_MASK',
-    ...config,
-  } as UseContractReadConfig<typeof feeLibraryABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: feeLibraryABI, functionName: 'STATIC_FEE_MASK', ...config } as UseContractReadConfig<
+    typeof feeLibraryABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7281,12 +6597,7 @@ export function useFeeLibraryStaticFeeMask<
 export function useFeesRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof feesABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
+>(config: Omit<UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
   return useContractRead({ abi: feesABI, ...config } as UseContractReadConfig<
     typeof feesABI,
     TFunctionName,
@@ -7300,12 +6611,7 @@ export function useFeesRead<
 export function useFeesMinProtocolFeeDenominator<
   TFunctionName extends 'MIN_PROTOCOL_FEE_DENOMINATOR',
   TSelectData = ReadContractResult<typeof feesABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
+>(config: Omit<UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any) {
   return useContractRead({
     abi: feesABI,
     functionName: 'MIN_PROTOCOL_FEE_DENOMINATOR',
@@ -7319,17 +6625,12 @@ export function useFeesMinProtocolFeeDenominator<
 export function useFeesHookFeesAccrued<
   TFunctionName extends 'hookFeesAccrued',
   TSelectData = ReadContractResult<typeof feesABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: feesABI,
-    functionName: 'hookFeesAccrued',
-    ...config,
-  } as UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any) {
+  return useContractRead({ abi: feesABI, functionName: 'hookFeesAccrued', ...config } as UseContractReadConfig<
+    typeof feesABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7338,17 +6639,12 @@ export function useFeesHookFeesAccrued<
 export function useFeesOwner<
   TFunctionName extends 'owner',
   TSelectData = ReadContractResult<typeof feesABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: feesABI,
-    functionName: 'owner',
-    ...config,
-  } as UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any) {
+  return useContractRead({ abi: feesABI, functionName: 'owner', ...config } as UseContractReadConfig<
+    typeof feesABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7357,17 +6653,12 @@ export function useFeesOwner<
 export function useFeesProtocolFeeController<
   TFunctionName extends 'protocolFeeController',
   TSelectData = ReadContractResult<typeof feesABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: feesABI,
-    functionName: 'protocolFeeController',
-    ...config,
-  } as UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any) {
+  return useContractRead({ abi: feesABI, functionName: 'protocolFeeController', ...config } as UseContractReadConfig<
+    typeof feesABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7376,54 +6667,34 @@ export function useFeesProtocolFeeController<
 export function useFeesProtocolFeesAccrued<
   TFunctionName extends 'protocolFeesAccrued',
   TSelectData = ReadContractResult<typeof feesABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: feesABI,
-    functionName: 'protocolFeesAccrued',
-    ...config,
-  } as UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof feesABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any) {
+  return useContractRead({ abi: feesABI, functionName: 'protocolFeesAccrued', ...config } as UseContractReadConfig<
+    typeof feesABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link feesABI}__.
  */
-export function useFeesWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useFeesWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof feesABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      >
+    ? UseContractWriteConfig<PrepareWriteContractResult<typeof feesABI, string>['request']['abi'], TFunctionName, TMode>
     : UseContractWriteConfig<typeof feesABI, TFunctionName, TMode> & {
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof feesABI, TFunctionName, TMode>({
-    abi: feesABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof feesABI, TFunctionName, TMode>({ abi: feesABI, ...config } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link feesABI}__ and `functionName` set to `"collectHookFees"`.
  */
-export function useFeesCollectHookFees<
-  TMode extends WriteContractMode = undefined,
->(
+export function useFeesCollectHookFees<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof feesABI,
-          'collectHookFees'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof feesABI, 'collectHookFees'>['request']['abi'],
         'collectHookFees',
         TMode
       > & { functionName?: 'collectHookFees' }
@@ -7442,15 +6713,10 @@ export function useFeesCollectHookFees<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link feesABI}__ and `functionName` set to `"collectProtocolFees"`.
  */
-export function useFeesCollectProtocolFees<
-  TMode extends WriteContractMode = undefined,
->(
+export function useFeesCollectProtocolFees<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof feesABI,
-          'collectProtocolFees'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof feesABI, 'collectProtocolFees'>['request']['abi'],
         'collectProtocolFees',
         TMode
       > & { functionName?: 'collectProtocolFees' }
@@ -7472,10 +6738,7 @@ export function useFeesCollectProtocolFees<
 export function useFeesSetOwner<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof feesABI,
-          'setOwner'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof feesABI, 'setOwner'>['request']['abi'],
         'setOwner',
         TMode
       > & { functionName?: 'setOwner' }
@@ -7494,23 +6757,14 @@ export function useFeesSetOwner<TMode extends WriteContractMode = undefined>(
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link feesABI}__ and `functionName` set to `"setProtocolFeeController"`.
  */
-export function useFeesSetProtocolFeeController<
-  TMode extends WriteContractMode = undefined,
->(
+export function useFeesSetProtocolFeeController<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof feesABI,
-          'setProtocolFeeController'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof feesABI, 'setProtocolFeeController'>['request']['abi'],
         'setProtocolFeeController',
         TMode
       > & { functionName?: 'setProtocolFeeController' }
-    : UseContractWriteConfig<
-        typeof feesABI,
-        'setProtocolFeeController',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof feesABI, 'setProtocolFeeController', TMode> & {
         abi?: never
         functionName?: 'setProtocolFeeController'
       } = {} as any,
@@ -7526,25 +6780,19 @@ export function useFeesSetProtocolFeeController<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link feesABI}__.
  */
 export function usePrepareFeesWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof feesABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof feesABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: feesABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof feesABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: feesABI, ...config } as UsePrepareContractWriteConfig<
+    typeof feesABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link feesABI}__ and `functionName` set to `"collectHookFees"`.
  */
 export function usePrepareFeesCollectHookFees(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof feesABI, 'collectHookFees'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof feesABI, 'collectHookFees'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: feesABI,
@@ -7573,16 +6821,12 @@ export function usePrepareFeesCollectProtocolFees(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link feesABI}__ and `functionName` set to `"setOwner"`.
  */
 export function usePrepareFeesSetOwner(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof feesABI, 'setOwner'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof feesABI, 'setOwner'>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: feesABI,
-    functionName: 'setOwner',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof feesABI, 'setOwner'>)
+  return usePrepareContractWrite({ abi: feesABI, functionName: 'setOwner', ...config } as UsePrepareContractWriteConfig<
+    typeof feesABI,
+    'setOwner'
+  >)
 }
 
 /**
@@ -7598,51 +6842,35 @@ export function usePrepareFeesSetProtocolFeeController(
     abi: feesABI,
     functionName: 'setProtocolFeeController',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof feesABI,
-    'setProtocolFeeController'
-  >)
+  } as UsePrepareContractWriteConfig<typeof feesABI, 'setProtocolFeeController'>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link feesABI}__.
  */
 export function useFeesEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof feesABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof feesABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({ abi: feesABI, ...config } as UseContractEventConfig<
-    typeof feesABI,
-    TEventName
-  >)
+  return useContractEvent({ abi: feesABI, ...config } as UseContractEventConfig<typeof feesABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link feesABI}__ and `eventName` set to `"OwnerChanged"`.
  */
 export function useFeesOwnerChangedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof feesABI, 'OwnerChanged'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof feesABI, 'OwnerChanged'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: feesABI,
-    eventName: 'OwnerChanged',
-    ...config,
-  } as UseContractEventConfig<typeof feesABI, 'OwnerChanged'>)
+  return useContractEvent({ abi: feesABI, eventName: 'OwnerChanged', ...config } as UseContractEventConfig<
+    typeof feesABI,
+    'OwnerChanged'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link feesABI}__ and `eventName` set to `"ProtocolFeeControllerUpdated"`.
  */
 export function useFeesProtocolFeeControllerUpdatedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof feesABI, 'ProtocolFeeControllerUpdated'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof feesABI, 'ProtocolFeeControllerUpdated'>, 'abi' | 'eventName'> = {} as any,
 ) {
   return useContractEvent({
     abi: feesABI,
@@ -7657,16 +6885,12 @@ export function useFeesProtocolFeeControllerUpdatedEvent(
 export function useHookMinerRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof hookMinerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof hookMinerABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: hookMinerABI,
-    ...config,
-  } as UseContractReadConfig<typeof hookMinerABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof hookMinerABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: hookMinerABI, ...config } as UseContractReadConfig<
+    typeof hookMinerABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7681,11 +6905,11 @@ export function useHookMinerComputeAddress<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: hookMinerABI,
-    functionName: 'computeAddress',
-    ...config,
-  } as UseContractReadConfig<typeof hookMinerABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: hookMinerABI, functionName: 'computeAddress', ...config } as UseContractReadConfig<
+    typeof hookMinerABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7700,11 +6924,11 @@ export function useHookMinerFind<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: hookMinerABI,
-    functionName: 'find',
-    ...config,
-  } as UseContractReadConfig<typeof hookMinerABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: hookMinerABI, functionName: 'find', ...config } as UseContractReadConfig<
+    typeof hookMinerABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7713,16 +6937,12 @@ export function useHookMinerFind<
 export function useHookTestRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof hookTestABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof hookTestABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: hookTestABI,
-    ...config,
-  } as UseContractReadConfig<typeof hookTestABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof hookTestABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: hookTestABI, ...config } as UseContractReadConfig<
+    typeof hookTestABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7737,11 +6957,11 @@ export function useHookTestIsTest<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: hookTestABI,
-    functionName: 'IS_TEST',
-    ...config,
-  } as UseContractReadConfig<typeof hookTestABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: hookTestABI, functionName: 'IS_TEST', ...config } as UseContractReadConfig<
+    typeof hookTestABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7756,11 +6976,11 @@ export function useHookTestMaxPriceLimit<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: hookTestABI,
-    functionName: 'MAX_PRICE_LIMIT',
-    ...config,
-  } as UseContractReadConfig<typeof hookTestABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: hookTestABI, functionName: 'MAX_PRICE_LIMIT', ...config } as UseContractReadConfig<
+    typeof hookTestABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -7775,26 +6995,20 @@ export function useHookTestMinPriceLimit<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: hookTestABI,
-    functionName: 'MIN_PRICE_LIMIT',
-    ...config,
-  } as UseContractReadConfig<typeof hookTestABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: hookTestABI, functionName: 'MIN_PRICE_LIMIT', ...config } as UseContractReadConfig<
+    typeof hookTestABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link hookTestABI}__.
  */
-export function useHookTestWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useHookTestWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof hookTestABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof hookTestABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
@@ -7802,10 +7016,7 @@ export function useHookTestWrite<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof hookTestABI, TFunctionName, TMode>({
-    abi: hookTestABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof hookTestABI, TFunctionName, TMode>({ abi: hookTestABI, ...config } as any)
 }
 
 /**
@@ -7814,10 +7025,7 @@ export function useHookTestWrite<
 export function useHookTestFailed<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof hookTestABI,
-          'failed'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof hookTestABI, 'failed'>['request']['abi'],
         'failed',
         TMode
       > & { functionName?: 'failed' }
@@ -7836,15 +7044,10 @@ export function useHookTestFailed<TMode extends WriteContractMode = undefined>(
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link hookTestABI}__ and `functionName` set to `"initHookTestEnv"`.
  */
-export function useHookTestInitHookTestEnv<
-  TMode extends WriteContractMode = undefined,
->(
+export function useHookTestInitHookTestEnv<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof hookTestABI,
-          'initHookTestEnv'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof hookTestABI, 'initHookTestEnv'>['request']['abi'],
         'initHookTestEnv',
         TMode
       > & { functionName?: 'initHookTestEnv' }
@@ -7864,25 +7067,19 @@ export function useHookTestInitHookTestEnv<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link hookTestABI}__.
  */
 export function usePrepareHookTestWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof hookTestABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof hookTestABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: hookTestABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof hookTestABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: hookTestABI, ...config } as UsePrepareContractWriteConfig<
+    typeof hookTestABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link hookTestABI}__ and `functionName` set to `"failed"`.
  */
 export function usePrepareHookTestFailed(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof hookTestABI, 'failed'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof hookTestABI, 'failed'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: hookTestABI,
@@ -7911,201 +7108,148 @@ export function usePrepareHookTestInitHookTestEnv(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__.
  */
 export function useHookTestEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, TEventName>)
+  return useContractEvent({ abi: hookTestABI, ...config } as UseContractEventConfig<typeof hookTestABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log"`.
  */
 export function useHookTestLogEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_address"`.
  */
 export function useHookTestLogAddressEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_address'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_address'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_address',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_address'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_address', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_address'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_array"`.
  */
 export function useHookTestLogArrayEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_array'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_array'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_array',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_array'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_array', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_array'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_bytes"`.
  */
 export function useHookTestLogBytesEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_bytes'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_bytes'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_bytes',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_bytes'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_bytes', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_bytes'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_bytes32"`.
  */
 export function useHookTestLogBytes32Event(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_bytes32'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_bytes32'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_bytes32',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_bytes32'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_bytes32', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_bytes32'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_int"`.
  */
 export function useHookTestLogIntEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_int'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_int'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_int',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_int'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_int', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_int'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_named_address"`.
  */
 export function useHookTestLogNamedAddressEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_named_address'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_named_address'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_named_address',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_named_address'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_named_address', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_named_address'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_named_array"`.
  */
 export function useHookTestLogNamedArrayEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_named_array'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_named_array'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_named_array',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_named_array'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_named_array', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_named_array'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_named_bytes"`.
  */
 export function useHookTestLogNamedBytesEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_named_bytes'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_named_bytes'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_named_bytes',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_named_bytes'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_named_bytes', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_named_bytes'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_named_bytes32"`.
  */
 export function useHookTestLogNamedBytes32Event(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_named_bytes32'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_named_bytes32'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_named_bytes32',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_named_bytes32'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_named_bytes32', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_named_bytes32'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_named_decimal_int"`.
  */
 export function useHookTestLogNamedDecimalIntEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_named_decimal_int'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_named_decimal_int'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_named_decimal_int',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_named_decimal_int'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_named_decimal_int', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_named_decimal_int'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_named_decimal_uint"`.
  */
 export function useHookTestLogNamedDecimalUintEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_named_decimal_uint'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_named_decimal_uint'>, 'abi' | 'eventName'> = {} as any,
 ) {
   return useContractEvent({
     abi: hookTestABI,
@@ -8118,119 +7262,85 @@ export function useHookTestLogNamedDecimalUintEvent(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_named_int"`.
  */
 export function useHookTestLogNamedIntEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_named_int'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_named_int'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_named_int',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_named_int'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_named_int', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_named_int'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_named_string"`.
  */
 export function useHookTestLogNamedStringEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_named_string'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_named_string'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_named_string',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_named_string'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_named_string', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_named_string'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_named_uint"`.
  */
 export function useHookTestLogNamedUintEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_named_uint'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_named_uint'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_named_uint',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_named_uint'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_named_uint', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_named_uint'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_string"`.
  */
 export function useHookTestLogStringEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_string'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_string'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_string',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_string'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_string', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_string'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"log_uint"`.
  */
 export function useHookTestLogUintEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'log_uint'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'log_uint'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'log_uint',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'log_uint'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'log_uint', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'log_uint'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link hookTestABI}__ and `eventName` set to `"logs"`.
  */
 export function useHookTestLogsEvent(
-  config: Omit<
-    UseContractEventConfig<typeof hookTestABI, 'logs'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof hookTestABI, 'logs'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: hookTestABI,
-    eventName: 'logs',
-    ...config,
-  } as UseContractEventConfig<typeof hookTestABI, 'logs'>)
+  return useContractEvent({ abi: hookTestABI, eventName: 'logs', ...config } as UseContractEventConfig<
+    typeof hookTestABI,
+    'logs'
+  >)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iDynamicFeeManagerABI}__.
  */
-export function useIDynamicFeeManagerWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useIDynamicFeeManagerWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iDynamicFeeManagerABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iDynamicFeeManagerABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
-    : UseContractWriteConfig<
-        typeof iDynamicFeeManagerABI,
-        TFunctionName,
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof iDynamicFeeManagerABI, TFunctionName, TMode> & {
         abi?: never
       } = {} as any,
 ) {
@@ -8243,15 +7353,10 @@ export function useIDynamicFeeManagerWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iDynamicFeeManagerABI}__ and `functionName` set to `"getFee"`.
  */
-export function useIDynamicFeeManagerGetFee<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIDynamicFeeManagerGetFee<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iDynamicFeeManagerABI,
-          'getFee'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iDynamicFeeManagerABI, 'getFee'>['request']['abi'],
         'getFee',
         TMode
       > & { functionName?: 'getFee' }
@@ -8271,15 +7376,9 @@ export function useIDynamicFeeManagerGetFee<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iDynamicFeeManagerABI}__.
  */
 export function usePrepareIDynamicFeeManagerWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iDynamicFeeManagerABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iDynamicFeeManagerABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: iDynamicFeeManagerABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<
+  return usePrepareContractWrite({ abi: iDynamicFeeManagerABI, ...config } as UsePrepareContractWriteConfig<
     typeof iDynamicFeeManagerABI,
     TFunctionName
   >)
@@ -8307,16 +7406,12 @@ export function usePrepareIDynamicFeeManagerGetFee(
 export function useIerc1155Read<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof ierc1155ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: ierc1155ABI,
-    ...config,
-  } as UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: ierc1155ABI, ...config } as UseContractReadConfig<
+    typeof ierc1155ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -8331,11 +7426,11 @@ export function useIerc1155BalanceOf<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc1155ABI,
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ierc1155ABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
+    typeof ierc1155ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -8350,11 +7445,11 @@ export function useIerc1155BalanceOfBatch<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc1155ABI,
-    functionName: 'balanceOfBatch',
-    ...config,
-  } as UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ierc1155ABI, functionName: 'balanceOfBatch', ...config } as UseContractReadConfig<
+    typeof ierc1155ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -8369,11 +7464,11 @@ export function useIerc1155IsApprovedForAll<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc1155ABI,
-    functionName: 'isApprovedForAll',
-    ...config,
-  } as UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ierc1155ABI, functionName: 'isApprovedForAll', ...config } as UseContractReadConfig<
+    typeof ierc1155ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -8388,26 +7483,20 @@ export function useIerc1155SupportsInterface<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc1155ABI,
-    functionName: 'supportsInterface',
-    ...config,
-  } as UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ierc1155ABI, functionName: 'supportsInterface', ...config } as UseContractReadConfig<
+    typeof ierc1155ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ABI}__.
  */
-export function useIerc1155Write<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc1155Write<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc1155ABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc1155ABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
@@ -8415,32 +7504,20 @@ export function useIerc1155Write<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof ierc1155ABI, TFunctionName, TMode>({
-    abi: ierc1155ABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof ierc1155ABI, TFunctionName, TMode>({ abi: ierc1155ABI, ...config } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
  */
-export function useIerc1155SafeBatchTransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc1155SafeBatchTransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc1155ABI,
-          'safeBatchTransferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc1155ABI, 'safeBatchTransferFrom'>['request']['abi'],
         'safeBatchTransferFrom',
         TMode
       > & { functionName?: 'safeBatchTransferFrom' }
-    : UseContractWriteConfig<
-        typeof ierc1155ABI,
-        'safeBatchTransferFrom',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof ierc1155ABI, 'safeBatchTransferFrom', TMode> & {
         abi?: never
         functionName?: 'safeBatchTransferFrom'
       } = {} as any,
@@ -8455,15 +7532,10 @@ export function useIerc1155SafeBatchTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"safeTransferFrom"`.
  */
-export function useIerc1155SafeTransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc1155SafeTransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc1155ABI,
-          'safeTransferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc1155ABI, 'safeTransferFrom'>['request']['abi'],
         'safeTransferFrom',
         TMode
       > & { functionName?: 'safeTransferFrom' }
@@ -8482,15 +7554,10 @@ export function useIerc1155SafeTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"setApprovalForAll"`.
  */
-export function useIerc1155SetApprovalForAll<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc1155SetApprovalForAll<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc1155ABI,
-          'setApprovalForAll'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc1155ABI, 'setApprovalForAll'>['request']['abi'],
         'setApprovalForAll',
         TMode
       > & { functionName?: 'setApprovalForAll' }
@@ -8510,15 +7577,12 @@ export function useIerc1155SetApprovalForAll<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155ABI}__.
  */
 export function usePrepareIerc1155Write<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc1155ABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof ierc1155ABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: ierc1155ABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc1155ABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: ierc1155ABI, ...config } as UsePrepareContractWriteConfig<
+    typeof ierc1155ABI,
+    TFunctionName
+  >)
 }
 
 /**
@@ -8534,10 +7598,7 @@ export function usePrepareIerc1155SafeBatchTransferFrom(
     abi: ierc1155ABI,
     functionName: 'safeBatchTransferFrom',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof ierc1155ABI,
-    'safeBatchTransferFrom'
-  >)
+  } as UsePrepareContractWriteConfig<typeof ierc1155ABI, 'safeBatchTransferFrom'>)
 }
 
 /**
@@ -8576,79 +7637,57 @@ export function usePrepareIerc1155SetApprovalForAll(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155ABI}__.
  */
 export function useIerc1155Event<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof ierc1155ABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc1155ABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc1155ABI,
-    ...config,
-  } as UseContractEventConfig<typeof ierc1155ABI, TEventName>)
+  return useContractEvent({ abi: ierc1155ABI, ...config } as UseContractEventConfig<typeof ierc1155ABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155ABI}__ and `eventName` set to `"ApprovalForAll"`.
  */
 export function useIerc1155ApprovalForAllEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc1155ABI, 'ApprovalForAll'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc1155ABI, 'ApprovalForAll'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc1155ABI,
-    eventName: 'ApprovalForAll',
-    ...config,
-  } as UseContractEventConfig<typeof ierc1155ABI, 'ApprovalForAll'>)
+  return useContractEvent({ abi: ierc1155ABI, eventName: 'ApprovalForAll', ...config } as UseContractEventConfig<
+    typeof ierc1155ABI,
+    'ApprovalForAll'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155ABI}__ and `eventName` set to `"TransferBatch"`.
  */
 export function useIerc1155TransferBatchEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc1155ABI, 'TransferBatch'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc1155ABI, 'TransferBatch'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc1155ABI,
-    eventName: 'TransferBatch',
-    ...config,
-  } as UseContractEventConfig<typeof ierc1155ABI, 'TransferBatch'>)
+  return useContractEvent({ abi: ierc1155ABI, eventName: 'TransferBatch', ...config } as UseContractEventConfig<
+    typeof ierc1155ABI,
+    'TransferBatch'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155ABI}__ and `eventName` set to `"TransferSingle"`.
  */
 export function useIerc1155TransferSingleEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc1155ABI, 'TransferSingle'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc1155ABI, 'TransferSingle'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc1155ABI,
-    eventName: 'TransferSingle',
-    ...config,
-  } as UseContractEventConfig<typeof ierc1155ABI, 'TransferSingle'>)
+  return useContractEvent({ abi: ierc1155ABI, eventName: 'TransferSingle', ...config } as UseContractEventConfig<
+    typeof ierc1155ABI,
+    'TransferSingle'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155ABI}__ and `eventName` set to `"URI"`.
  */
 export function useIerc1155UriEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc1155ABI, 'URI'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc1155ABI, 'URI'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc1155ABI,
-    eventName: 'URI',
-    ...config,
-  } as UseContractEventConfig<typeof ierc1155ABI, 'URI'>)
+  return useContractEvent({ abi: ierc1155ABI, eventName: 'URI', ...config } as UseContractEventConfig<
+    typeof ierc1155ABI,
+    'URI'
+  >)
 }
 
 /**
@@ -8656,24 +7695,9 @@ export function useIerc1155UriEvent(
  */
 export function useIerc1155MetadataUriRead<
   TFunctionName extends string,
-  TSelectData = ReadContractResult<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName
-  >,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof ierc1155MetadataUriABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: ierc1155MetadataUriABI,
-    ...config,
-  } as UseContractReadConfig<
+  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
+>(config: Omit<UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: ierc1155MetadataUriABI, ...config } as UseContractReadConfig<
     typeof ierc1155MetadataUriABI,
     TFunctionName,
     TSelectData
@@ -8685,25 +7709,14 @@ export function useIerc1155MetadataUriRead<
  */
 export function useIerc1155MetadataUriBalanceOf<
   TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName
-  >,
+  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
 >(
   config: Omit<
-    UseContractReadConfig<
-      typeof ierc1155MetadataUriABI,
-      TFunctionName,
-      TSelectData
-    >,
+    UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc1155MetadataUriABI,
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: ierc1155MetadataUriABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
     typeof ierc1155MetadataUriABI,
     TFunctionName,
     TSelectData
@@ -8715,17 +7728,10 @@ export function useIerc1155MetadataUriBalanceOf<
  */
 export function useIerc1155MetadataUriBalanceOfBatch<
   TFunctionName extends 'balanceOfBatch',
-  TSelectData = ReadContractResult<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName
-  >,
+  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
 >(
   config: Omit<
-    UseContractReadConfig<
-      typeof ierc1155MetadataUriABI,
-      TFunctionName,
-      TSelectData
-    >,
+    UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -8733,11 +7739,7 @@ export function useIerc1155MetadataUriBalanceOfBatch<
     abi: ierc1155MetadataUriABI,
     functionName: 'balanceOfBatch',
     ...config,
-  } as UseContractReadConfig<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>)
 }
 
 /**
@@ -8745,17 +7747,10 @@ export function useIerc1155MetadataUriBalanceOfBatch<
  */
 export function useIerc1155MetadataUriIsApprovedForAll<
   TFunctionName extends 'isApprovedForAll',
-  TSelectData = ReadContractResult<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName
-  >,
+  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
 >(
   config: Omit<
-    UseContractReadConfig<
-      typeof ierc1155MetadataUriABI,
-      TFunctionName,
-      TSelectData
-    >,
+    UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -8763,11 +7758,7 @@ export function useIerc1155MetadataUriIsApprovedForAll<
     abi: ierc1155MetadataUriABI,
     functionName: 'isApprovedForAll',
     ...config,
-  } as UseContractReadConfig<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>)
 }
 
 /**
@@ -8775,17 +7766,10 @@ export function useIerc1155MetadataUriIsApprovedForAll<
  */
 export function useIerc1155MetadataUriSupportsInterface<
   TFunctionName extends 'supportsInterface',
-  TSelectData = ReadContractResult<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName
-  >,
+  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
 >(
   config: Omit<
-    UseContractReadConfig<
-      typeof ierc1155MetadataUriABI,
-      TFunctionName,
-      TSelectData
-    >,
+    UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -8793,11 +7777,7 @@ export function useIerc1155MetadataUriSupportsInterface<
     abi: ierc1155MetadataUriABI,
     functionName: 'supportsInterface',
     ...config,
-  } as UseContractReadConfig<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>)
 }
 
 /**
@@ -8805,25 +7785,14 @@ export function useIerc1155MetadataUriSupportsInterface<
  */
 export function useIerc1155MetadataUriUri<
   TFunctionName extends 'uri',
-  TSelectData = ReadContractResult<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName
-  >,
+  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
 >(
   config: Omit<
-    UseContractReadConfig<
-      typeof ierc1155MetadataUriABI,
-      TFunctionName,
-      TSelectData
-    >,
+    UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc1155MetadataUriABI,
-    functionName: 'uri',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: ierc1155MetadataUriABI, functionName: 'uri', ...config } as UseContractReadConfig<
     typeof ierc1155MetadataUriABI,
     TFunctionName,
     TSelectData
@@ -8833,24 +7802,14 @@ export function useIerc1155MetadataUriUri<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__.
  */
-export function useIerc1155MetadataUriWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc1155MetadataUriWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc1155MetadataUriABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc1155MetadataUriABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
-    : UseContractWriteConfig<
-        typeof ierc1155MetadataUriABI,
-        TFunctionName,
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof ierc1155MetadataUriABI, TFunctionName, TMode> & {
         abi?: never
       } = {} as any,
 ) {
@@ -8863,32 +7822,19 @@ export function useIerc1155MetadataUriWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
  */
-export function useIerc1155MetadataUriSafeBatchTransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc1155MetadataUriSafeBatchTransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc1155MetadataUriABI,
-          'safeBatchTransferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc1155MetadataUriABI, 'safeBatchTransferFrom'>['request']['abi'],
         'safeBatchTransferFrom',
         TMode
       > & { functionName?: 'safeBatchTransferFrom' }
-    : UseContractWriteConfig<
-        typeof ierc1155MetadataUriABI,
-        'safeBatchTransferFrom',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeBatchTransferFrom', TMode> & {
         abi?: never
         functionName?: 'safeBatchTransferFrom'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof ierc1155MetadataUriABI,
-    'safeBatchTransferFrom',
-    TMode
-  >({
+  return useContractWrite<typeof ierc1155MetadataUriABI, 'safeBatchTransferFrom', TMode>({
     abi: ierc1155MetadataUriABI,
     functionName: 'safeBatchTransferFrom',
     ...config,
@@ -8898,32 +7844,19 @@ export function useIerc1155MetadataUriSafeBatchTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"safeTransferFrom"`.
  */
-export function useIerc1155MetadataUriSafeTransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc1155MetadataUriSafeTransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc1155MetadataUriABI,
-          'safeTransferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc1155MetadataUriABI, 'safeTransferFrom'>['request']['abi'],
         'safeTransferFrom',
         TMode
       > & { functionName?: 'safeTransferFrom' }
-    : UseContractWriteConfig<
-        typeof ierc1155MetadataUriABI,
-        'safeTransferFrom',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeTransferFrom', TMode> & {
         abi?: never
         functionName?: 'safeTransferFrom'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof ierc1155MetadataUriABI,
-    'safeTransferFrom',
-    TMode
-  >({
+  return useContractWrite<typeof ierc1155MetadataUriABI, 'safeTransferFrom', TMode>({
     abi: ierc1155MetadataUriABI,
     functionName: 'safeTransferFrom',
     ...config,
@@ -8933,32 +7866,19 @@ export function useIerc1155MetadataUriSafeTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"setApprovalForAll"`.
  */
-export function useIerc1155MetadataUriSetApprovalForAll<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc1155MetadataUriSetApprovalForAll<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc1155MetadataUriABI,
-          'setApprovalForAll'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc1155MetadataUriABI, 'setApprovalForAll'>['request']['abi'],
         'setApprovalForAll',
         TMode
       > & { functionName?: 'setApprovalForAll' }
-    : UseContractWriteConfig<
-        typeof ierc1155MetadataUriABI,
-        'setApprovalForAll',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof ierc1155MetadataUriABI, 'setApprovalForAll', TMode> & {
         abi?: never
         functionName?: 'setApprovalForAll'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof ierc1155MetadataUriABI,
-    'setApprovalForAll',
-    TMode
-  >({
+  return useContractWrite<typeof ierc1155MetadataUriABI, 'setApprovalForAll', TMode>({
     abi: ierc1155MetadataUriABI,
     functionName: 'setApprovalForAll',
     ...config,
@@ -8968,18 +7888,10 @@ export function useIerc1155MetadataUriSetApprovalForAll<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__.
  */
-export function usePrepareIerc1155MetadataUriWrite<
-  TFunctionName extends string,
->(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+export function usePrepareIerc1155MetadataUriWrite<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: ierc1155MetadataUriABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<
+  return usePrepareContractWrite({ abi: ierc1155MetadataUriABI, ...config } as UsePrepareContractWriteConfig<
     typeof ierc1155MetadataUriABI,
     TFunctionName
   >)
@@ -8990,10 +7902,7 @@ export function usePrepareIerc1155MetadataUriWrite<
  */
 export function usePrepareIerc1155MetadataUriSafeBatchTransferFrom(
   config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof ierc1155MetadataUriABI,
-      'safeBatchTransferFrom'
-    >,
+    UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeBatchTransferFrom'>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -9001,10 +7910,7 @@ export function usePrepareIerc1155MetadataUriSafeBatchTransferFrom(
     abi: ierc1155MetadataUriABI,
     functionName: 'safeBatchTransferFrom',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof ierc1155MetadataUriABI,
-    'safeBatchTransferFrom'
-  >)
+  } as UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeBatchTransferFrom'>)
 }
 
 /**
@@ -9012,10 +7918,7 @@ export function usePrepareIerc1155MetadataUriSafeBatchTransferFrom(
  */
 export function usePrepareIerc1155MetadataUriSafeTransferFrom(
   config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof ierc1155MetadataUriABI,
-      'safeTransferFrom'
-    >,
+    UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeTransferFrom'>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -9023,10 +7926,7 @@ export function usePrepareIerc1155MetadataUriSafeTransferFrom(
     abi: ierc1155MetadataUriABI,
     functionName: 'safeTransferFrom',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof ierc1155MetadataUriABI,
-    'safeTransferFrom'
-  >)
+  } as UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeTransferFrom'>)
 }
 
 /**
@@ -9034,10 +7934,7 @@ export function usePrepareIerc1155MetadataUriSafeTransferFrom(
  */
 export function usePrepareIerc1155MetadataUriSetApprovalForAll(
   config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof ierc1155MetadataUriABI,
-      'setApprovalForAll'
-    >,
+    UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'setApprovalForAll'>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -9045,25 +7942,19 @@ export function usePrepareIerc1155MetadataUriSetApprovalForAll(
     abi: ierc1155MetadataUriABI,
     functionName: 'setApprovalForAll',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof ierc1155MetadataUriABI,
-    'setApprovalForAll'
-  >)
+  } as UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'setApprovalForAll'>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155MetadataUriABI}__.
  */
 export function useIerc1155MetadataUriEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof ierc1155MetadataUriABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc1155MetadataUriABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc1155MetadataUriABI,
-    ...config,
-  } as UseContractEventConfig<typeof ierc1155MetadataUriABI, TEventName>)
+  return useContractEvent({ abi: ierc1155MetadataUriABI, ...config } as UseContractEventConfig<
+    typeof ierc1155MetadataUriABI,
+    TEventName
+  >)
 }
 
 /**
@@ -9086,10 +7977,7 @@ export function useIerc1155MetadataUriApprovalForAllEvent(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `eventName` set to `"TransferBatch"`.
  */
 export function useIerc1155MetadataUriTransferBatchEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc1155MetadataUriABI, 'TransferBatch'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc1155MetadataUriABI, 'TransferBatch'>, 'abi' | 'eventName'> = {} as any,
 ) {
   return useContractEvent({
     abi: ierc1155MetadataUriABI,
@@ -9118,16 +8006,12 @@ export function useIerc1155MetadataUriTransferSingleEvent(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `eventName` set to `"URI"`.
  */
 export function useIerc1155MetadataUriUriEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc1155MetadataUriABI, 'URI'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc1155MetadataUriABI, 'URI'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc1155MetadataUriABI,
-    eventName: 'URI',
-    ...config,
-  } as UseContractEventConfig<typeof ierc1155MetadataUriABI, 'URI'>)
+  return useContractEvent({ abi: ierc1155MetadataUriABI, eventName: 'URI', ...config } as UseContractEventConfig<
+    typeof ierc1155MetadataUriABI,
+    'URI'
+  >)
 }
 
 /**
@@ -9136,20 +8020,8 @@ export function useIerc1155MetadataUriUriEvent(
 export function useIerc1155ReceiverRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof ierc1155ReceiverABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof ierc1155ReceiverABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: ierc1155ReceiverABI,
-    ...config,
-  } as UseContractReadConfig<
+>(config: Omit<UseContractReadConfig<typeof ierc1155ReceiverABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: ierc1155ReceiverABI, ...config } as UseContractReadConfig<
     typeof ierc1155ReceiverABI,
     TFunctionName,
     TSelectData
@@ -9164,11 +8036,7 @@ export function useIerc1155ReceiverSupportsInterface<
   TSelectData = ReadContractResult<typeof ierc1155ReceiverABI, TFunctionName>,
 >(
   config: Omit<
-    UseContractReadConfig<
-      typeof ierc1155ReceiverABI,
-      TFunctionName,
-      TSelectData
-    >,
+    UseContractReadConfig<typeof ierc1155ReceiverABI, TFunctionName, TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -9176,34 +8044,20 @@ export function useIerc1155ReceiverSupportsInterface<
     abi: ierc1155ReceiverABI,
     functionName: 'supportsInterface',
     ...config,
-  } as UseContractReadConfig<
-    typeof ierc1155ReceiverABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof ierc1155ReceiverABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ReceiverABI}__.
  */
-export function useIerc1155ReceiverWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc1155ReceiverWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc1155ReceiverABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc1155ReceiverABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
-    : UseContractWriteConfig<
-        typeof ierc1155ReceiverABI,
-        TFunctionName,
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof ierc1155ReceiverABI, TFunctionName, TMode> & {
         abi?: never
       } = {} as any,
 ) {
@@ -9216,32 +8070,19 @@ export function useIerc1155ReceiverWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ReceiverABI}__ and `functionName` set to `"onERC1155BatchReceived"`.
  */
-export function useIerc1155ReceiverOnErc1155BatchReceived<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc1155ReceiverOnErc1155BatchReceived<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc1155ReceiverABI,
-          'onERC1155BatchReceived'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc1155ReceiverABI, 'onERC1155BatchReceived'>['request']['abi'],
         'onERC1155BatchReceived',
         TMode
       > & { functionName?: 'onERC1155BatchReceived' }
-    : UseContractWriteConfig<
-        typeof ierc1155ReceiverABI,
-        'onERC1155BatchReceived',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155BatchReceived', TMode> & {
         abi?: never
         functionName?: 'onERC1155BatchReceived'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof ierc1155ReceiverABI,
-    'onERC1155BatchReceived',
-    TMode
-  >({
+  return useContractWrite<typeof ierc1155ReceiverABI, 'onERC1155BatchReceived', TMode>({
     abi: ierc1155ReceiverABI,
     functionName: 'onERC1155BatchReceived',
     ...config,
@@ -9251,32 +8092,19 @@ export function useIerc1155ReceiverOnErc1155BatchReceived<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ReceiverABI}__ and `functionName` set to `"onERC1155Received"`.
  */
-export function useIerc1155ReceiverOnErc1155Received<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc1155ReceiverOnErc1155Received<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc1155ReceiverABI,
-          'onERC1155Received'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc1155ReceiverABI, 'onERC1155Received'>['request']['abi'],
         'onERC1155Received',
         TMode
       > & { functionName?: 'onERC1155Received' }
-    : UseContractWriteConfig<
-        typeof ierc1155ReceiverABI,
-        'onERC1155Received',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155Received', TMode> & {
         abi?: never
         functionName?: 'onERC1155Received'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof ierc1155ReceiverABI,
-    'onERC1155Received',
-    TMode
-  >({
+  return useContractWrite<typeof ierc1155ReceiverABI, 'onERC1155Received', TMode>({
     abi: ierc1155ReceiverABI,
     functionName: 'onERC1155Received',
     ...config,
@@ -9287,15 +8115,12 @@ export function useIerc1155ReceiverOnErc1155Received<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155ReceiverABI}__.
  */
 export function usePrepareIerc1155ReceiverWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: ierc1155ReceiverABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: ierc1155ReceiverABI, ...config } as UsePrepareContractWriteConfig<
+    typeof ierc1155ReceiverABI,
+    TFunctionName
+  >)
 }
 
 /**
@@ -9303,10 +8128,7 @@ export function usePrepareIerc1155ReceiverWrite<TFunctionName extends string>(
  */
 export function usePrepareIerc1155ReceiverOnErc1155BatchReceived(
   config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof ierc1155ReceiverABI,
-      'onERC1155BatchReceived'
-    >,
+    UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155BatchReceived'>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -9314,10 +8136,7 @@ export function usePrepareIerc1155ReceiverOnErc1155BatchReceived(
     abi: ierc1155ReceiverABI,
     functionName: 'onERC1155BatchReceived',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof ierc1155ReceiverABI,
-    'onERC1155BatchReceived'
-  >)
+  } as UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155BatchReceived'>)
 }
 
 /**
@@ -9325,10 +8144,7 @@ export function usePrepareIerc1155ReceiverOnErc1155BatchReceived(
  */
 export function usePrepareIerc1155ReceiverOnErc1155Received(
   config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof ierc1155ReceiverABI,
-      'onERC1155Received'
-    >,
+    UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155Received'>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -9336,10 +8152,7 @@ export function usePrepareIerc1155ReceiverOnErc1155Received(
     abi: ierc1155ReceiverABI,
     functionName: 'onERC1155Received',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof ierc1155ReceiverABI,
-    'onERC1155Received'
-  >)
+  } as UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155Received'>)
 }
 
 /**
@@ -9348,16 +8161,12 @@ export function usePrepareIerc1155ReceiverOnErc1155Received(
 export function useIerc165Read<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof ierc165ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc165ABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: ierc165ABI,
-    ...config,
-  } as UseContractReadConfig<typeof ierc165ABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof ierc165ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: ierc165ABI, ...config } as UseContractReadConfig<
+    typeof ierc165ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -9372,11 +8181,11 @@ export function useIerc165SupportsInterface<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc165ABI,
-    functionName: 'supportsInterface',
-    ...config,
-  } as UseContractReadConfig<typeof ierc165ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ierc165ABI, functionName: 'supportsInterface', ...config } as UseContractReadConfig<
+    typeof ierc165ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -9385,12 +8194,7 @@ export function useIerc165SupportsInterface<
 export function useIerc20Read<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
+>(config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
   return useContractRead({ abi: ierc20ABI, ...config } as UseContractReadConfig<
     typeof ierc20ABI,
     TFunctionName,
@@ -9405,16 +8209,13 @@ export function useIerc20Allowance<
   TFunctionName extends 'allowance',
   TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc20ABI,
-    functionName: 'allowance',
-    ...config,
-  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ierc20ABI, functionName: 'allowance', ...config } as UseContractReadConfig<
+    typeof ierc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -9424,16 +8225,13 @@ export function useIerc20BalanceOf<
   TFunctionName extends 'balanceOf',
   TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc20ABI,
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ierc20ABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
+    typeof ierc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -9443,16 +8241,13 @@ export function useIerc20Decimals<
   TFunctionName extends 'decimals',
   TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc20ABI,
-    functionName: 'decimals',
-    ...config,
-  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ierc20ABI, functionName: 'decimals', ...config } as UseContractReadConfig<
+    typeof ierc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -9462,16 +8257,13 @@ export function useIerc20Name<
   TFunctionName extends 'name',
   TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc20ABI,
-    functionName: 'name',
-    ...config,
-  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ierc20ABI, functionName: 'name', ...config } as UseContractReadConfig<
+    typeof ierc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -9481,16 +8273,13 @@ export function useIerc20Symbol<
   TFunctionName extends 'symbol',
   TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc20ABI,
-    functionName: 'symbol',
-    ...config,
-  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ierc20ABI, functionName: 'symbol', ...config } as UseContractReadConfig<
+    typeof ierc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -9500,25 +8289,19 @@ export function useIerc20TotalSupply<
   TFunctionName extends 'totalSupply',
   TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc20ABI,
-    functionName: 'totalSupply',
-    ...config,
-  } as UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ierc20ABI, functionName: 'totalSupply', ...config } as UseContractReadConfig<
+    typeof ierc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20ABI}__.
  */
-export function useIerc20Write<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc20Write<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
         PrepareWriteContractResult<typeof ierc20ABI, string>['request']['abi'],
@@ -9529,10 +8312,7 @@ export function useIerc20Write<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof ierc20ABI, TFunctionName, TMode>({
-    abi: ierc20ABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof ierc20ABI, TFunctionName, TMode>({ abi: ierc20ABI, ...config } as any)
 }
 
 /**
@@ -9541,10 +8321,7 @@ export function useIerc20Write<
 export function useIerc20Approve<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc20ABI,
-          'approve'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc20ABI, 'approve'>['request']['abi'],
         'approve',
         TMode
       > & { functionName?: 'approve' }
@@ -9566,10 +8343,7 @@ export function useIerc20Approve<TMode extends WriteContractMode = undefined>(
 export function useIerc20Transfer<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc20ABI,
-          'transfer'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc20ABI, 'transfer'>['request']['abi'],
         'transfer',
         TMode
       > & { functionName?: 'transfer' }
@@ -9588,15 +8362,10 @@ export function useIerc20Transfer<TMode extends WriteContractMode = undefined>(
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"transferFrom"`.
  */
-export function useIerc20TransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc20TransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc20ABI,
-          'transferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc20ABI, 'transferFrom'>['request']['abi'],
         'transferFrom',
         TMode
       > & { functionName?: 'transferFrom' }
@@ -9616,25 +8385,19 @@ export function useIerc20TransferFrom<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__.
  */
 export function usePrepareIerc20Write<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc20ABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof ierc20ABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: ierc20ABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc20ABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: ierc20ABI, ...config } as UsePrepareContractWriteConfig<
+    typeof ierc20ABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"approve"`.
  */
 export function usePrepareIerc20Approve(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc20ABI, 'approve'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof ierc20ABI, 'approve'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: ierc20ABI,
@@ -9647,10 +8410,7 @@ export function usePrepareIerc20Approve(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"transfer"`.
  */
 export function usePrepareIerc20Transfer(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc20ABI, 'transfer'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof ierc20ABI, 'transfer'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: ierc20ABI,
@@ -9663,10 +8423,7 @@ export function usePrepareIerc20Transfer(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"transferFrom"`.
  */
 export function usePrepareIerc20TransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc20ABI, 'transferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof ierc20ABI, 'transferFrom'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: ierc20ABI,
@@ -9679,47 +8436,33 @@ export function usePrepareIerc20TransferFrom(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20ABI}__.
  */
 export function useIerc20Event<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof ierc20ABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc20ABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc20ABI,
-    ...config,
-  } as UseContractEventConfig<typeof ierc20ABI, TEventName>)
+  return useContractEvent({ abi: ierc20ABI, ...config } as UseContractEventConfig<typeof ierc20ABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20ABI}__ and `eventName` set to `"Approval"`.
  */
 export function useIerc20ApprovalEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc20ABI, 'Approval'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc20ABI, 'Approval'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc20ABI,
-    eventName: 'Approval',
-    ...config,
-  } as UseContractEventConfig<typeof ierc20ABI, 'Approval'>)
+  return useContractEvent({ abi: ierc20ABI, eventName: 'Approval', ...config } as UseContractEventConfig<
+    typeof ierc20ABI,
+    'Approval'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20ABI}__ and `eventName` set to `"Transfer"`.
  */
 export function useIerc20TransferEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc20ABI, 'Transfer'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc20ABI, 'Transfer'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc20ABI,
-    eventName: 'Transfer',
-    ...config,
-  } as UseContractEventConfig<typeof ierc20ABI, 'Transfer'>)
+  return useContractEvent({ abi: ierc20ABI, eventName: 'Transfer', ...config } as UseContractEventConfig<
+    typeof ierc20ABI,
+    'Transfer'
+  >)
 }
 
 /**
@@ -9728,16 +8471,8 @@ export function useIerc20TransferEvent(
 export function useIerc20MinimalRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof ierc20MinimalABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc20MinimalABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: ierc20MinimalABI,
-    ...config,
-  } as UseContractReadConfig<
+>(config: Omit<UseContractReadConfig<typeof ierc20MinimalABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: ierc20MinimalABI, ...config } as UseContractReadConfig<
     typeof ierc20MinimalABI,
     TFunctionName,
     TSelectData
@@ -9756,11 +8491,7 @@ export function useIerc20MinimalAllowance<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc20MinimalABI,
-    functionName: 'allowance',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: ierc20MinimalABI, functionName: 'allowance', ...config } as UseContractReadConfig<
     typeof ierc20MinimalABI,
     TFunctionName,
     TSelectData
@@ -9779,11 +8510,7 @@ export function useIerc20MinimalBalanceOf<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: ierc20MinimalABI,
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: ierc20MinimalABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
     typeof ierc20MinimalABI,
     TFunctionName,
     TSelectData
@@ -9793,16 +8520,10 @@ export function useIerc20MinimalBalanceOf<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20MinimalABI}__.
  */
-export function useIerc20MinimalWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc20MinimalWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc20MinimalABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc20MinimalABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
@@ -9810,24 +8531,16 @@ export function useIerc20MinimalWrite<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof ierc20MinimalABI, TFunctionName, TMode>({
-    abi: ierc20MinimalABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof ierc20MinimalABI, TFunctionName, TMode>({ abi: ierc20MinimalABI, ...config } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20MinimalABI}__ and `functionName` set to `"approve"`.
  */
-export function useIerc20MinimalApprove<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc20MinimalApprove<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc20MinimalABI,
-          'approve'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc20MinimalABI, 'approve'>['request']['abi'],
         'approve',
         TMode
       > & { functionName?: 'approve' }
@@ -9846,15 +8559,10 @@ export function useIerc20MinimalApprove<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20MinimalABI}__ and `functionName` set to `"transfer"`.
  */
-export function useIerc20MinimalTransfer<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc20MinimalTransfer<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc20MinimalABI,
-          'transfer'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc20MinimalABI, 'transfer'>['request']['abi'],
         'transfer',
         TMode
       > & { functionName?: 'transfer' }
@@ -9873,15 +8581,10 @@ export function useIerc20MinimalTransfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20MinimalABI}__ and `functionName` set to `"transferFrom"`.
  */
-export function useIerc20MinimalTransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIerc20MinimalTransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ierc20MinimalABI,
-          'transferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ierc20MinimalABI, 'transferFrom'>['request']['abi'],
         'transferFrom',
         TMode
       > & { functionName?: 'transferFrom' }
@@ -9901,25 +8604,19 @@ export function useIerc20MinimalTransferFrom<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20MinimalABI}__.
  */
 export function usePrepareIerc20MinimalWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc20MinimalABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof ierc20MinimalABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: ierc20MinimalABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc20MinimalABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: ierc20MinimalABI, ...config } as UsePrepareContractWriteConfig<
+    typeof ierc20MinimalABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20MinimalABI}__ and `functionName` set to `"approve"`.
  */
 export function usePrepareIerc20MinimalApprove(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc20MinimalABI, 'approve'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof ierc20MinimalABI, 'approve'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: ierc20MinimalABI,
@@ -9932,10 +8629,7 @@ export function usePrepareIerc20MinimalApprove(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20MinimalABI}__ and `functionName` set to `"transfer"`.
  */
 export function usePrepareIerc20MinimalTransfer(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc20MinimalABI, 'transfer'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof ierc20MinimalABI, 'transfer'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: ierc20MinimalABI,
@@ -9964,47 +8658,36 @@ export function usePrepareIerc20MinimalTransferFrom(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20MinimalABI}__.
  */
 export function useIerc20MinimalEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof ierc20MinimalABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc20MinimalABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc20MinimalABI,
-    ...config,
-  } as UseContractEventConfig<typeof ierc20MinimalABI, TEventName>)
+  return useContractEvent({ abi: ierc20MinimalABI, ...config } as UseContractEventConfig<
+    typeof ierc20MinimalABI,
+    TEventName
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20MinimalABI}__ and `eventName` set to `"Approval"`.
  */
 export function useIerc20MinimalApprovalEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc20MinimalABI, 'Approval'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc20MinimalABI, 'Approval'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc20MinimalABI,
-    eventName: 'Approval',
-    ...config,
-  } as UseContractEventConfig<typeof ierc20MinimalABI, 'Approval'>)
+  return useContractEvent({ abi: ierc20MinimalABI, eventName: 'Approval', ...config } as UseContractEventConfig<
+    typeof ierc20MinimalABI,
+    'Approval'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20MinimalABI}__ and `eventName` set to `"Transfer"`.
  */
 export function useIerc20MinimalTransferEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc20MinimalABI, 'Transfer'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ierc20MinimalABI, 'Transfer'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ierc20MinimalABI,
-    eventName: 'Transfer',
-    ...config,
-  } as UseContractEventConfig<typeof ierc20MinimalABI, 'Transfer'>)
+  return useContractEvent({ abi: ierc20MinimalABI, eventName: 'Transfer', ...config } as UseContractEventConfig<
+    typeof ierc20MinimalABI,
+    'Transfer'
+  >)
 }
 
 /**
@@ -10013,12 +8696,7 @@ export function useIerc20MinimalTransferEvent(
 export function useIFeesRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof iFeesABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof iFeesABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
+>(config: Omit<UseContractReadConfig<typeof iFeesABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
   return useContractRead({ abi: iFeesABI, ...config } as UseContractReadConfig<
     typeof iFeesABI,
     TFunctionName,
@@ -10033,10 +8711,7 @@ export function useIFeesMinProtocolFeeDenominator<
   TFunctionName extends 'MIN_PROTOCOL_FEE_DENOMINATOR',
   TSelectData = ReadContractResult<typeof iFeesABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof iFeesABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof iFeesABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
   return useContractRead({
     abi: iFeesABI,
@@ -10052,16 +8727,13 @@ export function useIFeesHookFeesAccrued<
   TFunctionName extends 'hookFeesAccrued',
   TSelectData = ReadContractResult<typeof iFeesABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof iFeesABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof iFeesABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: iFeesABI,
-    functionName: 'hookFeesAccrued',
-    ...config,
-  } as UseContractReadConfig<typeof iFeesABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: iFeesABI, functionName: 'hookFeesAccrued', ...config } as UseContractReadConfig<
+    typeof iFeesABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -10071,31 +8743,22 @@ export function useIFeesProtocolFeesAccrued<
   TFunctionName extends 'protocolFeesAccrued',
   TSelectData = ReadContractResult<typeof iFeesABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof iFeesABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof iFeesABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: iFeesABI,
-    functionName: 'protocolFeesAccrued',
-    ...config,
-  } as UseContractReadConfig<typeof iFeesABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: iFeesABI, functionName: 'protocolFeesAccrued', ...config } as UseContractReadConfig<
+    typeof iFeesABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iFeesABI}__.
  */
 export function useIFeesEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof iFeesABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof iFeesABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: iFeesABI,
-    ...config,
-  } as UseContractEventConfig<typeof iFeesABI, TEventName>)
+  return useContractEvent({ abi: iFeesABI, ...config } as UseContractEventConfig<typeof iFeesABI, TEventName>)
 }
 
 /**
@@ -10120,20 +8783,8 @@ export function useIFeesProtocolFeeControllerUpdatedEvent(
 export function useIHookFeeManagerRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof iHookFeeManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof iHookFeeManagerABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: iHookFeeManagerABI,
-    ...config,
-  } as UseContractReadConfig<
+>(config: Omit<UseContractReadConfig<typeof iHookFeeManagerABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: iHookFeeManagerABI, ...config } as UseContractReadConfig<
     typeof iHookFeeManagerABI,
     TFunctionName,
     TSelectData
@@ -10148,19 +8799,11 @@ export function useIHookFeeManagerGetHookFees<
   TSelectData = ReadContractResult<typeof iHookFeeManagerABI, TFunctionName>,
 >(
   config: Omit<
-    UseContractReadConfig<
-      typeof iHookFeeManagerABI,
-      TFunctionName,
-      TSelectData
-    >,
+    UseContractReadConfig<typeof iHookFeeManagerABI, TFunctionName, TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iHookFeeManagerABI,
-    functionName: 'getHookFees',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iHookFeeManagerABI, functionName: 'getHookFees', ...config } as UseContractReadConfig<
     typeof iHookFeeManagerABI,
     TFunctionName,
     TSelectData
@@ -10170,10 +8813,7 @@ export function useIHookFeeManagerGetHookFees<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iHooksABI}__.
  */
-export function useIHooksWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useIHooksWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
         PrepareWriteContractResult<typeof iHooksABI, string>['request']['abi'],
@@ -10184,24 +8824,16 @@ export function useIHooksWrite<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof iHooksABI, TFunctionName, TMode>({
-    abi: iHooksABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof iHooksABI, TFunctionName, TMode>({ abi: iHooksABI, ...config } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"afterDonate"`.
  */
-export function useIHooksAfterDonate<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIHooksAfterDonate<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iHooksABI,
-          'afterDonate'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iHooksABI, 'afterDonate'>['request']['abi'],
         'afterDonate',
         TMode
       > & { functionName?: 'afterDonate' }
@@ -10220,15 +8852,10 @@ export function useIHooksAfterDonate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"afterInitialize"`.
  */
-export function useIHooksAfterInitialize<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIHooksAfterInitialize<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iHooksABI,
-          'afterInitialize'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iHooksABI, 'afterInitialize'>['request']['abi'],
         'afterInitialize',
         TMode
       > & { functionName?: 'afterInitialize' }
@@ -10247,15 +8874,10 @@ export function useIHooksAfterInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"afterModifyPosition"`.
  */
-export function useIHooksAfterModifyPosition<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIHooksAfterModifyPosition<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iHooksABI,
-          'afterModifyPosition'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iHooksABI, 'afterModifyPosition'>['request']['abi'],
         'afterModifyPosition',
         TMode
       > & { functionName?: 'afterModifyPosition' }
@@ -10277,10 +8899,7 @@ export function useIHooksAfterModifyPosition<
 export function useIHooksAfterSwap<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iHooksABI,
-          'afterSwap'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iHooksABI, 'afterSwap'>['request']['abi'],
         'afterSwap',
         TMode
       > & { functionName?: 'afterSwap' }
@@ -10299,15 +8918,10 @@ export function useIHooksAfterSwap<TMode extends WriteContractMode = undefined>(
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"beforeDonate"`.
  */
-export function useIHooksBeforeDonate<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIHooksBeforeDonate<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iHooksABI,
-          'beforeDonate'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iHooksABI, 'beforeDonate'>['request']['abi'],
         'beforeDonate',
         TMode
       > & { functionName?: 'beforeDonate' }
@@ -10326,15 +8940,10 @@ export function useIHooksBeforeDonate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"beforeInitialize"`.
  */
-export function useIHooksBeforeInitialize<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIHooksBeforeInitialize<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iHooksABI,
-          'beforeInitialize'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iHooksABI, 'beforeInitialize'>['request']['abi'],
         'beforeInitialize',
         TMode
       > & { functionName?: 'beforeInitialize' }
@@ -10353,23 +8962,14 @@ export function useIHooksBeforeInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"beforeModifyPosition"`.
  */
-export function useIHooksBeforeModifyPosition<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIHooksBeforeModifyPosition<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iHooksABI,
-          'beforeModifyPosition'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iHooksABI, 'beforeModifyPosition'>['request']['abi'],
         'beforeModifyPosition',
         TMode
       > & { functionName?: 'beforeModifyPosition' }
-    : UseContractWriteConfig<
-        typeof iHooksABI,
-        'beforeModifyPosition',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof iHooksABI, 'beforeModifyPosition', TMode> & {
         abi?: never
         functionName?: 'beforeModifyPosition'
       } = {} as any,
@@ -10384,15 +8984,10 @@ export function useIHooksBeforeModifyPosition<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"beforeSwap"`.
  */
-export function useIHooksBeforeSwap<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIHooksBeforeSwap<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iHooksABI,
-          'beforeSwap'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iHooksABI, 'beforeSwap'>['request']['abi'],
         'beforeSwap',
         TMode
       > & { functionName?: 'beforeSwap' }
@@ -10412,25 +9007,19 @@ export function useIHooksBeforeSwap<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iHooksABI}__.
  */
 export function usePrepareIHooksWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iHooksABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iHooksABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: iHooksABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof iHooksABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: iHooksABI, ...config } as UsePrepareContractWriteConfig<
+    typeof iHooksABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"afterDonate"`.
  */
 export function usePrepareIHooksAfterDonate(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iHooksABI, 'afterDonate'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iHooksABI, 'afterDonate'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iHooksABI,
@@ -10443,10 +9032,7 @@ export function usePrepareIHooksAfterDonate(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"afterInitialize"`.
  */
 export function usePrepareIHooksAfterInitialize(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iHooksABI, 'afterInitialize'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iHooksABI, 'afterInitialize'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iHooksABI,
@@ -10475,10 +9061,7 @@ export function usePrepareIHooksAfterModifyPosition(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"afterSwap"`.
  */
 export function usePrepareIHooksAfterSwap(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iHooksABI, 'afterSwap'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iHooksABI, 'afterSwap'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iHooksABI,
@@ -10491,10 +9074,7 @@ export function usePrepareIHooksAfterSwap(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"beforeDonate"`.
  */
 export function usePrepareIHooksBeforeDonate(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iHooksABI, 'beforeDonate'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iHooksABI, 'beforeDonate'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iHooksABI,
@@ -10507,10 +9087,7 @@ export function usePrepareIHooksBeforeDonate(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"beforeInitialize"`.
  */
 export function usePrepareIHooksBeforeInitialize(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iHooksABI, 'beforeInitialize'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iHooksABI, 'beforeInitialize'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iHooksABI,
@@ -10539,10 +9116,7 @@ export function usePrepareIHooksBeforeModifyPosition(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iHooksABI}__ and `functionName` set to `"beforeSwap"`.
  */
 export function usePrepareIHooksBeforeSwap(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iHooksABI, 'beforeSwap'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iHooksABI, 'beforeSwap'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iHooksABI,
@@ -10554,16 +9128,10 @@ export function usePrepareIHooksBeforeSwap(
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iLockCallbackABI}__.
  */
-export function useILockCallbackWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useILockCallbackWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iLockCallbackABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iLockCallbackABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
@@ -10571,24 +9139,16 @@ export function useILockCallbackWrite<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof iLockCallbackABI, TFunctionName, TMode>({
-    abi: iLockCallbackABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof iLockCallbackABI, TFunctionName, TMode>({ abi: iLockCallbackABI, ...config } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iLockCallbackABI}__ and `functionName` set to `"lockAcquired"`.
  */
-export function useILockCallbackLockAcquired<
-  TMode extends WriteContractMode = undefined,
->(
+export function useILockCallbackLockAcquired<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iLockCallbackABI,
-          'lockAcquired'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iLockCallbackABI, 'lockAcquired'>['request']['abi'],
         'lockAcquired',
         TMode
       > & { functionName?: 'lockAcquired' }
@@ -10608,15 +9168,12 @@ export function useILockCallbackLockAcquired<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iLockCallbackABI}__.
  */
 export function usePrepareILockCallbackWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iLockCallbackABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iLockCallbackABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: iLockCallbackABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof iLockCallbackABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: iLockCallbackABI, ...config } as UsePrepareContractWriteConfig<
+    typeof iLockCallbackABI,
+    TFunctionName
+  >)
 }
 
 /**
@@ -10641,16 +9198,8 @@ export function usePrepareILockCallbackLockAcquired(
 export function useIPoolManagerRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof iPoolManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    ...config,
-  } as UseContractReadConfig<
+>(config: Omit<UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: iPoolManagerABI, ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10669,11 +9218,7 @@ export function useIPoolManagerMaxTickSpacing<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'MAX_TICK_SPACING',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'MAX_TICK_SPACING', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10696,11 +9241,7 @@ export function useIPoolManagerMinProtocolFeeDenominator<
     abi: iPoolManagerABI,
     functionName: 'MIN_PROTOCOL_FEE_DENOMINATOR',
     ...config,
-  } as UseContractReadConfig<
-    typeof iPoolManagerABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>)
 }
 
 /**
@@ -10715,11 +9256,7 @@ export function useIPoolManagerMinTickSpacing<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'MIN_TICK_SPACING',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'MIN_TICK_SPACING', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10738,11 +9275,7 @@ export function useIPoolManagerBalanceOf<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10761,11 +9294,7 @@ export function useIPoolManagerBalanceOfBatch<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'balanceOfBatch',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'balanceOfBatch', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10784,11 +9313,7 @@ export function useIPoolManagerCurrencyDelta<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'currencyDelta',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'currencyDelta', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10807,11 +9332,7 @@ export function useIPoolManagerExtsload<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'extsload',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'extsload', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10830,11 +9351,7 @@ export function useIPoolManagerGetLiquidity<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'getLiquidity',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'getLiquidity', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10853,11 +9370,7 @@ export function useIPoolManagerGetLock<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'getLock',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'getLock', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10876,11 +9389,7 @@ export function useIPoolManagerGetPosition<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'getPosition',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'getPosition', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10899,11 +9408,7 @@ export function useIPoolManagerGetSlot0<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'getSlot0',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'getSlot0', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10922,11 +9427,7 @@ export function useIPoolManagerHookFeesAccrued<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'hookFeesAccrued',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'hookFeesAccrued', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10945,11 +9446,7 @@ export function useIPoolManagerIsApprovedForAll<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'isApprovedForAll',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'isApprovedForAll', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10968,11 +9465,7 @@ export function useIPoolManagerLockData<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'lockData',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'lockData', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -10995,11 +9488,7 @@ export function useIPoolManagerProtocolFeesAccrued<
     abi: iPoolManagerABI,
     functionName: 'protocolFeesAccrued',
     ...config,
-  } as UseContractReadConfig<
-    typeof iPoolManagerABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>)
 }
 
 /**
@@ -11014,11 +9503,7 @@ export function useIPoolManagerReservesOf<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'reservesOf',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'reservesOf', ...config } as UseContractReadConfig<
     typeof iPoolManagerABI,
     TFunctionName,
     TSelectData
@@ -11041,26 +9526,16 @@ export function useIPoolManagerSupportsInterface<
     abi: iPoolManagerABI,
     functionName: 'supportsInterface',
     ...config,
-  } as UseContractReadConfig<
-    typeof iPoolManagerABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__.
  */
-export function useIPoolManagerWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
@@ -11068,24 +9543,16 @@ export function useIPoolManagerWrite<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof iPoolManagerABI, TFunctionName, TMode>({
-    abi: iPoolManagerABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof iPoolManagerABI, TFunctionName, TMode>({ abi: iPoolManagerABI, ...config } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"donate"`.
  */
-export function useIPoolManagerDonate<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerDonate<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'donate'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'donate'>['request']['abi'],
         'donate',
         TMode
       > & { functionName?: 'donate' }
@@ -11104,15 +9571,10 @@ export function useIPoolManagerDonate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"initialize"`.
  */
-export function useIPoolManagerInitialize<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerInitialize<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'initialize'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'initialize'>['request']['abi'],
         'initialize',
         TMode
       > & { functionName?: 'initialize' }
@@ -11131,15 +9593,10 @@ export function useIPoolManagerInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"lock"`.
  */
-export function useIPoolManagerLock<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerLock<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'lock'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'lock'>['request']['abi'],
         'lock',
         TMode
       > & { functionName?: 'lock' }
@@ -11158,15 +9615,10 @@ export function useIPoolManagerLock<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"mint"`.
  */
-export function useIPoolManagerMint<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerMint<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'mint'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'mint'>['request']['abi'],
         'mint',
         TMode
       > & { functionName?: 'mint' }
@@ -11185,23 +9637,14 @@ export function useIPoolManagerMint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"modifyPosition"`.
  */
-export function useIPoolManagerModifyPosition<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerModifyPosition<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'modifyPosition'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'modifyPosition'>['request']['abi'],
         'modifyPosition',
         TMode
       > & { functionName?: 'modifyPosition' }
-    : UseContractWriteConfig<
-        typeof iPoolManagerABI,
-        'modifyPosition',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof iPoolManagerABI, 'modifyPosition', TMode> & {
         abi?: never
         functionName?: 'modifyPosition'
       } = {} as any,
@@ -11216,32 +9659,19 @@ export function useIPoolManagerModifyPosition<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
  */
-export function useIPoolManagerSafeBatchTransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerSafeBatchTransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'safeBatchTransferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'safeBatchTransferFrom'>['request']['abi'],
         'safeBatchTransferFrom',
         TMode
       > & { functionName?: 'safeBatchTransferFrom' }
-    : UseContractWriteConfig<
-        typeof iPoolManagerABI,
-        'safeBatchTransferFrom',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof iPoolManagerABI, 'safeBatchTransferFrom', TMode> & {
         abi?: never
         functionName?: 'safeBatchTransferFrom'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof iPoolManagerABI,
-    'safeBatchTransferFrom',
-    TMode
-  >({
+  return useContractWrite<typeof iPoolManagerABI, 'safeBatchTransferFrom', TMode>({
     abi: iPoolManagerABI,
     functionName: 'safeBatchTransferFrom',
     ...config,
@@ -11251,23 +9681,14 @@ export function useIPoolManagerSafeBatchTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"safeTransferFrom"`.
  */
-export function useIPoolManagerSafeTransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerSafeTransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'safeTransferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'safeTransferFrom'>['request']['abi'],
         'safeTransferFrom',
         TMode
       > & { functionName?: 'safeTransferFrom' }
-    : UseContractWriteConfig<
-        typeof iPoolManagerABI,
-        'safeTransferFrom',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof iPoolManagerABI, 'safeTransferFrom', TMode> & {
         abi?: never
         functionName?: 'safeTransferFrom'
       } = {} as any,
@@ -11282,23 +9703,14 @@ export function useIPoolManagerSafeTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"setApprovalForAll"`.
  */
-export function useIPoolManagerSetApprovalForAll<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerSetApprovalForAll<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'setApprovalForAll'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'setApprovalForAll'>['request']['abi'],
         'setApprovalForAll',
         TMode
       > & { functionName?: 'setApprovalForAll' }
-    : UseContractWriteConfig<
-        typeof iPoolManagerABI,
-        'setApprovalForAll',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof iPoolManagerABI, 'setApprovalForAll', TMode> & {
         abi?: never
         functionName?: 'setApprovalForAll'
       } = {} as any,
@@ -11313,15 +9725,10 @@ export function useIPoolManagerSetApprovalForAll<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"setHookFees"`.
  */
-export function useIPoolManagerSetHookFees<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerSetHookFees<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'setHookFees'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'setHookFees'>['request']['abi'],
         'setHookFees',
         TMode
       > & { functionName?: 'setHookFees' }
@@ -11340,23 +9747,14 @@ export function useIPoolManagerSetHookFees<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"setProtocolFees"`.
  */
-export function useIPoolManagerSetProtocolFees<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerSetProtocolFees<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'setProtocolFees'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'setProtocolFees'>['request']['abi'],
         'setProtocolFees',
         TMode
       > & { functionName?: 'setProtocolFees' }
-    : UseContractWriteConfig<
-        typeof iPoolManagerABI,
-        'setProtocolFees',
-        TMode
-      > & {
+    : UseContractWriteConfig<typeof iPoolManagerABI, 'setProtocolFees', TMode> & {
         abi?: never
         functionName?: 'setProtocolFees'
       } = {} as any,
@@ -11371,15 +9769,10 @@ export function useIPoolManagerSetProtocolFees<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"settle"`.
  */
-export function useIPoolManagerSettle<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerSettle<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'settle'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'settle'>['request']['abi'],
         'settle',
         TMode
       > & { functionName?: 'settle' }
@@ -11398,15 +9791,10 @@ export function useIPoolManagerSettle<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"swap"`.
  */
-export function useIPoolManagerSwap<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerSwap<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'swap'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'swap'>['request']['abi'],
         'swap',
         TMode
       > & { functionName?: 'swap' }
@@ -11425,15 +9813,10 @@ export function useIPoolManagerSwap<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"take"`.
  */
-export function useIPoolManagerTake<
-  TMode extends WriteContractMode = undefined,
->(
+export function useIPoolManagerTake<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof iPoolManagerABI,
-          'take'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'take'>['request']['abi'],
         'take',
         TMode
       > & { functionName?: 'take' }
@@ -11453,25 +9836,19 @@ export function useIPoolManagerTake<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__.
  */
 export function usePrepareIPoolManagerWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iPoolManagerABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iPoolManagerABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: iPoolManagerABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof iPoolManagerABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: iPoolManagerABI, ...config } as UsePrepareContractWriteConfig<
+    typeof iPoolManagerABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"donate"`.
  */
 export function usePrepareIPoolManagerDonate(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'donate'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'donate'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iPoolManagerABI,
@@ -11484,10 +9861,7 @@ export function usePrepareIPoolManagerDonate(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"initialize"`.
  */
 export function usePrepareIPoolManagerInitialize(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'initialize'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'initialize'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iPoolManagerABI,
@@ -11500,10 +9874,7 @@ export function usePrepareIPoolManagerInitialize(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"lock"`.
  */
 export function usePrepareIPoolManagerLock(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'lock'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'lock'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iPoolManagerABI,
@@ -11516,10 +9887,7 @@ export function usePrepareIPoolManagerLock(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"mint"`.
  */
 export function usePrepareIPoolManagerMint(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'mint'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'mint'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iPoolManagerABI,
@@ -11549,10 +9917,7 @@ export function usePrepareIPoolManagerModifyPosition(
  */
 export function usePrepareIPoolManagerSafeBatchTransferFrom(
   config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof iPoolManagerABI,
-      'safeBatchTransferFrom'
-    >,
+    UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'safeBatchTransferFrom'>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -11560,10 +9925,7 @@ export function usePrepareIPoolManagerSafeBatchTransferFrom(
     abi: iPoolManagerABI,
     functionName: 'safeBatchTransferFrom',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof iPoolManagerABI,
-    'safeBatchTransferFrom'
-  >)
+  } as UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'safeBatchTransferFrom'>)
 }
 
 /**
@@ -11579,10 +9941,7 @@ export function usePrepareIPoolManagerSafeTransferFrom(
     abi: iPoolManagerABI,
     functionName: 'safeTransferFrom',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof iPoolManagerABI,
-    'safeTransferFrom'
-  >)
+  } as UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'safeTransferFrom'>)
 }
 
 /**
@@ -11598,10 +9957,7 @@ export function usePrepareIPoolManagerSetApprovalForAll(
     abi: iPoolManagerABI,
     functionName: 'setApprovalForAll',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof iPoolManagerABI,
-    'setApprovalForAll'
-  >)
+  } as UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'setApprovalForAll'>)
 }
 
 /**
@@ -11640,10 +9996,7 @@ export function usePrepareIPoolManagerSetProtocolFees(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"settle"`.
  */
 export function usePrepareIPoolManagerSettle(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'settle'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'settle'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iPoolManagerABI,
@@ -11656,10 +10009,7 @@ export function usePrepareIPoolManagerSettle(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"swap"`.
  */
 export function usePrepareIPoolManagerSwap(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'swap'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'swap'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iPoolManagerABI,
@@ -11672,10 +10022,7 @@ export function usePrepareIPoolManagerSwap(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"take"`.
  */
 export function usePrepareIPoolManagerTake(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'take'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'take'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: iPoolManagerABI,
@@ -11688,79 +10035,60 @@ export function usePrepareIPoolManagerTake(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__.
  */
 export function useIPoolManagerEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof iPoolManagerABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: iPoolManagerABI,
-    ...config,
-  } as UseContractEventConfig<typeof iPoolManagerABI, TEventName>)
+  return useContractEvent({ abi: iPoolManagerABI, ...config } as UseContractEventConfig<
+    typeof iPoolManagerABI,
+    TEventName
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"ApprovalForAll"`.
  */
 export function useIPoolManagerApprovalForAllEvent(
-  config: Omit<
-    UseContractEventConfig<typeof iPoolManagerABI, 'ApprovalForAll'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'ApprovalForAll'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: iPoolManagerABI,
-    eventName: 'ApprovalForAll',
-    ...config,
-  } as UseContractEventConfig<typeof iPoolManagerABI, 'ApprovalForAll'>)
+  return useContractEvent({ abi: iPoolManagerABI, eventName: 'ApprovalForAll', ...config } as UseContractEventConfig<
+    typeof iPoolManagerABI,
+    'ApprovalForAll'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"HookFeeUpdated"`.
  */
 export function useIPoolManagerHookFeeUpdatedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof iPoolManagerABI, 'HookFeeUpdated'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'HookFeeUpdated'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: iPoolManagerABI,
-    eventName: 'HookFeeUpdated',
-    ...config,
-  } as UseContractEventConfig<typeof iPoolManagerABI, 'HookFeeUpdated'>)
+  return useContractEvent({ abi: iPoolManagerABI, eventName: 'HookFeeUpdated', ...config } as UseContractEventConfig<
+    typeof iPoolManagerABI,
+    'HookFeeUpdated'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"Initialize"`.
  */
 export function useIPoolManagerInitializeEvent(
-  config: Omit<
-    UseContractEventConfig<typeof iPoolManagerABI, 'Initialize'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'Initialize'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: iPoolManagerABI,
-    eventName: 'Initialize',
-    ...config,
-  } as UseContractEventConfig<typeof iPoolManagerABI, 'Initialize'>)
+  return useContractEvent({ abi: iPoolManagerABI, eventName: 'Initialize', ...config } as UseContractEventConfig<
+    typeof iPoolManagerABI,
+    'Initialize'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"ModifyPosition"`.
  */
 export function useIPoolManagerModifyPositionEvent(
-  config: Omit<
-    UseContractEventConfig<typeof iPoolManagerABI, 'ModifyPosition'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'ModifyPosition'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: iPoolManagerABI,
-    eventName: 'ModifyPosition',
-    ...config,
-  } as UseContractEventConfig<typeof iPoolManagerABI, 'ModifyPosition'>)
+  return useContractEvent({ abi: iPoolManagerABI, eventName: 'ModifyPosition', ...config } as UseContractEventConfig<
+    typeof iPoolManagerABI,
+    'ModifyPosition'
+  >)
 }
 
 /**
@@ -11768,10 +10096,7 @@ export function useIPoolManagerModifyPositionEvent(
  */
 export function useIPoolManagerProtocolFeeControllerUpdatedEvent(
   config: Omit<
-    UseContractEventConfig<
-      typeof iPoolManagerABI,
-      'ProtocolFeeControllerUpdated'
-    >,
+    UseContractEventConfig<typeof iPoolManagerABI, 'ProtocolFeeControllerUpdated'>,
     'abi' | 'eventName'
   > = {} as any,
 ) {
@@ -11779,20 +10104,14 @@ export function useIPoolManagerProtocolFeeControllerUpdatedEvent(
     abi: iPoolManagerABI,
     eventName: 'ProtocolFeeControllerUpdated',
     ...config,
-  } as UseContractEventConfig<
-    typeof iPoolManagerABI,
-    'ProtocolFeeControllerUpdated'
-  >)
+  } as UseContractEventConfig<typeof iPoolManagerABI, 'ProtocolFeeControllerUpdated'>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"ProtocolFeeUpdated"`.
  */
 export function useIPoolManagerProtocolFeeUpdatedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof iPoolManagerABI, 'ProtocolFeeUpdated'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'ProtocolFeeUpdated'>, 'abi' | 'eventName'> = {} as any,
 ) {
   return useContractEvent({
     abi: iPoolManagerABI,
@@ -11805,64 +10124,48 @@ export function useIPoolManagerProtocolFeeUpdatedEvent(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"Swap"`.
  */
 export function useIPoolManagerSwapEvent(
-  config: Omit<
-    UseContractEventConfig<typeof iPoolManagerABI, 'Swap'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'Swap'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: iPoolManagerABI,
-    eventName: 'Swap',
-    ...config,
-  } as UseContractEventConfig<typeof iPoolManagerABI, 'Swap'>)
+  return useContractEvent({ abi: iPoolManagerABI, eventName: 'Swap', ...config } as UseContractEventConfig<
+    typeof iPoolManagerABI,
+    'Swap'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"TransferBatch"`.
  */
 export function useIPoolManagerTransferBatchEvent(
-  config: Omit<
-    UseContractEventConfig<typeof iPoolManagerABI, 'TransferBatch'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'TransferBatch'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: iPoolManagerABI,
-    eventName: 'TransferBatch',
-    ...config,
-  } as UseContractEventConfig<typeof iPoolManagerABI, 'TransferBatch'>)
+  return useContractEvent({ abi: iPoolManagerABI, eventName: 'TransferBatch', ...config } as UseContractEventConfig<
+    typeof iPoolManagerABI,
+    'TransferBatch'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"TransferSingle"`.
  */
 export function useIPoolManagerTransferSingleEvent(
-  config: Omit<
-    UseContractEventConfig<typeof iPoolManagerABI, 'TransferSingle'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'TransferSingle'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: iPoolManagerABI,
-    eventName: 'TransferSingle',
-    ...config,
-  } as UseContractEventConfig<typeof iPoolManagerABI, 'TransferSingle'>)
+  return useContractEvent({ abi: iPoolManagerABI, eventName: 'TransferSingle', ...config } as UseContractEventConfig<
+    typeof iPoolManagerABI,
+    'TransferSingle'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"URI"`.
  */
 export function useIPoolManagerUriEvent(
-  config: Omit<
-    UseContractEventConfig<typeof iPoolManagerABI, 'URI'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'URI'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: iPoolManagerABI,
-    eventName: 'URI',
-    ...config,
-  } as UseContractEventConfig<typeof iPoolManagerABI, 'URI'>)
+  return useContractEvent({ abi: iPoolManagerABI, eventName: 'URI', ...config } as UseContractEventConfig<
+    typeof iPoolManagerABI,
+    'URI'
+  >)
 }
 
 /**
@@ -11870,24 +10173,11 @@ export function useIPoolManagerUriEvent(
  */
 export function useIProtocolFeeControllerRead<
   TFunctionName extends string,
-  TSelectData = ReadContractResult<
-    typeof iProtocolFeeControllerABI,
-    TFunctionName
-  >,
+  TSelectData = ReadContractResult<typeof iProtocolFeeControllerABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<
-      typeof iProtocolFeeControllerABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof iProtocolFeeControllerABI, TFunctionName, TSelectData>, 'abi'> = {} as any,
 ) {
-  return useContractRead({
-    abi: iProtocolFeeControllerABI,
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: iProtocolFeeControllerABI, ...config } as UseContractReadConfig<
     typeof iProtocolFeeControllerABI,
     TFunctionName,
     TSelectData
@@ -11899,17 +10189,10 @@ export function useIProtocolFeeControllerRead<
  */
 export function useIProtocolFeeControllerProtocolFeesForPool<
   TFunctionName extends 'protocolFeesForPool',
-  TSelectData = ReadContractResult<
-    typeof iProtocolFeeControllerABI,
-    TFunctionName
-  >,
+  TSelectData = ReadContractResult<typeof iProtocolFeeControllerABI, TFunctionName>,
 >(
   config: Omit<
-    UseContractReadConfig<
-      typeof iProtocolFeeControllerABI,
-      TFunctionName,
-      TSelectData
-    >,
+    UseContractReadConfig<typeof iProtocolFeeControllerABI, TFunctionName, TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -11917,11 +10200,7 @@ export function useIProtocolFeeControllerProtocolFeesForPool<
     abi: iProtocolFeeControllerABI,
     functionName: 'protocolFeesForPool',
     ...config,
-  } as UseContractReadConfig<
-    typeof iProtocolFeeControllerABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof iProtocolFeeControllerABI, TFunctionName, TSelectData>)
 }
 
 /**
@@ -11930,16 +10209,12 @@ export function useIProtocolFeeControllerProtocolFeesForPool<
 export function useMockErc20Read<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof mockErc20ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof mockErc20ABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: mockErc20ABI,
-    ...config,
-  } as UseContractReadConfig<typeof mockErc20ABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof mockErc20ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: mockErc20ABI, ...config } as UseContractReadConfig<
+    typeof mockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -11954,11 +10229,11 @@ export function useMockErc20DomainSeparator<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: mockErc20ABI,
-    functionName: 'DOMAIN_SEPARATOR',
-    ...config,
-  } as UseContractReadConfig<typeof mockErc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: mockErc20ABI, functionName: 'DOMAIN_SEPARATOR', ...config } as UseContractReadConfig<
+    typeof mockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -11973,11 +10248,11 @@ export function useMockErc20Allowance<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: mockErc20ABI,
-    functionName: 'allowance',
-    ...config,
-  } as UseContractReadConfig<typeof mockErc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: mockErc20ABI, functionName: 'allowance', ...config } as UseContractReadConfig<
+    typeof mockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -11992,11 +10267,11 @@ export function useMockErc20BalanceOf<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: mockErc20ABI,
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<typeof mockErc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: mockErc20ABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
+    typeof mockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -12011,11 +10286,11 @@ export function useMockErc20Decimals<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: mockErc20ABI,
-    functionName: 'decimals',
-    ...config,
-  } as UseContractReadConfig<typeof mockErc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: mockErc20ABI, functionName: 'decimals', ...config } as UseContractReadConfig<
+    typeof mockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -12030,11 +10305,11 @@ export function useMockErc20Name<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: mockErc20ABI,
-    functionName: 'name',
-    ...config,
-  } as UseContractReadConfig<typeof mockErc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: mockErc20ABI, functionName: 'name', ...config } as UseContractReadConfig<
+    typeof mockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -12049,11 +10324,11 @@ export function useMockErc20Nonces<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: mockErc20ABI,
-    functionName: 'nonces',
-    ...config,
-  } as UseContractReadConfig<typeof mockErc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: mockErc20ABI, functionName: 'nonces', ...config } as UseContractReadConfig<
+    typeof mockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -12068,11 +10343,11 @@ export function useMockErc20Symbol<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: mockErc20ABI,
-    functionName: 'symbol',
-    ...config,
-  } as UseContractReadConfig<typeof mockErc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: mockErc20ABI, functionName: 'symbol', ...config } as UseContractReadConfig<
+    typeof mockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -12087,26 +10362,20 @@ export function useMockErc20TotalSupply<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: mockErc20ABI,
-    functionName: 'totalSupply',
-    ...config,
-  } as UseContractReadConfig<typeof mockErc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: mockErc20ABI, functionName: 'totalSupply', ...config } as UseContractReadConfig<
+    typeof mockErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockErc20ABI}__.
  */
-export function useMockErc20Write<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useMockErc20Write<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof mockErc20ABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof mockErc20ABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
@@ -12114,24 +10383,16 @@ export function useMockErc20Write<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof mockErc20ABI, TFunctionName, TMode>({
-    abi: mockErc20ABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof mockErc20ABI, TFunctionName, TMode>({ abi: mockErc20ABI, ...config } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"approve"`.
  */
-export function useMockErc20Approve<
-  TMode extends WriteContractMode = undefined,
->(
+export function useMockErc20Approve<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof mockErc20ABI,
-          'approve'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof mockErc20ABI, 'approve'>['request']['abi'],
         'approve',
         TMode
       > & { functionName?: 'approve' }
@@ -12153,10 +10414,7 @@ export function useMockErc20Approve<
 export function useMockErc20Burn<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof mockErc20ABI,
-          'burn'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof mockErc20ABI, 'burn'>['request']['abi'],
         'burn',
         TMode
       > & { functionName?: 'burn' }
@@ -12178,10 +10436,7 @@ export function useMockErc20Burn<TMode extends WriteContractMode = undefined>(
 export function useMockErc20Mint<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof mockErc20ABI,
-          'mint'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof mockErc20ABI, 'mint'>['request']['abi'],
         'mint',
         TMode
       > & { functionName?: 'mint' }
@@ -12203,10 +10458,7 @@ export function useMockErc20Mint<TMode extends WriteContractMode = undefined>(
 export function useMockErc20Permit<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof mockErc20ABI,
-          'permit'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof mockErc20ABI, 'permit'>['request']['abi'],
         'permit',
         TMode
       > & { functionName?: 'permit' }
@@ -12225,15 +10477,10 @@ export function useMockErc20Permit<TMode extends WriteContractMode = undefined>(
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"transfer"`.
  */
-export function useMockErc20Transfer<
-  TMode extends WriteContractMode = undefined,
->(
+export function useMockErc20Transfer<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof mockErc20ABI,
-          'transfer'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof mockErc20ABI, 'transfer'>['request']['abi'],
         'transfer',
         TMode
       > & { functionName?: 'transfer' }
@@ -12252,15 +10499,10 @@ export function useMockErc20Transfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"transferFrom"`.
  */
-export function useMockErc20TransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useMockErc20TransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof mockErc20ABI,
-          'transferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof mockErc20ABI, 'transferFrom'>['request']['abi'],
         'transferFrom',
         TMode
       > & { functionName?: 'transferFrom' }
@@ -12280,25 +10522,19 @@ export function useMockErc20TransferFrom<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockErc20ABI}__.
  */
 export function usePrepareMockErc20Write<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof mockErc20ABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof mockErc20ABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: mockErc20ABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof mockErc20ABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: mockErc20ABI, ...config } as UsePrepareContractWriteConfig<
+    typeof mockErc20ABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"approve"`.
  */
 export function usePrepareMockErc20Approve(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof mockErc20ABI, 'approve'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof mockErc20ABI, 'approve'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: mockErc20ABI,
@@ -12311,10 +10547,7 @@ export function usePrepareMockErc20Approve(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"burn"`.
  */
 export function usePrepareMockErc20Burn(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof mockErc20ABI, 'burn'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof mockErc20ABI, 'burn'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: mockErc20ABI,
@@ -12327,10 +10560,7 @@ export function usePrepareMockErc20Burn(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"mint"`.
  */
 export function usePrepareMockErc20Mint(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof mockErc20ABI, 'mint'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof mockErc20ABI, 'mint'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: mockErc20ABI,
@@ -12343,10 +10573,7 @@ export function usePrepareMockErc20Mint(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"permit"`.
  */
 export function usePrepareMockErc20Permit(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof mockErc20ABI, 'permit'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof mockErc20ABI, 'permit'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: mockErc20ABI,
@@ -12359,10 +10586,7 @@ export function usePrepareMockErc20Permit(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"transfer"`.
  */
 export function usePrepareMockErc20Transfer(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof mockErc20ABI, 'transfer'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof mockErc20ABI, 'transfer'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: mockErc20ABI,
@@ -12375,10 +10599,7 @@ export function usePrepareMockErc20Transfer(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockErc20ABI}__ and `functionName` set to `"transferFrom"`.
  */
 export function usePrepareMockErc20TransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof mockErc20ABI, 'transferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof mockErc20ABI, 'transferFrom'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: mockErc20ABI,
@@ -12391,47 +10612,825 @@ export function usePrepareMockErc20TransferFrom(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockErc20ABI}__.
  */
 export function useMockErc20Event<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof mockErc20ABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof mockErc20ABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: mockErc20ABI,
-    ...config,
-  } as UseContractEventConfig<typeof mockErc20ABI, TEventName>)
+  return useContractEvent({ abi: mockErc20ABI, ...config } as UseContractEventConfig<typeof mockErc20ABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockErc20ABI}__ and `eventName` set to `"Approval"`.
  */
 export function useMockErc20ApprovalEvent(
-  config: Omit<
-    UseContractEventConfig<typeof mockErc20ABI, 'Approval'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof mockErc20ABI, 'Approval'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: mockErc20ABI,
-    eventName: 'Approval',
-    ...config,
-  } as UseContractEventConfig<typeof mockErc20ABI, 'Approval'>)
+  return useContractEvent({ abi: mockErc20ABI, eventName: 'Approval', ...config } as UseContractEventConfig<
+    typeof mockErc20ABI,
+    'Approval'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockErc20ABI}__ and `eventName` set to `"Transfer"`.
  */
 export function useMockErc20TransferEvent(
+  config: Omit<UseContractEventConfig<typeof mockErc20ABI, 'Transfer'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: mockErc20ABI, eventName: 'Transfer', ...config } as UseContractEventConfig<
+    typeof mockErc20ABI,
+    'Transfer'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__.
+ *
+ *
+ */
+export function useMockToken0Read<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
+>(
+  config: Omit<UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>, 'abi' | 'address'> & {
+    chainId?: keyof typeof mockToken0Address
+  } = {} as any,
+) {
+  return useContractRead({ abi: mockToken0ABI, address: mockToken0Address[31337], ...config } as UseContractReadConfig<
+    typeof mockToken0ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"allowance"`.
+ *
+ *
+ */
+export function useMockToken0Allowance<
+  TFunctionName extends 'allowance',
+  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
+>(
   config: Omit<
-    UseContractEventConfig<typeof mockErc20ABI, 'Transfer'>,
-    'abi' | 'eventName'
-  > = {} as any,
+    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'allowance',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"balanceOf"`.
+ *
+ *
+ */
+export function useMockToken0BalanceOf<
+  TFunctionName extends 'balanceOf',
+  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'balanceOf',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"decimals"`.
+ *
+ *
+ */
+export function useMockToken0Decimals<
+  TFunctionName extends 'decimals',
+  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'decimals',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"name"`.
+ *
+ *
+ */
+export function useMockToken0Name<
+  TFunctionName extends 'name',
+  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'name',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"symbol"`.
+ *
+ *
+ */
+export function useMockToken0Symbol<
+  TFunctionName extends 'symbol',
+  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'symbol',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"totalSupply"`.
+ *
+ *
+ */
+export function useMockToken0TotalSupply<
+  TFunctionName extends 'totalSupply',
+  TSelectData = ReadContractResult<typeof mockToken0ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'totalSupply',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken0ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken0ABI}__.
+ *
+ *
+ */
+export function useMockToken0Write<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof mockToken0Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof mockToken0ABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      > & { address?: Address; chainId?: TChainId }
+    : UseContractWriteConfig<typeof mockToken0ABI, TFunctionName, TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+      } = {} as any,
+) {
+  return useContractWrite<typeof mockToken0ABI, TFunctionName, TMode>({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"approve"`.
+ *
+ *
+ */
+export function useMockToken0Approve<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof mockToken0Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof mockToken0ABI, 'approve'>['request']['abi'],
+        'approve',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'approve' }
+    : UseContractWriteConfig<typeof mockToken0ABI, 'approve', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'approve'
+      } = {} as any,
+) {
+  return useContractWrite<typeof mockToken0ABI, 'approve', TMode>({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'approve',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"transfer"`.
+ *
+ *
+ */
+export function useMockToken0Transfer<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof mockToken0Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof mockToken0ABI, 'transfer'>['request']['abi'],
+        'transfer',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof mockToken0ABI, 'transfer', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  return useContractWrite<typeof mockToken0ABI, 'transfer', TMode>({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'transfer',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"transferFrom"`.
+ *
+ *
+ */
+export function useMockToken0TransferFrom<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof mockToken0Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof mockToken0ABI, 'transferFrom'>['request']['abi'],
+        'transferFrom',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'transferFrom' }
+    : UseContractWriteConfig<typeof mockToken0ABI, 'transferFrom', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transferFrom'
+      } = {} as any,
+) {
+  return useContractWrite<typeof mockToken0ABI, 'transferFrom', TMode>({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'transferFrom',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken0ABI}__.
+ *
+ *
+ */
+export function usePrepareMockToken0Write<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof mockToken0ABI, TFunctionName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof mockToken0Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof mockToken0ABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"approve"`.
+ *
+ *
+ */
+export function usePrepareMockToken0Approve(
+  config: Omit<UsePrepareContractWriteConfig<typeof mockToken0ABI, 'approve'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof mockToken0Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'approve',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof mockToken0ABI, 'approve'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"transfer"`.
+ *
+ *
+ */
+export function usePrepareMockToken0Transfer(
+  config: Omit<UsePrepareContractWriteConfig<typeof mockToken0ABI, 'transfer'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof mockToken0Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'transfer',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof mockToken0ABI, 'transfer'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken0ABI}__ and `functionName` set to `"transferFrom"`.
+ *
+ *
+ */
+export function usePrepareMockToken0TransferFrom(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof mockToken0ABI, 'transferFrom'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken0Address } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    functionName: 'transferFrom',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof mockToken0ABI, 'transferFrom'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken0ABI}__.
+ *
+ *
+ */
+export function useMockToken0Event<TEventName extends string>(
+  config: Omit<UseContractEventConfig<typeof mockToken0ABI, TEventName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof mockToken0Address
+  } = {} as any,
 ) {
   return useContractEvent({
-    abi: mockErc20ABI,
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    ...config,
+  } as UseContractEventConfig<typeof mockToken0ABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken0ABI}__ and `eventName` set to `"Approval"`.
+ *
+ *
+ */
+export function useMockToken0ApprovalEvent(
+  config: Omit<UseContractEventConfig<typeof mockToken0ABI, 'Approval'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof mockToken0Address
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
+    eventName: 'Approval',
+    ...config,
+  } as UseContractEventConfig<typeof mockToken0ABI, 'Approval'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken0ABI}__ and `eventName` set to `"Transfer"`.
+ *
+ *
+ */
+export function useMockToken0TransferEvent(
+  config: Omit<UseContractEventConfig<typeof mockToken0ABI, 'Transfer'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof mockToken0Address
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: mockToken0ABI,
+    address: mockToken0Address[31337],
     eventName: 'Transfer',
     ...config,
-  } as UseContractEventConfig<typeof mockErc20ABI, 'Transfer'>)
+  } as UseContractEventConfig<typeof mockToken0ABI, 'Transfer'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__.
+ *
+ *
+ */
+export function useMockToken1Read<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
+>(
+  config: Omit<UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>, 'abi' | 'address'> & {
+    chainId?: keyof typeof mockToken1Address
+  } = {} as any,
+) {
+  return useContractRead({ abi: mockToken1ABI, address: mockToken1Address[31337], ...config } as UseContractReadConfig<
+    typeof mockToken1ABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"allowance"`.
+ *
+ *
+ */
+export function useMockToken1Allowance<
+  TFunctionName extends 'allowance',
+  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'allowance',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"balanceOf"`.
+ *
+ *
+ */
+export function useMockToken1BalanceOf<
+  TFunctionName extends 'balanceOf',
+  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'balanceOf',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"decimals"`.
+ *
+ *
+ */
+export function useMockToken1Decimals<
+  TFunctionName extends 'decimals',
+  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'decimals',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"name"`.
+ *
+ *
+ */
+export function useMockToken1Name<
+  TFunctionName extends 'name',
+  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'name',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"symbol"`.
+ *
+ *
+ */
+export function useMockToken1Symbol<
+  TFunctionName extends 'symbol',
+  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'symbol',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"totalSupply"`.
+ *
+ *
+ */
+export function useMockToken1TotalSupply<
+  TFunctionName extends 'totalSupply',
+  TSelectData = ReadContractResult<typeof mockToken1ABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
+) {
+  return useContractRead({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'totalSupply',
+    ...config,
+  } as UseContractReadConfig<typeof mockToken1ABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken1ABI}__.
+ *
+ *
+ */
+export function useMockToken1Write<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof mockToken1Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof mockToken1ABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      > & { address?: Address; chainId?: TChainId }
+    : UseContractWriteConfig<typeof mockToken1ABI, TFunctionName, TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+      } = {} as any,
+) {
+  return useContractWrite<typeof mockToken1ABI, TFunctionName, TMode>({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"approve"`.
+ *
+ *
+ */
+export function useMockToken1Approve<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof mockToken1Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof mockToken1ABI, 'approve'>['request']['abi'],
+        'approve',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'approve' }
+    : UseContractWriteConfig<typeof mockToken1ABI, 'approve', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'approve'
+      } = {} as any,
+) {
+  return useContractWrite<typeof mockToken1ABI, 'approve', TMode>({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'approve',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"transfer"`.
+ *
+ *
+ */
+export function useMockToken1Transfer<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof mockToken1Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof mockToken1ABI, 'transfer'>['request']['abi'],
+        'transfer',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof mockToken1ABI, 'transfer', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  return useContractWrite<typeof mockToken1ABI, 'transfer', TMode>({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'transfer',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"transferFrom"`.
+ *
+ *
+ */
+export function useMockToken1TransferFrom<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof mockToken1Address,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof mockToken1ABI, 'transferFrom'>['request']['abi'],
+        'transferFrom',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'transferFrom' }
+    : UseContractWriteConfig<typeof mockToken1ABI, 'transferFrom', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transferFrom'
+      } = {} as any,
+) {
+  return useContractWrite<typeof mockToken1ABI, 'transferFrom', TMode>({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'transferFrom',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken1ABI}__.
+ *
+ *
+ */
+export function usePrepareMockToken1Write<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof mockToken1ABI, TFunctionName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof mockToken1Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof mockToken1ABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"approve"`.
+ *
+ *
+ */
+export function usePrepareMockToken1Approve(
+  config: Omit<UsePrepareContractWriteConfig<typeof mockToken1ABI, 'approve'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof mockToken1Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'approve',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof mockToken1ABI, 'approve'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"transfer"`.
+ *
+ *
+ */
+export function usePrepareMockToken1Transfer(
+  config: Omit<UsePrepareContractWriteConfig<typeof mockToken1ABI, 'transfer'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof mockToken1Address
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'transfer',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof mockToken1ABI, 'transfer'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link mockToken1ABI}__ and `functionName` set to `"transferFrom"`.
+ *
+ *
+ */
+export function usePrepareMockToken1TransferFrom(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof mockToken1ABI, 'transferFrom'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof mockToken1Address } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    functionName: 'transferFrom',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof mockToken1ABI, 'transferFrom'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken1ABI}__.
+ *
+ *
+ */
+export function useMockToken1Event<TEventName extends string>(
+  config: Omit<UseContractEventConfig<typeof mockToken1ABI, TEventName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof mockToken1Address
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    ...config,
+  } as UseContractEventConfig<typeof mockToken1ABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken1ABI}__ and `eventName` set to `"Approval"`.
+ *
+ *
+ */
+export function useMockToken1ApprovalEvent(
+  config: Omit<UseContractEventConfig<typeof mockToken1ABI, 'Approval'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof mockToken1Address
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    eventName: 'Approval',
+    ...config,
+  } as UseContractEventConfig<typeof mockToken1ABI, 'Approval'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link mockToken1ABI}__ and `eventName` set to `"Transfer"`.
+ *
+ *
+ */
+export function useMockToken1TransferEvent(
+  config: Omit<UseContractEventConfig<typeof mockToken1ABI, 'Transfer'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof mockToken1Address
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: mockToken1ABI,
+    address: mockToken1Address[31337],
+    eventName: 'Transfer',
+    ...config,
+  } as UseContractEventConfig<typeof mockToken1ABI, 'Transfer'>)
 }
 
 /**
@@ -12440,12 +11439,7 @@ export function useMockErc20TransferEvent(
 export function useOwnedRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof ownedABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ownedABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
+>(config: Omit<UseContractReadConfig<typeof ownedABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
   return useContractRead({ abi: ownedABI, ...config } as UseContractReadConfig<
     typeof ownedABI,
     TFunctionName,
@@ -12460,25 +11454,19 @@ export function useOwnedOwner<
   TFunctionName extends 'owner',
   TSelectData = ReadContractResult<typeof ownedABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof ownedABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof ownedABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
 ) {
-  return useContractRead({
-    abi: ownedABI,
-    functionName: 'owner',
-    ...config,
-  } as UseContractReadConfig<typeof ownedABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: ownedABI, functionName: 'owner', ...config } as UseContractReadConfig<
+    typeof ownedABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ownedABI}__.
  */
-export function useOwnedWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useOwnedWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
         PrepareWriteContractResult<typeof ownedABI, string>['request']['abi'],
@@ -12489,10 +11477,7 @@ export function useOwnedWrite<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof ownedABI, TFunctionName, TMode>({
-    abi: ownedABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof ownedABI, TFunctionName, TMode>({ abi: ownedABI, ...config } as any)
 }
 
 /**
@@ -12501,10 +11486,7 @@ export function useOwnedWrite<
 export function useOwnedSetOwner<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof ownedABI,
-          'setOwner'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof ownedABI, 'setOwner'>['request']['abi'],
         'setOwner',
         TMode
       > & { functionName?: 'setOwner' }
@@ -12524,25 +11506,19 @@ export function useOwnedSetOwner<TMode extends WriteContractMode = undefined>(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ownedABI}__.
  */
 export function usePrepareOwnedWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ownedABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof ownedABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: ownedABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ownedABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: ownedABI, ...config } as UsePrepareContractWriteConfig<
+    typeof ownedABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ownedABI}__ and `functionName` set to `"setOwner"`.
  */
 export function usePrepareOwnedSetOwner(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ownedABI, 'setOwner'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof ownedABI, 'setOwner'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: ownedABI,
@@ -12555,57 +11531,47 @@ export function usePrepareOwnedSetOwner(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ownedABI}__.
  */
 export function useOwnedEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof ownedABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ownedABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ownedABI,
-    ...config,
-  } as UseContractEventConfig<typeof ownedABI, TEventName>)
+  return useContractEvent({ abi: ownedABI, ...config } as UseContractEventConfig<typeof ownedABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ownedABI}__ and `eventName` set to `"OwnerChanged"`.
  */
 export function useOwnedOwnerChangedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ownedABI, 'OwnerChanged'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof ownedABI, 'OwnerChanged'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: ownedABI,
-    eventName: 'OwnerChanged',
-    ...config,
-  } as UseContractEventConfig<typeof ownedABI, 'OwnerChanged'>)
+  return useContractEvent({ abi: ownedABI, eventName: 'OwnerChanged', ...config } as UseContractEventConfig<
+    typeof ownedABI,
+    'OwnerChanged'
+  >)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolDonateTestABI}__.
+ *
+ *
  */
 export function usePoolDonateTestRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof poolDonateTestABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof poolDonateTestABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof poolDonateTestABI, TFunctionName, TSelectData>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
 ) {
   return useContractRead({
     abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
     ...config,
-  } as UseContractReadConfig<
-    typeof poolDonateTestABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof poolDonateTestABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolDonateTestABI}__ and `functionName` set to `"manager"`.
+ *
+ *
  */
 export function usePoolDonateTestManager<
   TFunctionName extends 'manager',
@@ -12613,68 +11579,71 @@ export function usePoolDonateTestManager<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolDonateTestABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolDonateTestAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
     functionName: 'manager',
     ...config,
-  } as UseContractReadConfig<
-    typeof poolDonateTestABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof poolDonateTestABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolDonateTestABI}__.
+ *
+ *
  */
 export function usePoolDonateTestWrite<
   TFunctionName extends string,
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolDonateTestAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolDonateTestABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolDonateTestABI, string>['request']['abi'],
         TFunctionName,
         TMode
-      >
+      > & { address?: Address; chainId?: TChainId }
     : UseContractWriteConfig<typeof poolDonateTestABI, TFunctionName, TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
       } = {} as any,
 ) {
   return useContractWrite<typeof poolDonateTestABI, TFunctionName, TMode>({
     abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
     ...config,
   } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolDonateTestABI}__ and `functionName` set to `"donate"`.
+ *
+ *
  */
 export function usePoolDonateTestDonate<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolDonateTestAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolDonateTestABI,
-          'donate'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolDonateTestABI, 'donate'>['request']['abi'],
         'donate',
         TMode
-      > & { functionName?: 'donate' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'donate' }
     : UseContractWriteConfig<typeof poolDonateTestABI, 'donate', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'donate'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolDonateTestABI, 'donate', TMode>({
     abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
     functionName: 'donate',
     ...config,
   } as any)
@@ -12682,30 +11651,29 @@ export function usePoolDonateTestDonate<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolDonateTestABI}__ and `functionName` set to `"lockAcquired"`.
+ *
+ *
  */
 export function usePoolDonateTestLockAcquired<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolDonateTestAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolDonateTestABI,
-          'lockAcquired'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolDonateTestABI, 'lockAcquired'>['request']['abi'],
         'lockAcquired',
         TMode
-      > & { functionName?: 'lockAcquired' }
-    : UseContractWriteConfig<
-        typeof poolDonateTestABI,
-        'lockAcquired',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'lockAcquired' }
+    : UseContractWriteConfig<typeof poolDonateTestABI, 'lockAcquired', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'lockAcquired'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolDonateTestABI, 'lockAcquired', TMode>({
     abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
     functionName: 'lockAcquired',
     ...config,
   } as any)
@@ -12713,30 +11681,35 @@ export function usePoolDonateTestLockAcquired<
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolDonateTestABI}__.
+ *
+ *
  */
 export function usePreparePoolDonateTestWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolDonateTestABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof poolDonateTestABI, TFunctionName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolDonateTestABI, TFunctionName>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolDonateTestABI}__ and `functionName` set to `"donate"`.
+ *
+ *
  */
 export function usePreparePoolDonateTestDonate(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolDonateTestABI, 'donate'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolDonateTestAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
     functionName: 'donate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolDonateTestABI, 'donate'>)
@@ -12744,15 +11717,18 @@ export function usePreparePoolDonateTestDonate(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolDonateTestABI}__ and `functionName` set to `"lockAcquired"`.
+ *
+ *
  */
 export function usePreparePoolDonateTestLockAcquired(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolDonateTestABI, 'lockAcquired'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolDonateTestAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
     functionName: 'lockAcquired',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolDonateTestABI, 'lockAcquired'>)
@@ -12760,24 +11736,28 @@ export function usePreparePoolDonateTestLockAcquired(
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__.
+ *
+ *
  */
 export function usePoolManagerRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof poolManagerABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"MAX_TICK_SPACING"`.
+ *
+ *
  */
 export function usePoolManagerMaxTickSpacing<
   TFunctionName extends 'MAX_TICK_SPACING',
@@ -12785,11 +11765,12 @@ export function usePoolManagerMaxTickSpacing<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'MAX_TICK_SPACING',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -12797,6 +11778,8 @@ export function usePoolManagerMaxTickSpacing<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"MIN_PROTOCOL_FEE_DENOMINATOR"`.
+ *
+ *
  */
 export function usePoolManagerMinProtocolFeeDenominator<
   TFunctionName extends 'MIN_PROTOCOL_FEE_DENOMINATOR',
@@ -12804,11 +11787,12 @@ export function usePoolManagerMinProtocolFeeDenominator<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'MIN_PROTOCOL_FEE_DENOMINATOR',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -12816,6 +11800,8 @@ export function usePoolManagerMinProtocolFeeDenominator<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"MIN_TICK_SPACING"`.
+ *
+ *
  */
 export function usePoolManagerMinTickSpacing<
   TFunctionName extends 'MIN_TICK_SPACING',
@@ -12823,11 +11809,12 @@ export function usePoolManagerMinTickSpacing<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'MIN_TICK_SPACING',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -12835,6 +11822,8 @@ export function usePoolManagerMinTickSpacing<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"balanceOf"`.
+ *
+ *
  */
 export function usePoolManagerBalanceOf<
   TFunctionName extends 'balanceOf',
@@ -12842,11 +11831,12 @@ export function usePoolManagerBalanceOf<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'balanceOf',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -12854,6 +11844,8 @@ export function usePoolManagerBalanceOf<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"balanceOfBatch"`.
+ *
+ *
  */
 export function usePoolManagerBalanceOfBatch<
   TFunctionName extends 'balanceOfBatch',
@@ -12861,11 +11853,12 @@ export function usePoolManagerBalanceOfBatch<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'balanceOfBatch',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -12873,6 +11866,8 @@ export function usePoolManagerBalanceOfBatch<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"currencyDelta"`.
+ *
+ *
  */
 export function usePoolManagerCurrencyDelta<
   TFunctionName extends 'currencyDelta',
@@ -12880,11 +11875,12 @@ export function usePoolManagerCurrencyDelta<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'currencyDelta',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -12892,6 +11888,8 @@ export function usePoolManagerCurrencyDelta<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"extsload"`.
+ *
+ *
  */
 export function usePoolManagerExtsload<
   TFunctionName extends 'extsload',
@@ -12899,11 +11897,12 @@ export function usePoolManagerExtsload<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'extsload',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -12911,6 +11910,8 @@ export function usePoolManagerExtsload<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"getLiquidity"`.
+ *
+ *
  */
 export function usePoolManagerGetLiquidity<
   TFunctionName extends 'getLiquidity',
@@ -12918,11 +11919,12 @@ export function usePoolManagerGetLiquidity<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'getLiquidity',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -12930,6 +11932,8 @@ export function usePoolManagerGetLiquidity<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"getLock"`.
+ *
+ *
  */
 export function usePoolManagerGetLock<
   TFunctionName extends 'getLock',
@@ -12937,11 +11941,12 @@ export function usePoolManagerGetLock<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'getLock',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -12949,6 +11954,8 @@ export function usePoolManagerGetLock<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"getPosition"`.
+ *
+ *
  */
 export function usePoolManagerGetPosition<
   TFunctionName extends 'getPosition',
@@ -12956,11 +11963,12 @@ export function usePoolManagerGetPosition<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'getPosition',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -12968,6 +11976,8 @@ export function usePoolManagerGetPosition<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"getSlot0"`.
+ *
+ *
  */
 export function usePoolManagerGetSlot0<
   TFunctionName extends 'getSlot0',
@@ -12975,11 +11985,12 @@ export function usePoolManagerGetSlot0<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'getSlot0',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -12987,6 +11998,8 @@ export function usePoolManagerGetSlot0<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"hookFeesAccrued"`.
+ *
+ *
  */
 export function usePoolManagerHookFeesAccrued<
   TFunctionName extends 'hookFeesAccrued',
@@ -12994,11 +12007,12 @@ export function usePoolManagerHookFeesAccrued<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'hookFeesAccrued',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -13006,6 +12020,8 @@ export function usePoolManagerHookFeesAccrued<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"isApprovedForAll"`.
+ *
+ *
  */
 export function usePoolManagerIsApprovedForAll<
   TFunctionName extends 'isApprovedForAll',
@@ -13013,11 +12029,12 @@ export function usePoolManagerIsApprovedForAll<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'isApprovedForAll',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -13025,6 +12042,8 @@ export function usePoolManagerIsApprovedForAll<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"lockData"`.
+ *
+ *
  */
 export function usePoolManagerLockData<
   TFunctionName extends 'lockData',
@@ -13032,11 +12051,12 @@ export function usePoolManagerLockData<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'lockData',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -13044,6 +12064,8 @@ export function usePoolManagerLockData<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"owner"`.
+ *
+ *
  */
 export function usePoolManagerOwner<
   TFunctionName extends 'owner',
@@ -13051,11 +12073,12 @@ export function usePoolManagerOwner<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -13063,6 +12086,8 @@ export function usePoolManagerOwner<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"pools"`.
+ *
+ *
  */
 export function usePoolManagerPools<
   TFunctionName extends 'pools',
@@ -13070,11 +12095,12 @@ export function usePoolManagerPools<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'pools',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -13082,6 +12108,8 @@ export function usePoolManagerPools<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"protocolFeeController"`.
+ *
+ *
  */
 export function usePoolManagerProtocolFeeController<
   TFunctionName extends 'protocolFeeController',
@@ -13089,11 +12117,12 @@ export function usePoolManagerProtocolFeeController<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'protocolFeeController',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -13101,6 +12130,8 @@ export function usePoolManagerProtocolFeeController<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"protocolFeesAccrued"`.
+ *
+ *
  */
 export function usePoolManagerProtocolFeesAccrued<
   TFunctionName extends 'protocolFeesAccrued',
@@ -13108,11 +12139,12 @@ export function usePoolManagerProtocolFeesAccrued<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'protocolFeesAccrued',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -13120,6 +12152,8 @@ export function usePoolManagerProtocolFeesAccrued<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"reservesOf"`.
+ *
+ *
  */
 export function usePoolManagerReservesOf<
   TFunctionName extends 'reservesOf',
@@ -13127,11 +12161,12 @@ export function usePoolManagerReservesOf<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'reservesOf',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -13139,6 +12174,8 @@ export function usePoolManagerReservesOf<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"supportsInterface"`.
+ *
+ *
  */
 export function usePoolManagerSupportsInterface<
   TFunctionName extends 'supportsInterface',
@@ -13146,11 +12183,12 @@ export function usePoolManagerSupportsInterface<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'supportsInterface',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -13158,6 +12196,8 @@ export function usePoolManagerSupportsInterface<
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"uri"`.
+ *
+ *
  */
 export function usePoolManagerUri<
   TFunctionName extends 'uri',
@@ -13165,11 +12205,12 @@ export function usePoolManagerUri<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'uri',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -13177,56 +12218,58 @@ export function usePoolManagerUri<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__.
+ *
+ *
  */
 export function usePoolManagerWrite<
   TFunctionName extends string,
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, string>['request']['abi'],
         TFunctionName,
         TMode
-      >
+      > & { address?: Address; chainId?: TChainId }
     : UseContractWriteConfig<typeof poolManagerABI, TFunctionName, TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, TFunctionName, TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     ...config,
   } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"collectHookFees"`.
+ *
+ *
  */
 export function usePoolManagerCollectHookFees<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'collectHookFees'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'collectHookFees'>['request']['abi'],
         'collectHookFees',
         TMode
-      > & { functionName?: 'collectHookFees' }
-    : UseContractWriteConfig<
-        typeof poolManagerABI,
-        'collectHookFees',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'collectHookFees' }
+    : UseContractWriteConfig<typeof poolManagerABI, 'collectHookFees', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'collectHookFees'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'collectHookFees', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'collectHookFees',
     ...config,
   } as any)
@@ -13234,30 +12277,29 @@ export function usePoolManagerCollectHookFees<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"collectProtocolFees"`.
+ *
+ *
  */
 export function usePoolManagerCollectProtocolFees<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'collectProtocolFees'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'collectProtocolFees'>['request']['abi'],
         'collectProtocolFees',
         TMode
-      > & { functionName?: 'collectProtocolFees' }
-    : UseContractWriteConfig<
-        typeof poolManagerABI,
-        'collectProtocolFees',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'collectProtocolFees' }
+    : UseContractWriteConfig<typeof poolManagerABI, 'collectProtocolFees', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'collectProtocolFees'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'collectProtocolFees', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'collectProtocolFees',
     ...config,
   } as any)
@@ -13265,26 +12307,29 @@ export function usePoolManagerCollectProtocolFees<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"donate"`.
+ *
+ *
  */
 export function usePoolManagerDonate<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'donate'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'donate'>['request']['abi'],
         'donate',
         TMode
-      > & { functionName?: 'donate' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'donate' }
     : UseContractWriteConfig<typeof poolManagerABI, 'donate', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'donate'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'donate', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'donate',
     ...config,
   } as any)
@@ -13292,26 +12337,29 @@ export function usePoolManagerDonate<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"initialize"`.
+ *
+ *
  */
 export function usePoolManagerInitialize<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'initialize'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'initialize'>['request']['abi'],
         'initialize',
         TMode
-      > & { functionName?: 'initialize' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'initialize' }
     : UseContractWriteConfig<typeof poolManagerABI, 'initialize', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'initialize'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'initialize', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'initialize',
     ...config,
   } as any)
@@ -13319,24 +12367,29 @@ export function usePoolManagerInitialize<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"lock"`.
+ *
+ *
  */
-export function usePoolManagerLock<TMode extends WriteContractMode = undefined>(
+export function usePoolManagerLock<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
+>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'lock'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'lock'>['request']['abi'],
         'lock',
         TMode
-      > & { functionName?: 'lock' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'lock' }
     : UseContractWriteConfig<typeof poolManagerABI, 'lock', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'lock'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'lock', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'lock',
     ...config,
   } as any)
@@ -13344,24 +12397,29 @@ export function usePoolManagerLock<TMode extends WriteContractMode = undefined>(
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"mint"`.
+ *
+ *
  */
-export function usePoolManagerMint<TMode extends WriteContractMode = undefined>(
+export function usePoolManagerMint<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
+>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'mint'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'mint'>['request']['abi'],
         'mint',
         TMode
-      > & { functionName?: 'mint' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'mint' }
     : UseContractWriteConfig<typeof poolManagerABI, 'mint', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'mint'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'mint', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'mint',
     ...config,
   } as any)
@@ -13369,26 +12427,29 @@ export function usePoolManagerMint<TMode extends WriteContractMode = undefined>(
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"modifyPosition"`.
+ *
+ *
  */
 export function usePoolManagerModifyPosition<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'modifyPosition'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'modifyPosition'>['request']['abi'],
         'modifyPosition',
         TMode
-      > & { functionName?: 'modifyPosition' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'modifyPosition' }
     : UseContractWriteConfig<typeof poolManagerABI, 'modifyPosition', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'modifyPosition'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'modifyPosition', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'modifyPosition',
     ...config,
   } as any)
@@ -13396,34 +12457,29 @@ export function usePoolManagerModifyPosition<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155BatchReceived"`.
+ *
+ *
  */
 export function usePoolManagerOnErc1155BatchReceived<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'onERC1155BatchReceived'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'onERC1155BatchReceived'>['request']['abi'],
         'onERC1155BatchReceived',
         TMode
-      > & { functionName?: 'onERC1155BatchReceived' }
-    : UseContractWriteConfig<
-        typeof poolManagerABI,
-        'onERC1155BatchReceived',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'onERC1155BatchReceived' }
+    : UseContractWriteConfig<typeof poolManagerABI, 'onERC1155BatchReceived', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'onERC1155BatchReceived'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof poolManagerABI,
-    'onERC1155BatchReceived',
-    TMode
-  >({
+  return useContractWrite<typeof poolManagerABI, 'onERC1155BatchReceived', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'onERC1155BatchReceived',
     ...config,
   } as any)
@@ -13431,30 +12487,29 @@ export function usePoolManagerOnErc1155BatchReceived<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155Received"`.
+ *
+ *
  */
 export function usePoolManagerOnErc1155Received<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'onERC1155Received'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'onERC1155Received'>['request']['abi'],
         'onERC1155Received',
         TMode
-      > & { functionName?: 'onERC1155Received' }
-    : UseContractWriteConfig<
-        typeof poolManagerABI,
-        'onERC1155Received',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'onERC1155Received' }
+    : UseContractWriteConfig<typeof poolManagerABI, 'onERC1155Received', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'onERC1155Received'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'onERC1155Received', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'onERC1155Received',
     ...config,
   } as any)
@@ -13462,34 +12517,29 @@ export function usePoolManagerOnErc1155Received<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
+ *
+ *
  */
 export function usePoolManagerSafeBatchTransferFrom<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'safeBatchTransferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'safeBatchTransferFrom'>['request']['abi'],
         'safeBatchTransferFrom',
         TMode
-      > & { functionName?: 'safeBatchTransferFrom' }
-    : UseContractWriteConfig<
-        typeof poolManagerABI,
-        'safeBatchTransferFrom',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'safeBatchTransferFrom' }
+    : UseContractWriteConfig<typeof poolManagerABI, 'safeBatchTransferFrom', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'safeBatchTransferFrom'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof poolManagerABI,
-    'safeBatchTransferFrom',
-    TMode
-  >({
+  return useContractWrite<typeof poolManagerABI, 'safeBatchTransferFrom', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'safeBatchTransferFrom',
     ...config,
   } as any)
@@ -13497,30 +12547,29 @@ export function usePoolManagerSafeBatchTransferFrom<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeTransferFrom"`.
+ *
+ *
  */
 export function usePoolManagerSafeTransferFrom<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'safeTransferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'safeTransferFrom'>['request']['abi'],
         'safeTransferFrom',
         TMode
-      > & { functionName?: 'safeTransferFrom' }
-    : UseContractWriteConfig<
-        typeof poolManagerABI,
-        'safeTransferFrom',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'safeTransferFrom' }
+    : UseContractWriteConfig<typeof poolManagerABI, 'safeTransferFrom', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'safeTransferFrom'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'safeTransferFrom', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'safeTransferFrom',
     ...config,
   } as any)
@@ -13528,30 +12577,29 @@ export function usePoolManagerSafeTransferFrom<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setApprovalForAll"`.
+ *
+ *
  */
 export function usePoolManagerSetApprovalForAll<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'setApprovalForAll'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'setApprovalForAll'>['request']['abi'],
         'setApprovalForAll',
         TMode
-      > & { functionName?: 'setApprovalForAll' }
-    : UseContractWriteConfig<
-        typeof poolManagerABI,
-        'setApprovalForAll',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'setApprovalForAll' }
+    : UseContractWriteConfig<typeof poolManagerABI, 'setApprovalForAll', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'setApprovalForAll'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'setApprovalForAll', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'setApprovalForAll',
     ...config,
   } as any)
@@ -13559,26 +12607,29 @@ export function usePoolManagerSetApprovalForAll<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setHookFees"`.
+ *
+ *
  */
 export function usePoolManagerSetHookFees<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'setHookFees'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'setHookFees'>['request']['abi'],
         'setHookFees',
         TMode
-      > & { functionName?: 'setHookFees' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'setHookFees' }
     : UseContractWriteConfig<typeof poolManagerABI, 'setHookFees', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'setHookFees'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'setHookFees', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'setHookFees',
     ...config,
   } as any)
@@ -13586,26 +12637,29 @@ export function usePoolManagerSetHookFees<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setOwner"`.
+ *
+ *
  */
 export function usePoolManagerSetOwner<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'setOwner'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'setOwner'>['request']['abi'],
         'setOwner',
         TMode
-      > & { functionName?: 'setOwner' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'setOwner' }
     : UseContractWriteConfig<typeof poolManagerABI, 'setOwner', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'setOwner'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'setOwner', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'setOwner',
     ...config,
   } as any)
@@ -13613,34 +12667,29 @@ export function usePoolManagerSetOwner<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setProtocolFeeController"`.
+ *
+ *
  */
 export function usePoolManagerSetProtocolFeeController<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'setProtocolFeeController'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'setProtocolFeeController'>['request']['abi'],
         'setProtocolFeeController',
         TMode
-      > & { functionName?: 'setProtocolFeeController' }
-    : UseContractWriteConfig<
-        typeof poolManagerABI,
-        'setProtocolFeeController',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'setProtocolFeeController' }
+    : UseContractWriteConfig<typeof poolManagerABI, 'setProtocolFeeController', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'setProtocolFeeController'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof poolManagerABI,
-    'setProtocolFeeController',
-    TMode
-  >({
+  return useContractWrite<typeof poolManagerABI, 'setProtocolFeeController', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'setProtocolFeeController',
     ...config,
   } as any)
@@ -13648,30 +12697,29 @@ export function usePoolManagerSetProtocolFeeController<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setProtocolFees"`.
+ *
+ *
  */
 export function usePoolManagerSetProtocolFees<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'setProtocolFees'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'setProtocolFees'>['request']['abi'],
         'setProtocolFees',
         TMode
-      > & { functionName?: 'setProtocolFees' }
-    : UseContractWriteConfig<
-        typeof poolManagerABI,
-        'setProtocolFees',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'setProtocolFees' }
+    : UseContractWriteConfig<typeof poolManagerABI, 'setProtocolFees', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'setProtocolFees'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'setProtocolFees', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'setProtocolFees',
     ...config,
   } as any)
@@ -13679,26 +12727,29 @@ export function usePoolManagerSetProtocolFees<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"settle"`.
+ *
+ *
  */
 export function usePoolManagerSettle<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'settle'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'settle'>['request']['abi'],
         'settle',
         TMode
-      > & { functionName?: 'settle' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'settle' }
     : UseContractWriteConfig<typeof poolManagerABI, 'settle', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'settle'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'settle', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'settle',
     ...config,
   } as any)
@@ -13706,24 +12757,29 @@ export function usePoolManagerSettle<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"swap"`.
+ *
+ *
  */
-export function usePoolManagerSwap<TMode extends WriteContractMode = undefined>(
+export function usePoolManagerSwap<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
+>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'swap'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'swap'>['request']['abi'],
         'swap',
         TMode
-      > & { functionName?: 'swap' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'swap' }
     : UseContractWriteConfig<typeof poolManagerABI, 'swap', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'swap'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'swap', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'swap',
     ...config,
   } as any)
@@ -13731,24 +12787,29 @@ export function usePoolManagerSwap<TMode extends WriteContractMode = undefined>(
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"take"`.
+ *
+ *
  */
-export function usePoolManagerTake<TMode extends WriteContractMode = undefined>(
+export function usePoolManagerTake<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
+>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolManagerABI,
-          'take'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolManagerABI, 'take'>['request']['abi'],
         'take',
         TMode
-      > & { functionName?: 'take' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'take' }
     : UseContractWriteConfig<typeof poolManagerABI, 'take', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'take'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolManagerABI, 'take', TMode>({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'take',
     ...config,
   } as any)
@@ -13756,30 +12817,35 @@ export function usePoolManagerTake<TMode extends WriteContractMode = undefined>(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__.
+ *
+ *
  */
 export function usePreparePoolManagerWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, TFunctionName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, TFunctionName>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"collectHookFees"`.
+ *
+ *
  */
 export function usePreparePoolManagerCollectHookFees(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolManagerABI, 'collectHookFees'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'collectHookFees',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'collectHookFees'>)
@@ -13787,34 +12853,36 @@ export function usePreparePoolManagerCollectHookFees(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"collectProtocolFees"`.
+ *
+ *
  */
 export function usePreparePoolManagerCollectProtocolFees(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolManagerABI, 'collectProtocolFees'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'collectProtocolFees',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof poolManagerABI,
-    'collectProtocolFees'
-  >)
+  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'collectProtocolFees'>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"donate"`.
+ *
+ *
  */
 export function usePreparePoolManagerDonate(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'donate'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'donate'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'donate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'donate'>)
@@ -13822,15 +12890,18 @@ export function usePreparePoolManagerDonate(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"initialize"`.
+ *
+ *
  */
 export function usePreparePoolManagerInitialize(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolManagerABI, 'initialize'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'initialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'initialize'>)
@@ -13838,15 +12909,17 @@ export function usePreparePoolManagerInitialize(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"lock"`.
+ *
+ *
  */
 export function usePreparePoolManagerLock(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'lock'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'lock'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'lock',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'lock'>)
@@ -13854,15 +12927,17 @@ export function usePreparePoolManagerLock(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"mint"`.
+ *
+ *
  */
 export function usePreparePoolManagerMint(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'mint'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'mint'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'mint',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'mint'>)
@@ -13870,15 +12945,18 @@ export function usePreparePoolManagerMint(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"modifyPosition"`.
+ *
+ *
  */
 export function usePreparePoolManagerModifyPosition(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolManagerABI, 'modifyPosition'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'modifyPosition',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'modifyPosition'>)
@@ -13886,78 +12964,75 @@ export function usePreparePoolManagerModifyPosition(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155BatchReceived"`.
+ *
+ *
  */
 export function usePreparePoolManagerOnErc1155BatchReceived(
   config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof poolManagerABI,
-      'onERC1155BatchReceived'
-    >,
-    'abi' | 'functionName'
-  > = {} as any,
+    UsePrepareContractWriteConfig<typeof poolManagerABI, 'onERC1155BatchReceived'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'onERC1155BatchReceived',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof poolManagerABI,
-    'onERC1155BatchReceived'
-  >)
+  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'onERC1155BatchReceived'>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155Received"`.
+ *
+ *
  */
 export function usePreparePoolManagerOnErc1155Received(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolManagerABI, 'onERC1155Received'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'onERC1155Received',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof poolManagerABI,
-    'onERC1155Received'
-  >)
+  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'onERC1155Received'>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
+ *
+ *
  */
 export function usePreparePoolManagerSafeBatchTransferFrom(
   config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof poolManagerABI,
-      'safeBatchTransferFrom'
-    >,
-    'abi' | 'functionName'
-  > = {} as any,
+    UsePrepareContractWriteConfig<typeof poolManagerABI, 'safeBatchTransferFrom'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'safeBatchTransferFrom',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof poolManagerABI,
-    'safeBatchTransferFrom'
-  >)
+  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'safeBatchTransferFrom'>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeTransferFrom"`.
+ *
+ *
  */
 export function usePreparePoolManagerSafeTransferFrom(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolManagerABI, 'safeTransferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'safeTransferFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'safeTransferFrom'>)
@@ -13965,34 +13040,37 @@ export function usePreparePoolManagerSafeTransferFrom(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setApprovalForAll"`.
+ *
+ *
  */
 export function usePreparePoolManagerSetApprovalForAll(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolManagerABI, 'setApprovalForAll'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'setApprovalForAll',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof poolManagerABI,
-    'setApprovalForAll'
-  >)
+  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'setApprovalForAll'>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setHookFees"`.
+ *
+ *
  */
 export function usePreparePoolManagerSetHookFees(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolManagerABI, 'setHookFees'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'setHookFees',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'setHookFees'>)
@@ -14000,15 +13078,17 @@ export function usePreparePoolManagerSetHookFees(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setOwner"`.
+ *
+ *
  */
 export function usePreparePoolManagerSetOwner(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'setOwner'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'setOwner'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'setOwner',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'setOwner'>)
@@ -14016,37 +13096,37 @@ export function usePreparePoolManagerSetOwner(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setProtocolFeeController"`.
+ *
+ *
  */
 export function usePreparePoolManagerSetProtocolFeeController(
   config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof poolManagerABI,
-      'setProtocolFeeController'
-    >,
-    'abi' | 'functionName'
-  > = {} as any,
+    UsePrepareContractWriteConfig<typeof poolManagerABI, 'setProtocolFeeController'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'setProtocolFeeController',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof poolManagerABI,
-    'setProtocolFeeController'
-  >)
+  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'setProtocolFeeController'>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setProtocolFees"`.
+ *
+ *
  */
 export function usePreparePoolManagerSetProtocolFees(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolManagerABI, 'setProtocolFees'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'setProtocolFees',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'setProtocolFees'>)
@@ -14054,15 +13134,17 @@ export function usePreparePoolManagerSetProtocolFees(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"settle"`.
+ *
+ *
  */
 export function usePreparePoolManagerSettle(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'settle'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'settle'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'settle',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'settle'>)
@@ -14070,15 +13152,17 @@ export function usePreparePoolManagerSettle(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"swap"`.
+ *
+ *
  */
 export function usePreparePoolManagerSwap(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'swap'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'swap'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'swap',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'swap'>)
@@ -14086,15 +13170,17 @@ export function usePreparePoolManagerSwap(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"take"`.
+ *
+ *
  */
 export function usePreparePoolManagerTake(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'take'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'take'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     functionName: 'take',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'take'>)
@@ -14102,30 +13188,34 @@ export function usePreparePoolManagerTake(
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__.
+ *
+ *
  */
 export function usePoolManagerEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof poolManagerABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, TEventName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"ApprovalForAll"`.
+ *
+ *
  */
 export function usePoolManagerApprovalForAllEvent(
-  config: Omit<
-    UseContractEventConfig<typeof poolManagerABI, 'ApprovalForAll'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'ApprovalForAll'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     eventName: 'ApprovalForAll',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'ApprovalForAll'>)
@@ -14133,15 +13223,17 @@ export function usePoolManagerApprovalForAllEvent(
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"HookFeeUpdated"`.
+ *
+ *
  */
 export function usePoolManagerHookFeeUpdatedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof poolManagerABI, 'HookFeeUpdated'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'HookFeeUpdated'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     eventName: 'HookFeeUpdated',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'HookFeeUpdated'>)
@@ -14149,15 +13241,17 @@ export function usePoolManagerHookFeeUpdatedEvent(
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"Initialize"`.
+ *
+ *
  */
 export function usePoolManagerInitializeEvent(
-  config: Omit<
-    UseContractEventConfig<typeof poolManagerABI, 'Initialize'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'Initialize'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     eventName: 'Initialize',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'Initialize'>)
@@ -14165,15 +13259,17 @@ export function usePoolManagerInitializeEvent(
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"ModifyPosition"`.
+ *
+ *
  */
 export function usePoolManagerModifyPositionEvent(
-  config: Omit<
-    UseContractEventConfig<typeof poolManagerABI, 'ModifyPosition'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'ModifyPosition'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     eventName: 'ModifyPosition',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'ModifyPosition'>)
@@ -14181,15 +13277,17 @@ export function usePoolManagerModifyPositionEvent(
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"OwnerChanged"`.
+ *
+ *
  */
 export function usePoolManagerOwnerChangedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof poolManagerABI, 'OwnerChanged'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'OwnerChanged'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     eventName: 'OwnerChanged',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'OwnerChanged'>)
@@ -14197,37 +13295,36 @@ export function usePoolManagerOwnerChangedEvent(
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"ProtocolFeeControllerUpdated"`.
+ *
+ *
  */
 export function usePoolManagerProtocolFeeControllerUpdatedEvent(
   config: Omit<
-    UseContractEventConfig<
-      typeof poolManagerABI,
-      'ProtocolFeeControllerUpdated'
-    >,
-    'abi' | 'eventName'
-  > = {} as any,
+    UseContractEventConfig<typeof poolManagerABI, 'ProtocolFeeControllerUpdated'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     eventName: 'ProtocolFeeControllerUpdated',
     ...config,
-  } as UseContractEventConfig<
-    typeof poolManagerABI,
-    'ProtocolFeeControllerUpdated'
-  >)
+  } as UseContractEventConfig<typeof poolManagerABI, 'ProtocolFeeControllerUpdated'>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"ProtocolFeeUpdated"`.
+ *
+ *
  */
 export function usePoolManagerProtocolFeeUpdatedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof poolManagerABI, 'ProtocolFeeUpdated'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'ProtocolFeeUpdated'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     eventName: 'ProtocolFeeUpdated',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'ProtocolFeeUpdated'>)
@@ -14235,15 +13332,17 @@ export function usePoolManagerProtocolFeeUpdatedEvent(
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"Swap"`.
+ *
+ *
  */
 export function usePoolManagerSwapEvent(
-  config: Omit<
-    UseContractEventConfig<typeof poolManagerABI, 'Swap'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'Swap'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     eventName: 'Swap',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'Swap'>)
@@ -14251,15 +13350,17 @@ export function usePoolManagerSwapEvent(
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"TransferBatch"`.
+ *
+ *
  */
 export function usePoolManagerTransferBatchEvent(
-  config: Omit<
-    UseContractEventConfig<typeof poolManagerABI, 'TransferBatch'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'TransferBatch'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     eventName: 'TransferBatch',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'TransferBatch'>)
@@ -14267,15 +13368,17 @@ export function usePoolManagerTransferBatchEvent(
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"TransferSingle"`.
+ *
+ *
  */
 export function usePoolManagerTransferSingleEvent(
-  config: Omit<
-    UseContractEventConfig<typeof poolManagerABI, 'TransferSingle'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'TransferSingle'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     eventName: 'TransferSingle',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'TransferSingle'>)
@@ -14283,15 +13386,17 @@ export function usePoolManagerTransferSingleEvent(
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"URI"`.
+ *
+ *
  */
 export function usePoolManagerUriEvent(
-  config: Omit<
-    UseContractEventConfig<typeof poolManagerABI, 'URI'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'URI'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
 ) {
   return useContractEvent({
     abi: poolManagerABI,
+    address: poolManagerAddress[31337],
     eventName: 'URI',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'URI'>)
@@ -14299,124 +13404,101 @@ export function usePoolManagerUriEvent(
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolModifyPositionTestABI}__.
+ *
+ *
  */
 export function usePoolModifyPositionTestRead<
   TFunctionName extends string,
-  TSelectData = ReadContractResult<
-    typeof poolModifyPositionTestABI,
-    TFunctionName
-  >,
+  TSelectData = ReadContractResult<typeof poolModifyPositionTestABI, TFunctionName>,
 >(
   config: Omit<
-    UseContractReadConfig<
-      typeof poolModifyPositionTestABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi'
-  > = {} as any,
+    UseContractReadConfig<typeof poolModifyPositionTestABI, TFunctionName, TSelectData>,
+    'abi' | 'address'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[31337],
     ...config,
-  } as UseContractReadConfig<
-    typeof poolModifyPositionTestABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof poolModifyPositionTestABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"manager"`.
+ *
+ *
  */
 export function usePoolModifyPositionTestManager<
   TFunctionName extends 'manager',
-  TSelectData = ReadContractResult<
-    typeof poolModifyPositionTestABI,
-    TFunctionName
-  >,
+  TSelectData = ReadContractResult<typeof poolModifyPositionTestABI, TFunctionName>,
 >(
   config: Omit<
-    UseContractReadConfig<
-      typeof poolModifyPositionTestABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'functionName'
-  > = {} as any,
+    UseContractReadConfig<typeof poolModifyPositionTestABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[31337],
     functionName: 'manager',
     ...config,
-  } as UseContractReadConfig<
-    typeof poolModifyPositionTestABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof poolModifyPositionTestABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__.
+ *
+ *
  */
 export function usePoolModifyPositionTestWrite<
   TFunctionName extends string,
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolModifyPositionTestAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolModifyPositionTestABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolModifyPositionTestABI, string>['request']['abi'],
         TFunctionName,
         TMode
-      >
-    : UseContractWriteConfig<
-        typeof poolModifyPositionTestABI,
-        TFunctionName,
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId }
+    : UseContractWriteConfig<typeof poolModifyPositionTestABI, TFunctionName, TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof poolModifyPositionTestABI,
-    TFunctionName,
-    TMode
-  >({ abi: poolModifyPositionTestABI, ...config } as any)
+  return useContractWrite<typeof poolModifyPositionTestABI, TFunctionName, TMode>({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[31337],
+    ...config,
+  } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"lockAcquired"`.
+ *
+ *
  */
 export function usePoolModifyPositionTestLockAcquired<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolModifyPositionTestAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolModifyPositionTestABI,
-          'lockAcquired'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolModifyPositionTestABI, 'lockAcquired'>['request']['abi'],
         'lockAcquired',
         TMode
-      > & { functionName?: 'lockAcquired' }
-    : UseContractWriteConfig<
-        typeof poolModifyPositionTestABI,
-        'lockAcquired',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'lockAcquired' }
+    : UseContractWriteConfig<typeof poolModifyPositionTestABI, 'lockAcquired', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'lockAcquired'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof poolModifyPositionTestABI,
-    'lockAcquired',
-    TMode
-  >({
+  return useContractWrite<typeof poolModifyPositionTestABI, 'lockAcquired', TMode>({
     abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[31337],
     functionName: 'lockAcquired',
     ...config,
   } as any)
@@ -14424,34 +13506,29 @@ export function usePoolModifyPositionTestLockAcquired<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"modifyPosition"`.
+ *
+ *
  */
 export function usePoolModifyPositionTestModifyPosition<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolModifyPositionTestAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolModifyPositionTestABI,
-          'modifyPosition'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolModifyPositionTestABI, 'modifyPosition'>['request']['abi'],
         'modifyPosition',
         TMode
-      > & { functionName?: 'modifyPosition' }
-    : UseContractWriteConfig<
-        typeof poolModifyPositionTestABI,
-        'modifyPosition',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'modifyPosition' }
+    : UseContractWriteConfig<typeof poolModifyPositionTestABI, 'modifyPosition', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'modifyPosition'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof poolModifyPositionTestABI,
-    'modifyPosition',
-    TMode
-  >({
+  return useContractWrite<typeof poolModifyPositionTestABI, 'modifyPosition', TMode>({
     abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[31337],
     functionName: 'modifyPosition',
     ...config,
   } as any)
@@ -14459,95 +13536,83 @@ export function usePoolModifyPositionTestModifyPosition<
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__.
+ *
+ *
  */
-export function usePreparePoolModifyPositionTestWrite<
-  TFunctionName extends string,
->(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof poolModifyPositionTestABI,
-      TFunctionName
-    >,
-    'abi'
-  > = {} as any,
+export function usePreparePoolModifyPositionTestWrite<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, TFunctionName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolModifyPositionTestAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[31337],
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof poolModifyPositionTestABI,
-    TFunctionName
-  >)
+  } as UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, TFunctionName>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"lockAcquired"`.
+ *
+ *
  */
 export function usePreparePoolModifyPositionTestLockAcquired(
   config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof poolModifyPositionTestABI,
-      'lockAcquired'
-    >,
-    'abi' | 'functionName'
-  > = {} as any,
+    UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, 'lockAcquired'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[31337],
     functionName: 'lockAcquired',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof poolModifyPositionTestABI,
-    'lockAcquired'
-  >)
+  } as UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, 'lockAcquired'>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"modifyPosition"`.
+ *
+ *
  */
 export function usePreparePoolModifyPositionTestModifyPosition(
   config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof poolModifyPositionTestABI,
-      'modifyPosition'
-    >,
-    'abi' | 'functionName'
-  > = {} as any,
+    UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, 'modifyPosition'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[31337],
     functionName: 'modifyPosition',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof poolModifyPositionTestABI,
-    'modifyPosition'
-  >)
+  } as UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, 'modifyPosition'>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolSwapTestABI}__.
+ *
+ *
  */
 export function usePoolSwapTestRead<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof poolSwapTestABI, TFunctionName>,
 >(
-  config: Omit<
-    UseContractReadConfig<typeof poolSwapTestABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractReadConfig<typeof poolSwapTestABI, TFunctionName, TSelectData>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
 ) {
   return useContractRead({
     abi: poolSwapTestABI,
+    address: poolSwapTestAddress[31337],
     ...config,
-  } as UseContractReadConfig<
-    typeof poolSwapTestABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof poolSwapTestABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolSwapTestABI}__ and `functionName` set to `"manager"`.
+ *
+ *
  */
 export function usePoolSwapTestManager<
   TFunctionName extends 'manager',
@@ -14555,68 +13620,71 @@ export function usePoolSwapTestManager<
 >(
   config: Omit<
     UseContractReadConfig<typeof poolSwapTestABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolSwapTestAddress } = {} as any,
 ) {
   return useContractRead({
     abi: poolSwapTestABI,
+    address: poolSwapTestAddress[31337],
     functionName: 'manager',
     ...config,
-  } as UseContractReadConfig<
-    typeof poolSwapTestABI,
-    TFunctionName,
-    TSelectData
-  >)
+  } as UseContractReadConfig<typeof poolSwapTestABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolSwapTestABI}__.
+ *
+ *
  */
 export function usePoolSwapTestWrite<
   TFunctionName extends string,
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolSwapTestAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolSwapTestABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolSwapTestABI, string>['request']['abi'],
         TFunctionName,
         TMode
-      >
+      > & { address?: Address; chainId?: TChainId }
     : UseContractWriteConfig<typeof poolSwapTestABI, TFunctionName, TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
       } = {} as any,
 ) {
   return useContractWrite<typeof poolSwapTestABI, TFunctionName, TMode>({
     abi: poolSwapTestABI,
+    address: poolSwapTestAddress[31337],
     ...config,
   } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolSwapTestABI}__ and `functionName` set to `"lockAcquired"`.
+ *
+ *
  */
 export function usePoolSwapTestLockAcquired<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolSwapTestAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolSwapTestABI,
-          'lockAcquired'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolSwapTestABI, 'lockAcquired'>['request']['abi'],
         'lockAcquired',
         TMode
-      > & { functionName?: 'lockAcquired' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'lockAcquired' }
     : UseContractWriteConfig<typeof poolSwapTestABI, 'lockAcquired', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'lockAcquired'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolSwapTestABI, 'lockAcquired', TMode>({
     abi: poolSwapTestABI,
+    address: poolSwapTestAddress[31337],
     functionName: 'lockAcquired',
     ...config,
   } as any)
@@ -14624,26 +13692,29 @@ export function usePoolSwapTestLockAcquired<
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolSwapTestABI}__ and `functionName` set to `"swap"`.
+ *
+ *
  */
 export function usePoolSwapTestSwap<
   TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolSwapTestAddress,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof poolSwapTestABI,
-          'swap'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof poolSwapTestABI, 'swap'>['request']['abi'],
         'swap',
         TMode
-      > & { functionName?: 'swap' }
+      > & { address?: Address; chainId?: TChainId; functionName?: 'swap' }
     : UseContractWriteConfig<typeof poolSwapTestABI, 'swap', TMode> & {
         abi?: never
+        address?: never
+        chainId?: TChainId
         functionName?: 'swap'
       } = {} as any,
 ) {
   return useContractWrite<typeof poolSwapTestABI, 'swap', TMode>({
     abi: poolSwapTestABI,
+    address: poolSwapTestAddress[31337],
     functionName: 'swap',
     ...config,
   } as any)
@@ -14651,30 +13722,35 @@ export function usePoolSwapTestSwap<
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolSwapTestABI}__.
+ *
+ *
  */
 export function usePreparePoolSwapTestWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolSwapTestABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof poolSwapTestABI, TFunctionName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolSwapTestABI,
+    address: poolSwapTestAddress[31337],
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolSwapTestABI, TFunctionName>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolSwapTestABI}__ and `functionName` set to `"lockAcquired"`.
+ *
+ *
  */
 export function usePreparePoolSwapTestLockAcquired(
   config: Omit<
     UsePrepareContractWriteConfig<typeof poolSwapTestABI, 'lockAcquired'>,
-    'abi' | 'functionName'
-  > = {} as any,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolSwapTestAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolSwapTestABI,
+    address: poolSwapTestAddress[31337],
     functionName: 'lockAcquired',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolSwapTestABI, 'lockAcquired'>)
@@ -14682,15 +13758,17 @@ export function usePreparePoolSwapTestLockAcquired(
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolSwapTestABI}__ and `functionName` set to `"swap"`.
+ *
+ *
  */
 export function usePreparePoolSwapTestSwap(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolSwapTestABI, 'swap'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof poolSwapTestABI, 'swap'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: poolSwapTestABI,
+    address: poolSwapTestAddress[31337],
     functionName: 'swap',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolSwapTestABI, 'swap'>)
@@ -14702,16 +13780,12 @@ export function usePreparePoolSwapTestSwap(
 export function useTestErc20Read<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof testErc20ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof testErc20ABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: testErc20ABI,
-    ...config,
-  } as UseContractReadConfig<typeof testErc20ABI, TFunctionName, TSelectData>)
+>(config: Omit<UseContractReadConfig<typeof testErc20ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: testErc20ABI, ...config } as UseContractReadConfig<
+    typeof testErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -14726,11 +13800,11 @@ export function useTestErc20Allowance<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: testErc20ABI,
-    functionName: 'allowance',
-    ...config,
-  } as UseContractReadConfig<typeof testErc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: testErc20ABI, functionName: 'allowance', ...config } as UseContractReadConfig<
+    typeof testErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
@@ -14745,26 +13819,20 @@ export function useTestErc20BalanceOf<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: testErc20ABI,
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<typeof testErc20ABI, TFunctionName, TSelectData>)
+  return useContractRead({ abi: testErc20ABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
+    typeof testErc20ABI,
+    TFunctionName,
+    TSelectData
+  >)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link testErc20ABI}__.
  */
-export function useTestErc20Write<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useTestErc20Write<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof testErc20ABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof testErc20ABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
@@ -14772,24 +13840,16 @@ export function useTestErc20Write<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof testErc20ABI, TFunctionName, TMode>({
-    abi: testErc20ABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof testErc20ABI, TFunctionName, TMode>({ abi: testErc20ABI, ...config } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link testErc20ABI}__ and `functionName` set to `"approve"`.
  */
-export function useTestErc20Approve<
-  TMode extends WriteContractMode = undefined,
->(
+export function useTestErc20Approve<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof testErc20ABI,
-          'approve'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof testErc20ABI, 'approve'>['request']['abi'],
         'approve',
         TMode
       > & { functionName?: 'approve' }
@@ -14811,10 +13871,7 @@ export function useTestErc20Approve<
 export function useTestErc20Mint<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof testErc20ABI,
-          'mint'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof testErc20ABI, 'mint'>['request']['abi'],
         'mint',
         TMode
       > & { functionName?: 'mint' }
@@ -14833,15 +13890,10 @@ export function useTestErc20Mint<TMode extends WriteContractMode = undefined>(
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link testErc20ABI}__ and `functionName` set to `"transfer"`.
  */
-export function useTestErc20Transfer<
-  TMode extends WriteContractMode = undefined,
->(
+export function useTestErc20Transfer<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof testErc20ABI,
-          'transfer'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof testErc20ABI, 'transfer'>['request']['abi'],
         'transfer',
         TMode
       > & { functionName?: 'transfer' }
@@ -14860,15 +13912,10 @@ export function useTestErc20Transfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link testErc20ABI}__ and `functionName` set to `"transferFrom"`.
  */
-export function useTestErc20TransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useTestErc20TransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof testErc20ABI,
-          'transferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof testErc20ABI, 'transferFrom'>['request']['abi'],
         'transferFrom',
         TMode
       > & { functionName?: 'transferFrom' }
@@ -14888,25 +13935,19 @@ export function useTestErc20TransferFrom<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link testErc20ABI}__.
  */
 export function usePrepareTestErc20Write<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof testErc20ABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof testErc20ABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: testErc20ABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof testErc20ABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: testErc20ABI, ...config } as UsePrepareContractWriteConfig<
+    typeof testErc20ABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link testErc20ABI}__ and `functionName` set to `"approve"`.
  */
 export function usePrepareTestErc20Approve(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof testErc20ABI, 'approve'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof testErc20ABI, 'approve'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: testErc20ABI,
@@ -14919,10 +13960,7 @@ export function usePrepareTestErc20Approve(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link testErc20ABI}__ and `functionName` set to `"mint"`.
  */
 export function usePrepareTestErc20Mint(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof testErc20ABI, 'mint'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof testErc20ABI, 'mint'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: testErc20ABI,
@@ -14935,10 +13973,7 @@ export function usePrepareTestErc20Mint(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link testErc20ABI}__ and `functionName` set to `"transfer"`.
  */
 export function usePrepareTestErc20Transfer(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof testErc20ABI, 'transfer'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof testErc20ABI, 'transfer'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: testErc20ABI,
@@ -14951,10 +13986,7 @@ export function usePrepareTestErc20Transfer(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link testErc20ABI}__ and `functionName` set to `"transferFrom"`.
  */
 export function usePrepareTestErc20TransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof testErc20ABI, 'transferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof testErc20ABI, 'transferFrom'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: testErc20ABI,
@@ -14967,47 +13999,33 @@ export function usePrepareTestErc20TransferFrom(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link testErc20ABI}__.
  */
 export function useTestErc20Event<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof testErc20ABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof testErc20ABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: testErc20ABI,
-    ...config,
-  } as UseContractEventConfig<typeof testErc20ABI, TEventName>)
+  return useContractEvent({ abi: testErc20ABI, ...config } as UseContractEventConfig<typeof testErc20ABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link testErc20ABI}__ and `eventName` set to `"Approval"`.
  */
 export function useTestErc20ApprovalEvent(
-  config: Omit<
-    UseContractEventConfig<typeof testErc20ABI, 'Approval'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof testErc20ABI, 'Approval'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: testErc20ABI,
-    eventName: 'Approval',
-    ...config,
-  } as UseContractEventConfig<typeof testErc20ABI, 'Approval'>)
+  return useContractEvent({ abi: testErc20ABI, eventName: 'Approval', ...config } as UseContractEventConfig<
+    typeof testErc20ABI,
+    'Approval'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link testErc20ABI}__ and `eventName` set to `"Transfer"`.
  */
 export function useTestErc20TransferEvent(
-  config: Omit<
-    UseContractEventConfig<typeof testErc20ABI, 'Transfer'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof testErc20ABI, 'Transfer'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: testErc20ABI,
-    eventName: 'Transfer',
-    ...config,
-  } as UseContractEventConfig<typeof testErc20ABI, 'Transfer'>)
+  return useContractEvent({ abi: testErc20ABI, eventName: 'Transfer', ...config } as UseContractEventConfig<
+    typeof testErc20ABI,
+    'Transfer'
+  >)
 }
 
 /**
@@ -15016,16 +14034,8 @@ export function useTestErc20TransferEvent(
 export function useUniMockErc20Read<
   TFunctionName extends string,
   TSelectData = ReadContractResult<typeof uniMockErc20ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof uniMockErc20ABI, TFunctionName, TSelectData>,
-    'abi'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: uniMockErc20ABI,
-    ...config,
-  } as UseContractReadConfig<
+>(config: Omit<UseContractReadConfig<typeof uniMockErc20ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: uniMockErc20ABI, ...config } as UseContractReadConfig<
     typeof uniMockErc20ABI,
     TFunctionName,
     TSelectData
@@ -15044,11 +14054,7 @@ export function useUniMockErc20DomainSeparator<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: uniMockErc20ABI,
-    functionName: 'DOMAIN_SEPARATOR',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: uniMockErc20ABI, functionName: 'DOMAIN_SEPARATOR', ...config } as UseContractReadConfig<
     typeof uniMockErc20ABI,
     TFunctionName,
     TSelectData
@@ -15067,11 +14073,7 @@ export function useUniMockErc20Allowance<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: uniMockErc20ABI,
-    functionName: 'allowance',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: uniMockErc20ABI, functionName: 'allowance', ...config } as UseContractReadConfig<
     typeof uniMockErc20ABI,
     TFunctionName,
     TSelectData
@@ -15090,11 +14092,7 @@ export function useUniMockErc20BalanceOf<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: uniMockErc20ABI,
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: uniMockErc20ABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
     typeof uniMockErc20ABI,
     TFunctionName,
     TSelectData
@@ -15113,11 +14111,7 @@ export function useUniMockErc20Decimals<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: uniMockErc20ABI,
-    functionName: 'decimals',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: uniMockErc20ABI, functionName: 'decimals', ...config } as UseContractReadConfig<
     typeof uniMockErc20ABI,
     TFunctionName,
     TSelectData
@@ -15136,11 +14130,7 @@ export function useUniMockErc20Name<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: uniMockErc20ABI,
-    functionName: 'name',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: uniMockErc20ABI, functionName: 'name', ...config } as UseContractReadConfig<
     typeof uniMockErc20ABI,
     TFunctionName,
     TSelectData
@@ -15159,11 +14149,7 @@ export function useUniMockErc20Nonces<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: uniMockErc20ABI,
-    functionName: 'nonces',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: uniMockErc20ABI, functionName: 'nonces', ...config } as UseContractReadConfig<
     typeof uniMockErc20ABI,
     TFunctionName,
     TSelectData
@@ -15182,11 +14168,7 @@ export function useUniMockErc20Symbol<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: uniMockErc20ABI,
-    functionName: 'symbol',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: uniMockErc20ABI, functionName: 'symbol', ...config } as UseContractReadConfig<
     typeof uniMockErc20ABI,
     TFunctionName,
     TSelectData
@@ -15205,11 +14187,7 @@ export function useUniMockErc20TotalSupply<
     'abi' | 'functionName'
   > = {} as any,
 ) {
-  return useContractRead({
-    abi: uniMockErc20ABI,
-    functionName: 'totalSupply',
-    ...config,
-  } as UseContractReadConfig<
+  return useContractRead({ abi: uniMockErc20ABI, functionName: 'totalSupply', ...config } as UseContractReadConfig<
     typeof uniMockErc20ABI,
     TFunctionName,
     TSelectData
@@ -15219,16 +14197,10 @@ export function useUniMockErc20TotalSupply<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__.
  */
-export function useUniMockErc20Write<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
->(
+export function useUniMockErc20Write<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof uniMockErc20ABI,
-          string
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof uniMockErc20ABI, string>['request']['abi'],
         TFunctionName,
         TMode
       >
@@ -15236,24 +14208,16 @@ export function useUniMockErc20Write<
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<typeof uniMockErc20ABI, TFunctionName, TMode>({
-    abi: uniMockErc20ABI,
-    ...config,
-  } as any)
+  return useContractWrite<typeof uniMockErc20ABI, TFunctionName, TMode>({ abi: uniMockErc20ABI, ...config } as any)
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"approve"`.
  */
-export function useUniMockErc20Approve<
-  TMode extends WriteContractMode = undefined,
->(
+export function useUniMockErc20Approve<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof uniMockErc20ABI,
-          'approve'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof uniMockErc20ABI, 'approve'>['request']['abi'],
         'approve',
         TMode
       > & { functionName?: 'approve' }
@@ -15272,15 +14236,10 @@ export function useUniMockErc20Approve<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"forceApprove"`.
  */
-export function useUniMockErc20ForceApprove<
-  TMode extends WriteContractMode = undefined,
->(
+export function useUniMockErc20ForceApprove<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof uniMockErc20ABI,
-          'forceApprove'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof uniMockErc20ABI, 'forceApprove'>['request']['abi'],
         'forceApprove',
         TMode
       > & { functionName?: 'forceApprove' }
@@ -15299,15 +14258,10 @@ export function useUniMockErc20ForceApprove<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"mint"`.
  */
-export function useUniMockErc20Mint<
-  TMode extends WriteContractMode = undefined,
->(
+export function useUniMockErc20Mint<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof uniMockErc20ABI,
-          'mint'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof uniMockErc20ABI, 'mint'>['request']['abi'],
         'mint',
         TMode
       > & { functionName?: 'mint' }
@@ -15326,15 +14280,10 @@ export function useUniMockErc20Mint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"permit"`.
  */
-export function useUniMockErc20Permit<
-  TMode extends WriteContractMode = undefined,
->(
+export function useUniMockErc20Permit<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof uniMockErc20ABI,
-          'permit'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof uniMockErc20ABI, 'permit'>['request']['abi'],
         'permit',
         TMode
       > & { functionName?: 'permit' }
@@ -15353,15 +14302,10 @@ export function useUniMockErc20Permit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"transfer"`.
  */
-export function useUniMockErc20Transfer<
-  TMode extends WriteContractMode = undefined,
->(
+export function useUniMockErc20Transfer<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof uniMockErc20ABI,
-          'transfer'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof uniMockErc20ABI, 'transfer'>['request']['abi'],
         'transfer',
         TMode
       > & { functionName?: 'transfer' }
@@ -15380,15 +14324,10 @@ export function useUniMockErc20Transfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"transferFrom"`.
  */
-export function useUniMockErc20TransferFrom<
-  TMode extends WriteContractMode = undefined,
->(
+export function useUniMockErc20TransferFrom<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof uniMockErc20ABI,
-          'transferFrom'
-        >['request']['abi'],
+        PrepareWriteContractResult<typeof uniMockErc20ABI, 'transferFrom'>['request']['abi'],
         'transferFrom',
         TMode
       > & { functionName?: 'transferFrom' }
@@ -15408,25 +14347,19 @@ export function useUniMockErc20TransferFrom<
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__.
  */
 export function usePrepareUniMockErc20Write<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, TFunctionName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof uniMockErc20ABI, TFunctionName>, 'abi'> = {} as any,
 ) {
-  return usePrepareContractWrite({
-    abi: uniMockErc20ABI,
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof uniMockErc20ABI, TFunctionName>)
+  return usePrepareContractWrite({ abi: uniMockErc20ABI, ...config } as UsePrepareContractWriteConfig<
+    typeof uniMockErc20ABI,
+    TFunctionName
+  >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"approve"`.
  */
 export function usePrepareUniMockErc20Approve(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'approve'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'approve'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: uniMockErc20ABI,
@@ -15455,10 +14388,7 @@ export function usePrepareUniMockErc20ForceApprove(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"mint"`.
  */
 export function usePrepareUniMockErc20Mint(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'mint'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'mint'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: uniMockErc20ABI,
@@ -15471,10 +14401,7 @@ export function usePrepareUniMockErc20Mint(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"permit"`.
  */
 export function usePrepareUniMockErc20Permit(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'permit'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'permit'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: uniMockErc20ABI,
@@ -15487,10 +14414,7 @@ export function usePrepareUniMockErc20Permit(
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link uniMockErc20ABI}__ and `functionName` set to `"transfer"`.
  */
 export function usePrepareUniMockErc20Transfer(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'transfer'>,
-    'abi' | 'functionName'
-  > = {} as any,
+  config: Omit<UsePrepareContractWriteConfig<typeof uniMockErc20ABI, 'transfer'>, 'abi' | 'functionName'> = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: uniMockErc20ABI,
@@ -15519,45 +14443,34 @@ export function usePrepareUniMockErc20TransferFrom(
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link uniMockErc20ABI}__.
  */
 export function useUniMockErc20Event<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof uniMockErc20ABI, TEventName>,
-    'abi'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof uniMockErc20ABI, TEventName>, 'abi'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: uniMockErc20ABI,
-    ...config,
-  } as UseContractEventConfig<typeof uniMockErc20ABI, TEventName>)
+  return useContractEvent({ abi: uniMockErc20ABI, ...config } as UseContractEventConfig<
+    typeof uniMockErc20ABI,
+    TEventName
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link uniMockErc20ABI}__ and `eventName` set to `"Approval"`.
  */
 export function useUniMockErc20ApprovalEvent(
-  config: Omit<
-    UseContractEventConfig<typeof uniMockErc20ABI, 'Approval'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof uniMockErc20ABI, 'Approval'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: uniMockErc20ABI,
-    eventName: 'Approval',
-    ...config,
-  } as UseContractEventConfig<typeof uniMockErc20ABI, 'Approval'>)
+  return useContractEvent({ abi: uniMockErc20ABI, eventName: 'Approval', ...config } as UseContractEventConfig<
+    typeof uniMockErc20ABI,
+    'Approval'
+  >)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link uniMockErc20ABI}__ and `eventName` set to `"Transfer"`.
  */
 export function useUniMockErc20TransferEvent(
-  config: Omit<
-    UseContractEventConfig<typeof uniMockErc20ABI, 'Transfer'>,
-    'abi' | 'eventName'
-  > = {} as any,
+  config: Omit<UseContractEventConfig<typeof uniMockErc20ABI, 'Transfer'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({
-    abi: uniMockErc20ABI,
-    eventName: 'Transfer',
-    ...config,
-  } as UseContractEventConfig<typeof uniMockErc20ABI, 'Transfer'>)
+  return useContractEvent({ abi: uniMockErc20ABI, eventName: 'Transfer', ...config } as UseContractEventConfig<
+    typeof uniMockErc20ABI,
+    'Transfer'
+  >)
 }

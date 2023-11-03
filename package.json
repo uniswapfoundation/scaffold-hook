@@ -18,7 +18,7 @@
     "dev:foundry": "npm run dev & wagmi generate --watch & npm run anvil",
     "start": "next start",
     "lint": "next lint",
-    "wagmi": "wagmi generate"
+    "wagmi": "cd src/nextjsv2 && wagmi generate"
   },
   "dependencies": {
     "@wagmi/cli": "^1.0.0",
