@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { Divider, Select, SelectItem, Tooltip } from "@nextui-org/react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { formatEther, parseEther } from "viem";
+import { useChainId } from "wagmi";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
-import deployedContracts from "~~/generated/deployedContracts";
 import {
+  counterAddress,
+  poolModifyPositionTestAddress,
   useErc20Allowance,
   useErc20Approve,
   useErc20Read,
   usePoolModifyPositionTestModifyPosition,
-} from "~~/generated/generatedTypes";
+} from "~~/generated/generated";
 import { MAX_UINT } from "~~/utils/constants";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -67,11 +69,13 @@ function LiquidityComponent() {
     { value: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4", label: "Token1" },
   ];
 
+  const chainId = useChainId();
+
   // Token & Wallet Configuration
   const token0Addr = tokenOptions[0].value;
   const token1Addr = tokenOptions[1].value;
   const walletAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-  const lpRouterAddress = deployedContracts[31337][0].contracts.PoolModifyPositionTest.address;
+  const lpRouterAddress = poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress];
 
   // Fetch Token Names
   const getToken0Name = useErc20Read({ address: token0Addr, functionName: "name" });
@@ -84,7 +88,7 @@ function LiquidityComponent() {
   // State Variables
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState(deployedContracts[31337][0].contracts.Counter.address);
+  const [hookAddress, setHookAddress] = useState(counterAddress[chainId as keyof typeof counterAddress]);
 
   const [tickLower, setTickLower] = useState(-(tickSpacing * 10n));
   const [tickUpper, setTickUpper] = useState(tickSpacing * 10n);
@@ -112,7 +116,6 @@ function LiquidityComponent() {
   });
 
   const { writeAsync: writeModifyPosition, error: errorModifyPosition } = usePoolModifyPositionTestModifyPosition({
-    address: lpRouterAddress,
     args: [
       {
         currency0: token0Addr,

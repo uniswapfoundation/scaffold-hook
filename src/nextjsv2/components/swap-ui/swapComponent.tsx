@@ -3,13 +3,19 @@ import { TokenDropdown } from "./InitializeComponent";
 import { PoolKeyId } from "./LiquidityComponent";
 import { Tab, Tabs } from "@nextui-org/react";
 import { parseEther } from "viem";
-import { useAccount } from "wagmi";
-import deployedContracts from "~~/generated/deployedContracts";
-import { useErc20Allowance, useErc20Approve, usePoolSwapTestSwap } from "~~/generated/generatedTypes";
+import { useAccount, useChainId } from "wagmi";
+import {
+  counterAddress,
+  poolSwapTestAddress,
+  useErc20Allowance,
+  useErc20Approve,
+  usePoolSwapTestSwap,
+} from "~~/generated/generated";
 import { MAX_SQRT_PRICE_LIMIT, MAX_UINT, MIN_SQRT_PRICE_LIMIT } from "~~/utils/constants";
 
 function SwapComponent({ poolKey }: { poolKey: any }) {
   const { address } = useAccount();
+  const chainId = useChainId();
 
   // TODO: remove all the hardcoded addresses
   const tokenOptions = [
@@ -17,7 +23,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
     { value: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4", label: "Token1" },
   ];
 
-  const swapRouterAddress = deployedContracts[31337][0].contracts.PoolSwapTest.address;
+  const swapRouterAddress = poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress];
 
   const [fromCurrency, setFromCurrency] = useState("");
   const [toCurrency, setToCurrency] = useState("");
@@ -25,7 +31,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
 
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState(deployedContracts[31337][0].contracts.Counter.address);
+  const [hookAddress, setHookAddress] = useState(counterAddress[chainId as keyof typeof counterAddress]);
 
   const fromTokenAllowance = useErc20Allowance({
     address: fromCurrency,
@@ -38,7 +44,6 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
   });
 
   const swap = usePoolSwapTestSwap({
-    address: swapRouterAddress,
     args: [
       {
         currency0: tokenOptions[0].value,
