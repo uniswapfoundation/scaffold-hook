@@ -1,35 +1,12 @@
 import React, { useState } from "react";
+import { NumericInput } from "../base/numeric-input";
 import { TokenDropdown } from "../base/token-dropdown";
-import { Tooltip } from "@nextui-org/react";
 import { useChainId, useToken } from "wagmi";
 import { FetchTokenResult } from "wagmi/dist/actions";
-import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { counterAddress, usePoolManagerInitialize } from "~~/generated/generated";
 import { TOKEN_ADDRESSES } from "~~/utils/config";
 import { BLANK_TOKEN } from "~~/utils/constants";
 import { notification } from "~~/utils/scaffold-eth";
-
-function NumericInput({ type, placeholder, tooltipText, value, onChange }) {
-  return (
-    <div className="flex flex-col justify-end">
-      <label className="label text-left  flex justify-between">
-        <span className="label-text">{placeholder}</span>
-        <Tooltip content={tooltipText}>
-          <QuestionMarkCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </Tooltip>
-      </label>
-      {/* <Tooltip /> */}
-      <input
-        type={type}
-        className="input input-bordered w-full"
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
-      {/* <small className="text-gray-600">More info about {placeholder}.</small> */}
-    </div>
-  );
-}
 
 function InitializePoolButton({ isLoading, onClick }) {
   return (
@@ -53,7 +30,7 @@ function InitializeComponent() {
 
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState(counterAddress[chainId as keyof typeof counterAddress]);
+  const [hookAddress, setHookAddress] = useState<string>(counterAddress[chainId as keyof typeof counterAddress]);
 
   const {
     writeAsync: write,

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Divider, Select, SelectItem, Tooltip } from "@nextui-org/react";
+import { NumericInput } from "../base/numeric-input";
+import { Select, SelectItem, Tooltip } from "@nextui-org/react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { formatEther, parseEther } from "viem";
 import { useChainId } from "wagmi";
@@ -14,53 +15,6 @@ import {
 } from "~~/generated/generated";
 import { MAX_UINT } from "~~/utils/constants";
 import { notification } from "~~/utils/scaffold-eth";
-
-function TokenDropdown({ label, tooltipText, value, options, onChange }) {
-  return (
-    <div className="flex flex-col justify-end">
-      <label className="label text-left flex justify-between">
-        <span className="label-text">{label}</span>
-        <Tooltip content={tooltipText}>
-          <QuestionMarkCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </Tooltip>
-      </label>
-      <Select
-        onChange={onChange}
-        placeholder="
-      Select a token"
-        variant="flat"
-      >
-        {options.map((option, index) => (
-          <SelectItem key={index} value={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </Select>
-    </div>
-  );
-}
-
-function NumericInput({ type, placeholder, tooltipText, value, onChange }) {
-  return (
-    <div className="flex flex-col justify-end">
-      <label className="label text-left  flex justify-between">
-        <span className="label-text">{placeholder}</span>
-        <Tooltip content={tooltipText}>
-          <QuestionMarkCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </Tooltip>
-      </label>
-      {/* <Tooltip /> */}
-      <input
-        type={type}
-        className="input input-bordered w-full"
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
-      {/* <small className="text-gray-600">More info about {placeholder}.</small> */}
-    </div>
-  );
-}
 
 function LiquidityComponent() {
   // TODO: remove all the hardcoded addresses
@@ -211,7 +165,7 @@ function LiquidityComponent() {
         placeholder="Hook Data"
         tooltipText="Data to pass to the hook."
         value={hookData}
-        onChange={e => setHookData(e.target.value)}
+        onChange={e => setHookData(e.target.value as `0x${string}`)}
       />
 
       <div className="grid w-full  grid-cols-2  gap-4">
