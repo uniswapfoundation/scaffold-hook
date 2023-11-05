@@ -4,9 +4,11 @@ import {
   UseContractReadConfig,
   UseContractWriteConfig,
   UsePrepareContractWriteConfig,
+  useChainId,
   useContractEvent,
   useContractRead,
   useContractWrite,
+  useNetwork,
   usePrepareContractWrite,
 } from 'wagmi'
 import { PrepareWriteContractResult, ReadContractResult, WriteContractMode } from 'wagmi/actions'
@@ -340,7 +342,8 @@ export const constantsABI = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export const counterABI = [
   {
@@ -647,14 +650,17 @@ export const counterABI = [
 ] as const
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export const counterAddress = {
   31337: '0x3c3514a364278C43AC2Da7db1e44b4cc702CeFD7',
+  80001: '0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8',
 } as const
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export const counterConfig = { address: counterAddress, abi: counterABI } as const
 
@@ -3227,7 +3233,8 @@ export const poolDonateTestConfig = { address: poolDonateTestAddress, abi: poolD
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export const poolManagerABI = [
   {
@@ -3967,14 +3974,17 @@ export const poolManagerABI = [
 ] as const
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export const poolManagerAddress = {
   31337: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+  80001: '0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89',
 } as const
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export const poolManagerConfig = { address: poolManagerAddress, abi: poolManagerABI } as const
 
@@ -3983,7 +3993,8 @@ export const poolManagerConfig = { address: poolManagerAddress, abi: poolManager
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x092D53306f9Df9eeD35efec24c31Ca32000033BC)
  */
 export const poolModifyPositionTestABI = [
   {
@@ -4041,14 +4052,17 @@ export const poolModifyPositionTestABI = [
 ] as const
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x092D53306f9Df9eeD35efec24c31Ca32000033BC)
  */
 export const poolModifyPositionTestAddress = {
   31337: '0x3079c0319F8734239eB06765666468F7B76Eb505',
+  80001: '0x092D53306f9Df9eeD35efec24c31Ca32000033BC',
 } as const
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x092D53306f9Df9eeD35efec24c31Ca32000033BC)
  */
 export const poolModifyPositionTestConfig = {
   address: poolModifyPositionTestAddress,
@@ -4263,7 +4277,8 @@ export const tickMathABI = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export const token0ABI = [
   {
@@ -4345,14 +4360,17 @@ export const token0ABI = [
 ] as const
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export const token0Address = {
   31337: '0x2DAFBDF11A8Cf84c372539A38D781D8248399AE3',
+  80001: '0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7',
 } as const
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export const token0Config = { address: token0Address, abi: token0ABI } as const
 
@@ -4361,7 +4379,8 @@ export const token0Config = { address: token0Address, abi: token0ABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export const token1ABI = [
   {
@@ -4443,14 +4462,17 @@ export const token1ABI = [
 ] as const
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export const token1Address = {
   31337: '0xa8cEAFb1940244F2f022FF8440a42411B4F07fC4',
+  80001: '0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e',
 } as const
 
 /**
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export const token1Config = { address: token1Address, abi: token1ABI } as const
 
@@ -5160,7 +5182,8 @@ export function useConstantsSqrtRatio_4_1<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterRead<
   TFunctionName extends string,
@@ -5170,17 +5193,21 @@ export function useCounterRead<
     chainId?: keyof typeof counterAddress
   } = {} as any,
 ) {
-  return useContractRead({ abi: counterABI, address: counterAddress[31337], ...config } as UseContractReadConfig<
-    typeof counterABI,
-    TFunctionName,
-    TSelectData
-  >)
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: counterABI,
+    address: counterAddress[chainId as keyof typeof counterAddress],
+    ...config,
+  } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterModifyPositionCount"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterAfterModifyPositionCount<
   TFunctionName extends 'afterModifyPositionCount',
@@ -5191,9 +5218,12 @@ export function useCounterAfterModifyPositionCount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterModifyPositionCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5202,7 +5232,8 @@ export function useCounterAfterModifyPositionCount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterSwapCount"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterAfterSwapCount<
   TFunctionName extends 'afterSwapCount',
@@ -5213,9 +5244,12 @@ export function useCounterAfterSwapCount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterSwapCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5224,7 +5258,8 @@ export function useCounterAfterSwapCount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeModifyPositionCount"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterBeforeModifyPositionCount<
   TFunctionName extends 'beforeModifyPositionCount',
@@ -5235,9 +5270,12 @@ export function useCounterBeforeModifyPositionCount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeModifyPositionCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5246,7 +5284,8 @@ export function useCounterBeforeModifyPositionCount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeSwapCount"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterBeforeSwapCount<
   TFunctionName extends 'beforeSwapCount',
@@ -5257,9 +5296,12 @@ export function useCounterBeforeSwapCount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeSwapCount',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5268,7 +5310,8 @@ export function useCounterBeforeSwapCount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"getHooksCalls"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterGetHooksCalls<
   TFunctionName extends 'getHooksCalls',
@@ -5279,9 +5322,12 @@ export function useCounterGetHooksCalls<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'getHooksCalls',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5290,7 +5336,8 @@ export function useCounterGetHooksCalls<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"poolManager"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterPoolManager<
   TFunctionName extends 'poolManager',
@@ -5301,9 +5348,12 @@ export function useCounterPoolManager<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'poolManager',
     ...config,
   } as UseContractReadConfig<typeof counterABI, TFunctionName, TSelectData>)
@@ -5312,7 +5362,8 @@ export function useCounterPoolManager<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterWrite<
   TFunctionName extends string,
@@ -5331,9 +5382,12 @@ export function useCounterWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, TFunctionName, TMode>({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     ...config,
   } as any)
 }
@@ -5341,7 +5395,8 @@ export function useCounterWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterDonate"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterAfterDonate<
   TMode extends WriteContractMode = undefined,
@@ -5360,9 +5415,12 @@ export function useCounterAfterDonate<
         functionName?: 'afterDonate'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'afterDonate', TMode>({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterDonate',
     ...config,
   } as any)
@@ -5371,7 +5429,8 @@ export function useCounterAfterDonate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterInitialize"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterAfterInitialize<
   TMode extends WriteContractMode = undefined,
@@ -5390,9 +5449,12 @@ export function useCounterAfterInitialize<
         functionName?: 'afterInitialize'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'afterInitialize', TMode>({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterInitialize',
     ...config,
   } as any)
@@ -5401,7 +5463,8 @@ export function useCounterAfterInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterModifyPosition"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterAfterModifyPosition<
   TMode extends WriteContractMode = undefined,
@@ -5420,9 +5483,12 @@ export function useCounterAfterModifyPosition<
         functionName?: 'afterModifyPosition'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'afterModifyPosition', TMode>({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterModifyPosition',
     ...config,
   } as any)
@@ -5431,7 +5497,8 @@ export function useCounterAfterModifyPosition<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterSwap"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterAfterSwap<
   TMode extends WriteContractMode = undefined,
@@ -5450,9 +5517,12 @@ export function useCounterAfterSwap<
         functionName?: 'afterSwap'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'afterSwap', TMode>({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterSwap',
     ...config,
   } as any)
@@ -5461,7 +5531,8 @@ export function useCounterAfterSwap<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeDonate"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterBeforeDonate<
   TMode extends WriteContractMode = undefined,
@@ -5480,9 +5551,12 @@ export function useCounterBeforeDonate<
         functionName?: 'beforeDonate'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'beforeDonate', TMode>({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeDonate',
     ...config,
   } as any)
@@ -5491,7 +5565,8 @@ export function useCounterBeforeDonate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeInitialize"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterBeforeInitialize<
   TMode extends WriteContractMode = undefined,
@@ -5510,9 +5585,12 @@ export function useCounterBeforeInitialize<
         functionName?: 'beforeInitialize'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'beforeInitialize', TMode>({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeInitialize',
     ...config,
   } as any)
@@ -5521,7 +5599,8 @@ export function useCounterBeforeInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeModifyPosition"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterBeforeModifyPosition<
   TMode extends WriteContractMode = undefined,
@@ -5540,9 +5619,12 @@ export function useCounterBeforeModifyPosition<
         functionName?: 'beforeModifyPosition'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'beforeModifyPosition', TMode>({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeModifyPosition',
     ...config,
   } as any)
@@ -5551,7 +5633,8 @@ export function useCounterBeforeModifyPosition<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeSwap"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterBeforeSwap<
   TMode extends WriteContractMode = undefined,
@@ -5570,9 +5653,12 @@ export function useCounterBeforeSwap<
         functionName?: 'beforeSwap'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'beforeSwap', TMode>({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeSwap',
     ...config,
   } as any)
@@ -5581,7 +5667,8 @@ export function useCounterBeforeSwap<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"lockAcquired"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function useCounterLockAcquired<
   TMode extends WriteContractMode = undefined,
@@ -5600,9 +5687,12 @@ export function useCounterLockAcquired<
         functionName?: 'lockAcquired'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof counterABI, 'lockAcquired', TMode>({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'lockAcquired',
     ...config,
   } as any)
@@ -5611,16 +5701,20 @@ export function useCounterLockAcquired<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function usePrepareCounterWrite<TFunctionName extends string>(
   config: Omit<UsePrepareContractWriteConfig<typeof counterABI, TFunctionName>, 'abi' | 'address'> & {
     chainId?: keyof typeof counterAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, TFunctionName>)
 }
@@ -5628,16 +5722,20 @@ export function usePrepareCounterWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterDonate"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function usePrepareCounterAfterDonate(
   config: Omit<UsePrepareContractWriteConfig<typeof counterABI, 'afterDonate'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof counterAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterDonate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterDonate'>)
@@ -5646,7 +5744,8 @@ export function usePrepareCounterAfterDonate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterInitialize"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function usePrepareCounterAfterInitialize(
   config: Omit<
@@ -5654,9 +5753,12 @@ export function usePrepareCounterAfterInitialize(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterInitialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterInitialize'>)
@@ -5665,7 +5767,8 @@ export function usePrepareCounterAfterInitialize(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterModifyPosition"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function usePrepareCounterAfterModifyPosition(
   config: Omit<
@@ -5673,9 +5776,12 @@ export function usePrepareCounterAfterModifyPosition(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterModifyPosition',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterModifyPosition'>)
@@ -5684,16 +5790,20 @@ export function usePrepareCounterAfterModifyPosition(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"afterSwap"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function usePrepareCounterAfterSwap(
   config: Omit<UsePrepareContractWriteConfig<typeof counterABI, 'afterSwap'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof counterAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'afterSwap',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'afterSwap'>)
@@ -5702,16 +5812,20 @@ export function usePrepareCounterAfterSwap(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeDonate"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function usePrepareCounterBeforeDonate(
   config: Omit<UsePrepareContractWriteConfig<typeof counterABI, 'beforeDonate'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof counterAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeDonate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeDonate'>)
@@ -5720,7 +5834,8 @@ export function usePrepareCounterBeforeDonate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeInitialize"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function usePrepareCounterBeforeInitialize(
   config: Omit<
@@ -5728,9 +5843,12 @@ export function usePrepareCounterBeforeInitialize(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeInitialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeInitialize'>)
@@ -5739,7 +5857,8 @@ export function usePrepareCounterBeforeInitialize(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeModifyPosition"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function usePrepareCounterBeforeModifyPosition(
   config: Omit<
@@ -5747,9 +5866,12 @@ export function usePrepareCounterBeforeModifyPosition(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof counterAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeModifyPosition',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeModifyPosition'>)
@@ -5758,16 +5880,20 @@ export function usePrepareCounterBeforeModifyPosition(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"beforeSwap"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function usePrepareCounterBeforeSwap(
   config: Omit<UsePrepareContractWriteConfig<typeof counterABI, 'beforeSwap'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof counterAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'beforeSwap',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'beforeSwap'>)
@@ -5776,16 +5902,20 @@ export function usePrepareCounterBeforeSwap(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link counterABI}__ and `functionName` set to `"lockAcquired"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8)
  */
 export function usePrepareCounterLockAcquired(
   config: Omit<UsePrepareContractWriteConfig<typeof counterABI, 'lockAcquired'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof counterAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: counterABI,
-    address: counterAddress[31337],
+    address: counterAddress[chainId as keyof typeof counterAddress],
     functionName: 'lockAcquired',
     ...config,
   } as UsePrepareContractWriteConfig<typeof counterABI, 'lockAcquired'>)
@@ -10945,7 +11075,8 @@ export function usePreparePoolDonateTestLockAcquired(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerRead<
   TFunctionName extends string,
@@ -10955,9 +11086,12 @@ export function usePoolManagerRead<
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
 }
@@ -10965,7 +11099,8 @@ export function usePoolManagerRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"MAX_TICK_SPACING"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerMaxTickSpacing<
   TFunctionName extends 'MAX_TICK_SPACING',
@@ -10976,9 +11111,12 @@ export function usePoolManagerMaxTickSpacing<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'MAX_TICK_SPACING',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -10987,7 +11125,8 @@ export function usePoolManagerMaxTickSpacing<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"MIN_PROTOCOL_FEE_DENOMINATOR"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerMinProtocolFeeDenominator<
   TFunctionName extends 'MIN_PROTOCOL_FEE_DENOMINATOR',
@@ -10998,9 +11137,12 @@ export function usePoolManagerMinProtocolFeeDenominator<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'MIN_PROTOCOL_FEE_DENOMINATOR',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11009,7 +11151,8 @@ export function usePoolManagerMinProtocolFeeDenominator<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"MIN_TICK_SPACING"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerMinTickSpacing<
   TFunctionName extends 'MIN_TICK_SPACING',
@@ -11020,9 +11163,12 @@ export function usePoolManagerMinTickSpacing<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'MIN_TICK_SPACING',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11031,7 +11177,8 @@ export function usePoolManagerMinTickSpacing<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"balanceOf"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerBalanceOf<
   TFunctionName extends 'balanceOf',
@@ -11042,9 +11189,12 @@ export function usePoolManagerBalanceOf<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'balanceOf',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11053,7 +11203,8 @@ export function usePoolManagerBalanceOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"balanceOfBatch"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerBalanceOfBatch<
   TFunctionName extends 'balanceOfBatch',
@@ -11064,9 +11215,12 @@ export function usePoolManagerBalanceOfBatch<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'balanceOfBatch',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11075,7 +11229,8 @@ export function usePoolManagerBalanceOfBatch<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"currencyDelta"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerCurrencyDelta<
   TFunctionName extends 'currencyDelta',
@@ -11086,9 +11241,12 @@ export function usePoolManagerCurrencyDelta<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'currencyDelta',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11097,7 +11255,8 @@ export function usePoolManagerCurrencyDelta<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"extsload"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerExtsload<
   TFunctionName extends 'extsload',
@@ -11108,9 +11267,12 @@ export function usePoolManagerExtsload<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'extsload',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11119,7 +11281,8 @@ export function usePoolManagerExtsload<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"getLiquidity"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerGetLiquidity<
   TFunctionName extends 'getLiquidity',
@@ -11130,9 +11293,12 @@ export function usePoolManagerGetLiquidity<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'getLiquidity',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11141,7 +11307,8 @@ export function usePoolManagerGetLiquidity<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"getLock"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerGetLock<
   TFunctionName extends 'getLock',
@@ -11152,9 +11319,12 @@ export function usePoolManagerGetLock<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'getLock',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11163,7 +11333,8 @@ export function usePoolManagerGetLock<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"getPosition"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerGetPosition<
   TFunctionName extends 'getPosition',
@@ -11174,9 +11345,12 @@ export function usePoolManagerGetPosition<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'getPosition',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11185,7 +11359,8 @@ export function usePoolManagerGetPosition<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"getSlot0"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerGetSlot0<
   TFunctionName extends 'getSlot0',
@@ -11196,9 +11371,12 @@ export function usePoolManagerGetSlot0<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'getSlot0',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11207,7 +11385,8 @@ export function usePoolManagerGetSlot0<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"hookFeesAccrued"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerHookFeesAccrued<
   TFunctionName extends 'hookFeesAccrued',
@@ -11218,9 +11397,12 @@ export function usePoolManagerHookFeesAccrued<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'hookFeesAccrued',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11229,7 +11411,8 @@ export function usePoolManagerHookFeesAccrued<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"isApprovedForAll"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerIsApprovedForAll<
   TFunctionName extends 'isApprovedForAll',
@@ -11240,9 +11423,12 @@ export function usePoolManagerIsApprovedForAll<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'isApprovedForAll',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11251,7 +11437,8 @@ export function usePoolManagerIsApprovedForAll<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"lockData"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerLockData<
   TFunctionName extends 'lockData',
@@ -11262,9 +11449,12 @@ export function usePoolManagerLockData<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'lockData',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11273,7 +11463,8 @@ export function usePoolManagerLockData<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"owner"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerOwner<
   TFunctionName extends 'owner',
@@ -11284,9 +11475,12 @@ export function usePoolManagerOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11295,7 +11489,8 @@ export function usePoolManagerOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"pools"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerPools<
   TFunctionName extends 'pools',
@@ -11306,9 +11501,12 @@ export function usePoolManagerPools<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'pools',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11317,7 +11515,8 @@ export function usePoolManagerPools<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"protocolFeeController"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerProtocolFeeController<
   TFunctionName extends 'protocolFeeController',
@@ -11328,9 +11527,12 @@ export function usePoolManagerProtocolFeeController<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'protocolFeeController',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11339,7 +11541,8 @@ export function usePoolManagerProtocolFeeController<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"protocolFeesAccrued"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerProtocolFeesAccrued<
   TFunctionName extends 'protocolFeesAccrued',
@@ -11350,9 +11553,12 @@ export function usePoolManagerProtocolFeesAccrued<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'protocolFeesAccrued',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11361,7 +11567,8 @@ export function usePoolManagerProtocolFeesAccrued<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"reservesOf"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerReservesOf<
   TFunctionName extends 'reservesOf',
@@ -11372,9 +11579,12 @@ export function usePoolManagerReservesOf<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'reservesOf',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11383,7 +11593,8 @@ export function usePoolManagerReservesOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"supportsInterface"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerSupportsInterface<
   TFunctionName extends 'supportsInterface',
@@ -11394,9 +11605,12 @@ export function usePoolManagerSupportsInterface<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'supportsInterface',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11405,7 +11619,8 @@ export function usePoolManagerSupportsInterface<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"uri"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerUri<
   TFunctionName extends 'uri',
@@ -11416,9 +11631,12 @@ export function usePoolManagerUri<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'uri',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
@@ -11427,7 +11645,8 @@ export function usePoolManagerUri<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerWrite<
   TFunctionName extends string,
@@ -11446,9 +11665,12 @@ export function usePoolManagerWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, TFunctionName, TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     ...config,
   } as any)
 }
@@ -11456,7 +11678,8 @@ export function usePoolManagerWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"collectHookFees"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerCollectHookFees<
   TMode extends WriteContractMode = undefined,
@@ -11475,9 +11698,12 @@ export function usePoolManagerCollectHookFees<
         functionName?: 'collectHookFees'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'collectHookFees', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'collectHookFees',
     ...config,
   } as any)
@@ -11486,7 +11712,8 @@ export function usePoolManagerCollectHookFees<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"collectProtocolFees"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerCollectProtocolFees<
   TMode extends WriteContractMode = undefined,
@@ -11505,9 +11732,12 @@ export function usePoolManagerCollectProtocolFees<
         functionName?: 'collectProtocolFees'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'collectProtocolFees', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'collectProtocolFees',
     ...config,
   } as any)
@@ -11516,7 +11746,8 @@ export function usePoolManagerCollectProtocolFees<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"donate"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerDonate<
   TMode extends WriteContractMode = undefined,
@@ -11535,9 +11766,12 @@ export function usePoolManagerDonate<
         functionName?: 'donate'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'donate', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'donate',
     ...config,
   } as any)
@@ -11546,7 +11780,8 @@ export function usePoolManagerDonate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"initialize"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerInitialize<
   TMode extends WriteContractMode = undefined,
@@ -11565,9 +11800,12 @@ export function usePoolManagerInitialize<
         functionName?: 'initialize'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'initialize', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'initialize',
     ...config,
   } as any)
@@ -11576,7 +11814,8 @@ export function usePoolManagerInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"lock"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerLock<
   TMode extends WriteContractMode = undefined,
@@ -11595,9 +11834,12 @@ export function usePoolManagerLock<
         functionName?: 'lock'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'lock', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'lock',
     ...config,
   } as any)
@@ -11606,7 +11848,8 @@ export function usePoolManagerLock<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"mint"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerMint<
   TMode extends WriteContractMode = undefined,
@@ -11625,9 +11868,12 @@ export function usePoolManagerMint<
         functionName?: 'mint'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'mint', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'mint',
     ...config,
   } as any)
@@ -11636,7 +11882,8 @@ export function usePoolManagerMint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"modifyPosition"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerModifyPosition<
   TMode extends WriteContractMode = undefined,
@@ -11655,9 +11902,12 @@ export function usePoolManagerModifyPosition<
         functionName?: 'modifyPosition'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'modifyPosition', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'modifyPosition',
     ...config,
   } as any)
@@ -11666,7 +11916,8 @@ export function usePoolManagerModifyPosition<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155BatchReceived"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerOnErc1155BatchReceived<
   TMode extends WriteContractMode = undefined,
@@ -11685,9 +11936,12 @@ export function usePoolManagerOnErc1155BatchReceived<
         functionName?: 'onERC1155BatchReceived'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'onERC1155BatchReceived', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'onERC1155BatchReceived',
     ...config,
   } as any)
@@ -11696,7 +11950,8 @@ export function usePoolManagerOnErc1155BatchReceived<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155Received"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerOnErc1155Received<
   TMode extends WriteContractMode = undefined,
@@ -11715,9 +11970,12 @@ export function usePoolManagerOnErc1155Received<
         functionName?: 'onERC1155Received'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'onERC1155Received', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'onERC1155Received',
     ...config,
   } as any)
@@ -11726,7 +11984,8 @@ export function usePoolManagerOnErc1155Received<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerSafeBatchTransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -11745,9 +12004,12 @@ export function usePoolManagerSafeBatchTransferFrom<
         functionName?: 'safeBatchTransferFrom'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'safeBatchTransferFrom', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'safeBatchTransferFrom',
     ...config,
   } as any)
@@ -11756,7 +12018,8 @@ export function usePoolManagerSafeBatchTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeTransferFrom"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerSafeTransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -11775,9 +12038,12 @@ export function usePoolManagerSafeTransferFrom<
         functionName?: 'safeTransferFrom'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'safeTransferFrom', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'safeTransferFrom',
     ...config,
   } as any)
@@ -11786,7 +12052,8 @@ export function usePoolManagerSafeTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setApprovalForAll"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerSetApprovalForAll<
   TMode extends WriteContractMode = undefined,
@@ -11805,9 +12072,12 @@ export function usePoolManagerSetApprovalForAll<
         functionName?: 'setApprovalForAll'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'setApprovalForAll', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'setApprovalForAll',
     ...config,
   } as any)
@@ -11816,7 +12086,8 @@ export function usePoolManagerSetApprovalForAll<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setHookFees"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerSetHookFees<
   TMode extends WriteContractMode = undefined,
@@ -11835,9 +12106,12 @@ export function usePoolManagerSetHookFees<
         functionName?: 'setHookFees'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'setHookFees', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'setHookFees',
     ...config,
   } as any)
@@ -11846,7 +12120,8 @@ export function usePoolManagerSetHookFees<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setOwner"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerSetOwner<
   TMode extends WriteContractMode = undefined,
@@ -11865,9 +12140,12 @@ export function usePoolManagerSetOwner<
         functionName?: 'setOwner'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'setOwner', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'setOwner',
     ...config,
   } as any)
@@ -11876,7 +12154,8 @@ export function usePoolManagerSetOwner<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setProtocolFeeController"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerSetProtocolFeeController<
   TMode extends WriteContractMode = undefined,
@@ -11895,9 +12174,12 @@ export function usePoolManagerSetProtocolFeeController<
         functionName?: 'setProtocolFeeController'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'setProtocolFeeController', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'setProtocolFeeController',
     ...config,
   } as any)
@@ -11906,7 +12188,8 @@ export function usePoolManagerSetProtocolFeeController<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setProtocolFees"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerSetProtocolFees<
   TMode extends WriteContractMode = undefined,
@@ -11925,9 +12208,12 @@ export function usePoolManagerSetProtocolFees<
         functionName?: 'setProtocolFees'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'setProtocolFees', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'setProtocolFees',
     ...config,
   } as any)
@@ -11936,7 +12222,8 @@ export function usePoolManagerSetProtocolFees<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"settle"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerSettle<
   TMode extends WriteContractMode = undefined,
@@ -11955,9 +12242,12 @@ export function usePoolManagerSettle<
         functionName?: 'settle'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'settle', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'settle',
     ...config,
   } as any)
@@ -11966,7 +12256,8 @@ export function usePoolManagerSettle<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"swap"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerSwap<
   TMode extends WriteContractMode = undefined,
@@ -11985,9 +12276,12 @@ export function usePoolManagerSwap<
         functionName?: 'swap'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'swap', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'swap',
     ...config,
   } as any)
@@ -11996,7 +12290,8 @@ export function usePoolManagerSwap<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"take"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerTake<
   TMode extends WriteContractMode = undefined,
@@ -12015,9 +12310,12 @@ export function usePoolManagerTake<
         functionName?: 'take'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolManagerABI, 'take', TMode>({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'take',
     ...config,
   } as any)
@@ -12026,16 +12324,20 @@ export function usePoolManagerTake<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerWrite<TFunctionName extends string>(
   config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, TFunctionName>, 'abi' | 'address'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, TFunctionName>)
 }
@@ -12043,7 +12345,8 @@ export function usePreparePoolManagerWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"collectHookFees"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerCollectHookFees(
   config: Omit<
@@ -12051,9 +12354,12 @@ export function usePreparePoolManagerCollectHookFees(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'collectHookFees',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'collectHookFees'>)
@@ -12062,7 +12368,8 @@ export function usePreparePoolManagerCollectHookFees(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"collectProtocolFees"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerCollectProtocolFees(
   config: Omit<
@@ -12070,9 +12377,12 @@ export function usePreparePoolManagerCollectProtocolFees(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'collectProtocolFees',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'collectProtocolFees'>)
@@ -12081,16 +12391,20 @@ export function usePreparePoolManagerCollectProtocolFees(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"donate"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerDonate(
   config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'donate'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'donate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'donate'>)
@@ -12099,7 +12413,8 @@ export function usePreparePoolManagerDonate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"initialize"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerInitialize(
   config: Omit<
@@ -12107,9 +12422,12 @@ export function usePreparePoolManagerInitialize(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'initialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'initialize'>)
@@ -12118,16 +12436,20 @@ export function usePreparePoolManagerInitialize(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"lock"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerLock(
   config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'lock'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'lock',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'lock'>)
@@ -12136,16 +12458,20 @@ export function usePreparePoolManagerLock(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"mint"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerMint(
   config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'mint'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'mint',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'mint'>)
@@ -12154,7 +12480,8 @@ export function usePreparePoolManagerMint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"modifyPosition"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerModifyPosition(
   config: Omit<
@@ -12162,9 +12489,12 @@ export function usePreparePoolManagerModifyPosition(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'modifyPosition',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'modifyPosition'>)
@@ -12173,7 +12503,8 @@ export function usePreparePoolManagerModifyPosition(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155BatchReceived"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerOnErc1155BatchReceived(
   config: Omit<
@@ -12181,9 +12512,12 @@ export function usePreparePoolManagerOnErc1155BatchReceived(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'onERC1155BatchReceived',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'onERC1155BatchReceived'>)
@@ -12192,7 +12526,8 @@ export function usePreparePoolManagerOnErc1155BatchReceived(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155Received"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerOnErc1155Received(
   config: Omit<
@@ -12200,9 +12535,12 @@ export function usePreparePoolManagerOnErc1155Received(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'onERC1155Received',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'onERC1155Received'>)
@@ -12211,7 +12549,8 @@ export function usePreparePoolManagerOnErc1155Received(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerSafeBatchTransferFrom(
   config: Omit<
@@ -12219,9 +12558,12 @@ export function usePreparePoolManagerSafeBatchTransferFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'safeBatchTransferFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'safeBatchTransferFrom'>)
@@ -12230,7 +12572,8 @@ export function usePreparePoolManagerSafeBatchTransferFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeTransferFrom"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerSafeTransferFrom(
   config: Omit<
@@ -12238,9 +12581,12 @@ export function usePreparePoolManagerSafeTransferFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'safeTransferFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'safeTransferFrom'>)
@@ -12249,7 +12595,8 @@ export function usePreparePoolManagerSafeTransferFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setApprovalForAll"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerSetApprovalForAll(
   config: Omit<
@@ -12257,9 +12604,12 @@ export function usePreparePoolManagerSetApprovalForAll(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'setApprovalForAll',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'setApprovalForAll'>)
@@ -12268,7 +12618,8 @@ export function usePreparePoolManagerSetApprovalForAll(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setHookFees"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerSetHookFees(
   config: Omit<
@@ -12276,9 +12627,12 @@ export function usePreparePoolManagerSetHookFees(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'setHookFees',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'setHookFees'>)
@@ -12287,16 +12641,20 @@ export function usePreparePoolManagerSetHookFees(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setOwner"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerSetOwner(
   config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'setOwner'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'setOwner',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'setOwner'>)
@@ -12305,7 +12663,8 @@ export function usePreparePoolManagerSetOwner(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setProtocolFeeController"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerSetProtocolFeeController(
   config: Omit<
@@ -12313,9 +12672,12 @@ export function usePreparePoolManagerSetProtocolFeeController(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'setProtocolFeeController',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'setProtocolFeeController'>)
@@ -12324,7 +12686,8 @@ export function usePreparePoolManagerSetProtocolFeeController(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setProtocolFees"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerSetProtocolFees(
   config: Omit<
@@ -12332,9 +12695,12 @@ export function usePreparePoolManagerSetProtocolFees(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'setProtocolFees',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'setProtocolFees'>)
@@ -12343,16 +12709,20 @@ export function usePreparePoolManagerSetProtocolFees(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"settle"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerSettle(
   config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'settle'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'settle',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'settle'>)
@@ -12361,16 +12731,20 @@ export function usePreparePoolManagerSettle(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"swap"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerSwap(
   config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'swap'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'swap',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'swap'>)
@@ -12379,16 +12753,20 @@ export function usePreparePoolManagerSwap(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"take"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePreparePoolManagerTake(
   config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'take'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'take',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'take'>)
@@ -12397,16 +12775,20 @@ export function usePreparePoolManagerTake(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerEvent<TEventName extends string>(
   config: Omit<UseContractEventConfig<typeof poolManagerABI, TEventName>, 'abi' | 'address'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, TEventName>)
 }
@@ -12414,16 +12796,20 @@ export function usePoolManagerEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"ApprovalForAll"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerApprovalForAllEvent(
   config: Omit<UseContractEventConfig<typeof poolManagerABI, 'ApprovalForAll'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     eventName: 'ApprovalForAll',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'ApprovalForAll'>)
@@ -12432,16 +12818,20 @@ export function usePoolManagerApprovalForAllEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"HookFeeUpdated"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerHookFeeUpdatedEvent(
   config: Omit<UseContractEventConfig<typeof poolManagerABI, 'HookFeeUpdated'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     eventName: 'HookFeeUpdated',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'HookFeeUpdated'>)
@@ -12450,16 +12840,20 @@ export function usePoolManagerHookFeeUpdatedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"Initialize"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerInitializeEvent(
   config: Omit<UseContractEventConfig<typeof poolManagerABI, 'Initialize'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     eventName: 'Initialize',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'Initialize'>)
@@ -12468,16 +12862,20 @@ export function usePoolManagerInitializeEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"ModifyPosition"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerModifyPositionEvent(
   config: Omit<UseContractEventConfig<typeof poolManagerABI, 'ModifyPosition'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     eventName: 'ModifyPosition',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'ModifyPosition'>)
@@ -12486,16 +12884,20 @@ export function usePoolManagerModifyPositionEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"OwnerChanged"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerOwnerChangedEvent(
   config: Omit<UseContractEventConfig<typeof poolManagerABI, 'OwnerChanged'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     eventName: 'OwnerChanged',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'OwnerChanged'>)
@@ -12504,7 +12906,8 @@ export function usePoolManagerOwnerChangedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"ProtocolFeeControllerUpdated"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerProtocolFeeControllerUpdatedEvent(
   config: Omit<
@@ -12512,9 +12915,12 @@ export function usePoolManagerProtocolFeeControllerUpdatedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     eventName: 'ProtocolFeeControllerUpdated',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'ProtocolFeeControllerUpdated'>)
@@ -12523,16 +12929,20 @@ export function usePoolManagerProtocolFeeControllerUpdatedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"ProtocolFeeUpdated"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerProtocolFeeUpdatedEvent(
   config: Omit<UseContractEventConfig<typeof poolManagerABI, 'ProtocolFeeUpdated'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     eventName: 'ProtocolFeeUpdated',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'ProtocolFeeUpdated'>)
@@ -12541,16 +12951,20 @@ export function usePoolManagerProtocolFeeUpdatedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"Swap"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerSwapEvent(
   config: Omit<UseContractEventConfig<typeof poolManagerABI, 'Swap'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     eventName: 'Swap',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'Swap'>)
@@ -12559,16 +12973,20 @@ export function usePoolManagerSwapEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"TransferBatch"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerTransferBatchEvent(
   config: Omit<UseContractEventConfig<typeof poolManagerABI, 'TransferBatch'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     eventName: 'TransferBatch',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'TransferBatch'>)
@@ -12577,16 +12995,20 @@ export function usePoolManagerTransferBatchEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"TransferSingle"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerTransferSingleEvent(
   config: Omit<UseContractEventConfig<typeof poolManagerABI, 'TransferSingle'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     eventName: 'TransferSingle',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'TransferSingle'>)
@@ -12595,16 +13017,20 @@ export function usePoolManagerTransferSingleEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"URI"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x5FF8780e4D20e75B8599A9C4528D8ac9682e5c89)
  */
 export function usePoolManagerUriEvent(
   config: Omit<UseContractEventConfig<typeof poolManagerABI, 'URI'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: poolManagerABI,
-    address: poolManagerAddress[31337],
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     eventName: 'URI',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'URI'>)
@@ -12613,7 +13039,8 @@ export function usePoolManagerUriEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolModifyPositionTestABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x092D53306f9Df9eeD35efec24c31Ca32000033BC)
  */
 export function usePoolModifyPositionTestRead<
   TFunctionName extends string,
@@ -12624,9 +13051,12 @@ export function usePoolModifyPositionTestRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolModifyPositionTestABI,
-    address: poolModifyPositionTestAddress[31337],
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
     ...config,
   } as UseContractReadConfig<typeof poolModifyPositionTestABI, TFunctionName, TSelectData>)
 }
@@ -12634,7 +13064,8 @@ export function usePoolModifyPositionTestRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"manager"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x092D53306f9Df9eeD35efec24c31Ca32000033BC)
  */
 export function usePoolModifyPositionTestManager<
   TFunctionName extends 'manager',
@@ -12645,9 +13076,12 @@ export function usePoolModifyPositionTestManager<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: poolModifyPositionTestABI,
-    address: poolModifyPositionTestAddress[31337],
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
     functionName: 'manager',
     ...config,
   } as UseContractReadConfig<typeof poolModifyPositionTestABI, TFunctionName, TSelectData>)
@@ -12656,7 +13090,8 @@ export function usePoolModifyPositionTestManager<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x092D53306f9Df9eeD35efec24c31Ca32000033BC)
  */
 export function usePoolModifyPositionTestWrite<
   TFunctionName extends string,
@@ -12675,9 +13110,12 @@ export function usePoolModifyPositionTestWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolModifyPositionTestABI, TFunctionName, TMode>({
     abi: poolModifyPositionTestABI,
-    address: poolModifyPositionTestAddress[31337],
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
     ...config,
   } as any)
 }
@@ -12685,7 +13123,8 @@ export function usePoolModifyPositionTestWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"lockAcquired"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x092D53306f9Df9eeD35efec24c31Ca32000033BC)
  */
 export function usePoolModifyPositionTestLockAcquired<
   TMode extends WriteContractMode = undefined,
@@ -12704,9 +13143,12 @@ export function usePoolModifyPositionTestLockAcquired<
         functionName?: 'lockAcquired'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolModifyPositionTestABI, 'lockAcquired', TMode>({
     abi: poolModifyPositionTestABI,
-    address: poolModifyPositionTestAddress[31337],
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
     functionName: 'lockAcquired',
     ...config,
   } as any)
@@ -12715,7 +13157,8 @@ export function usePoolModifyPositionTestLockAcquired<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"modifyPosition"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x092D53306f9Df9eeD35efec24c31Ca32000033BC)
  */
 export function usePoolModifyPositionTestModifyPosition<
   TMode extends WriteContractMode = undefined,
@@ -12734,9 +13177,12 @@ export function usePoolModifyPositionTestModifyPosition<
         functionName?: 'modifyPosition'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof poolModifyPositionTestABI, 'modifyPosition', TMode>({
     abi: poolModifyPositionTestABI,
-    address: poolModifyPositionTestAddress[31337],
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
     functionName: 'modifyPosition',
     ...config,
   } as any)
@@ -12745,16 +13191,20 @@ export function usePoolModifyPositionTestModifyPosition<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x092D53306f9Df9eeD35efec24c31Ca32000033BC)
  */
 export function usePreparePoolModifyPositionTestWrite<TFunctionName extends string>(
   config: Omit<UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, TFunctionName>, 'abi' | 'address'> & {
     chainId?: keyof typeof poolModifyPositionTestAddress
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolModifyPositionTestABI,
-    address: poolModifyPositionTestAddress[31337],
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, TFunctionName>)
 }
@@ -12762,7 +13212,8 @@ export function usePreparePoolModifyPositionTestWrite<TFunctionName extends stri
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"lockAcquired"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x092D53306f9Df9eeD35efec24c31Ca32000033BC)
  */
 export function usePreparePoolModifyPositionTestLockAcquired(
   config: Omit<
@@ -12770,9 +13221,12 @@ export function usePreparePoolModifyPositionTestLockAcquired(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolModifyPositionTestABI,
-    address: poolModifyPositionTestAddress[31337],
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
     functionName: 'lockAcquired',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, 'lockAcquired'>)
@@ -12781,7 +13235,8 @@ export function usePreparePoolModifyPositionTestLockAcquired(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"modifyPosition"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x092D53306f9Df9eeD35efec24c31Ca32000033BC)
  */
 export function usePreparePoolModifyPositionTestModifyPosition(
   config: Omit<
@@ -12789,9 +13244,12 @@ export function usePreparePoolModifyPositionTestModifyPosition(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: poolModifyPositionTestABI,
-    address: poolModifyPositionTestAddress[31337],
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
     functionName: 'modifyPosition',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, 'modifyPosition'>)
@@ -13239,7 +13697,8 @@ export function useTestErc20TransferEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0Read<
   TFunctionName extends string,
@@ -13249,17 +13708,21 @@ export function useToken0Read<
     chainId?: keyof typeof token0Address
   } = {} as any,
 ) {
-  return useContractRead({ abi: token0ABI, address: token0Address[31337], ...config } as UseContractReadConfig<
-    typeof token0ABI,
-    TFunctionName,
-    TSelectData
-  >)
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: token0ABI,
+    address: token0Address[chainId as keyof typeof token0Address],
+    ...config,
+  } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"allowance"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0Allowance<
   TFunctionName extends 'allowance',
@@ -13270,9 +13733,12 @@ export function useToken0Allowance<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token0Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'allowance',
     ...config,
   } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
@@ -13281,7 +13747,8 @@ export function useToken0Allowance<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"balanceOf"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0BalanceOf<
   TFunctionName extends 'balanceOf',
@@ -13292,9 +13759,12 @@ export function useToken0BalanceOf<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token0Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'balanceOf',
     ...config,
   } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
@@ -13303,7 +13773,8 @@ export function useToken0BalanceOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"decimals"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0Decimals<
   TFunctionName extends 'decimals',
@@ -13314,9 +13785,12 @@ export function useToken0Decimals<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token0Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'decimals',
     ...config,
   } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
@@ -13325,7 +13799,8 @@ export function useToken0Decimals<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"name"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0Name<
   TFunctionName extends 'name',
@@ -13336,9 +13811,12 @@ export function useToken0Name<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token0Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'name',
     ...config,
   } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
@@ -13347,7 +13825,8 @@ export function useToken0Name<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"symbol"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0Symbol<
   TFunctionName extends 'symbol',
@@ -13358,9 +13837,12 @@ export function useToken0Symbol<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token0Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'symbol',
     ...config,
   } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
@@ -13369,7 +13851,8 @@ export function useToken0Symbol<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"totalSupply"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0TotalSupply<
   TFunctionName extends 'totalSupply',
@@ -13380,9 +13863,12 @@ export function useToken0TotalSupply<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token0Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'totalSupply',
     ...config,
   } as UseContractReadConfig<typeof token0ABI, TFunctionName, TSelectData>)
@@ -13391,7 +13877,8 @@ export function useToken0TotalSupply<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token0ABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0Write<
   TFunctionName extends string,
@@ -13410,9 +13897,12 @@ export function useToken0Write<
         chainId?: TChainId
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof token0ABI, TFunctionName, TMode>({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     ...config,
   } as any)
 }
@@ -13420,7 +13910,8 @@ export function useToken0Write<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"approve"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0Approve<
   TMode extends WriteContractMode = undefined,
@@ -13439,9 +13930,12 @@ export function useToken0Approve<
         functionName?: 'approve'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof token0ABI, 'approve', TMode>({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'approve',
     ...config,
   } as any)
@@ -13450,7 +13944,8 @@ export function useToken0Approve<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"transfer"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0Transfer<
   TMode extends WriteContractMode = undefined,
@@ -13469,9 +13964,12 @@ export function useToken0Transfer<
         functionName?: 'transfer'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof token0ABI, 'transfer', TMode>({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'transfer',
     ...config,
   } as any)
@@ -13480,7 +13978,8 @@ export function useToken0Transfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"transferFrom"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0TransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -13499,9 +13998,12 @@ export function useToken0TransferFrom<
         functionName?: 'transferFrom'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof token0ABI, 'transferFrom', TMode>({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'transferFrom',
     ...config,
   } as any)
@@ -13510,16 +14012,20 @@ export function useToken0TransferFrom<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token0ABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function usePrepareToken0Write<TFunctionName extends string>(
   config: Omit<UsePrepareContractWriteConfig<typeof token0ABI, TFunctionName>, 'abi' | 'address'> & {
     chainId?: keyof typeof token0Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     ...config,
   } as UsePrepareContractWriteConfig<typeof token0ABI, TFunctionName>)
 }
@@ -13527,16 +14033,20 @@ export function usePrepareToken0Write<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"approve"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function usePrepareToken0Approve(
   config: Omit<UsePrepareContractWriteConfig<typeof token0ABI, 'approve'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof token0Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'approve',
     ...config,
   } as UsePrepareContractWriteConfig<typeof token0ABI, 'approve'>)
@@ -13545,16 +14055,20 @@ export function usePrepareToken0Approve(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"transfer"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function usePrepareToken0Transfer(
   config: Omit<UsePrepareContractWriteConfig<typeof token0ABI, 'transfer'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof token0Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'transfer',
     ...config,
   } as UsePrepareContractWriteConfig<typeof token0ABI, 'transfer'>)
@@ -13563,16 +14077,20 @@ export function usePrepareToken0Transfer(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token0ABI}__ and `functionName` set to `"transferFrom"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function usePrepareToken0TransferFrom(
   config: Omit<UsePrepareContractWriteConfig<typeof token0ABI, 'transferFrom'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof token0Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     functionName: 'transferFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof token0ABI, 'transferFrom'>)
@@ -13581,32 +14099,41 @@ export function usePrepareToken0TransferFrom(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token0ABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0Event<TEventName extends string>(
   config: Omit<UseContractEventConfig<typeof token0ABI, TEventName>, 'abi' | 'address'> & {
     chainId?: keyof typeof token0Address
   } = {} as any,
 ) {
-  return useContractEvent({ abi: token0ABI, address: token0Address[31337], ...config } as UseContractEventConfig<
-    typeof token0ABI,
-    TEventName
-  >)
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: token0ABI,
+    address: token0Address[chainId as keyof typeof token0Address],
+    ...config,
+  } as UseContractEventConfig<typeof token0ABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token0ABI}__ and `eventName` set to `"Approval"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0ApprovalEvent(
   config: Omit<UseContractEventConfig<typeof token0ABI, 'Approval'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof token0Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     eventName: 'Approval',
     ...config,
   } as UseContractEventConfig<typeof token0ABI, 'Approval'>)
@@ -13615,16 +14142,20 @@ export function useToken0ApprovalEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token0ABI}__ and `eventName` set to `"Transfer"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7)
  */
 export function useToken0TransferEvent(
   config: Omit<UseContractEventConfig<typeof token0ABI, 'Transfer'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof token0Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: token0ABI,
-    address: token0Address[31337],
+    address: token0Address[chainId as keyof typeof token0Address],
     eventName: 'Transfer',
     ...config,
   } as UseContractEventConfig<typeof token0ABI, 'Transfer'>)
@@ -13633,7 +14164,8 @@ export function useToken0TransferEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1Read<
   TFunctionName extends string,
@@ -13643,17 +14175,21 @@ export function useToken1Read<
     chainId?: keyof typeof token1Address
   } = {} as any,
 ) {
-  return useContractRead({ abi: token1ABI, address: token1Address[31337], ...config } as UseContractReadConfig<
-    typeof token1ABI,
-    TFunctionName,
-    TSelectData
-  >)
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: token1ABI,
+    address: token1Address[chainId as keyof typeof token1Address],
+    ...config,
+  } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"allowance"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1Allowance<
   TFunctionName extends 'allowance',
@@ -13664,9 +14200,12 @@ export function useToken1Allowance<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token1Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'allowance',
     ...config,
   } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
@@ -13675,7 +14214,8 @@ export function useToken1Allowance<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"balanceOf"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1BalanceOf<
   TFunctionName extends 'balanceOf',
@@ -13686,9 +14226,12 @@ export function useToken1BalanceOf<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token1Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'balanceOf',
     ...config,
   } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
@@ -13697,7 +14240,8 @@ export function useToken1BalanceOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"decimals"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1Decimals<
   TFunctionName extends 'decimals',
@@ -13708,9 +14252,12 @@ export function useToken1Decimals<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token1Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'decimals',
     ...config,
   } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
@@ -13719,7 +14266,8 @@ export function useToken1Decimals<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"name"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1Name<
   TFunctionName extends 'name',
@@ -13730,9 +14278,12 @@ export function useToken1Name<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token1Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'name',
     ...config,
   } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
@@ -13741,7 +14292,8 @@ export function useToken1Name<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"symbol"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1Symbol<
   TFunctionName extends 'symbol',
@@ -13752,9 +14304,12 @@ export function useToken1Symbol<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token1Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'symbol',
     ...config,
   } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
@@ -13763,7 +14318,8 @@ export function useToken1Symbol<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"totalSupply"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1TotalSupply<
   TFunctionName extends 'totalSupply',
@@ -13774,9 +14330,12 @@ export function useToken1TotalSupply<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof token1Address } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'totalSupply',
     ...config,
   } as UseContractReadConfig<typeof token1ABI, TFunctionName, TSelectData>)
@@ -13785,7 +14344,8 @@ export function useToken1TotalSupply<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token1ABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1Write<
   TFunctionName extends string,
@@ -13804,9 +14364,12 @@ export function useToken1Write<
         chainId?: TChainId
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof token1ABI, TFunctionName, TMode>({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     ...config,
   } as any)
 }
@@ -13814,7 +14377,8 @@ export function useToken1Write<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"approve"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1Approve<
   TMode extends WriteContractMode = undefined,
@@ -13833,9 +14397,12 @@ export function useToken1Approve<
         functionName?: 'approve'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof token1ABI, 'approve', TMode>({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'approve',
     ...config,
   } as any)
@@ -13844,7 +14411,8 @@ export function useToken1Approve<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"transfer"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1Transfer<
   TMode extends WriteContractMode = undefined,
@@ -13863,9 +14431,12 @@ export function useToken1Transfer<
         functionName?: 'transfer'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof token1ABI, 'transfer', TMode>({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'transfer',
     ...config,
   } as any)
@@ -13874,7 +14445,8 @@ export function useToken1Transfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"transferFrom"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1TransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -13893,9 +14465,12 @@ export function useToken1TransferFrom<
         functionName?: 'transferFrom'
       } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof token1ABI, 'transferFrom', TMode>({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'transferFrom',
     ...config,
   } as any)
@@ -13904,16 +14479,20 @@ export function useToken1TransferFrom<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token1ABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function usePrepareToken1Write<TFunctionName extends string>(
   config: Omit<UsePrepareContractWriteConfig<typeof token1ABI, TFunctionName>, 'abi' | 'address'> & {
     chainId?: keyof typeof token1Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     ...config,
   } as UsePrepareContractWriteConfig<typeof token1ABI, TFunctionName>)
 }
@@ -13921,16 +14500,20 @@ export function usePrepareToken1Write<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"approve"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function usePrepareToken1Approve(
   config: Omit<UsePrepareContractWriteConfig<typeof token1ABI, 'approve'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof token1Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'approve',
     ...config,
   } as UsePrepareContractWriteConfig<typeof token1ABI, 'approve'>)
@@ -13939,16 +14522,20 @@ export function usePrepareToken1Approve(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"transfer"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function usePrepareToken1Transfer(
   config: Omit<UsePrepareContractWriteConfig<typeof token1ABI, 'transfer'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof token1Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'transfer',
     ...config,
   } as UsePrepareContractWriteConfig<typeof token1ABI, 'transfer'>)
@@ -13957,16 +14544,20 @@ export function usePrepareToken1Transfer(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link token1ABI}__ and `functionName` set to `"transferFrom"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function usePrepareToken1TransferFrom(
   config: Omit<UsePrepareContractWriteConfig<typeof token1ABI, 'transferFrom'>, 'abi' | 'address' | 'functionName'> & {
     chainId?: keyof typeof token1Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     functionName: 'transferFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof token1ABI, 'transferFrom'>)
@@ -13975,32 +14566,41 @@ export function usePrepareToken1TransferFrom(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token1ABI}__.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1Event<TEventName extends string>(
   config: Omit<UseContractEventConfig<typeof token1ABI, TEventName>, 'abi' | 'address'> & {
     chainId?: keyof typeof token1Address
   } = {} as any,
 ) {
-  return useContractEvent({ abi: token1ABI, address: token1Address[31337], ...config } as UseContractEventConfig<
-    typeof token1ABI,
-    TEventName
-  >)
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: token1ABI,
+    address: token1Address[chainId as keyof typeof token1Address],
+    ...config,
+  } as UseContractEventConfig<typeof token1ABI, TEventName>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token1ABI}__ and `eventName` set to `"Approval"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1ApprovalEvent(
   config: Omit<UseContractEventConfig<typeof token1ABI, 'Approval'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof token1Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     eventName: 'Approval',
     ...config,
   } as UseContractEventConfig<typeof token1ABI, 'Approval'>)
@@ -14009,16 +14609,20 @@ export function useToken1ApprovalEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link token1ABI}__ and `eventName` set to `"Transfer"`.
  *
- *
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e)
  */
 export function useToken1TransferEvent(
   config: Omit<UseContractEventConfig<typeof token1ABI, 'Transfer'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof token1Address
   } = {} as any,
 ) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: token1ABI,
-    address: token1Address[31337],
+    address: token1Address[chainId as keyof typeof token1Address],
     eventName: 'Transfer',
     ...config,
   } as UseContractEventConfig<typeof token1ABI, 'Transfer'>)

@@ -85,7 +85,7 @@ export const RainbowKitCustomConnectButton = () => {
                 );
               }
 
-              if (chain.unsupported || chain.id !== configuredNetwork.id) {
+              if (chain.unsupported && chain.id !== configuredNetwork.id) {
                 return (
                   // <div className="dropdown dropdown-end">
                   //   <label tabIndex={0} className="btn btn-error btn-sm dropdown-toggle gap-1">
@@ -126,7 +126,7 @@ export const RainbowKitCustomConnectButton = () => {
                           Wrong Network
                         </Button>
                       </DropdownTrigger>
-                      <DropdownMenu varifant="bordered" aria-label="Network Actions">
+                      <DropdownMenu variant="bordered" aria-label="Network Actions">
                         <DropdownItem onClick={() => switchNetwork?.(configuredNetwork.id)}>
                           <span className="flex items-center gap-3">
                             <ArrowsRightLeftIcon className="h-6 w-4" />
