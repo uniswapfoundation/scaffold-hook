@@ -43,16 +43,17 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
   const swap = usePoolSwapTestSwap({
     args: [
       {
-        currency0: fromCurrency < toCurrency ? fromCurrency : toCurrency,
-        currency1: fromCurrency < toCurrency ? toCurrency : fromCurrency,
+        currency0: fromCurrency.toLowerCase() < toCurrency.toLowerCase() ? fromCurrency : toCurrency,
+        currency1: fromCurrency.toLowerCase() < toCurrency.toLowerCase() ? toCurrency : fromCurrency,
         fee: Number(swapFee),
         tickSpacing: Number(tickSpacing),
         hooks: hookAddress,
       },
       {
-        zeroForOne: fromCurrency < toCurrency,
+        zeroForOne: fromCurrency.toLowerCase() < toCurrency.toLowerCase(),
         amountSpecified: parseEther(fromAmount), // TODO: assumes tokens are always 18 decimals
-        sqrtPriceLimitX96: fromCurrency < toCurrency ? MIN_SQRT_PRICE_LIMIT : MAX_SQRT_PRICE_LIMIT, // unlimited impact
+        sqrtPriceLimitX96:
+          fromCurrency.toLowerCase() < toCurrency.toLowerCase() ? MIN_SQRT_PRICE_LIMIT : MAX_SQRT_PRICE_LIMIT, // unlimited impact
       },
       {
         withdrawTokens: true,
@@ -63,7 +64,6 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
   });
 
   const handleSwap = () => {
-    console.log(fromCurrency);
     swap.writeAsync().then(() => {
       console.log("Swap successful");
     });

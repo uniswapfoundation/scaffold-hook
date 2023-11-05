@@ -42,8 +42,10 @@ function InitializeComponent() {
 
   const handleInitialize = async () => {
     // sort tokens
-    const c0 = currency0.address < currency1.address ? currency0.address : currency1.address;
-    const c1 = currency0.address < currency1.address ? currency1.address : currency0.address;
+    const c0 =
+      currency0.address.toLowerCase() < currency1.address.toLowerCase() ? currency0.address : currency1.address;
+    const c1 =
+      currency0.address.toLowerCase() < currency1.address.toLowerCase() ? currency1.address : currency0.address;
     console.log({ c0, c1 });
     await write({
       args: [
