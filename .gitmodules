@@ -3,9 +3,6 @@
 	url = https://github.com/foundry-rs/forge-std
 [submodule "lib/forge-std"]
 	branch = v1.2.0
-[submodule "contracts/lib/v4-periphery"]
-	path = contracts/lib/v4-periphery
-	url = https://github.com/uniswap/v4-periphery
-[submodule "contracts/lib/periphery-next"]
-	path = contracts/lib/periphery-next
-	url = https://github.com/Uniswap/periphery-next
+[submodule "contracts/lib/v4-core"]
+	path = contracts/lib/v4-core
+	url = https://github.com/uniswap/v4-core
