@@ -1,13 +1,4 @@
-@ensdomains/=contracts/lib/v4-periphery/lib/v4-core/node_modules/@ensdomains/
-@openzeppelin/=contracts/lib/v4-periphery/lib/openzeppelin-contracts/
-@uniswap/v4-core/=contracts/lib/v4-periphery/lib/v4-core/
+@uniswap/v4-core/=contracts/lib/v4-core/
 ds-test/=contracts/lib/forge-std/lib/ds-test/src/
-erc4626-tests/=contracts/lib/v4-periphery/lib/openzeppelin-contracts/lib/erc4626-tests/
-forge-gas-snapshot/=contracts/lib/v4-periphery/lib/forge-gas-snapshot/src/
 forge-std/=contracts/lib/forge-std/src/
-hardhat/=contracts/lib/v4-periphery/lib/v4-core/node_modules/hardhat/
-openzeppelin-contracts/=contracts/lib/v4-periphery/lib/openzeppelin-contracts/
-openzeppelin/=contracts/lib/v4-periphery/lib/openzeppelin-contracts/contracts/
-solmate/=contracts/lib/v4-periphery/lib/solmate/src/
-v4-core/=contracts/lib/v4-periphery/lib/v4-core/contracts/
-v4-periphery/=contracts/lib/v4-periphery/contracts/
+solmate/=contracts/lib/v4-core/lib/solmate/src/
