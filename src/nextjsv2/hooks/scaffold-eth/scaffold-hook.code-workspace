@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../scaffold-hook"
+		},
+		{
+			"path": "../../../.."
+		}
+	],
+	"settings": {
+		"solidity.defaultCompiler": "localNodeModule"
+	}
+}

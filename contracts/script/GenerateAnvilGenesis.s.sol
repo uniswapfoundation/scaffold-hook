@@ -2,8 +2,12 @@
 pragma solidity ^0.8.19;
 
 import "forge-std/Script.sol";
+import {PoolKey} from "@uniswap/v4-core/contracts/types/PoolKey.sol";
+import {Currency} from "@uniswap/v4-core/contracts/types/Currency.sol";
+
 import {PoolManager} from "@uniswap/v4-core/contracts/PoolManager.sol";
 import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
+import {IHooks} from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
 import {PoolModifyPositionTest} from "@uniswap/v4-core/contracts/test/PoolModifyPositionTest.sol";
 import {PoolSwapTest} from "@uniswap/v4-core/contracts/test/PoolSwapTest.sol";
 import {PoolDonateTest} from "@uniswap/v4-core/contracts/test/PoolDonateTest.sol";
@@ -12,8 +16,9 @@ import {IERC20} from "forge-std/interfaces/IERC20.sol";
 
 contract GenerateAnvilGenesisScript is Script {
     
-    // 0x565506c573abfe24eb6abb7c0d8c809ace1f638d
-    address MANAGER = address(uint160(uint256(keccak256(abi.encode("poolmanager")))));
+    // RECENT DEPLOYMENT: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+    // PoolManager cannot be hardcoded because of NoDelegateCall.sol
+    address MANAGER;
     
     // 0xaf7ccf0ff7ef054a1db43330f5431958ab4a9441
     address SWAPROUTER = address(uint160(uint256(keccak256(abi.encode("swaprouter")))));
@@ -38,8 +43,7 @@ contract GenerateAnvilGenesisScript is Script {
     function run() public {
         vm.broadcast();
         PoolManager manager = new PoolManager(500_000);
-
-        anvilCopyCode(address(manager), MANAGER);
+        MANAGER = address(manager);
 
         // Additional helpers for interacting with the pool
         vm.startBroadcast();
@@ -61,6 +65,9 @@ contract GenerateAnvilGenesisScript is Script {
         anvilCopyCode(address(token1), TOKEN1);
 
         generateGenesis();
+
+        // run a lifecycle test to make sure everything works
+        lifecycle();
     }
 
     function generateGenesis() internal {
@@ -146,5 +153,47 @@ contract GenerateAnvilGenesisScript is Script {
         
         string memory child = vm.serializeString("token", "code", vm.toString(tokenAddr.code));
         tokenJson = vm.serializeString("alloc", vm.toString(tokenAddr), child);
+    }
+
+    function lifecycle() internal {
+        PoolManager m = PoolManager(payable(MANAGER));
+        MockERC20 t0 = MockERC20(TOKEN0);
+        MockERC20 t1 = MockERC20(TOKEN1);
+        PoolModifyPositionTest lpm = PoolModifyPositionTest(LPROUTER);
+        PoolSwapTest swapper = PoolSwapTest(SWAPROUTER);
+        
+        vm.startBroadcast();
+        t0.mint(msg.sender, 1_000_000e18);
+        t1.mint(msg.sender, 1_000_000e18);
+        t0.approve(address(lpm), 1_000_000e18);
+        t1.approve(address(lpm), 1_000_000e18);
+        t0.approve(address(swapper), 1_000_000e18);
+        t1.approve(address(swapper), 1_000_000e18);
+
+        PoolKey memory key = PoolKey({
+            currency0: Currency.wrap(address(t0)),
+            currency1: Currency.wrap(address(t1)),
+            fee: 3000,
+            tickSpacing: 60,
+            hooks: IHooks(address(0x0))
+        });
+        m.initialize(key, 79228162514264337593543950336, new bytes(0));
+        lpm.modifyPosition(key, IPoolManager.ModifyPositionParams({
+            tickLower: -600,
+            tickUpper: 600,
+            liquidityDelta: 10e18
+        }), new bytes(0));
+
+        IPoolManager.SwapParams memory params = IPoolManager.SwapParams({
+            zeroForOne: true,
+            amountSpecified: 1e18,
+            sqrtPriceLimitX96: 4295128740 // unlimited impact
+        });
+
+        PoolSwapTest.TestSettings memory testSettings =
+            PoolSwapTest.TestSettings({withdrawTokens: true, settleUsingTransfer: true});
+
+        swapper.swap(key, params, testSettings, new bytes(0));
+        vm.stopBroadcast();
     }
 }

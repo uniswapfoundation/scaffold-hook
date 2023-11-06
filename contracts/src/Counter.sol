@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import {BaseHook} from "v4-periphery/BaseHook.sol";
-
+import {BaseTestHooks} from "@uniswap/v4-core/contracts/test/BaseTestHooks.sol";
+import {IHooks} from "@uniswap/v4-core/contracts/interfaces/IHooks.sol";
 import {Hooks} from "@uniswap/v4-core/contracts/libraries/Hooks.sol";
 import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
 import {PoolKey} from "@uniswap/v4-core/contracts/types/PoolKey.sol";
 import {PoolId, PoolIdLibrary} from "@uniswap/v4-core/contracts/types/PoolId.sol";
 import {BalanceDelta} from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
 
-contract Counter is BaseHook {
+contract Counter is BaseTestHooks {
     using PoolIdLibrary for PoolKey;
 
     // NOTE: ---------------------------------------------------------
@@ -23,9 +23,14 @@ contract Counter is BaseHook {
     mapping(PoolId => uint256 count) public beforeModifyPositionCount;
     mapping(PoolId => uint256 count) public afterModifyPositionCount;
 
-    constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
+    IPoolManager public immutable poolManager;
 
-    function getHooksCalls() public pure override returns (Hooks.Calls memory) {
+    constructor(IPoolManager _poolManager) {
+        poolManager = _poolManager;
+        Hooks.validateHookAddress(IHooks(address(this)), getHooksCalls());
+    }
+
+    function getHooksCalls() public pure returns (Hooks.Calls memory) {
         return Hooks.Calls({
             beforeInitialize: false,
             afterInitialize: false,
@@ -48,7 +53,7 @@ contract Counter is BaseHook {
         returns (bytes4)
     {
         beforeSwapCount[key.toId()]++;
-        return BaseHook.beforeSwap.selector;
+        return BaseTestHooks.beforeSwap.selector;
     }
 
     function afterSwap(address, PoolKey calldata key, IPoolManager.SwapParams calldata, BalanceDelta, bytes calldata)
@@ -57,7 +62,7 @@ contract Counter is BaseHook {
         returns (bytes4)
     {
         afterSwapCount[key.toId()]++;
-        return BaseHook.afterSwap.selector;
+        return BaseTestHooks.afterSwap.selector;
     }
 
     function beforeModifyPosition(
@@ -67,7 +72,7 @@ contract Counter is BaseHook {
         bytes calldata
     ) external override returns (bytes4) {
         beforeModifyPositionCount[key.toId()]++;
-        return BaseHook.beforeModifyPosition.selector;
+        return BaseTestHooks.beforeModifyPosition.selector;
     }
 
     function afterModifyPosition(
@@ -78,6 +83,6 @@ contract Counter is BaseHook {
         bytes calldata
     ) external override returns (bytes4) {
         afterModifyPositionCount[key.toId()]++;
-        return BaseHook.afterModifyPosition.selector;
+        return BaseTestHooks.afterModifyPosition.selector;
     }
 }
