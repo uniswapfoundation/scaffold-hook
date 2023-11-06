@@ -1,19 +1,22 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
+import { Button } from "@nextui-org/react";
+import { watchContractEvent } from "@wagmi/core";
 import type { NextPage } from "next";
 import { useLocalStorage } from "usehooks-ts";
+import { useChainId } from "wagmi";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { ContractUI } from "~~/components/scaffold-eth";
+import { poolManagerABI, poolManagerAddress } from "~~/generated/generated";
+import { DEBUGGABLE_ADDRESSES } from "~~/utils/config";
+import { notification } from "~~/utils/scaffold-eth";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
 import { getContractNames } from "~~/utils/scaffold-eth/contractNames";
-import { Button } from "@nextui-org/react";
-import { poolManagerABI } from "~~/generated/PoolManager.sol/PoolManager";
-import { watchContractEvent } from "@wagmi/core";
-import { notification } from "~~/utils/scaffold-eth";
 
 const selectedContractStorageKey = "scaffoldEth2.selectedContract";
 const contractNames = getContractNames();
 
 const Debug: NextPage = () => {
+  const chainId = useChainId();
   const [selectedContract, setSelectedContract] = useLocalStorage<ContractName>(
     selectedContractStorageKey,
     contractNames[0],
@@ -28,7 +31,7 @@ const Debug: NextPage = () => {
   useEffect(() => {
     const unwatch = watchContractEvent(
       {
-        address: "0x565506C573abFE24Eb6abb7c0D8C809aCe1f638D",
+        address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
         abi: poolManagerABI,
         eventName: "Initialize",
       },
@@ -36,11 +39,12 @@ const Debug: NextPage = () => {
         const successMsg = (
           <div className="w-full overflow auto">
             <p className="font-bold mt-0 mb-1">New Pool Created!</p>
-            <p className="m-0 overflow-hidden flex-wrap">
+            <p className="m-0 overflow-hidden flex-wrap break-all">
               - Pool ID: <code className="italic bg-base-300 text-base font-bold">{log[0].args.id}</code>
             </p>
             <p className="mt-1 break-normal">
-              - Hook Address: <code className="italic bg-base-300 text-base font-bold">{log[0].args.hooks}</code>
+              - Hook Address:{" "}
+              <code className="italic bg-base-300 text-base font-bold break-all">{log[0].args.hooks}</code>
             </p>
           </div>
         );
@@ -59,11 +63,11 @@ const Debug: NextPage = () => {
         description="Debug your deployed 🏗 Scaffold-ETH 2 contracts in an easy way"
       />
       <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
-        {contractNames.length === 0 ? (
+        {DEBUGGABLE_ADDRESSES.length === 0 ? (
           <p className="text-3xl mt-14">No contracts found!</p>
         ) : (
           <>
-            {contractNames.length > 1 && (
+            {DEBUGGABLE_ADDRESSES.length > 1 && (
               <div className="flex flex-row gap-2 w-full max-w-7xl pb-1 px-6 lg:px-10 flex-wrap">
                 <div
                   className="
@@ -73,24 +77,26 @@ const Debug: NextPage = () => {
                   Inspect Contracts Deployed:{" "}
                 </div>
                 <br />
-                {contractNames.map(contractName => (
+                {DEBUGGABLE_ADDRESSES.map(contract => (
                   <Button
                     variant="bordered"
                     color="default"
                     className={``}
-                    key={contractName}
-                    onClick={() => setSelectedContract(contractName)}
+                    key={contract.name}
+                    onClick={() => setSelectedContract(contract.name)}
                   >
-                    {contractName}
+                    {contract.name}
                   </Button>
                 ))}
               </div>
             )}
-            {contractNames.map(contractName => (
+            {DEBUGGABLE_ADDRESSES.map(contract => (
               <ContractUI
-                key={contractName}
-                contractName={contractName}
-                className={contractName === selectedContract ? "" : "hidden"}
+                key={contract.address[chainId as keyof typeof contract.address]}
+                address={contract.address}
+                abi={contract.abi}
+                contractName={contract.name}
+                className={contract.name === selectedContract ? "" : "hidden"}
               />
             ))}
           </>

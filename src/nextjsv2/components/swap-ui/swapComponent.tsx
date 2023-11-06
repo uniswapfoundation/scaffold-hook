@@ -1,82 +1,73 @@
 import React, { useState } from "react";
-import { Switch, Tab, Tabs } from "@nextui-org/react";
+import { PoolKeyId } from "../base/pool-key";
+import { TokenDropdown } from "../base/token-dropdown";
+import { Tab, Tabs } from "@nextui-org/react";
+import { parseEther } from "viem";
+import { useAccount, useChainId, useToken } from "wagmi";
 import {
-  useErc20Decimals,
-  useErc20Name,
-  useErc20Symbol,
-  useMockErc20Name,
-  useMockErc20Symbol,
-  usePoolManagerGetLiquidity,
-  usePoolManagerPools,
+  counterAddress,
+  poolSwapTestAddress,
+  useErc20Allowance,
+  useErc20Approve,
+  usePoolSwapTestSwap,
 } from "~~/generated/generated";
+import { TOKEN_ADDRESSES } from "~~/utils/config";
+import { BLANK_TOKEN, MAX_SQRT_PRICE_LIMIT, MAX_UINT, MIN_SQRT_PRICE_LIMIT } from "~~/utils/constants";
 
 function SwapComponent({ poolKey }: { poolKey: any }) {
-  const [fromCurrency, setFromCurrency] = useState("ETH");
-  const [toCurrency, setToCurrency] = useState("DAI");
+  const { address } = useAccount();
+  const chainId = useChainId();
+
+  const tokens = TOKEN_ADDRESSES.map(address => useToken({ address: address[chainId as keyof typeof address] }));
+
+  const swapRouterAddress = poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress];
+
+  const [fromCurrency, setFromCurrency] = useState(BLANK_TOKEN.address);
+  const [toCurrency, setToCurrency] = useState(BLANK_TOKEN.address);
   const [fromAmount, setFromAmount] = useState("");
-  const [toAmount, setToAmount] = useState("");
-  const [liquidityAvailable, setLiquidityAvailable] = useState("1000 ETH");
-  const [fee, setFee] = useState("0.3%");
-  const [slippage, setSlippage] = useState("0.2%");
 
-  const {
-    data: poolLiquidity,
-    isLoading: isLoadingLiq,
-    isError: isErrorLiq,
-  } = usePoolManagerGetLiquidity({
-    address: "0x565506C573abFE24Eb6abb7c0D8C809aCe1f638D",
-    args: ["0xfd5760f27378b822bb5a39d2b76e3523cc538841e47ca97b08ee1a34a037ad89"],
+  const [swapFee, setSwapFee] = useState(3000n);
+  const [tickSpacing, setTickSpacing] = useState(60n);
+  const [hookAddress, setHookAddress] = useState<`0x${string}`>(counterAddress[chainId as keyof typeof counterAddress]);
+
+  const fromTokenAllowance = useErc20Allowance({
+    address: fromCurrency,
+    args: [address ?? "0x0", swapRouterAddress],
   });
 
-  const {
-    data: poolData,
-    isLoading: isLoadingPool,
-    isError: isErrorPool,
-  } = usePoolManagerPools({
-    address: "0x565506C573abFE24Eb6abb7c0D8C809aCe1f638D",
-    args: ["0xfd5760f27378b822bb5a39d2b76e3523cc538841e47ca97b08ee1a34a037ad89"],
+  const tokenApprove = useErc20Approve({
+    address: fromCurrency,
+    args: [swapRouterAddress, MAX_UINT],
   });
 
-  const {
-    data: Token0Data,
-    isLoading: isLoadingToken0,
-    isError: isErrorToken0,
-  } = useErc20Name({
-    address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
+  const swap = usePoolSwapTestSwap({
+    args: [
+      {
+        currency0: fromCurrency.toLowerCase() < toCurrency.toLowerCase() ? fromCurrency : toCurrency,
+        currency1: fromCurrency.toLowerCase() < toCurrency.toLowerCase() ? toCurrency : fromCurrency,
+        fee: Number(swapFee),
+        tickSpacing: Number(tickSpacing),
+        hooks: hookAddress,
+      },
+      {
+        zeroForOne: fromCurrency.toLowerCase() < toCurrency.toLowerCase(),
+        amountSpecified: parseEther(fromAmount), // TODO: assumes tokens are always 18 decimals
+        sqrtPriceLimitX96:
+          fromCurrency.toLowerCase() < toCurrency.toLowerCase() ? MIN_SQRT_PRICE_LIMIT : MAX_SQRT_PRICE_LIMIT, // unlimited impact
+      },
+      {
+        withdrawTokens: true,
+        settleUsingTransfer: true,
+      },
+      "0x0", // TODO: support hookData
+    ],
   });
-
-  const {
-    data: Token0Data1,
-    isLoading: isLoadingToken01,
-    isError: isErrorToken01,
-  } = useMockErc20Name({
-    address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
-  });
-
-  const {
-    data: Token0Data2,
-    isLoading: isLoadingToken02,
-    isError: isErrorToken02,
-  } = useMockErc20Symbol({
-    address: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
-  });
-
-  console.log(Token0Data, "Token0Data", isLoadingToken0, isErrorToken0);
-  console.log(Token0Data2, "Token0Data1", isLoadingToken01, isErrorToken01);
-  console.log(poolLiquidity, "poolManagerPools2", isLoadingLiq, isErrorLiq);
-
-  console.log(poolData, "poolManagerPools", isLoadingPool, isErrorPool);
 
   const handleSwap = () => {
-    // Implement swap logic here
-  };
-
-  const handleAddLiquidity = () => {
-    // Implement add liquidity logic here
-  };
-
-  const handleRemoveLiquidity = () => {
-    // Implement remove liquidity logic here
+    swap.writeAsync().then(() => {
+      console.log("Swap successful");
+    });
+    // TODO: better notification for success
   };
 
   return (
@@ -87,20 +78,31 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
           <Tab key="liquidity" title="Liquidity" />
         </Tabs>
 
+        <PoolKeyId
+          swapFee={swapFee}
+          setSwapFee={setSwapFee}
+          tickSpacing={tickSpacing}
+          setTickSpacing={setTickSpacing}
+          hookAddress={hookAddress}
+          setHookAddress={setHookAddress}
+        />
+
         <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col justify-end">
-            <label className="label text-left block">
-              <span className="label-text">From:</span>
-            </label>
-            <select
-              className="select select-bordered w-full mt-2"
-              value={fromCurrency}
-              onChange={e => setFromCurrency(e.target.value)}
-            >
-              <option>ETH</option>
-              <option>DAI</option>
-            </select>
-          </div>
+          <TokenDropdown
+            label="From"
+            tooltipText={"The token you are sending"}
+            options={tokens.map(token => token.data ?? BLANK_TOKEN)}
+            onChange={e => {
+              setFromCurrency(e.target.value);
+              fromTokenAllowance.refetch();
+            }}
+          />
+          <TokenDropdown
+            label="To"
+            tooltipText="The token you are receiving"
+            options={tokens.map(token => token.data ?? BLANK_TOKEN)}
+            onChange={e => setToCurrency(e.target.value)}
+          />
           <div className="flex flex-col justify-end">
             <input
               type="number"
@@ -110,29 +112,16 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
               onChange={e => setFromAmount(e.target.value)}
             />
           </div>
-          <div className="flex flex-col justify-end">
-            <label className="label text-left block">
-              <span className="label-text">To:</span>
-            </label>
-            <select
-              className="select select-bordered w-full mt-2"
-              value={toCurrency}
-              onChange={e => setToCurrency(e.target.value)}
-            >
-              <option>DAI</option>
-              <option>ETH</option>
-            </select>
-          </div>
-          <div className="flex flex-col justify-end">
-            <input
-              type="number"
-              className="input input-bordered w-full mt-6"
-              placeholder="Amount"
-              value={toAmount}
-              disabled
-            />
-          </div>
         </div>
+
+        {fromTokenAllowance.data === 0n && (
+          <button
+            className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
+            onClick={() => tokenApprove.writeAsync().then(() => fromTokenAllowance.refetch())}
+          >
+            Approve {tokens.find(token => token.data?.address === fromCurrency)?.data?.symbol}
+          </button>
+        )}
 
         <button
           className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
@@ -140,43 +129,6 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
         >
           Swap
         </button>
-
-        <div className="border-t-2 border-gray-200 pt-4 mt-4">
-          <div className="grid grid-rows-3 gap-4 text-sm">
-            <div className="flex items-center justify-between">
-              <span>Price:</span>
-              <span className="font-bold ml-2">
-                {" "}
-                {!isLoadingPool && !isErrorPool ? poolData[0].sqrtPriceX96.toString() : "NaN"}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Liquidity:</span>
-              <span className="font-bold ml-2">{!isLoadingLiq && !isErrorLiq ? poolLiquidity?.toString() : "NaN"}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Fee:</span>
-              <span className="font-bold ml-2">
-                {!isLoadingPool && !isErrorPool ? poolData[0].protocolFees : "NaN"}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex space-x-4 mt-4">
-          <button
-            className="btn btn-outline w-1/2 hover:bg-indigo-100 hover:shadow-md transition-all"
-            onClick={handleAddLiquidity}
-          >
-            Add Liquidity
-          </button>
-          <button
-            className="btn btn-outline w-1/2 hover:bg-indigo-100 hover:shadow-md transition-all"
-            onClick={handleRemoveLiquidity}
-          >
-            Remove Liquidity
-          </button>
-        </div>
       </div>
     </div>
   );

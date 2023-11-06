@@ -1,11 +1,11 @@
 import { useState } from "react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import { Abi, createWalletClient, http, parseEther } from "viem";
 import { erc20ABI, useAccount, useContractWrite, useNetwork, usePrepareContractWrite } from "wagmi";
 import { hardhat } from "wagmi/chains";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { useAccountBalance, useTransactor } from "~~/hooks/scaffold-eth";
 import { getTargetNetwork } from "~~/utils/scaffold-eth/";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 
 // Number of ETH faucet sends to an address
 const NUM_OF_ETH = "1";
@@ -32,8 +32,8 @@ export const FaucetButton = () => {
     writeAsync: writeAsyncT1,
   } = useContractWrite({
     chainId: getTargetNetwork().id,
-    account: FAUCET_ADDRESS,
-    address: TOKEN1_CONTRACT_ADDRESS,
+    account: FAUCET_ADDRESS.toLowerCase(),
+    address: TOKEN1_CONTRACT_ADDRESS.toLowerCase(),
     functionName: "transfer",
     abi: erc20ABI as Abi,
     args: [address, parseEther(NUM_OF_DAI)],
@@ -45,8 +45,8 @@ export const FaucetButton = () => {
     writeAsync: writeAsyncT0,
   } = useContractWrite({
     chainId: getTargetNetwork().id,
-    account: FAUCET_ADDRESS,
-    address: TOKEN0_CONTRACT_ADDRESS,
+    account: FAUCET_ADDRESS.toLowerCase(),
+    address: TOKEN0_CONTRACT_ADDRESS.toLowerCase(),
     functionName: "transfer",
     abi: erc20ABI as Abi,
     args: [address, parseEther(NUM_OF_DAI)],

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import SwapComponent from "./swapComponent";
-import { Button, Card, Divider, Input, Select, SelectItem, Spacer, Tab, Tabs, Text } from "@nextui-org/react";
+import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { MetaHeader } from "~~/components/MetaHeader";
-import { usePoolManagerGetLiquidity, usePoolManagerPools } from "~~/generated/generatedTypes";
 
 interface PoolInput {
   currency0: string;

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Link } from "@nextui-org/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { QRCodeSVG } from "qrcode.react";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { Abi } from "viem";
 import { erc20ABI, useContractRead, useDisconnect, useSwitchNetwork } from "wagmi";
 import {
   ArrowLeftOnRectangleIcon,
@@ -22,7 +23,6 @@ import {
 } from "~~/components/scaffold-eth";
 import { useAutoConnect, useNetworkColor } from "~~/hooks/scaffold-eth";
 import { getBlockExplorerAddressLink, getTargetNetwork } from "~~/utils/scaffold-eth";
-import { Abi } from "viem";
 
 /**
  * Custom Wagmi Connect Button (watch balance + custom design)
@@ -34,22 +34,7 @@ export const RainbowKitCustomConnectButton = () => {
   const { disconnect } = useDisconnect();
   const { switchNetwork } = useSwitchNetwork();
   const [addressCopied, setAddressCopied] = useState(false);
-  const [address, setAddress] = useState("");
-  const { data: balanceToken0 } = useContractRead({
-    chainId: getTargetNetwork().id,
-    address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
-    abi: erc20ABI as Abi,
-    functionName: "balanceOf",
-    args: [address],
-  });
-
-  const { data: balanceToken1 } = useContractRead({
-    chainId: getTargetNetwork().id,
-    address: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
-    abi: erc20ABI as Abi,
-    functionName: "balanceOf",
-    args: [address],
-  });
+  const [address, setAddress] = useState<string>(undefined);
 
   return (
     <ConnectButton.Custom>
@@ -58,10 +43,27 @@ export const RainbowKitCustomConnectButton = () => {
         const blockExplorerAddressLink = account
           ? getBlockExplorerAddressLink(getTargetNetwork(), account.address)
           : undefined;
-        if (account) {
-          setAddress(account.address);
-        }
+        const { data: balanceToken0 } = useContractRead({
+          chainId: getTargetNetwork().id,
+          address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
+          abi: erc20ABI as Abi,
+          functionName: "balanceOf",
+          args: [address],
+          watch: true,
+        });
+        const { data: balanceToken1 } = useContractRead({
+          chainId: getTargetNetwork().id,
+          address: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
+          abi: erc20ABI as Abi,
+          functionName: "balanceOf",
+          args: [address],
+        });
 
+        useEffect(() => {
+          if (account) {
+            setAddress(account.address);
+          }
+        }, [account]);
         return (
           <>
             {(() => {

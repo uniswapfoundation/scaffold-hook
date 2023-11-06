@@ -1,53 +1,47 @@
 import React, { useState } from "react";
-import { Divider } from "@nextui-org/react";
+import { NumericInput } from "../base/numeric-input";
+import { PoolKeyId } from "../base/pool-key";
 import { formatEther, parseEther } from "viem";
-import deployedContracts from "~~/generated/deployedContracts";
+import { useAccount, useChainId } from "wagmi";
 import {
+  counterAddress,
+  poolModifyPositionTestAddress,
   useErc20Allowance,
   useErc20Approve,
-  useErc20Read,
   usePoolModifyPositionTestModifyPosition,
-} from "~~/generated/generatedTypes";
+} from "~~/generated/generated";
+import { TOKEN_ADDRESSES } from "~~/utils/config";
 import { MAX_UINT } from "~~/utils/constants";
 import { notification } from "~~/utils/scaffold-eth";
 
 function LiquidityComponent() {
-  // TODO: remove all the hardcoded addresses
-  const token0Addr = "0x2dafbdf11a8cf84c372539a38d781d8248399ae3";
-  const token1Addr = "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4";
-  const walletAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-  const lpRouterAddress = deployedContracts[31337][0].contracts.PoolModifyPositionTest.address;
+  const chainId = useChainId();
+  const { address: walletAddress } = useAccount();
 
-  const getToken0Name = useErc20Read({
-    address: token0Addr,
-    functionName: "name",
-  });
+  // Token & Wallet Configuration
+  // TODO: allow users to select tokens?
+  const token0Addr = TOKEN_ADDRESSES[0][chainId as keyof (typeof TOKEN_ADDRESSES)[0]];
+  const token1Addr = TOKEN_ADDRESSES[1][chainId as keyof (typeof TOKEN_ADDRESSES)[1]];
+  const lpRouterAddress = poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress];
 
-  const getToken1Name = useErc20Read({
-    address: token1Addr,
-    functionName: "name",
-  });
-
-  const [token0, setToken0] = useState(getToken0Name.data);
-  const [token1, setToken1] = useState(getToken1Name.data);
-
+  // State Variables
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState(deployedContracts[31337][0].contracts.Counter.address);
+  const [hookAddress, setHookAddress] = useState<`0x${string}`>(counterAddress[chainId as keyof typeof counterAddress]);
 
   const [tickLower, setTickLower] = useState(-(tickSpacing * 10n));
   const [tickUpper, setTickUpper] = useState(tickSpacing * 10n);
   const [liquidityDelta, setLiquidityDelta] = useState(10000000000000000000n);
-  const [hookData, setHookData] = useState<`0x${string}`>();
+  const [hookData, setHookData] = useState<`0x${string}`>("0x");
 
   const { data: token0Allowance, refetch: refetchT0Allowance } = useErc20Allowance({
     address: token0Addr,
-    args: [walletAddress, lpRouterAddress],
+    args: [walletAddress ?? "0x0", lpRouterAddress],
   });
 
   const { data: token1Allowance, refetch: refetchT1Allowance } = useErc20Allowance({
     address: token1Addr,
-    args: [walletAddress, lpRouterAddress],
+    args: [walletAddress ?? "0x0", lpRouterAddress],
   });
 
   const { writeAsync: writeToken0Approve, error: errorToken0Approve } = useErc20Approve({
@@ -61,7 +55,6 @@ function LiquidityComponent() {
   });
 
   const { writeAsync: writeModifyPosition, error: errorModifyPosition } = usePoolModifyPositionTestModifyPosition({
-    address: lpRouterAddress,
     args: [
       {
         currency0: token0Addr,
@@ -122,122 +115,55 @@ function LiquidityComponent() {
 
   return (
     <div className="card shadow-2xl p-6 bg-white rounded-xl border-2 border-pink-400 min-w-[34rem] max-w-xl transition-shadow hover:shadow-none">
-      <div className="space-y-0">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col justify-end">
-            <label className="label text-left block">
-              <span className="label-text">Token0</span>
-            </label>
-            <select
-              className="select select-bordered w-full mt-2"
-              value={token0}
-              onChange={e => setToken0(e.target.value)}
-            >
-              <option>{getToken0Name.data}</option>
-              <option>{getToken1Name.data}</option>
-            </select>
-          </div>
-          <div className="flex flex-col justify-end">
-            <label className="label text-left block">
-              <span className="label-text">Token1</span>
-            </label>
-            <select
-              className="select select-bordered w-full mt-2"
-              value={token1}
-              onChange={e => setToken1(e.target.value)}
-            >
-              <option>{getToken0Name.data}</option>
-              <option>{getToken1Name.data}</option>
-            </select>
-          </div>
-        </div>
+      <h2 className="text-2xl font-bold mb-2">Provision Liquidity</h2>
+      <p className="text-gray-600 mb-6">Fill out the details below to provision liquidity to a pool. .</p>
+      <PoolKeyId
+        swapFee={swapFee}
+        setSwapFee={setSwapFee}
+        tickSpacing={tickSpacing}
+        setTickSpacing={setTickSpacing}
+        hookAddress={hookAddress}
+        setHookAddress={setHookAddress}
+      />
 
-        <div className="flex flex-col justify-end">
-          <input
-            type="number"
-            className="input input-bordered w-full mt-6"
-            placeholder="Fee"
-            value={swapFee.toString()}
-            onChange={e => setSwapFee(BigInt(e.target.value))}
-          />
-        </div>
+      <div className="grid grid-cols-2 gap-2">
+        <NumericInput
+          type="number"
+          placeholder="Lower Bound"
+          tooltipText="Lower bound of the price range."
+          value={Number(tickLower)}
+          onChange={e => setTickLower(BigInt(e.target.value))}
+        />
 
-        <div className="flex flex-col justify-end">
-          <input
-            type="number"
-            className="input input-bordered w-full mt-6"
-            placeholder="Fee"
-            value={tickSpacing.toString()}
-            onChange={e => setTickSpacing(BigInt(e.target.value))}
-          />
-        </div>
+        <NumericInput
+          type="number"
+          placeholder="Upper Bound"
+          tooltipText="Upper bound of the price range."
+          value={Number(tickUpper)}
+          onChange={e => setTickUpper(BigInt(e.target.value))}
+        />
+      </div>
 
-        <div className="flex flex-col justify-end">
-          <input
-            type="string"
-            className="input input-bordered w-full mt-6"
-            placeholder="Hook Address"
-            value={hookAddress}
-            onChange={e => setHookAddress(e.target.value)}
-          />
-        </div>
+      <NumericInput
+        type="number"
+        placeholder="Liquidity Delta"
+        tooltipText="Amount of liquidity to add/remove."
+        value={Number(formatEther(liquidityDelta))}
+        onChange={e => setLiquidityDelta(parseEther(String(e.target.value)))}
+      />
 
-        <Divider />
+      <NumericInput
+        type="text"
+        placeholder="Hook Data"
+        tooltipText="Data to pass to the hook."
+        value={hookData}
+        onChange={e => setHookData(e.target.value as `0x${string}`)}
+      />
 
-        <div className="grid grid-cols-2 gap-2">
-          <div className="flex flex-col justify-end">
-            <label className="label text-left block">
-              <span className="label-text">Lower Bound</span>
-            </label>
-            <input
-              type="number"
-              className="input input-bordered w-full mt-6"
-              placeholder="Lower Bound"
-              value={Number(tickLower)}
-              onChange={e => setTickLower(BigInt(e.target.value))}
-            />
-          </div>
-
-          <div className="flex flex-col justify-end">
-            <label className="label text-left block">
-              <span className="label-text">Upper Bound</span>
-            </label>
-            <input
-              type="number"
-              className="input input-bordered w-full mt-6"
-              placeholder="Upper Bound"
-              value={Number(tickUpper)}
-              onChange={e => setTickUpper(BigInt(e.target.value))}
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-end">
-          <label className="label text-left block">
-            <span className="label-text">Liquidity Amount</span>
-          </label>
-          <input
-            type="number"
-            className="input input-bordered w-full mt-6"
-            placeholder="Liquidity Amount"
-            value={formatEther(liquidityDelta)}
-            onChange={e => setLiquidityDelta(parseEther(e.target.value))}
-          />
-        </div>
-
-        <div className="flex flex-col justify-end">
-          <input
-            type="string"
-            className="input input-bordered w-full mt-6"
-            placeholder="(optional) Hook Data"
-            value={hookData}
-            onChange={e => setHookData(e.target.value as `0x${string}`)}
-          />
-        </div>
-
+      <div className="grid w-full  grid-cols-2  gap-4">
         {token0Allowance === 0n && (
           <button
-            className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
+            className="btn  btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
             onClick={handleToken0Approve}
           >
             Approve Token0
@@ -252,14 +178,13 @@ function LiquidityComponent() {
             Approve Token1
           </button>
         )}
-
-        <button
-          className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
-          onClick={handleInitialize}
-        >
-          Provision
-        </button>
       </div>
+      <button
+        className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
+        onClick={handleInitialize}
+      >
+        Provision
+      </button>
     </div>
   );
 }

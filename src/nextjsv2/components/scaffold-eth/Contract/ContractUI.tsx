@@ -1,29 +1,68 @@
-import { useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
+import { EventsEmitted } from "./ContractEvents";
 import { ContractReadMethods } from "./ContractReadMethods";
 import { ContractVariables } from "./ContractVariables";
 import { ContractWriteMethods } from "./ContractWriteMethods";
+import { Abi } from "viem";
+import { useChainId, usePublicClient } from "wagmi";
 import { Spinner } from "~~/components/assets/Spinner";
 import { Address, Balance } from "~~/components/scaffold-eth";
-import { useDeployedContractInfo, useNetworkColor } from "~~/hooks/scaffold-eth";
+import { useNetworkColor } from "~~/hooks/scaffold-eth";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
-import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 type ContractUIProps = {
-  contractName: ContractName;
+  address: { [key: number]: string };
+  abi: Abi;
+  contractName: string;
   className?: string;
 };
 
 /**
  * UI component to interface with deployed contracts.
  **/
-export const ContractUI = ({ contractName, className = "" }: ContractUIProps) => {
+export const ContractUI = ({ address, abi, contractName, className = "" }: ContractUIProps) => {
+  const chainId = useChainId();
   const [refreshDisplayVariables, triggerRefreshDisplayVariables] = useReducer(value => !value, false);
   const configuredNetwork = getTargetNetwork();
+  const publicClient = usePublicClient();
+  const latestBlock = publicClient.getBlockNumber();
 
-  const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo(contractName);
+  const [eventLogs, setEventLogs] = useState<any[]>([]);
+  const deployedContractData = { address: address[chainId as keyof typeof address], abi: abi };
+  const [loading, setLoading] = useState(true);
+
   const networkColor = useNetworkColor();
 
-  if (deployedContractLoading) {
+  useEffect(() => {
+    if (!deployedContractData) {
+      return;
+    }
+    const fetchEvents = async () => {
+      const lastblock = await latestBlock;
+      const events = await publicClient.getContractEvents({
+        address: deployedContractData.address,
+        abi: deployedContractData.abi,
+        fromBlock: lastblock - 100n,
+        toBlock: lastblock,
+      });
+      setEventLogs(events);
+    };
+    fetchEvents().then(() => setLoading(false));
+  }, [deployedContractData]);
+
+  // useEventWatch({
+  //   deployedContractData,
+  //   onEvent: logs => {
+  //     console.log("Event(s) emitted:", logs);
+  //     const eventNames = logs.map((log: { eventName: any }) => log.eventName);
+  //     // set events, append to existing
+  //     const logsAppended = [...eventLogs, ...logs];
+  //     setEventLogs(logsAppended);
+  //   },
+  //   chainId: configuredNetwork.id,
+  // });
+
+  if (loading) {
     return (
       <div className="mt-14">
         <Spinner width="50px" height="50px" />
@@ -60,6 +99,10 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
                 <span style={{ color: networkColor }}>{configuredNetwork.name}</span>
               </p>
             )}
+          </div>
+          <div className="bg-base-300 rounded-3xl px-6 lg:px-8 py-4 shadow-lg shadow-base-300 mb-6">
+            <h2 className="font-semibold">Contract Events</h2>
+            <EventsEmitted logs={eventLogs} />
           </div>
           <div className="bg-base-300 rounded-3xl px-6 lg:px-8 py-4 shadow-lg shadow-base-300">
             <ContractVariables
