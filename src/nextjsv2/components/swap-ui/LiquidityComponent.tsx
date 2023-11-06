@@ -1,90 +1,33 @@
 import React, { useState } from "react";
-import { Divider, Select, SelectItem, Tooltip } from "@nextui-org/react";
-import { Accordion, AccordionItem } from "@nextui-org/react";
+import { NumericInput } from "../base/numeric-input";
+import { PoolKeyId } from "../base/pool-key";
 import { formatEther, parseEther } from "viem";
-import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
-import deployedContracts from "~~/generated/deployedContracts";
+import { useAccount, useChainId } from "wagmi";
 import {
+  counterAddress,
+  poolModifyPositionTestAddress,
   useErc20Allowance,
   useErc20Approve,
-  useErc20Read,
   usePoolModifyPositionTestModifyPosition,
-} from "~~/generated/generatedTypes";
+} from "~~/generated/generated";
+import { TOKEN_ADDRESSES } from "~~/utils/config";
 import { MAX_UINT } from "~~/utils/constants";
 import { notification } from "~~/utils/scaffold-eth";
 
-function TokenDropdown({ label, tooltipText, value, options, onChange }) {
-  return (
-    <div className="flex flex-col justify-end">
-      <label className="label text-left flex justify-between">
-        <span className="label-text">{label}</span>
-        <Tooltip content={tooltipText}>
-          <QuestionMarkCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </Tooltip>
-      </label>
-      <Select
-        onChange={onChange}
-        placeholder="
-      Select a token"
-        variant="flat"
-      >
-        {options.map((option, index) => (
-          <SelectItem key={index} value={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </Select>
-    </div>
-  );
-}
-
-function NumericInput({ type, placeholder, tooltipText, value, onChange }) {
-  return (
-    <div className="flex flex-col justify-end">
-      <label className="label text-left  flex justify-between">
-        <span className="label-text">{placeholder}</span>
-        <Tooltip content={tooltipText}>
-          <QuestionMarkCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </Tooltip>
-      </label>
-      {/* <Tooltip /> */}
-      <input
-        type={type}
-        className="input input-bordered w-full"
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
-      {/* <small className="text-gray-600">More info about {placeholder}.</small> */}
-    </div>
-  );
-}
-
 function LiquidityComponent() {
-  // TODO: remove all the hardcoded addresses
-  const tokenOptions = [
-    { value: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3", label: "Token0" },
-    { value: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4", label: "Token1" },
-  ];
+  const chainId = useChainId();
+  const { address: walletAddress } = useAccount();
 
   // Token & Wallet Configuration
-  const token0Addr = tokenOptions[0].value;
-  const token1Addr = tokenOptions[1].value;
-  const walletAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-  const lpRouterAddress = deployedContracts[31337][0].contracts.PoolModifyPositionTest.address;
-
-  // Fetch Token Names
-  const getToken0Name = useErc20Read({ address: token0Addr, functionName: "name" });
-  const getToken1Name = useErc20Read({ address: token1Addr, functionName: "name" });
-
-  // State Variables
-  const [token0, setToken0] = useState(0);
-  const [token1, setToken1] = useState(1);
+  // TODO: allow users to select tokens?
+  const token0Addr = TOKEN_ADDRESSES[0][chainId as keyof (typeof TOKEN_ADDRESSES)[0]];
+  const token1Addr = TOKEN_ADDRESSES[1][chainId as keyof (typeof TOKEN_ADDRESSES)[1]];
+  const lpRouterAddress = poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress];
 
   // State Variables
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState(deployedContracts[31337][0].contracts.Counter.address);
+  const [hookAddress, setHookAddress] = useState<`0x${string}`>(counterAddress[chainId as keyof typeof counterAddress]);
 
   const [tickLower, setTickLower] = useState(-(tickSpacing * 10n));
   const [tickUpper, setTickUpper] = useState(tickSpacing * 10n);
@@ -93,12 +36,12 @@ function LiquidityComponent() {
 
   const { data: token0Allowance, refetch: refetchT0Allowance } = useErc20Allowance({
     address: token0Addr,
-    args: [walletAddress, lpRouterAddress],
+    args: [walletAddress ?? "0x0", lpRouterAddress],
   });
 
   const { data: token1Allowance, refetch: refetchT1Allowance } = useErc20Allowance({
     address: token1Addr,
-    args: [walletAddress, lpRouterAddress],
+    args: [walletAddress ?? "0x0", lpRouterAddress],
   });
 
   const { writeAsync: writeToken0Approve, error: errorToken0Approve } = useErc20Approve({
@@ -112,7 +55,6 @@ function LiquidityComponent() {
   });
 
   const { writeAsync: writeModifyPosition, error: errorModifyPosition } = usePoolModifyPositionTestModifyPosition({
-    address: lpRouterAddress,
     args: [
       {
         currency0: token0Addr,
@@ -175,7 +117,14 @@ function LiquidityComponent() {
     <div className="card shadow-2xl p-6 bg-white rounded-xl border-2 border-pink-400 min-w-[34rem] max-w-xl transition-shadow hover:shadow-none">
       <h2 className="text-2xl font-bold mb-2">Provision Liquidity</h2>
       <p className="text-gray-600 mb-6">Fill out the details below to provision liquidity to a pool. .</p>
-      {PoolKeyId(swapFee, setSwapFee, tickSpacing, setTickSpacing, hookAddress, setHookAddress)}
+      <PoolKeyId
+        swapFee={swapFee}
+        setSwapFee={setSwapFee}
+        tickSpacing={tickSpacing}
+        setTickSpacing={setTickSpacing}
+        hookAddress={hookAddress}
+        setHookAddress={setHookAddress}
+      />
 
       <div className="grid grid-cols-2 gap-2">
         <NumericInput
@@ -208,7 +157,7 @@ function LiquidityComponent() {
         placeholder="Hook Data"
         tooltipText="Data to pass to the hook."
         value={hookData}
-        onChange={e => setHookData(e.target.value)}
+        onChange={e => setHookData(e.target.value as `0x${string}`)}
       />
 
       <div className="grid w-full  grid-cols-2  gap-4">
@@ -237,44 +186,6 @@ function LiquidityComponent() {
         Provision
       </button>
     </div>
-  );
-}
-export function PoolKeyId(
-  swapFee: bigint,
-  setSwapFee: React.Dispatch<React.SetStateAction<bigint>>,
-  tickSpacing: bigint,
-  setTickSpacing: React.Dispatch<React.SetStateAction<bigint>>,
-  hookAddress: any,
-  setHookAddress: React.Dispatch<any>,
-) {
-  return (
-    <Accordion variant="bordered">
-      <AccordionItem key="1" aria-label="PoolKey Identifier" title="PoolKey Identifier">
-        <NumericInput
-          type="number"
-          placeholder="Swap Fee"
-          tooltipText="Transaction fee for swapping tokens."
-          value={swapFee.toString()}
-          onChange={e => setSwapFee(BigInt(e.target.value))}
-        />
-
-        <NumericInput
-          type="number"
-          placeholder="Tick Spacing"
-          tooltipText="The minimum price movement between ticks."
-          value={tickSpacing.toString()}
-          onChange={e => setTickSpacing(BigInt(e.target.value))}
-        />
-
-        <NumericInput
-          type="text"
-          placeholder="Hook Address"
-          tooltipText="Smart contract address for custom logic."
-          value={hookAddress}
-          onChange={e => setHookAddress(e.target.value)}
-        />
-      </AccordionItem>
-    </Accordion>
   );
 }
 

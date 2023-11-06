@@ -1,31 +1,34 @@
 import React, { useState } from "react";
-import { TokenDropdown } from "./InitializeComponent";
-import { PoolKeyId } from "./LiquidityComponent";
+import { PoolKeyId } from "../base/pool-key";
+import { TokenDropdown } from "../base/token-dropdown";
 import { Tab, Tabs } from "@nextui-org/react";
 import { parseEther } from "viem";
-import { useAccount } from "wagmi";
-import deployedContracts from "~~/generated/deployedContracts";
-import { useErc20Allowance, useErc20Approve, usePoolSwapTestSwap } from "~~/generated/generatedTypes";
-import { MAX_SQRT_PRICE_LIMIT, MAX_UINT, MIN_SQRT_PRICE_LIMIT } from "~~/utils/constants";
+import { useAccount, useChainId, useToken } from "wagmi";
+import {
+  counterAddress,
+  poolSwapTestAddress,
+  useErc20Allowance,
+  useErc20Approve,
+  usePoolSwapTestSwap,
+} from "~~/generated/generated";
+import { TOKEN_ADDRESSES } from "~~/utils/config";
+import { BLANK_TOKEN, MAX_SQRT_PRICE_LIMIT, MAX_UINT, MIN_SQRT_PRICE_LIMIT } from "~~/utils/constants";
 
 function SwapComponent({ poolKey }: { poolKey: any }) {
   const { address } = useAccount();
+  const chainId = useChainId();
 
-  // TODO: remove all the hardcoded addresses
-  const tokenOptions = [
-    { value: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3", label: "Token0" },
-    { value: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4", label: "Token1" },
-  ];
+  const tokens = TOKEN_ADDRESSES.map(address => useToken({ address: address[chainId as keyof typeof address] }));
 
-  const swapRouterAddress = deployedContracts[31337][0].contracts.PoolSwapTest.address;
+  const swapRouterAddress = poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress];
 
-  const [fromCurrency, setFromCurrency] = useState("");
-  const [toCurrency, setToCurrency] = useState("");
+  const [fromCurrency, setFromCurrency] = useState(BLANK_TOKEN.address);
+  const [toCurrency, setToCurrency] = useState(BLANK_TOKEN.address);
   const [fromAmount, setFromAmount] = useState("");
 
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState(deployedContracts[31337][0].contracts.Counter.address);
+  const [hookAddress, setHookAddress] = useState<`0x${string}`>(counterAddress[chainId as keyof typeof counterAddress]);
 
   const fromTokenAllowance = useErc20Allowance({
     address: fromCurrency,
@@ -38,19 +41,19 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
   });
 
   const swap = usePoolSwapTestSwap({
-    address: swapRouterAddress,
     args: [
       {
-        currency0: tokenOptions[0].value,
-        currency1: tokenOptions[1].value,
+        currency0: fromCurrency.toLowerCase() < toCurrency.toLowerCase() ? fromCurrency : toCurrency,
+        currency1: fromCurrency.toLowerCase() < toCurrency.toLowerCase() ? toCurrency : fromCurrency,
         fee: Number(swapFee),
         tickSpacing: Number(tickSpacing),
         hooks: hookAddress,
       },
       {
-        zeroForOne: fromCurrency === tokenOptions[0].value,
+        zeroForOne: fromCurrency.toLowerCase() < toCurrency.toLowerCase(),
         amountSpecified: parseEther(fromAmount), // TODO: assumes tokens are always 18 decimals
-        sqrtPriceLimitX96: fromCurrency === tokenOptions[0].value ? MIN_SQRT_PRICE_LIMIT : MAX_SQRT_PRICE_LIMIT, // unlimited impact
+        sqrtPriceLimitX96:
+          fromCurrency.toLowerCase() < toCurrency.toLowerCase() ? MIN_SQRT_PRICE_LIMIT : MAX_SQRT_PRICE_LIMIT, // unlimited impact
       },
       {
         withdrawTokens: true,
@@ -61,7 +64,6 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
   });
 
   const handleSwap = () => {
-    console.log(fromCurrency);
     swap.writeAsync().then(() => {
       console.log("Swap successful");
     });
@@ -76,24 +78,29 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
           <Tab key="liquidity" title="Liquidity" />
         </Tabs>
 
-        {PoolKeyId(swapFee, setSwapFee, tickSpacing, setTickSpacing, hookAddress, setHookAddress)}
+        <PoolKeyId
+          swapFee={swapFee}
+          setSwapFee={setSwapFee}
+          tickSpacing={tickSpacing}
+          setTickSpacing={setTickSpacing}
+          hookAddress={hookAddress}
+          setHookAddress={setHookAddress}
+        />
 
         <div className="grid grid-cols-2 gap-4">
           <TokenDropdown
             label="From"
             tooltipText={"The token you are sending"}
-            value={"TODO: UNUSED"}
-            options={tokenOptions}
+            options={tokens.map(token => token.data ?? BLANK_TOKEN)}
             onChange={e => {
-              setFromCurrency(tokenOptions[e.target.value as number].value);
+              setFromCurrency(e.target.value);
               fromTokenAllowance.refetch();
             }}
           />
           <TokenDropdown
             label="To"
             tooltipText="The token you are receiving"
-            value={tokenOptions[1].value}
-            options={tokenOptions}
+            options={tokens.map(token => token.data ?? BLANK_TOKEN)}
             onChange={e => setToCurrency(e.target.value)}
           />
           <div className="flex flex-col justify-end">
@@ -112,7 +119,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
             className="btn btn-primary w-full hover:bg-indigo-600 hover:shadow-lg active:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all mt-4"
             onClick={() => tokenApprove.writeAsync().then(() => fromTokenAllowance.refetch())}
           >
-            Approve {fromCurrency === tokenOptions[0].value ? tokenOptions[0].label : tokenOptions[1].label}
+            Approve {tokens.find(token => token.data?.address === fromCurrency)?.data?.symbol}
           </button>
         )}
 
