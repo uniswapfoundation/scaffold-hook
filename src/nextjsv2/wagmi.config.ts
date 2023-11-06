@@ -22,7 +22,7 @@ export default defineConfig({
   ],
   plugins: [
     foundry({
-      project: "../../contracts",
+      project: "../../", // path to the project root, directory holding foundry.toml
       deployments: {
         Counter: {
           31337: "0x3c3514a364278C43AC2Da7db1e44b4cc702CeFD7",
