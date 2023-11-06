@@ -3,30 +3,33 @@ import { EventsEmitted } from "./ContractEvents";
 import { ContractReadMethods } from "./ContractReadMethods";
 import { ContractVariables } from "./ContractVariables";
 import { ContractWriteMethods } from "./ContractWriteMethods";
-import { usePublicClient } from "wagmi";
+import { Abi } from "viem";
+import { useChainId, usePublicClient } from "wagmi";
 import { Spinner } from "~~/components/assets/Spinner";
 import { Address, Balance } from "~~/components/scaffold-eth";
-import { useDeployedContractInfo, useEventWatch, useNetworkColor } from "~~/hooks/scaffold-eth";
-import { getTargetNetwork, notification } from "~~/utils/scaffold-eth";
-import { ContractName } from "~~/utils/scaffold-eth/contract";
+import { useNetworkColor } from "~~/hooks/scaffold-eth";
+import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 type ContractUIProps = {
-  contractName: ContractName;
+  address: { [key: number]: string };
+  abi: Abi;
+  contractName: string;
   className?: string;
 };
 
 /**
  * UI component to interface with deployed contracts.
  **/
-export const ContractUI = ({ contractName, className = "" }: ContractUIProps) => {
+export const ContractUI = ({ address, abi, contractName, className = "" }: ContractUIProps) => {
+  const chainId = useChainId();
   const [refreshDisplayVariables, triggerRefreshDisplayVariables] = useReducer(value => !value, false);
   const configuredNetwork = getTargetNetwork();
   const publicClient = usePublicClient();
   const latestBlock = publicClient.getBlockNumber();
 
   const [eventLogs, setEventLogs] = useState<any[]>([]);
-  // console.log("eventslogs for contract", contractName, eventLogs);
-  const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo(contractName);
+  const deployedContractData = { address: address[chainId as keyof typeof address], abi: abi };
+  const [loading, setLoading] = useState(true);
 
   const networkColor = useNetworkColor();
 
@@ -42,10 +45,9 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
         fromBlock: lastblock - 100n,
         toBlock: lastblock,
       });
-      console.log("events found", events, deployedContractData.address, contractName);
       setEventLogs(events);
     };
-    fetchEvents();
+    fetchEvents().then(() => setLoading(false));
   }, [deployedContractData]);
 
   // useEventWatch({
@@ -60,7 +62,7 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
   //   chainId: configuredNetwork.id,
   // });
 
-  if (deployedContractLoading) {
+  if (loading) {
     return (
       <div className="mt-14">
         <Spinner width="50px" height="50px" />
