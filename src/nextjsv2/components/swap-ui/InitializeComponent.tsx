@@ -32,9 +32,6 @@ function InitializeComponent() {
   const [tickSpacing, setTickSpacing] = useState(60n);
   const [hookAddress, setHookAddress] = useState<string>(counterAddress[chainId as keyof typeof counterAddress]);
 
-  console.log(chainId, counterAddress[chainId as keyof typeof counterAddress], counterAddress);
-  console.log(tokens);
-
   const {
     writeAsync: write,
     isLoading: isLoadingInitialize,
