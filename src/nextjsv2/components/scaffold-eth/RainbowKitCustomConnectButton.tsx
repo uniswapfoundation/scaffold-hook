@@ -53,11 +53,13 @@ export const RainbowKitCustomConnectButton = () => {
           address: TOKEN_ADDRESSES[1][chain?.id as keyof (typeof TOKEN_ADDRESSES)[1]],
         });
 
-        const { data: balanceToken0 } = useErc20BalanceOf({
+        const { data: balanceToken0, refetch: refetchToken0Balance } = useErc20BalanceOf({
+          address: TOKEN_ADDRESSES[0][chain?.id as keyof (typeof TOKEN_ADDRESSES)[0]],
           args: [address],
           watch: true,
         });
-        const { data: balanceToken1 } = useErc20BalanceOf({
+        const { data: balanceToken1, refetch: refetchToken1Balance } = useErc20BalanceOf({
+          address: TOKEN_ADDRESSES[1][chain?.id as keyof (typeof TOKEN_ADDRESSES)[1]],
           args: [address],
           watch: true,
         });
@@ -65,6 +67,8 @@ export const RainbowKitCustomConnectButton = () => {
         useEffect(() => {
           if (account) {
             setAddress(account.address);
+            refetchToken0Balance();
+            refetchToken1Balance();
           }
         }, [account]);
         return (
