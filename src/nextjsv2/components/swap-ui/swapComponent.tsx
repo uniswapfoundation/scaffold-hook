@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PoolKeyId } from "../base/pool-key";
 import { TokenDropdown } from "../base/token-dropdown";
 import { Tab, Tabs } from "@nextui-org/react";
@@ -69,6 +69,10 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
     });
     // TODO: better notification for success
   };
+
+  useEffect(() => {
+    setHookAddress(counterAddress[chainId as keyof typeof counterAddress]);
+  }, [chainId]);
 
   return (
     <div className="card shadow-2xl p-6 bg-white rounded-xl border-2 border-pink-400 min-w-[34rem] max-w-xl transition-shadow hover:shadow-none">

@@ -9,7 +9,7 @@ export default defineConfig({
       abi: erc20ABI,
       address: {
         31337: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
-        80001: "0xcBd1c83AbfE43E3b4Ad0f790e67e369d8F2faDE7",
+        80001: "0xeb4708989b42f0cd327A6Bd8f76a931429137fd7",
       },
       name: "Token0",
     },
@@ -17,7 +17,7 @@ export default defineConfig({
       abi: erc20ABI,
       address: {
         31337: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
-        80001: "0xD2Be0CD181FFd73E3925E71f8C8d5AD9E695A29e",
+        80001: "0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49",
       },
       name: "Token1",
     },
@@ -36,6 +36,7 @@ export default defineConfig({
         },
         PoolSwapTest: {
           31337: "0xaf7ccf0ff7ef054a1db43330f5431958ab4a9441",
+          80001: "0x24C731645ee1e35C3219153d370EBd79784D1E91",
         },
         PoolModifyPositionTest: {
           31337: "0x3079c0319f8734239eb06765666468f7b76eb505",
