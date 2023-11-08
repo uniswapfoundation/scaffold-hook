@@ -1,62 +1,114 @@
-This is a [Next.js](https://nextjs.org) + [Foundry](https://book.getfoundry.sh/) + [wagmi](https://wagmi.sh) project bootstrapped with [`create-wagmi`](https://github.com/wagmi-dev/wagmi/tree/main/packages/create-wagmi)
+# scaffold-hook
 
-# Setup
+_Develop and test Uniswap v4 Hooks with minimal interfaces for the swap lifecycle (pool creation, liquidity provision, and swapping)_
+
+> _inspired by [scaffold-eth](https://github.com/scaffold-eth/scaffold-eth-2)_
+
+## Features
+
+✅ Template hook with deployment commands
+
+✅ Configured local network with v4 contracts pre-deployed
+
+✅ Testnet and devnet support
+
+✅ User interfaces for: pool creation, liquidity creation, and swapping
+
+✅ Foundry
+
+---
+
+## Setup
+
+_requires [foundry](https://book.getfoundry.sh/getting-started/installation) & [node 18+](https://nodejs.org/en/download)_
+
+Install Dependencies
 
 ```bash
 forge install
-
-cp .env.sample .env
+npm install
 ```
 
-# Generating ABIs & React Hooks
+Define environment variables
 
-This project comes with `@wagmi/cli` built-in, which means you can generate wagmi-compatible (type safe) ABIs & React Hooks straight from the command line.
-
-To generate ABIs & Hooks, follow the steps below.
-
-## Install Foundry
-
-First, you will need to install [Foundry](https://book.getfoundry.sh/getting-started/installation) in order to build your smart contracts. This can be done by running the following command:
-
-```
-curl -L https://foundry.paradigm.xyz | bash
-```
-
-## Generate code
-
-To generate ABIs & React Hooks from your Foundry project (in `./contracts`), you can run:
-
-```
-npm run wagmi
-```
-
-This will use the wagmi config (`wagmi.config.ts`) to generate a `src/generated.ts` file which will include your ABIs & Hooks that you can start using in your project.
-
-[Here is an example](./src/components/Counter.tsx) of where Hooks from the generated file is being used.
-
-# Deploying Hooks
-
-## Local (Anvil)
-
-`scaffold-hook` will initiate a local anvil instance with predeployments of V4 PoolManager and periphery routers.
-
-start anvil with
 ```bash
-yarn anvil
+cp .env.example .env
 ```
 
-To deploy your hook to anvil:
+---
+
+## Get Started
+
+1. Start the local network, with v4 contracts predeployed
+
+   ```bash
+   npm run anvil
+   ```
+
+2. Deploy the template hook
+
+   ```
+   npm run deploy:anvil
+   ```
+
+3. Update [wagmi.config.ts](src/nextjsv2/wagmi.config.ts) with the hook address from [run-latest.json](/broadcast/DeployHook.s.sol/31337/run-latest.json)
+
+4. Regenerate react hooks, addresses, and ABIs
+
+   ```bash
+   npm run wagmi
+   ```
+
+5. Start the webapp
+   ```
+   npm run dev
+   ```
+
+## Hook Configuration
+
+If you rename your hook file or contract name -- Update [.env](.env)
+
 ```bash
-yarn deploy:anvil
+# Hook Contract, formatted: <filename.sol>:<contractName>
+HOOK_CONTRACT="Counter.sol:Counter"
 ```
 
-## Install Foundry
+If you updated your hook's interfaces -- Update [.env](.env) and ensure `getHookCalls()` is in agreement
 
-Make sure you have Foundry installed & set up.
+```bash
+# in .env
+# Hook Flags
+BEFORE_SWAP=true
+AFTER_SWAP=true
+BEFORE_MODIFY_POSITION=true
+AFTER_MODIFY_POSITION=true
+BEFORE_INITIALIZE=false
+AFTER_INITIALIZE=false
+BEFORE_DONATE=false
+AFTER_DONATE=false
+```
 
-[See the above instructions](#install-foundry).
+```solidity
+// in Hook Contract
+function getHooksCalls() public pure returns (Hooks.Calls memory) {
+    return Hooks.Calls({
+        beforeInitialize: false,
+        afterInitialize: false,
+        beforeModifyPosition: true,
+        afterModifyPosition: true,
+        beforeSwap: true,
+        afterSwap: true,
+        beforeDonate: false,
+        afterDonate: false
+    });
+}
+```
 
-## Set up environment
+## Additional Configuration
+
+TODO: document [config.ts](src/nextjsv2/utils/config.ts)
+
+## (TODO) Set up environment
 
 You will first need to set up your `.env` to tell Forge where to deploy your contract.
 
@@ -65,54 +117,6 @@ Go ahead and open up your `.env` file, and enter the following env vars:
 - `ETHERSCAN_API_KEY`: Your Etherscan API Key.
 - `FORGE_RPC_URL`: The RPC URL of the network to deploy to.
 - `FORGE_PRIVATE_KEY`: The private key of the wallet you want to deploy from.
-
-## Deploy contract
-
-You can now deploy your contract!
-
-```
-npm run deploy
-```
-
-# Developing with Anvil (Mainnet Fork)
-
-Let's combine the above sections and use Anvil alongside our development environment to use our contracts (`./contracts`) against an Ethereum Mainnet fork.
-
-## Install Foundry
-
-Make sure you have Foundry installed & set up.
-
-[See the above instructions](#install-foundry).
-
-## Start dev server
-
-Run the command:
-
-```
-npm run dev:foundry
-```
-
-This will:
-
-- Start a Next.js dev server,
-- Start the `@wagmi/cli` in [**watch mode**](https://wagmi.sh/cli/commands/generate#options) to listen to changes in our contracts, and instantly generate code,
-- Start an Anvil instance (Mainnet Fork) on an RPC URL.
-
-## Deploy our contract to Anvil
-
-Now that we have an Anvil instance up and running, let's deploy our smart contract to the Anvil network:
-
-```
-pnpm run deploy:anvil
-```
-
-## Start developing
-
-Now that your contract has been deployed to Anvil, you can start playing around with your contract straight from the web interface!
-
-Head to [localhost:3000](http://localhost:3000) in your browser, connect your wallet, and try increment the counter on the Foundry chain.
-
-> Tip: If you import an Anvil private key into your browser wallet (MetaMask, Coinbase Wallet, etc) – you will have 10,000 ETH to play with 😎. The private key is found in the terminal under "Private Keys" when you start up an Anvil instance with `npm run dev:foundry`.
 
 # Learn more
 
