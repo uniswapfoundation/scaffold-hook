@@ -31,7 +31,7 @@ function LiquidityComponent() {
 
   const [tickLower, setTickLower] = useState(-(tickSpacing * 10n));
   const [tickUpper, setTickUpper] = useState(tickSpacing * 10n);
-  const [liquidityDelta, setLiquidityDelta] = useState(10000000000000000000n);
+  const [liquidityDelta, setLiquidityDelta] = useState(parseEther("1000"));
   const [hookData, setHookData] = useState<`0x${string}`>("0x");
 
   const { data: token0Allowance, refetch: refetchT0Allowance } = useErc20Allowance({
