@@ -1,5 +1,4 @@
-import { useAccountBalance } from "~~/hooks/scaffold-eth";
-import { getTargetNetwork } from "~~/utils/scaffold-eth";
+import { useBalance } from "wagmi";
 
 type TBalanceProps = {
   address?: string;
@@ -10,8 +9,16 @@ type TBalanceProps = {
  * Display (ETH & USD) balance of an ETH address.
  */
 export const Balance = ({ address, className = "" }: TBalanceProps) => {
-  const configuredNetwork = getTargetNetwork();
-  const { balance, price, isError, isLoading, onToggleBalance, isEthBalance } = useAccountBalance(address);
+  const {
+    data: balance,
+    isError,
+    isLoading,
+  } = useBalance({
+    address,
+  });
+
+  // disable USD conversion for now
+  const isEthBalance = true;
 
   if (!address || isLoading || balance === null) {
     return (
@@ -35,18 +42,18 @@ export const Balance = ({ address, className = "" }: TBalanceProps) => {
   return (
     <button
       className={`btn btn-sm btn-ghost flex flex-col font-normal items-center hover:bg-transparent ${className}`}
-      onClick={onToggleBalance}
+      onClick={() => {}}
     >
       <div className="w-full flex items-center justify-center">
         {isEthBalance ? (
           <>
-            <span>{balance?.toFixed(4)}</span>
-            <span className="text-[0.8em] font-bold ml-1">{configuredNetwork.nativeCurrency.symbol}</span>
+            <span>{Number(balance?.formatted ?? "0").toFixed(4)}</span>
+            <span className="text-[0.8em] font-bold ml-1">{balance?.symbol}</span>
           </>
         ) : (
           <>
             <span className="text-[0.8em] font-bold mr-1">$</span>
-            <span>{(balance * price).toFixed(2)}</span>
+            <span>{Number(balance?.value ?? 0n * 1n).toFixed(2)}</span>
           </>
         )}
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NumericInput } from "../base/numeric-input";
 import { TokenDropdown } from "../base/token-dropdown";
 import { useChainId, useToken } from "wagmi";
@@ -46,7 +46,6 @@ function InitializeComponent() {
       currency0.address.toLowerCase() < currency1.address.toLowerCase() ? currency0.address : currency1.address;
     const c1 =
       currency0.address.toLowerCase() < currency1.address.toLowerCase() ? currency1.address : currency0.address;
-    console.log({ c0, c1 });
     await write({
       args: [
         {
@@ -77,6 +76,10 @@ function InitializeComponent() {
       </div>,
     );
   };
+
+  useEffect(() => {
+    setHookAddress(counterAddress[chainId as keyof typeof counterAddress]);
+  }, [chainId]);
 
   return (
     <div className="card shadow-2xl p-6 bg-white rounded-xl border-2 border-pink-400 min-w-[34rem] max-w-xl transition-shadow hover:shadow-none">

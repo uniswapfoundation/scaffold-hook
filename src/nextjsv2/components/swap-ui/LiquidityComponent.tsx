@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NumericInput } from "../base/numeric-input";
 import { PoolKeyId } from "../base/pool-key";
 import { formatEther, parseEther } from "viem";
@@ -31,7 +31,7 @@ function LiquidityComponent() {
 
   const [tickLower, setTickLower] = useState(-(tickSpacing * 10n));
   const [tickUpper, setTickUpper] = useState(tickSpacing * 10n);
-  const [liquidityDelta, setLiquidityDelta] = useState(10000000000000000000n);
+  const [liquidityDelta, setLiquidityDelta] = useState(parseEther("1000"));
   const [hookData, setHookData] = useState<`0x${string}`>("0x");
 
   const { data: token0Allowance, refetch: refetchT0Allowance } = useErc20Allowance({
@@ -57,8 +57,8 @@ function LiquidityComponent() {
   const { writeAsync: writeModifyPosition, error: errorModifyPosition } = usePoolModifyPositionTestModifyPosition({
     args: [
       {
-        currency0: token0Addr,
-        currency1: token1Addr,
+        currency0: token0Addr < token1Addr ? token0Addr : token1Addr,
+        currency1: token0Addr < token1Addr ? token1Addr : token0Addr,
         fee: Number(swapFee),
         tickSpacing: Number(tickSpacing),
         hooks: hookAddress,
@@ -112,6 +112,10 @@ function LiquidityComponent() {
       );
     }
   };
+
+  useEffect(() => {
+    setHookAddress(counterAddress[chainId as keyof typeof counterAddress]);
+  }, [chainId]);
 
   return (
     <div className="card shadow-2xl p-6 bg-white rounded-xl border-2 border-pink-400 min-w-[34rem] max-w-xl transition-shadow hover:shadow-none">

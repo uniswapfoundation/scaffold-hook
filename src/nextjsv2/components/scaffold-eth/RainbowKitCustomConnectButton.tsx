@@ -3,8 +3,8 @@ import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { QRCodeSVG } from "qrcode.react";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { Abi } from "viem";
-import { erc20ABI, useContractRead, useDisconnect, useSwitchNetwork } from "wagmi";
+import { Abi, formatEther, parseEther } from "viem";
+import { erc20ABI, useContractRead, useDisconnect, useSwitchNetwork, useToken } from "wagmi";
 import {
   ArrowLeftOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
@@ -21,7 +21,9 @@ import {
   TOKEN0_CONTRACT_ADDRESS,
   TOKEN1_CONTRACT_ADDRESS,
 } from "~~/components/scaffold-eth";
+import { useErc20BalanceOf } from "~~/generated/generated";
 import { useAutoConnect, useNetworkColor } from "~~/hooks/scaffold-eth";
+import { TOKEN_ADDRESSES } from "~~/utils/config";
 import { getBlockExplorerAddressLink, getTargetNetwork } from "~~/utils/scaffold-eth";
 
 /**
@@ -34,7 +36,7 @@ export const RainbowKitCustomConnectButton = () => {
   const { disconnect } = useDisconnect();
   const { switchNetwork } = useSwitchNetwork();
   const [addressCopied, setAddressCopied] = useState(false);
-  const [address, setAddress] = useState<string>(undefined);
+  const [address, setAddress] = useState<string>("0x0");
 
   return (
     <ConnectButton.Custom>
@@ -43,25 +45,30 @@ export const RainbowKitCustomConnectButton = () => {
         const blockExplorerAddressLink = account
           ? getBlockExplorerAddressLink(getTargetNetwork(), account.address)
           : undefined;
-        const { data: balanceToken0 } = useContractRead({
-          chainId: getTargetNetwork().id,
-          address: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
-          abi: erc20ABI as Abi,
-          functionName: "balanceOf",
+
+        const token0 = useToken({
+          address: TOKEN_ADDRESSES[0][chain?.id as keyof (typeof TOKEN_ADDRESSES)[0]],
+        });
+        const token1 = useToken({
+          address: TOKEN_ADDRESSES[1][chain?.id as keyof (typeof TOKEN_ADDRESSES)[1]],
+        });
+
+        const { data: balanceToken0, refetch: refetchToken0Balance } = useErc20BalanceOf({
+          address: TOKEN_ADDRESSES[0][chain?.id as keyof (typeof TOKEN_ADDRESSES)[0]],
           args: [address],
           watch: true,
         });
-        const { data: balanceToken1 } = useContractRead({
-          chainId: getTargetNetwork().id,
-          address: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
-          abi: erc20ABI as Abi,
-          functionName: "balanceOf",
+        const { data: balanceToken1, refetch: refetchToken1Balance } = useErc20BalanceOf({
+          address: TOKEN_ADDRESSES[1][chain?.id as keyof (typeof TOKEN_ADDRESSES)[1]],
           args: [address],
+          watch: true,
         });
 
         useEffect(() => {
           if (account) {
             setAddress(account.address);
+            refetchToken0Balance();
+            refetchToken1Balance();
           }
         }, [account]);
         return (
@@ -85,7 +92,7 @@ export const RainbowKitCustomConnectButton = () => {
                 );
               }
 
-              if (chain.unsupported || chain.id !== configuredNetwork.id) {
+              if (chain.unsupported && chain.id !== configuredNetwork.id) {
                 return (
                   // <div className="dropdown dropdown-end">
                   //   <label tabIndex={0} className="btn btn-error btn-sm dropdown-toggle gap-1">
@@ -126,7 +133,7 @@ export const RainbowKitCustomConnectButton = () => {
                           Wrong Network
                         </Button>
                       </DropdownTrigger>
-                      <DropdownMenu varifant="bordered" aria-label="Network Actions">
+                      <DropdownMenu variant="bordered" aria-label="Network Actions">
                         <DropdownItem onClick={() => switchNetwork?.(configuredNetwork.id)}>
                           <span className="flex items-center gap-3">
                             <ArrowsRightLeftIcon className="h-6 w-4" />
@@ -161,16 +168,16 @@ export const RainbowKitCustomConnectButton = () => {
                       <DropdownItem>
                         <CopyToClipboard text={TOKEN0_CONTRACT_ADDRESS || "0"}>
                           <div className="flex flex-col items-center">
-                            <span className="text-xs">Token 0</span>
-                            <span className="text-xs">{(balanceToken0?.toString() / 10 ** 18).toFixed(3)}</span>
+                            <span className="text-xs">{token0.data?.name ?? "Token0"}</span>
+                            <span className="text-xs">{Number(formatEther(balanceToken0 ?? 0n)).toFixed(3)}</span>
                           </div>
                         </CopyToClipboard>
                       </DropdownItem>
                       <DropdownItem>
                         <CopyToClipboard text={TOKEN1_CONTRACT_ADDRESS || "0"}>
                           <div className="flex flex-col items-center">
-                            <span className="text-xs">Token 1</span>
-                            <span className="text-xs">{(balanceToken1?.toString() / 10 ** 18).toFixed(3)}</span>
+                            <span className="text-xs">{token1.data?.name ?? "Token1"}</span>
+                            <span className="text-xs">{Number(formatEther(balanceToken1 ?? 0n)).toFixed(3)}</span>
                           </div>
                         </CopyToClipboard>
                       </DropdownItem>
