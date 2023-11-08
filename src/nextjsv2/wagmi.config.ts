@@ -27,7 +27,7 @@ export default defineConfig({
       project: "../../", // path to the project root, directory holding foundry.toml
       deployments: {
         Counter: {
-          31337: "0x3c3514a364278C43AC2Da7db1e44b4cc702CeFD7",
+          31337: "0x3Ce72a2059524eC26219E6a7f9dBe387370ac1D8",
           80001: "0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8",
         },
         PoolManager: {

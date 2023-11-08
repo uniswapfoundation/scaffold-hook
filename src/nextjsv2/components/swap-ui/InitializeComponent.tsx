@@ -38,45 +38,57 @@ function InitializeComponent() {
     isError: isErrorInitialize,
     error: errorInitialize,
     data: dataInitialize,
-  } = usePoolManagerInitialize();
-
+  } = usePoolManagerInitialize({
+    onerror: (error: { message: any }) => {
+      notification.error(
+        <div className="text-left">
+          Error Initializing Pool
+          <br />
+          {error.message}
+        </div>,
+      );
+    },
+  });
   const handleInitialize = async () => {
     // sort tokens
     const c0 =
       currency0.address.toLowerCase() < currency1.address.toLowerCase() ? currency0.address : currency1.address;
     const c1 =
       currency0.address.toLowerCase() < currency1.address.toLowerCase() ? currency1.address : currency0.address;
-    await write({
-      args: [
-        {
-          currency0: c0,
-          currency1: c1,
-          fee: Number(swapFee),
-          tickSpacing: Number(tickSpacing),
-          hooks: hookAddress,
-        },
-        79228162514264337593543950336n,
-        "0x0",
-      ],
-    });
-    notification.success(
-      <div className="text-left">
-        Initialized Pool
-        <br />
-        Token0: {c0}
-        <br />
-        Token1: {c1}
-        <br />
-        Swap Fee: {swapFee.toString()}
-        <br />
-        Tick Spacing: {tickSpacing.toString()}
-        <br />
-        Hook Address: {hookAddress}
-        <br />
-      </div>,
-    );
+    try {
+      await write({
+        args: [
+          {
+            currency0: c0,
+            currency1: c1,
+            fee: Number(swapFee),
+            tickSpacing: Number(tickSpacing),
+            hooks: hookAddress,
+          },
+          79228162514264337593543950336n,
+          "0x0",
+        ],
+      });
+      notification.success(
+        <div className="text-left">
+          Initialized Pool
+          <br />
+          Token0: {c0}
+          <br />
+          Token1: {c1}
+          <br />
+          Swap Fee: {swapFee.toString()}
+          <br />
+          Tick Spacing: {tickSpacing.toString()}
+          <br />
+          Hook Address: {hookAddress}
+          <br />
+        </div>,
+      );
+    } catch (error) {
+      notification.error(`Error: ${error.message}`);
+    }
   };
-
   useEffect(() => {
     setHookAddress(counterAddress[chainId as keyof typeof counterAddress]);
   }, [chainId]);
