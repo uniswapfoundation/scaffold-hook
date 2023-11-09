@@ -23,8 +23,10 @@ export function TokenDropdown({
       </label>
       <Select onChange={onChange} placeholder="Select a token" variant="flat">
         {options.map(option => (
-          <SelectItem key={option.address} value={option.address}>
-            {option.name}
+          <SelectItem key={option.address} value={option.address} textValue={option.name}>
+            <div>
+              {option.name} ({option.address.slice(0, 6)}...{option.address.slice(-4)})
+            </div>
           </SelectItem>
         ))}
       </Select>

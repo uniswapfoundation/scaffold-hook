@@ -3,7 +3,7 @@ import { NumericInput } from "../base/numeric-input";
 import { PoolKeyId } from "../base/pool-key";
 import { Tab, Tabs } from "@nextui-org/react";
 import { formatEther, keccak256, parseEther } from "viem";
-import { useAccount, useChainId } from "wagmi";
+import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
 import {
   counterAddress,
   poolModifyPositionTestAddress,
@@ -34,7 +34,8 @@ function LiquidityComponent() {
 
   const [tickLower, setTickLower] = useState(-(tickSpacing * 10n));
   const [tickUpper, setTickUpper] = useState(tickSpacing * 10n);
-  const [liquidityDelta, setLiquidityDelta] = useState(parseEther("1000"));
+  const [liquidityDeltaAdd, setLiquidityDeltaAdd] = useState(parseEther("1000"));
+  const [liquidityDeltaRemove, setLiquidityDeltaRemove] = useState(parseEther("-1000"));
   const [hookData, setHookData] = useState<`0x${string}`>("0x");
   // Add loading states for UI feedback
 
@@ -89,30 +90,77 @@ function LiquidityComponent() {
 
   const {
     writeAsync: writeModifyPosition,
+    data: dataModifyPos,
     error: errorModifyPosition,
     isError: isErrorModifyPos,
     isLoading: isLoadingModifyPos,
-  } = usePoolModifyPositionTestModifyPosition({
-    args: [
-      {
-        currency0: token0Addr < token1Addr ? token0Addr : token1Addr,
-        currency1: token0Addr < token1Addr ? token1Addr : token0Addr,
-        fee: Number(swapFee),
-        tickSpacing: Number(tickSpacing),
-        hooks: hookAddress,
-      },
-      {
-        tickLower: Number(tickLower),
-        tickUpper: Number(tickUpper),
-        liquidityDelta: liquidityDelta,
-      },
-      hookData || "0x00",
-    ],
-  });
+  } = usePoolModifyPositionTestModifyPosition();
 
-  const handleInitialize = async () => {
+  const handleInitializeAdd = async () => {
     try {
-      await writeModifyPosition();
+      await writeModifyPosition({
+        args: [
+          {
+            currency0: token0Addr < token1Addr ? token0Addr : token1Addr,
+            currency1: token0Addr < token1Addr ? token1Addr : token0Addr,
+            fee: Number(swapFee),
+            tickSpacing: Number(tickSpacing),
+            hooks: hookAddress,
+          },
+          {
+            tickLower: Number(tickLower),
+            tickUpper: Number(tickUpper),
+            liquidityDelta: liquidityDeltaAdd,
+          },
+          hookData || "0x00",
+        ],
+      });
+      const txHash = dataModifyPos?.hash;
+
+      notification.success(
+        <div className="text-left">
+          Success Provisioning Liquidity <br></br>
+          Tx Hash: {txHash}
+        </div>,
+      );
+    } catch (error) {
+      notification.error(
+        <div className="text-left">
+          Error Provisioning Liquidity
+          {errorModifyPosition?.message}
+          {error?.message}
+        </div>,
+      );
+    }
+  };
+
+  const handleInitializeRemove = async () => {
+    try {
+      await writeModifyPosition({
+        args: [
+          {
+            currency0: token0Addr < token1Addr ? token0Addr : token1Addr,
+            currency1: token0Addr < token1Addr ? token1Addr : token0Addr,
+            fee: Number(swapFee),
+            tickSpacing: Number(tickSpacing),
+            hooks: hookAddress,
+          },
+          {
+            tickLower: Number(tickLower),
+            tickUpper: Number(tickUpper),
+            liquidityDelta: liquidityDeltaRemove,
+          },
+          hookData || "0x00",
+        ],
+      });
+      const txHash = dataModifyPos?.hash;
+
+      notification.success(
+        <div className="text-left">
+          Success Provisioning Liquidity <br></br>
+          Tx Hash: {txHash}
+        </div>,
+      );
     } catch (error) {
       notification.error(
         <div className="text-left">
@@ -185,6 +233,8 @@ function LiquidityComponent() {
           <p className="text-gray-600 mb-6">Fill out the details below to provision liquidity to a pool. .</p>
 
           <PoolKeyId
+            currency0={token0Addr}
+            currency1={token1Addr}
             swapFee={swapFee}
             setSwapFee={setSwapFee}
             tickSpacing={tickSpacing}
@@ -199,8 +249,8 @@ function LiquidityComponent() {
             setTickLower,
             tickUpper,
             setTickUpper,
-            liquidityDelta,
-            setLiquidityDelta,
+            liquidityDeltaAdd,
+            setLiquidityDeltaAdd,
             hookData,
             setHookData,
             token0Allowance,
@@ -212,7 +262,7 @@ function LiquidityComponent() {
             isApprovingToken1,
             handleToken1Approve,
             isErrorModifyPos,
-            handleInitialize,
+            handleInitializeAdd,
             isLoadingModifyPos,
           )}
         </>
@@ -222,6 +272,8 @@ function LiquidityComponent() {
           <p className="text-gray-600 mb-6">Fill out the details below to remove liquidity from a pool.</p>
 
           <PoolKeyId
+            currency0={token0Addr}
+            currency1={token1Addr}
             swapFee={swapFee}
             setSwapFee={setSwapFee}
             tickSpacing={tickSpacing}
@@ -236,14 +288,14 @@ function LiquidityComponent() {
             {/* pool Liquidity */}
             <div className="flex  justify-end">
               <label className="label w-full">
-                <span className="label-text font-mono font-bold">Pool Liquidity</span>
+                <span className="label-text font-mono font-bold">Your Pool Liquidity</span>
               </label>
               <input
                 type="number"
                 color="success"
                 className="input input-bordered w-full font-mono"
                 placeholder="Pool Liquidity"
-                value={Number(formatEther(poolLiquidity))}
+                value={Number(formatEther(poolLiquidity ? poolLiquidity : "0n"))}
                 disabled
               />
             </div>
@@ -253,12 +305,12 @@ function LiquidityComponent() {
               setTickLower,
               tickUpper,
               setTickUpper,
-              liquidityDelta,
-              setLiquidityDelta,
+              liquidityDeltaRemove,
+              setLiquidityDeltaRemove,
               hookData,
               setHookData,
               isErrorModifyPos,
-              handleInitialize,
+              handleInitializeRemove,
               isLoadingModifyPos,
             )}
           </div>
@@ -428,7 +480,7 @@ function RemoveLiquidity(
         type="number"
         placeholder="Liquidity Delta"
         tooltipText="Amount of liquidity to add/remove."
-        value={Number(formatEther(liquidityDelta)) * -1}
+        value={Number(formatEther(liquidityDelta))}
         onChange={e => setLiquidityDelta(parseEther(String(e.target.value)))}
       />
       <NumericInput

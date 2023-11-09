@@ -59,7 +59,7 @@ export const AddressInput = ({ value, name, placeholder, onChange, disabled }: C
       value={value}
       onChange={handleChange}
       disabled={isEnsAddressLoading || isEnsNameLoading || disabled}
-      prefix={
+      suffix={
         ensName && (
           <div className="flex bg-base-300 rounded-l-full items-center">
             {ensAvatar ? (
@@ -74,7 +74,7 @@ export const AddressInput = ({ value, name, placeholder, onChange, disabled }: C
           </div>
         )
       }
-      suffix={
+      prefix={
         // Don't want to use nextJS Image here (and adding remote patterns for the URL)
         // eslint-disable-next-line @next/next/no-img-element
         value && <img alt="" className="!rounded-full" src={blo(value as `0x${string}`)} width="35" height="35" />
