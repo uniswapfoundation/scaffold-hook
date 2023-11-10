@@ -7,7 +7,7 @@ export const MIN_SQRT_PRICE_LIMIT = 4295128739n + 1n;
 export const MAX_SQRT_PRICE_LIMIT = 1461446703485210103287273052203988822378723970342n - 1n;
 
 export const BLANK_TOKEN: FetchTokenResult = {
-  address: "0x1111",
+  address: "0x000000000000000000000000000000000000dEaD",
   symbol: "BLANK",
   name: "BLANK",
   decimals: 18,

@@ -1,6 +1,4 @@
 import { encodeAbiParameters, keccak256 } from "viem"
-import { Contract } from "./scaffold-eth/contract"
-import { Console } from "console"
 
 export function getPoolId({
     currency0,
@@ -9,20 +7,13 @@ export function getPoolId({
     tickSpacing,
     hooks,
 }: {
-    currency0: string | Contract
-    currency1: string | Contract
+    currency0: string
+    currency1: string
     fee: number
     tickSpacing: number
-    hooks: string | Contract
+    hooks: string
 }): string {
-    console.log("getPoolId",
-        [
-            typeof currency0 === 'string' ? currency0 : currency0.address,
-            typeof currency1 === 'string' ? currency1 : currency1.address,
-            fee,
-            tickSpacing,
-            typeof hooks === 'string' ? hooks : hooks.address,
-        ])
+
     return keccak256(
         encodeAbiParameters(
             [
@@ -36,11 +27,11 @@ export function getPoolId({
 
             ],
             [
-                typeof currency0 === 'string' ? currency0 : currency0.address,
-                typeof currency1 === 'string' ? currency1 : currency1.address,
+                currency0,
+                currency1,
                 fee,
                 tickSpacing,
-                typeof hooks === 'string' ? hooks : hooks.address,
+                hooks,
             ],
 
         )

@@ -31,7 +31,7 @@ const SwapUI = () => {
     <>
       <MetaHeader title="Swap UI | Uniswap Project" description="Swap and manage your tokens seamlessly." />
       <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-        <div className="flex items-center w-full max-w-xl px-6 py-4 ">
+        {/* <div className="flex items-center w-full max-w-xl px-6 py-4 ">
           <Select
             label="Select a pool"
             placeholder="Select a pool"
@@ -79,7 +79,7 @@ const SwapUI = () => {
               </Button>
             </div>
           </form>
-        )}
+        )} */}
 
         <SwapComponent poolKey={poolKey} />
       </div>
