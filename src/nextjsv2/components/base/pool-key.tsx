@@ -1,7 +1,11 @@
+import { Address, AddressInput } from "../scaffold-eth";
 import { NumericInput } from "./numeric-input";
 import { Accordion, AccordionItem } from "@nextui-org/react";
+import { getPoolId } from "~~/utils/v4helpers";
 
 export function PoolKeyId({
+  currency0,
+  currency1,
   swapFee,
   setSwapFee,
   tickSpacing,
@@ -9,6 +13,8 @@ export function PoolKeyId({
   hookAddress,
   setHookAddress,
 }: {
+  currency0?: string;
+  currency1?: string;
   swapFee: bigint;
   setSwapFee: React.Dispatch<React.SetStateAction<bigint>>;
   tickSpacing: bigint;
@@ -16,9 +22,39 @@ export function PoolKeyId({
   hookAddress: `0x${string}`;
   setHookAddress: React.Dispatch<`0x${string}`>;
 }) {
+  const poolId = getPoolId({
+    currency0,
+    currency1,
+    fee: Number(swapFee),
+    tickSpacing: Number(tickSpacing),
+    hooks: hookAddress,
+  });
   return (
-    <Accordion variant="bordered">
-      <AccordionItem key="1" aria-label="PoolKey Identifier" title="PoolKey Identifier">
+    <Accordion variant="flat">
+      <AccordionItem
+        key="1"
+        aria-label="PoolKey Identifier"
+        startContent={
+          <div className="flex flex-grow gap-4  items-center justify-between min-w-max ">
+            <span className="text-md font-semibold text-gray-500">PoolKey ID</span>
+            <div className="flex ">
+              <AddressInput value={poolId} onChange={() => null} />
+            </div>
+          </div>
+        }
+      >
+        <div className="flex gap-2 center justify-between w-full mb-3">
+          {/* add currency 0 and currency 1 */}
+          <div className="gap-2 center items-center justify-between w-full">
+            <span className="text-md font-semibold text-gray-500">Currency 0</span>
+            <Address address={currency0} />
+          </div>
+          <div className="gap-2 center items-center justify-between w-full">
+            <span className="text-md font-semibold text-gray-500">Currency 1</span>
+            <Address address={currency1} />
+          </div>
+        </div>
+
         <NumericInput
           type="number"
           placeholder="Swap Fee"
@@ -26,7 +62,6 @@ export function PoolKeyId({
           value={swapFee.toString()}
           onChange={e => setSwapFee(BigInt(e.target.value))}
         />
-
         <NumericInput
           type="number"
           placeholder="Tick Spacing"
@@ -34,7 +69,6 @@ export function PoolKeyId({
           value={tickSpacing.toString()}
           onChange={e => setTickSpacing(BigInt(e.target.value))}
         />
-
         <NumericInput
           type="text"
           placeholder="Hook Address"

@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
-import { Abi, createWalletClient, http, parseEther } from "viem";
-import { erc20ABI, useAccount, useContractWrite, useNetwork, usePrepareContractWrite } from "wagmi";
+import { createWalletClient, http, parseEther } from "viem";
+import { useAccount, useChainId, useToken } from "wagmi";
 import { hardhat } from "wagmi/chains";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
-import { useAccountBalance, useTransactor } from "~~/hooks/scaffold-eth";
-import { getTargetNetwork } from "~~/utils/scaffold-eth/";
+import { useMockErc20Mint } from "~~/generated/generated";
+import { useTransactor } from "~~/hooks/scaffold-eth";
+import { TOKEN_ADDRESSES } from "~~/utils/config";
 
 // Number of ETH faucet sends to an address
 const NUM_OF_ETH = "1";
 const FAUCET_ADDRESS = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-const NUM_OF_DAI = "100";
-export const TOKEN1_CONTRACT_ADDRESS = "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4";
-export const TOKEN0_CONTRACT_ADDRESS = "0x2dafbdf11a8cf84c372539a38d781d8248399ae3";
 
 const localWalletClient = createWalletClient({
   chain: hardhat,
@@ -23,36 +21,26 @@ const localWalletClient = createWalletClient({
  * FaucetButton button which lets you grab eth.
  */
 export const FaucetButton = () => {
+  const chainId = useChainId();
   const { address } = useAccount();
-  const { balance } = useAccountBalance(address);
 
-  const {
-    data: resultT1,
-    isLoading: isLoadingT1,
-    writeAsync: writeAsyncT1,
-  } = useContractWrite({
-    chainId: getTargetNetwork().id,
-    account: FAUCET_ADDRESS.toLowerCase(),
-    address: TOKEN1_CONTRACT_ADDRESS.toLowerCase(),
-    functionName: "transfer",
-    abi: erc20ABI as Abi,
-    args: [address, parseEther(NUM_OF_DAI)],
+  const token0 = useToken({
+    address: TOKEN_ADDRESSES[0][chainId as keyof (typeof TOKEN_ADDRESSES)[0]],
   });
 
-  const {
-    data: resultT0,
-    isLoading: isLoadingT0,
-    writeAsync: writeAsyncT0,
-  } = useContractWrite({
-    chainId: getTargetNetwork().id,
-    account: FAUCET_ADDRESS.toLowerCase(),
-    address: TOKEN0_CONTRACT_ADDRESS.toLowerCase(),
-    functionName: "transfer",
-    abi: erc20ABI as Abi,
-    args: [address, parseEther(NUM_OF_DAI)],
+  const { writeAsync: writeAsyncToken0Mint } = useMockErc20Mint({
+    address: TOKEN_ADDRESSES[0][chainId as keyof (typeof TOKEN_ADDRESSES)[0]],
+    args: [address ?? FAUCET_ADDRESS, parseEther("1000")],
   });
 
-  const { chain: ConnectedChain } = useNetwork();
+  const token1 = useToken({
+    address: TOKEN_ADDRESSES[1][chainId as keyof (typeof TOKEN_ADDRESSES)[1]],
+  });
+
+  const { writeAsync: writeAsyncToken1Mint } = useMockErc20Mint({
+    address: TOKEN_ADDRESSES[1][chainId as keyof (typeof TOKEN_ADDRESSES)[1]],
+    args: [address ?? FAUCET_ADDRESS, parseEther("1000")],
+  });
 
   const [loading, setLoading] = useState(false);
 
@@ -63,7 +51,7 @@ export const FaucetButton = () => {
       setLoading(true);
       await faucetTxn({
         chain: hardhat,
-        account: FAUCET_ADDRESS,
+        account: address ?? FAUCET_ADDRESS,
         to: address,
         value: parseEther(NUM_OF_ETH),
       });
@@ -78,8 +66,9 @@ export const FaucetButton = () => {
     try {
       setLoading(true);
 
-      await faucetTxn(writeAsyncT0);
-      setLoading(false);
+      writeAsyncToken0Mint().then(() => {
+        setLoading(false);
+      });
     } catch (error) {
       console.error("⚡️ ~ file: FaucetButton.tsx:send Token0 ~ error", error);
       setLoading(false);
@@ -89,18 +78,14 @@ export const FaucetButton = () => {
     try {
       setLoading(true);
 
-      await faucetTxn(writeAsyncT1);
-      setLoading(false);
+      writeAsyncToken1Mint().then(() => {
+        setLoading(false);
+      });
     } catch (error) {
       console.error("⚡️ ~ file: FaucetButton.tsx:send Token1 ~ error", error);
       setLoading(false);
     }
   };
-
-  // Render only on local chain
-  if (ConnectedChain?.id !== hardhat.id) {
-    return null;
-  }
 
   return (
     <Dropdown>
@@ -125,45 +110,27 @@ export const FaucetButton = () => {
             </svg>
           }
           // spinnerPlacement="start"
-          isLoading={isLoadingT0 || isLoadingT1 || loading}
+          isLoading={token0.isLoading || token1.isLoading || loading}
           disabled={loading}
         >
           <BanknotesIcon className="h-4 w-4" />
           <span className="ml-2">Faucet</span>
         </Button>
       </DropdownTrigger>
-      <DropdownMenu variant="faded" color="warning">
-        <DropdownItem onClick={sendETH}>ETH</DropdownItem>
-        <DropdownItem onClick={sendToken0}>Token0</DropdownItem>
-        <DropdownItem onClick={sendToken1}>Token1</DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
-    // <div
-    //   className={
-    //     balance
-    //       ? ""
-    //       : "tooltip tooltip-bottom tooltip-secondary tooltip-open font-bold before:left-auto before:transform-none before:content-[attr(data-tip)] before:right-0"
-    //   }
-    //   data-tip="Grab funds from faucet"
-    // >
-    //   <button className="btn btn-secondary btn-sm px-2 rounded-full" onClick={sendETH} disabled={loading}>
-    //     {!loading ? (
-    //       <BanknotesIcon className="h-4 w-4" />
-    //     ) : (
-    //       <span className="loading loading-spinner loading-xs"></span>
-    //     )}
-    //   </button>
 
-    //   <div /*...similar code for tooltip etc. */>
-    //     <button className="btn btn-secondary btn-sm px-2 rounded-full" onClick={sendToken0} disabled={loading}>
-    //       {!loading ? "Token0" : <span className="loading loading-spinner loading-xs"></span>}
-    //     </button>
-    //   </div>
-    //   <div /*...similar code for tooltip etc. */>
-    //     <button className="btn btn-secondary btn-sm px-2 rounded-full" onClick={sendToken1} disabled={loading}>
-    //       {!loading ? "Token1" : <span className="loading loading-spinner loading-xs"></span>}
-    //     </button>
-    //   </div>
-    // </div>
+      {/* really ugly, but you cant conditionally render dropdown items */}
+      {chainId === hardhat.id ? (
+        <DropdownMenu variant="faded" color="warning">
+          <DropdownItem onClick={sendETH}>ETH</DropdownItem>
+          <DropdownItem onClick={sendToken0}>{token0.data?.name ?? "Token0"}</DropdownItem>
+          <DropdownItem onClick={sendToken1}>{token1.data?.name ?? "Token1"}</DropdownItem>
+        </DropdownMenu>
+      ) : (
+        <DropdownMenu variant="faded" color="warning">
+          <DropdownItem onClick={sendToken0}>{token0.data?.name ?? "Token0"}</DropdownItem>
+          <DropdownItem onClick={sendToken1}>{token1.data?.name ?? "Token1"}</DropdownItem>
+        </DropdownMenu>
+      )}
+    </Dropdown>
   );
 };
