@@ -100,7 +100,7 @@ const Home: NextPage = () => {
                 variants={variants}
                 transition={{ delay: 0.2 }}
               >
-                <div className="flex gap-4">
+                <div className=" w-full gap-4">
                   {/* 
         Step 1: Editing the Deployment Script
         Provides instructions for users to edit the deploy script to suit their requirements before deployment.
@@ -109,7 +109,7 @@ const Home: NextPage = () => {
                     symbol=""
                     hideCopyButton
                     variant="bordered"
-                    className="mb-4 break-all"
+                    className="mb-4 break-all  whitespace-pre flex-wrap whitespace-normal whitespace-break-spaces"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
                     <span>Edit the deploy script as needed:</span>

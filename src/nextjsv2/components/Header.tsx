@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { Icons as icons } from "./assets/Icons";
+import { NetworkSwitcher } from "./scaffold-eth/NetworkSwitcher";
 import {
   Button,
   Dropdown,
@@ -143,6 +144,9 @@ export const Header = () => {
       <NavbarContent justify="end">
         <NavbarItem>
           <RainbowKitCustomConnectButton />
+        </NavbarItem>
+        <NavbarItem>
+          <NetworkSwitcher />
         </NavbarItem>
         <NavbarItem>
           <FaucetButton />
