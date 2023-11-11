@@ -31,6 +31,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
   const [hookAddress, setHookAddress] = useState<`0x${string}`>(counterAddress[chainId as keyof typeof counterAddress]);
+  const [hookData, setHookData] = useState<string>(""); // New state for custom hook data
 
   //swap status
   const [isSwapping, setIsSwapping] = useState(false);
@@ -83,7 +84,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
             withdrawTokens: true,
             settleUsingTransfer: true,
           },
-          "0x0", // TODO: support hookData
+          hookData, // Use the user-provided hookData here
         ],
       });
 
@@ -153,6 +154,14 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
           tooltipText="Transaction amount for swapping tokens."
           value={fromAmount}
           onChange={e => setFromAmount(e.target.value)}
+        />
+
+        <NumericInput
+          type="string"
+          placeholder="Hook Data"
+          tooltipText="Optional custom hook data in hexadecimal format."
+          value={hookData}
+          onChange={e => setHookData(e.target.value)}
         />
 
         {fromCurrency !== BLANK_TOKEN.address && fromTokenAllowance.data === 0n && (

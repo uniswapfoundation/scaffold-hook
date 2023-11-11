@@ -13,27 +13,27 @@ export function getPoolId({
     tickSpacing: number
     hooks: string
 }): string {
-
-    return keccak256(
-        encodeAbiParameters(
-            [
-
-                { name: 'token0', type: 'address' },
-                { name: 'token1', type: 'address' },
-                { name: 'fee', type: 'uint24' },
-                { name: 'tickSpacing', type: 'int24' },
-                { name: 'hookAddr', type: 'address' },
-
-
-            ],
-            [
-                currency0,
-                currency1,
-                fee,
-                tickSpacing,
-                hooks,
-            ],
-
+    try {
+        return keccak256(
+            encodeAbiParameters(
+                [
+                    { name: 'token0', type: 'address' },
+                    { name: 'token1', type: 'address' },
+                    { name: 'fee', type: 'uint24' },
+                    { name: 'tickSpacing', type: 'int24' },
+                    { name: 'hookAddr', type: 'address' },
+                ],
+                [
+                    currency0,
+                    currency1,
+                    fee,
+                    tickSpacing,
+                    hooks,
+                ],
+            )
         )
-    )
+    } catch (error) {
+        console.error(error)
+        return "0x"
+    }
 }
