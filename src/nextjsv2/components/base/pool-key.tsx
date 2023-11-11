@@ -13,8 +13,8 @@ export function PoolKeyId({
   hookAddress,
   setHookAddress,
 }: {
-  currency0?: string;
-  currency1?: string;
+  currency0: string;
+  currency1: string;
   swapFee: bigint;
   setSwapFee: React.Dispatch<React.SetStateAction<bigint>>;
   tickSpacing: bigint;

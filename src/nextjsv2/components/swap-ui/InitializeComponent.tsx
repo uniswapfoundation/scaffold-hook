@@ -22,6 +22,10 @@ function InitializePoolButton({ isLoading, onClick }) {
   );
 }
 
+const calculateSqrtPriceX96 = (price: number) => {
+  return Math.floor(Math.sqrt(price) * 2 ** 96);
+};
+
 function InitializeComponent() {
   const chainId = useChainId();
 
@@ -35,12 +39,8 @@ function InitializeComponent() {
   const [hookAddress, setHookAddress] = useState<string>(counterAddress[chainId as keyof typeof counterAddress]);
 
   const [hookData, setHookData] = useState<string>("0x"); // State for custom hook data
-  const [price, setPrice] = useState<number>(0); // State for normal price
-  const [sqrtPriceX96, setSqrtPriceX96] = useState<string>(""); // State for square root price
-
-  const calculateSqrtPriceX96 = (price: number) => {
-    return Math.sqrt(price) * 2 ** 96;
-  };
+  const [price, setPrice] = useState<number>(1); // State for normal price
+  const [sqrtPriceX96, setSqrtPriceX96] = useState<string>(calculateSqrtPriceX96(1).toString()); // State for square root price
 
   // Update sqrtPriceX96 whenever price changes
   useEffect(() => {
@@ -54,7 +54,7 @@ function InitializeComponent() {
     error: errorInitialize,
     data: dataInitialize,
   } = usePoolManagerInitialize({
-    onerror: (error: { message: any }) => {
+    onError: (error: { message: any }) => {
       notification.error(
         <div className="text-left">
           Error Initializing Pool

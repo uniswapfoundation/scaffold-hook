@@ -2,8 +2,8 @@ import React, { Key, useEffect, useState } from "react";
 import { NumericInput } from "../base/numeric-input";
 import { PoolKeyId } from "../base/pool-key";
 import { Tab, Tabs } from "@nextui-org/react";
-import { formatEther, keccak256, parseEther } from "viem";
-import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
+import { formatEther, parseEther } from "viem";
+import { useAccount, useChainId } from "wagmi";
 import {
   counterAddress,
   poolModifyPositionTestAddress,
@@ -13,7 +13,7 @@ import {
   usePoolModifyPositionTestModifyPosition,
 } from "~~/generated/generated";
 import { TOKEN_ADDRESSES } from "~~/utils/config";
-import { MAX_UINT } from "~~/utils/constants";
+import { MAX_UINT, ZERO_ADDR } from "~~/utils/constants";
 import { notification } from "~~/utils/scaffold-eth";
 import { getPoolId } from "~~/utils/v4helpers";
 
@@ -30,7 +30,9 @@ function LiquidityComponent() {
   // State Variables
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState<`0x${string}`>(counterAddress[chainId as keyof typeof counterAddress]);
+  const [hookAddress, setHookAddress] = useState<`0x${string}`>(
+    (counterAddress[chainId as keyof typeof counterAddress] ?? ZERO_ADDR) as `0x${string}`,
+  );
 
   const [tickLower, setTickLower] = useState(-(tickSpacing * 10n));
   const [tickUpper, setTickUpper] = useState(tickSpacing * 10n);
@@ -85,7 +87,12 @@ function LiquidityComponent() {
     isError: isErrorPoolLiquidity,
     isSuccess: isSuccessPoolLiquidity,
   } = usePoolManagerGetLiquidity({
-    args: [poolId, poolModifyPositionTestAddress[chainId] ?? "0x0", Number(tickLower), Number(tickUpper)],
+    args: [
+      poolId,
+      poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+      Number(tickLower),
+      Number(tickUpper),
+    ],
   });
 
   const {
@@ -209,7 +216,7 @@ function LiquidityComponent() {
   };
 
   useEffect(() => {
-    setHookAddress(counterAddress[chainId as keyof typeof counterAddress]);
+    setHookAddress(counterAddress[chainId as keyof typeof counterAddress] ?? ZERO_ADDR);
   }, [chainId]);
 
   return (
