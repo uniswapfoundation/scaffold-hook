@@ -80,7 +80,7 @@ function InitializeComponent() {
             tickSpacing: Number(tickSpacing),
             hooks: hookAddress,
           },
-          BigInt(sqrtPriceX96),
+          sqrtPriceX96,
           hookData as `0x${string}`,
         ],
       });

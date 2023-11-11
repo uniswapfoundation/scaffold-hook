@@ -86,7 +86,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
             withdrawTokens: true,
             settleUsingTransfer: true,
           },
-          hookData, // Use the user-provided hookData here
+          hookData as `0x${string}`,
         ],
       });
 
