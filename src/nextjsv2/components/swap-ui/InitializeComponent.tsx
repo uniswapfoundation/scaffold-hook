@@ -22,8 +22,8 @@ function InitializePoolButton({ isLoading, onClick }) {
   );
 }
 
-const calculateSqrtPriceX96 = (price: number) => {
-  return Math.floor(Math.sqrt(price) * 2 ** 96);
+const calculateSqrtPriceX96 = (price: number): bigint => {
+  return BigInt(Math.sqrt(price) * 2 ** 96);
 };
 
 function InitializeComponent() {
@@ -40,11 +40,11 @@ function InitializeComponent() {
 
   const [hookData, setHookData] = useState<string>("0x"); // State for custom hook data
   const [price, setPrice] = useState<number>(1); // State for normal price
-  const [sqrtPriceX96, setSqrtPriceX96] = useState<string>(calculateSqrtPriceX96(1).toString()); // State for square root price
+  const [sqrtPriceX96, setSqrtPriceX96] = useState<bigint>(calculateSqrtPriceX96(1)); // State for square root price
 
   // Update sqrtPriceX96 whenever price changes
   useEffect(() => {
-    setSqrtPriceX96(calculateSqrtPriceX96(price).toString());
+    setSqrtPriceX96(calculateSqrtPriceX96(price));
   }, [price]);
 
   const {
@@ -162,7 +162,7 @@ function InitializeComponent() {
           value={price.toString()}
           onChange={e => setPrice(parseFloat(e.target.value))}
         />
-        <p className=" font-mono text-xs">Sqrt Price x96: {sqrtPriceX96}</p>
+        <p className=" font-mono text-xs">Sqrt Price x96: {sqrtPriceX96.toString()}</p>
 
         <NumericInput
           type="text"
