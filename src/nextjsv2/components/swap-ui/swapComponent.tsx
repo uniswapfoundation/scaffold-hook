@@ -13,7 +13,7 @@ import {
   usePoolSwapTestSwap,
 } from "~~/generated/generated";
 import { TOKEN_ADDRESSES } from "~~/utils/config";
-import { BLANK_TOKEN, MAX_SQRT_PRICE_LIMIT, MAX_UINT, MIN_SQRT_PRICE_LIMIT } from "~~/utils/constants";
+import { BLANK_TOKEN, MAX_SQRT_PRICE_LIMIT, MAX_UINT, MIN_SQRT_PRICE_LIMIT, ZERO_ADDR } from "~~/utils/constants";
 
 function SwapComponent({ poolKey }: { poolKey: any }) {
   const { address } = useAccount();
@@ -30,8 +30,10 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
 
   const [swapFee, setSwapFee] = useState(3000n);
   const [tickSpacing, setTickSpacing] = useState(60n);
-  const [hookAddress, setHookAddress] = useState<`0x${string}`>(counterAddress[chainId as keyof typeof counterAddress]);
   const [hookData, setHookData] = useState<string>(""); // New state for custom hook data
+  const [hookAddress, setHookAddress] = useState<`0x${string}`>(
+    counterAddress[chainId as keyof typeof counterAddress] ?? ZERO_ADDR,
+  );
 
   //swap status
   const [isSwapping, setIsSwapping] = useState(false);
@@ -39,7 +41,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
   const [swapSuccess, setSwapSuccess] = useState(false);
 
   // Use state hook to hold the transaction hash
-  const [txHash, setTxHash] = useState("");
+  const [txHash, setTxHash] = useState<`0x${string}`>("0x00");
 
   // Use the useWaitForTransaction hook from 'wagmi' to get the transaction receipt
   const { data: txReceipt, isSuccess: isTxConfirmed } = useWaitForTransaction({
@@ -101,7 +103,7 @@ function SwapComponent({ poolKey }: { poolKey: any }) {
   };
 
   useEffect(() => {
-    setHookAddress(counterAddress[chainId as keyof typeof counterAddress]);
+    setHookAddress(counterAddress[chainId as keyof typeof counterAddress] ?? ZERO_ADDR);
   }, [chainId]);
 
   // Success message once the transaction has been confirmed on the blockchain
