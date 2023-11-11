@@ -23,9 +23,12 @@ const { onlyLocalBurnerWallet } = scaffoldConfig;
 export const enabledChains = [
   chains.foundry,
   chains.polygonMumbai,
+  chains.polygonZkEvmTestnet,
   chains.arbitrumGoerli,
   chains.optimismGoerli,
-  chains.sepolia,
+  chains.goerli,
+  chains.baseGoerli,
+  chains.scrollSepolia,
 ];
 
 /**
