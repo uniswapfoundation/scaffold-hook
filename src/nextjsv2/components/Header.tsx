@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import { Icons as icons } from "./assets/Icons";
 import { NetworkSwitcher } from "./scaffold-eth/NetworkSwitcher";
@@ -8,7 +8,6 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Link,
   Navbar,
   NavbarBrand,
   NavbarContent,

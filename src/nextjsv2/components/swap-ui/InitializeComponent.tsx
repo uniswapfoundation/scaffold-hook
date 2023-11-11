@@ -8,6 +8,8 @@ import { TOKEN_ADDRESSES } from "~~/utils/config";
 import { BLANK_TOKEN } from "~~/utils/constants";
 import { notification } from "~~/utils/scaffold-eth";
 
+// Importing mathjs for precise mathematical operations
+
 function InitializePoolButton({ isLoading, onClick }) {
   return (
     <button
@@ -19,6 +21,10 @@ function InitializePoolButton({ isLoading, onClick }) {
     </button>
   );
 }
+
+const calculateSqrtPriceX96 = (price: number): bigint => {
+  return BigInt(Math.sqrt(price) * 2 ** 96);
+};
 
 function InitializeComponent() {
   const chainId = useChainId();
@@ -32,6 +38,15 @@ function InitializeComponent() {
   const [tickSpacing, setTickSpacing] = useState(60n);
   const [hookAddress, setHookAddress] = useState<string>(counterAddress[chainId as keyof typeof counterAddress]);
 
+  const [hookData, setHookData] = useState<string>("0x"); // State for custom hook data
+  const [price, setPrice] = useState<number>(1); // State for normal price
+  const [sqrtPriceX96, setSqrtPriceX96] = useState<bigint>(calculateSqrtPriceX96(1)); // State for square root price
+
+  // Update sqrtPriceX96 whenever price changes
+  useEffect(() => {
+    setSqrtPriceX96(calculateSqrtPriceX96(price));
+  }, [price]);
+
   const {
     writeAsync: write,
     isLoading: isLoadingInitialize,
@@ -39,7 +54,7 @@ function InitializeComponent() {
     error: errorInitialize,
     data: dataInitialize,
   } = usePoolManagerInitialize({
-    onerror: (error: { message: any }) => {
+    onError: (error: { message: any }) => {
       notification.error(
         <div className="text-left">
           Error Initializing Pool
@@ -65,8 +80,8 @@ function InitializeComponent() {
             tickSpacing: Number(tickSpacing),
             hooks: hookAddress,
           },
-          79228162514264337593543950336n,
-          "0x0",
+          sqrtPriceX96,
+          hookData as `0x${string}`,
         ],
       });
       notification.success(
@@ -140,6 +155,24 @@ function InitializeComponent() {
           onChange={e => setHookAddress(e.target.value)}
         />
 
+        <NumericInput
+          type="number"
+          placeholder="Price"
+          tooltipText="Normal price of the token pair."
+          value={price.toString()}
+          onChange={e => setPrice(parseFloat(e.target.value))}
+        />
+        <p className=" font-mono text-xs">Sqrt Price x96: {sqrtPriceX96.toString()}</p>
+
+        <NumericInput
+          type="text"
+          placeholder="Hook Data (optional)"
+          tooltipText="Optional custom hook data in hexadecimal format."
+          value={hookData}
+          onChange={e => setHookData(e.target.value)}
+        />
+
+        {/* ... (Rest of the JSX structure) */}
         <InitializePoolButton isLoading={isLoadingInitialize} onClick={handleInitialize} />
       </div>
     </div>
