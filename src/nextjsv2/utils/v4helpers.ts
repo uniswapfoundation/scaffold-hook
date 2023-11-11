@@ -12,7 +12,7 @@ export function getPoolId({
   fee: number;
   tickSpacing: number;
   hooks: string;
-}): string {
+}): `0x${string}` {
   return keccak256(
     encodeAbiParameters(
       [
