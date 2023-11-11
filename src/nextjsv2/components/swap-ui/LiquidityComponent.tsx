@@ -278,7 +278,7 @@ function LiquidityComponent() {
           <h2 className="text-2xl font-bold mb-1">Remove Liquidity</h2>
           <p className="text-gray-600 mb-6">Fill out the details below to remove liquidity from a pool.</p>
 
-          {/* <PoolKeyId
+          <PoolKeyId
             currency0={token0Addr}
             currency1={token1Addr}
             swapFee={swapFee}
@@ -287,7 +287,7 @@ function LiquidityComponent() {
             setTickSpacing={setTickSpacing}
             hookAddress={hookAddress}
             setHookAddress={setHookAddress}
-          /> */}
+          />
           <br></br>
 
           {/* add nice ui to show liquidity with badges */}
