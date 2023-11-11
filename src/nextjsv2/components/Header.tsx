@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import { Icons as icons } from "./assets/Icons";
 import { NetworkSwitcher } from "./scaffold-eth/NetworkSwitcher";
@@ -8,13 +8,11 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Link,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
 } from "@nextui-org/react";
-import { useChainId, useNetwork } from "wagmi";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 
 const isActiveLink = (router: any, href: string) => router.pathname === href;
@@ -23,8 +21,6 @@ const isActiveLink = (router: any, href: string) => router.pathname === href;
  */
 export const Header = () => {
   const router = useRouter();
-  const { chain } = useNetwork();
-  console.log("🚀 ~ file: Header.tsx:27 ~ Header ~ chain:", chain);
   const redirectLink = (event: any, href: string) => {
     event.preventDefault();
     router.push(href);
@@ -151,11 +147,9 @@ export const Header = () => {
         <NavbarItem>
           <NetworkSwitcher />
         </NavbarItem>
-        {chain && chain.id == 31337 && (
-          <NavbarItem>
-            <FaucetButton />
-          </NavbarItem>
-        )}
+        <NavbarItem>
+          <FaucetButton />
+        </NavbarItem>
       </NavbarContent>
     </Navbar>
   );
