@@ -58,9 +58,9 @@ export function PoolKeyId({
         <NumericInput
           type="number"
           placeholder="Swap Fee"
-          tooltipText="Transaction fee for swapping tokens."
-          value={swapFee.toString()}
-          onChange={e => setSwapFee(BigInt(e.target.value))}
+          tooltipText="Transaction fee for swapping tokens, as a percentage."
+          value={(Number(swapFee) / 10_000).toString()}
+          onChange={e => setSwapFee(BigInt(Number(e.target.value) * 10_000))}
         />
         <NumericInput
           type="number"
