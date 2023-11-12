@@ -1,14 +1,11 @@
 import NextLink from "next/link";
-import { Button, Code, Snippet } from "@nextui-org/react";
+import { Code, Snippet } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import { button as buttonStyles } from "@nextui-org/theme";
 import { motion } from "framer-motion";
 import type { NextPage } from "next";
 import { FaGithub } from "react-icons/fa";
-import { size } from "viem";
-import { BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
-import Hook from "~~/components/hookspage/hooks-model";
 import { subtitle, title } from "~~/components/primitives";
 
 const variants = {
@@ -16,41 +13,12 @@ const variants = {
   visible: { opacity: 1 },
 };
 
-const codeColorVariant = ["primary", "secondary", "success", "warning", "error"];
-const technicalDetails = [
-  "The `DeployHook.s.sol` file contains the script necessary for initializing and deploying your hook.",
-  "Remember to set the correct network in your hardhat config if you're not using the default local network.",
-  "The Wagmi hooks are auto-generated code wrapping your smart contract for React, providing custom hooks for common interactions.",
-  // Add more technical details as necessary
-];
-
 const Home: NextPage = () => {
   return (
     <>
       <MetaHeader />
       <div className="flex items-center flex-col flex-grow pt-10">
         <div className="px-5">
-          {/* <h1 className="text-center mb-8">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/pages/index.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code> 
-            
-          </p>*/}
           <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
             <div className="inline-block max-w-2xl text-center justify-center">
               <h1

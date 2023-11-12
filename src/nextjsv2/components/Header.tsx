@@ -39,9 +39,7 @@ export const Header = () => {
         isActive={isActiveLink(router, "/debug")}
         onClick={(event: any) => redirectLink(event, "/debug")}
       >
-        {/* <NavLink href="/debug" > */}
         Debug Contracts
-        {/* </NavLink> */}
       </NavbarItem>
 
       <Dropdown>

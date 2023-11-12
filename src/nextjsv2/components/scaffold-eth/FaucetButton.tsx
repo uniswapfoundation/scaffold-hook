@@ -90,7 +90,6 @@ export const FaucetButton = () => {
   return (
     <Dropdown>
       <DropdownTrigger>
-        {/* add faucet button */}
         <Button
           variant="ghost"
           color="warning"

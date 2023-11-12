@@ -44,7 +44,6 @@ export function PoolKeyId({
         }
       >
         <div className="flex gap-2 center justify-between w-full mb-3">
-          {/* add currency 0 and currency 1 */}
           <div className="gap-2 center items-center justify-between w-full">
             <span className="text-md font-semibold text-gray-500">Currency 0</span>
             <Address address={currency0} />

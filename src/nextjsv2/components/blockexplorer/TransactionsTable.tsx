@@ -13,7 +13,6 @@ export const TransactionsTable = ({ blocks, transactionReceipts }: TransactionsT
       <div className="overflow-x-auto w-full shadow-2xl rounded-xl">
         <Table className="table text-xl  table-zebra w-full md:table-md table-sm">
           <TableHeader>
-            {/* <TableRow className="rounded-xl text-sm text-base-content"> */}
             <TableColumn className="">Transaction Hash</TableColumn>
             <TableColumn className="">Function Called</TableColumn>
             <TableColumn className="">Block Number</TableColumn>
@@ -21,7 +20,6 @@ export const TransactionsTable = ({ blocks, transactionReceipts }: TransactionsT
             <TableColumn className="">From</TableColumn>
             <TableColumn className="">To</TableColumn>
             <TableColumn className=" text-end">Value ({targetNetwork.nativeCurrency.symbol})</TableColumn>
-            {/* </TableRow> */}
           </TableHeader>
           <TableBody>
             {blocks.map(block =>

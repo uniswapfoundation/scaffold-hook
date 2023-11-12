@@ -172,7 +172,6 @@ function InitializeComponent() {
           onChange={e => setHookData(e.target.value)}
         />
 
-        {/* ... (Rest of the JSX structure) */}
         <InitializePoolButton isLoading={isLoadingInitialize} onClick={handleInitialize} />
       </div>
     </div>
