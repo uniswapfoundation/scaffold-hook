@@ -32,7 +32,7 @@ const Home: NextPage = () => {
               <br />
               <h1 className={title({ size: "lg" })}>in less than 10 minutes.</h1>
               <h4 className={subtitle({ class: "mt-4", size: "lg" })}>
-                Scaffold-Hook is a framework for fast and easy hook development .
+                scaffold-hook is a framework for fast and easy hook development.
               </h4>
             </div>
 
@@ -80,14 +80,19 @@ const Home: NextPage = () => {
                     className="mb-4 break-all  whitespace-pre flex-wrap whitespace-normal whitespace-break-spaces"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
-                    <span>Edit the deploy script as needed:</span>
+                    <span>Edit the Hook contract as needed:</span>
                     {/* Highlight the file path with a calm blue color to indicate an action point */}
-                    <Code color="info" css={{ fontFamily: "var(--font-mono)" }}>
-                      {`contracts/script/DeployHook.s.sol`}
+                    <Code color="default" style={{ fontFamily: "var(--font-mono)" }}>
+                      {`contracts/src/Counter.sol`}
+                    </Code>
+                    <span>Start your local network</span>
+                    {/* Highlight the file path with a calm blue color to indicate an action point */}
+                    <Code color="default" style={{ fontFamily: "var(--font-mono)" }}>
+                      {`npm run anvil`}
                     </Code>
                     <span>Execute the deployment script with the following command:</span>
                     {/* Use green to signify a successful action that should be taken */}
-                    <Code block color="success" css={{ fontFamily: "var(--font-mono)" }}>
+                    <Code color="success" style={{ fontFamily: "var(--font-mono)" }}>
                       {`npm run deploy:anvil`}
                     </Code>
                   </Snippet>
@@ -111,7 +116,7 @@ const Home: NextPage = () => {
                     <span>Important: Generate Wagmi hooks with the updated contract address:</span>
                     {/* Red to alert users to the importance of this action */}
                     <Code block color="error" css={{ fontFamily: "var(--font-mono)" }}>
-                      {`npm run generate`}
+                      {`npm run wagmi`}
                     </Code>
                   </Snippet>
 
