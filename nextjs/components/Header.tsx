@@ -42,9 +42,7 @@ export const Header = () => {
         isActive={isActiveLink(router, "/debug")}
         onClick={(event: any) => redirectLink(event, "/debug")}
       >
-        {/* <NavLink href="/debug" > */}
         Debug Contracts
-        {/* </NavLink> */}
       </NavbarItem>
 
       <Dropdown>
@@ -140,7 +138,7 @@ export const Header = () => {
       }}
     >
       <NavbarBrand>
-        <p className="font-bold text-inherit">Scaffold-UNIv4</p>
+        <p className="font-bold text-inherit">scaffold-hook</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         {navLinks}

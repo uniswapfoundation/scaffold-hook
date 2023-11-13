@@ -4,46 +4,28 @@ import { erc20ABI } from "wagmi";
 
 export default defineConfig({
   out: "generated/generated.ts",
-  contracts: [
-    {
-      abi: erc20ABI,
-      address: {
-        31337: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
-        5: "0x6aed99B81255c1d8D7b222A5F16290741B9DcD39",
-        420: "0xeb4708989b42f0cd327A6Bd8f76a931429137fd7",
-        1442: "0xeb4708989b42f0cd327A6Bd8f76a931429137fd7",
-        80001: "0x841B5A0b3DBc473c8A057E2391014aa4C4751351",
-        84531: "0x73666807a1Ed304C2993C72D2b07434a4a561d26",
-        421613: "0x5cbA23E581A5cBee77BE4E98Df0bCea74C0B5C9a",
-        421614: "0x615bCf3371F7daF8E8f7d26db10e12F0F4830C94",
-        534351: "0x5bA874E13D2Cf3161F89D1B1d1732D14226dBF16",
-      },
-      name: "Token0",
-    },
-    {
-      abi: erc20ABI,
-      address: {
-        31337: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
-        5: "0x77513a96372816fBD0Ab84D897cF261656208B18",
-        420: "0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49",
-        1442: "0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49",
-        80001: "0xFB3e0C6F74eB1a21CC1Da29aeC80D2Dfe6C9a317",
-        84531: "0x482Bf489989ea9c40aC978739E11f1699384dd7F",
-        421613: "0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6",
-        421614: "0x3D5e538D212b05bc4b3F70520189AA3dEA588B1E",
-        534351: "0x5C038EE8AB7bD7699037E277874F1c611aD0C28F",
-      },
-      name: "Token1",
-    },
-  ],
   plugins: [
     foundry({
-      project: "../", // path to the project root, directory holding foundry.toml
+      project: "../", // path to the project root (directory holding foundry.toml)
       deployments: {
+        // --------------------------------------------------
+        // 👉 Update the address with your deployed hook 👈
+        // --------------------------------------------------
         Counter: {
           31337: "0x3Ce72a2059524eC26219E6a7f9dBe387370ac1D8",
-          80001: "0x3c210Bc497Df1Dd8794b6F3c3A081eC2AC9Ad8C8",
+          5: "0x0000000000000000000000000000000000000000", // goerli
+          420: "0x0000000000000000000000000000000000000000", // optimism goerli
+          1442: "0x0000000000000000000000000000000000000000", // polygon zkevm testnet
+          80001: "0x0000000000000000000000000000000000000000", // mumbai
+          84531: "0x0000000000000000000000000000000000000000", // base goerli
+          421613: "0x0000000000000000000000000000000000000000", // arbitrum goerli
+          421614: "0x0000000000000000000000000000000000000000", // arbitrum sepolia
+          534351: "0x0000000000000000000000000000000000000000", // scroll  sepolia
         },
+
+        // --------------------------------------------------
+        // Do not change
+        // --------------------------------------------------
         PoolManager: {
           31337: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
           5: "0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b",
@@ -83,5 +65,40 @@ export default defineConfig({
       },
     }),
     react(),
+  ],
+  contracts: [
+    // --------------------------------------------------
+    // (Optional): Update to use your own deployed tokens
+    // --------------------------------------------------
+    {
+      abi: erc20ABI,
+      address: {
+        31337: "0x2dafbdf11a8cf84c372539a38d781d8248399ae3",
+        5: "0x6aed99B81255c1d8D7b222A5F16290741B9DcD39",
+        420: "0xeb4708989b42f0cd327A6Bd8f76a931429137fd7",
+        1442: "0xeb4708989b42f0cd327A6Bd8f76a931429137fd7",
+        80001: "0x841B5A0b3DBc473c8A057E2391014aa4C4751351",
+        84531: "0x73666807a1Ed304C2993C72D2b07434a4a561d26",
+        421613: "0x5cbA23E581A5cBee77BE4E98Df0bCea74C0B5C9a",
+        421614: "0x615bCf3371F7daF8E8f7d26db10e12F0F4830C94",
+        534351: "0x5bA874E13D2Cf3161F89D1B1d1732D14226dBF16",
+      },
+      name: "Token0",
+    },
+    {
+      abi: erc20ABI,
+      address: {
+        31337: "0xa8ceafb1940244f2f022ff8440a42411b4f07fc4",
+        5: "0x77513a96372816fBD0Ab84D897cF261656208B18",
+        420: "0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49",
+        1442: "0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49",
+        80001: "0xFB3e0C6F74eB1a21CC1Da29aeC80D2Dfe6C9a317",
+        84531: "0x482Bf489989ea9c40aC978739E11f1699384dd7F",
+        421613: "0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6",
+        421614: "0x3D5e538D212b05bc4b3F70520189AA3dEA588B1E",
+        534351: "0x5C038EE8AB7bD7699037E277874F1c611aD0C28F",
+      },
+      name: "Token1",
+    },
   ],
 });

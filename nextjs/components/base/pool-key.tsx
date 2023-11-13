@@ -44,7 +44,6 @@ export function PoolKeyId({
         }
       >
         <div className="flex gap-2 center justify-between w-full mb-3">
-          {/* add currency 0 and currency 1 */}
           <div className="gap-2 center items-center justify-between w-full">
             <span className="text-md font-semibold text-gray-500">Currency 0</span>
             <Address address={currency0} />
@@ -58,9 +57,9 @@ export function PoolKeyId({
         <NumericInput
           type="number"
           placeholder="Swap Fee"
-          tooltipText="Transaction fee for swapping tokens."
-          value={swapFee.toString()}
-          onChange={e => setSwapFee(BigInt(e.target.value))}
+          tooltipText="Transaction fee for swapping tokens, as a percentage."
+          value={(Number(swapFee) / 10_000).toString()}
+          onChange={e => setSwapFee(BigInt(Number(e.target.value) * 10_000))}
         />
         <NumericInput
           type="number"
