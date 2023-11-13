@@ -13,6 +13,8 @@ import {
   NavbarContent,
   NavbarItem,
 } from "@nextui-org/react";
+import { hardhat } from "viem/chains";
+import { useChainId } from "wagmi";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 
 const isActiveLink = (router: any, href: string) => router.pathname === href;
@@ -21,6 +23,7 @@ const isActiveLink = (router: any, href: string) => router.pathname === href;
  */
 export const Header = () => {
   const router = useRouter();
+  const chainId = useChainId();
   const redirectLink = (event: any, href: string) => {
     event.preventDefault();
     router.push(href);
@@ -100,13 +103,15 @@ export const Header = () => {
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
-      <NavbarItem
-        isActive={isActiveLink(router, "/blockexplorer")}
-        onClick={(event: any) => redirectLink(event, "/blockexplorer")}
-        className="cursor-pointer "
-      >
-        Block Explorer
-      </NavbarItem>
+      {chainId === hardhat.id && (
+        <NavbarItem
+          isActive={isActiveLink(router, "/blockexplorer")}
+          onClick={(event: any) => redirectLink(event, "/blockexplorer")}
+          className="cursor-pointer "
+        >
+          Block Explorer
+        </NavbarItem>
+      )}
     </>
   );
 
