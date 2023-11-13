@@ -8,13 +8,13 @@ _Develop and test Uniswap v4 Hooks with minimal interfaces for the swap lifecycl
 
 ✅ Template hook with deployment commands
 
-✅ Configured local network with v4 contracts pre-deployed
-
-✅ Testnet and devnet support
-
 ✅ User interfaces for: pool creation, liquidity creation, and swapping
 
-✅ Foundry
+✅ Local network (anvil) with predeployed Uniswap v4
+
+✅ Testnet support
+
+✅ Foundry (hardhat support coming later)
 
 ---
 
@@ -34,6 +34,8 @@ Define environment variables
 ```bash
 cp .env.example .env
 ```
+
+See [Environment](#environment-variables) additional setup
 
 ---
 
@@ -66,14 +68,16 @@ cp .env.example .env
 
 ## Hook Configuration
 
-If you rename your hook file or contract name -- Update [.env](.env)
+Modifying the file name, contract name, or _hook flags_ will require configuration:
+
+Renaming -- update [.env](.env)
 
 ```bash
 # Hook Contract, formatted: <filename.sol>:<contractName>
 HOOK_CONTRACT="Counter.sol:Counter"
 ```
 
-If you updated your hook's interfaces -- Update [.env](.env) and ensure `getHookCalls()` is in agreement
+Changing hook flags -- update [.env](.env) and ensure `getHookCalls()` is in agreement
 
 ```bash
 # in .env
@@ -104,19 +108,49 @@ function getHooksCalls() public pure returns (Hooks.Calls memory) {
 }
 ```
 
+## Deploying to Testnets
+
+_Ensure your wallet is funded with testnet gas (ETH)_
+
+- `npm run deploy:anvil`
+
+- `npm run deploy:goerli`
+
+- `npm run deploy:arbitrum-goerli`
+
+- `npm run deploy:arbitrum-sepolia`
+
+- `npm run deploy:optimism-goerli`
+
+- `npm run deploy:base-goerli`
+
+- `npm run deploy:sepolia`
+
+- `npm run deploy:scroll-sepolia`
+
+- `npm run deploy:polygon-mumbai`
+
+- `npm run deploy:polygon-zkevm-testnet`
+
 ## Additional Configuration
 
-TODO: document [config.ts](src/nextjsv2/utils/config.ts)
+### Custom Tokens
 
-## (TODO) Set up environment
+While `scaffold-hook` ships solmate's `MockERC20` on local and testnet, you can provide your own custom tokens:
 
-You will first need to set up your `.env` to tell Forge where to deploy your contract.
+1. define them in [wagmi.config.ts](src/nextjsv2/wagmi.config.ts#L69), and regenerate the codegen: `npm run wagmi`
+2. import the generated addresses and edit [`TOKEN_ADDRESSES`](src/nextjsv2/utils/config.ts)
 
-Go ahead and open up your `.env` file, and enter the following env vars:
+### Debuggable Hook (etherscan-style contract interface)
 
-- `ETHERSCAN_API_KEY`: Your Etherscan API Key.
-- `FORGE_RPC_URL`: The RPC URL of the network to deploy to.
-- `FORGE_PRIVATE_KEY`: The private key of the wallet you want to deploy from.
+1. define the hook in [wagmi.config.ts](src/nextjsv2/wagmi.config.ts#L11), and regenerate the codegen: `npm run wagmi`
+2. import the generated types and edit [`DEBUGGABLE_ADDRESSES`](src/nextjsv2/utils/config.ts)
+
+## Environment Variables
+
+- `ANVIL_FORK_URL`: RPC URL for anvil fork mode
+- `ETHERSCAN_API_KEY`: Your Etherscan API Key
+- `FORGE_PRIVATE_KEY`: The private key of the wallet for testnet deployments
 
 # Learn more
 
