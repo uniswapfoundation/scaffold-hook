@@ -6,7 +6,7 @@ export default defineConfig({
   out: "generated/generated.ts",
   plugins: [
     foundry({
-      project: "../../", // path to the project root (directory holding foundry.toml)
+      project: "../", // path to the project root (directory holding foundry.toml)
       deployments: {
         // --------------------------------------------------
         // 👉 Update the address with your deployed hook 👈

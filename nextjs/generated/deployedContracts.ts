@@ -1,8 +1,4 @@
-import PoolModifyPositionTestABI from "../../../contracts/out/PoolModifyPositionTest.sol/PoolModifyPositionTest.json";
-import PoolSwapTestABI from "../../../contracts/out/PoolSwapTest.sol/PoolSwapTest.json";
-import { CounterHookABI } from "./Counter.sol/counterHook";
-import { abi } from "./HookMiner.sol/HookMiner.json";
-import { poolManagerABI } from "./PoolManager.sol/PoolManager";
+import { counterABI, hookMinerABI, poolManagerABI, poolModifyPositionTestABI, poolSwapTestABI } from "./generated";
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 export const deployedContracts: GenericContractsDeclaration = {
@@ -17,19 +13,19 @@ export const deployedContracts: GenericContractsDeclaration = {
         },
         Counter: {
           address: "0x3Ce72a2059524eC26219E6a7f9dBe387370ac1D8",
-          abi: CounterHookABI,
+          abi: counterABI,
         },
         HookMiner: {
           address: "0x32cd5ecdA7f2B8633C00A0434DE28Db111E60636",
-          abi: abi,
+          abi: hookMinerABI,
         },
         PoolModifyPositionTest: {
           address: "0x3079c0319f8734239eb06765666468f7b76eb505",
-          abi: PoolModifyPositionTestABI.abi,
+          abi: poolModifyPositionTestABI,
         },
         PoolSwapTest: {
           address: "0xaf7ccf0ff7ef054a1db43330f5431958ab4a9441",
-          abi: PoolSwapTestABI.abi,
+          abi: poolSwapTestABI,
         },
       },
     },
