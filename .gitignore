@@ -10,9 +10,6 @@
 
 /coverage
 /broadcast
-/broadcast/**/*
-/cache 
-
 # next.js
 
 /.next/
