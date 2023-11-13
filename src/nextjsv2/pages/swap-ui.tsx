@@ -1,10 +1,9 @@
 import { useMemo } from "react";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
-import SwapUI from "~~/components/swap-ui/SwapUI";
-import PoolInit from "~~/components/swap-ui/PoolInit";
 import LiquidityUI from "~~/components/swap-ui/LiquidityUI";
-
+import PoolInit from "~~/components/swap-ui/PoolInit";
+import SwapUI from "~~/components/swap-ui/swapUI";
 
 const SwapUIPage: NextPage = () => {
   const router = useRouter();
@@ -27,4 +26,4 @@ const SwapUIPage: NextPage = () => {
   return <></>;
 };
 
-export default SwapUIPage as ExampleUI;
+export default SwapUIPage;

@@ -15,7 +15,7 @@ import {
 import { TOKEN_ADDRESSES } from "~~/utils/config";
 import { BLANK_TOKEN, MAX_SQRT_PRICE_LIMIT, MAX_UINT, MIN_SQRT_PRICE_LIMIT, ZERO_ADDR } from "~~/utils/constants";
 
-function SwapComponent({ poolKey }: { poolKey: any }) {
+function SwapComponent() {
   const { address } = useAccount();
   const chainId = useChainId();
 
