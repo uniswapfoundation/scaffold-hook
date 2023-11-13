@@ -51,7 +51,7 @@ cp .env.example .env
    npm run deploy:anvil
    ```
 
-3. Update [wagmi.config.ts](src/nextjsv2/wagmi.config.ts) with the hook address from [run-latest.json](/broadcast/DeployHook.s.sol/31337/run-latest.json)
+3. Update [wagmi.config.ts](src/nextjs/wagmi.config.ts) with the hook address from [run-latest.json](/broadcast/DeployHook.s.sol/31337/run-latest.json)
 
 4. Regenerate react hooks, addresses, and ABIs
 
