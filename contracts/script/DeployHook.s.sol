@@ -24,7 +24,7 @@ contract DeployHookScript is Script {
         // Mine a salt that will produce a hook address with the correct flags
         bytes memory creationCode = vm.getCode(vm.envString("HOOK_CONTRACT"));
         (address hookAddress, bytes32 salt) =
-            HookMiner.find(CREATE2_DEPLOYER, flags, 0, creationCode, constructorArgs);
+            HookMiner.find(CREATE2_DEPLOYER, flags, creationCode, constructorArgs);
 
         // Deploy the hook using CREATE2
         bytes memory bytecode = abi.encodePacked(creationCode, constructorArgs);
@@ -40,7 +40,7 @@ contract DeployHookScript is Script {
     }
 
     /// @dev Read booleans flags from the environemnt and encode them into the uint160 bit flags
-    function getFlagsFromEnv() internal returns (uint160) {
+    function getFlagsFromEnv() internal view returns (uint160) {
         uint256 flags;
         if (vm.envBool("BEFORE_SWAP")) flags |= Hooks.BEFORE_SWAP_FLAG;
         if (vm.envBool("AFTER_SWAP")) flags |= Hooks.AFTER_SWAP_FLAG;
