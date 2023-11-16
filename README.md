@@ -55,7 +55,7 @@ See [Environment](#environment-variables) additional setup
    npm run deploy:anvil
    ```
 
-3. Update [wagmi.config.ts](src/nextjsv2/wagmi.config.ts) with the hook address from [run-latest.json](/broadcast/DeployHook.s.sol/31337/run-latest.json)
+3. Update [wagmi.config.ts](nextjs/wagmi.config.ts) with the hook address from [run-latest.json](/broadcast/DeployHook.s.sol/31337/run-latest.json)
 
 4. Regenerate react hooks, addresses, and ABIs
 
@@ -142,13 +142,13 @@ _Ensure your wallet is funded with testnet gas (ETH)_
 
 While `scaffold-hook` ships solmate's `MockERC20` on local and testnet, you can provide your own custom tokens:
 
-1. define them in [wagmi.config.ts](src/nextjsv2/wagmi.config.ts#L69), and regenerate the codegen: `npm run wagmi`
-2. import the generated addresses and edit [`TOKEN_ADDRESSES`](src/nextjsv2/utils/config.ts)
+1. define them in [wagmi.config.ts](nextjs/wagmi.config.ts#L80), and regenerate the codegen: `npm run wagmi`
+2. import the generated addresses and edit [`TOKEN_ADDRESSES`](nextjs/utils/config.ts)
 
 ### Debuggable Hook (etherscan-style contract interface)
 
-1. define the hook in [wagmi.config.ts](src/nextjsv2/wagmi.config.ts#L11), and regenerate the codegen: `npm run wagmi`
-2. import the generated types and edit [`DEBUGGABLE_ADDRESSES`](src/nextjsv2/utils/config.ts)
+1. define the hook in [wagmi.config.ts](nextjs/wagmi.config.ts#L15), and regenerate the codegen: `npm run wagmi`
+2. import the generated types and edit [`DEBUGGABLE_ADDRESSES`](nextjs/utils/config.ts)
 
 ## Environment Variables
 
