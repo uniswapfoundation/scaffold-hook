@@ -26,6 +26,8 @@ Install Dependencies
 
 ```bash
 forge install
+
+cd nextjs/
 npm install
 ```
 
@@ -58,11 +60,13 @@ See [Environment](#environment-variables) additional setup
 4. Regenerate react hooks, addresses, and ABIs
 
    ```bash
+   cd nextjs/
    npm run wagmi
    ```
 
 5. Start the webapp
    ```
+   cd nextjs/
    npm run dev
    ```
 
