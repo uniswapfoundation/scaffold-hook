@@ -46,12 +46,16 @@ See [Environment](#environment-variables) additional setup
 1. Start the local network, with v4 contracts predeployed
 
    ```bash
+   # root of the repository
+   cd scaffold-hook/
    npm run anvil
    ```
 
 2. Deploy the template hook
 
-   ```
+   ```bash
+   # root of the repository
+   cd scaffold-hook/
    npm run deploy:anvil
    ```
 
@@ -65,7 +69,7 @@ See [Environment](#environment-variables) additional setup
    ```
 
 5. Start the webapp
-   ```
+   ```bash
    cd nextjs/
    npm run dev
    ```
