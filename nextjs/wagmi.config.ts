@@ -15,7 +15,7 @@ export default defineConfig({
         // 👉 Update the address with your deployed hook 👈
         // --------------------------------------------------
         Counter: {
-          31337: "0x3Ce72a2059524eC26219E6a7f9dBe387370ac1D8",
+          31337: "0x3c07Ac9bad30352D08A194985D650804C594f937",
           5: "0x0000000000000000000000000000000000000000", // goerli
           420: "0x0000000000000000000000000000000000000000", // optimism goerli
           1442: "0x0000000000000000000000000000000000000000", // polygon zkevm testnet
