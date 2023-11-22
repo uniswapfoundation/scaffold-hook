@@ -8,6 +8,7 @@ import {Currency} from "@uniswap/v4-core/src/types/Currency.sol";
 import {PoolManager} from "@uniswap/v4-core/src/PoolManager.sol";
 import {IPoolManager} from "@uniswap/v4-core/src/interfaces/IPoolManager.sol";
 import {IHooks} from "@uniswap/v4-core/src/interfaces/IHooks.sol";
+import {PoolInitializeTest} from "@uniswap/v4-core/src/test/PoolInitializeTest.sol";
 import {PoolModifyPositionTest} from "@uniswap/v4-core/src/test/PoolModifyPositionTest.sol";
 import {PoolSwapTest} from "@uniswap/v4-core/src/test/PoolSwapTest.sol";
 import {PoolDonateTest} from "@uniswap/v4-core/src/test/PoolDonateTest.sol";
@@ -19,6 +20,9 @@ contract GenerateAnvilGenesisScript is Script {
     // RECENT DEPLOYMENT: 0x5FbDB2315678afecb367f032d93F642f64180aa3
     // PoolManager cannot be hardcoded because of NoDelegateCall.sol
     address MANAGER;
+
+    // 0xFEB29bB43e36c0F8488F78bba2E8E94F0D829Fa1
+    address INITROUTER = address(uint160(uint256(keccak256(abi.encode("initrouter")))));
     
     // 0xaf7ccf0ff7ef054a1db43330f5431958ab4a9441
     address SWAPROUTER = address(uint160(uint256(keccak256(abi.encode("swaprouter")))));
@@ -47,11 +51,13 @@ contract GenerateAnvilGenesisScript is Script {
 
         // Additional helpers for interacting with the pool
         vm.startBroadcast();
+        PoolInitializeTest initRouter = new PoolInitializeTest(IPoolManager(MANAGER));
         PoolSwapTest swapRouter = new PoolSwapTest(IPoolManager(MANAGER));
         PoolModifyPositionTest lpRouter = new PoolModifyPositionTest(IPoolManager(MANAGER));
         PoolDonateTest donateRouter = new PoolDonateTest(IPoolManager(MANAGER));
         vm.stopBroadcast();
 
+        anvilCopyCode(address(initRouter), INITROUTER);
         anvilCopyCode(address(swapRouter), SWAPROUTER);
         anvilCopyCode(address(lpRouter), LPROUTER);
         anvilCopyCode(address(donateRouter), DONATEROUTER);
@@ -108,6 +114,11 @@ contract GenerateAnvilGenesisScript is Script {
         string memory poolManager = vm.serializeString("alloc", vm.toString(MANAGER), poolManagerChild);
         vm.serializeString("root", "alloc", poolManager);
 
+        vm.serializeString("initrouter", "balance", "0x0");
+        string memory initRouterChild = vm.serializeString("initrouter", "code", vm.toString(INITROUTER.code));
+        string memory initRouter = vm.serializeString("alloc", vm.toString(INITROUTER), initRouterChild);
+        vm.serializeString("root", "alloc", initRouter);
+
         vm.serializeString("swaprouter", "balance", "0x0");
         string memory swapRouterChild = vm.serializeString("swaprouter", "code", vm.toString(SWAPROUTER.code));
         string memory swapRouter = vm.serializeString("alloc", vm.toString(SWAPROUTER), swapRouterChild);
@@ -156,9 +167,9 @@ contract GenerateAnvilGenesisScript is Script {
     }
 
     function lifecycle() internal {
-        PoolManager m = PoolManager(payable(MANAGER));
         MockERC20 t0 = MockERC20(TOKEN0);
         MockERC20 t1 = MockERC20(TOKEN1);
+        PoolInitializeTest initRouter = PoolInitializeTest(INITROUTER);
         PoolModifyPositionTest lpm = PoolModifyPositionTest(LPROUTER);
         PoolSwapTest swapper = PoolSwapTest(SWAPROUTER);
         
@@ -177,7 +188,7 @@ contract GenerateAnvilGenesisScript is Script {
             tickSpacing: 60,
             hooks: IHooks(address(0x0))
         });
-        m.initialize(key, 79228162514264337593543950336, new bytes(0));
+        initRouter.initialize(key, 79228162514264337593543950336, new bytes(0));
         lpm.modifyPosition(key, IPoolManager.ModifyPositionParams({
             tickLower: -600,
             tickUpper: 600,
