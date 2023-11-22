@@ -18,11 +18,17 @@ _Develop and test Uniswap v4 Hooks with minimal interfaces for the swap lifecycl
 
 ---
 
-## Setup
+# Setup
 
 _requires [foundry](https://book.getfoundry.sh/getting-started/installation) & [node 18+](https://nodejs.org/en/download)_
 
-Install Dependencies
+## Linux / WSL2 (TSTORE)
+
+Please update [foundry.toml](foundry.toml#L9) to use the linux `solc`
+
+Mac users do not need to change anything by default
+
+## Install Dependencies
 
 ```bash
 forge install
@@ -31,7 +37,7 @@ cd nextjs/
 npm install
 ```
 
-Define environment variables
+## Define environment variables
 
 ```bash
 cp .env.example .env
