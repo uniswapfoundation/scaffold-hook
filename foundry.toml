@@ -4,5 +4,9 @@ test = 'contracts/test'
 out = 'contracts/out'
 libs = ['contracts/lib']
 fs_permissions = [{ access = "read", path = "./contracts/out"}, { access = "write", path = "genesis.json"}]
+cancun = true
+
+# For Linux/WSL2 systems, please change to `contracts/lib/v4-core/bin/solc-static-linux`
+solc = "contracts/lib/v4-core/bin/solc-mac"
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
