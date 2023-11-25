@@ -56,6 +56,7 @@ See [Environment](#environment-variables) additional setup
    ```bash
    # root of the repository
    cd scaffold-hook/
+   forge build
    npm run deploy:anvil
    ```
 
