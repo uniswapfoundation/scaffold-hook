@@ -27,11 +27,11 @@ contract Counter is BaseTestHooks {
 
     constructor(IPoolManager _poolManager) {
         poolManager = _poolManager;
-        Hooks.validateHookAddress(IHooks(address(this)), getHooksCalls());
+        Hooks.validateHookPermissions(IHooks(address(this)), getHookPermissions());
     }
 
-    function getHooksCalls() public pure returns (Hooks.Calls memory) {
-        return Hooks.Calls({
+    function getHookPermissions() public pure returns (Hooks.Permissions memory) {
+        return Hooks.Permissions({
             beforeInitialize: false,
             afterInitialize: false,
             beforeModifyPosition: true,
@@ -40,7 +40,8 @@ contract Counter is BaseTestHooks {
             afterSwap: true,
             beforeDonate: false,
             afterDonate: false,
-            noOp: false
+            noOp: false,
+            accessLock: false
         });
     }
 
