@@ -6,13 +6,16 @@ export default defineConfig({
   out: "generated/generated.ts",
   plugins: [
     foundry({
+      forge: {
+        build: false, // disable build because we are using a custom solc
+      },
       project: "../", // path to the project root (directory holding foundry.toml)
       deployments: {
         // --------------------------------------------------
         // 👉 Update the address with your deployed hook 👈
         // --------------------------------------------------
         Counter: {
-          31337: "0x3Ce72a2059524eC26219E6a7f9dBe387370ac1D8",
+          31337: "0x3c07Ac9bad30352D08A194985D650804C594f937",
           5: "0x0000000000000000000000000000000000000000", // goerli
           420: "0x0000000000000000000000000000000000000000", // optimism goerli
           1442: "0x0000000000000000000000000000000000000000", // polygon zkevm testnet
@@ -38,6 +41,9 @@ export default defineConfig({
           421614: "0xb673AE03413860776497B8C9b3E3F8d4D8745cB3",
           534351: "0xeb4708989b42f0cd327A6Bd8f76a931429137fd7",
           11155111: "0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219",
+        },
+        PoolInitializeTest: {
+          31337: "0xFEB29bB43e36c0F8488F78bba2E8E94F0D829Fa1",
         },
         PoolSwapTest: {
           31337: "0xaf7ccf0ff7ef054a1db43330f5431958ab4a9441",

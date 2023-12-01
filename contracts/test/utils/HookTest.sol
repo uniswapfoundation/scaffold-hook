@@ -6,10 +6,12 @@ import "forge-std/Test.sol";
 import {PoolManager} from "@uniswap/v4-core/src/PoolManager.sol";
 import {IPoolManager} from "@uniswap/v4-core/src/interfaces/IPoolManager.sol";
 import {PoolKey} from "@uniswap/v4-core/src/types/PoolKey.sol";
+import {PoolInitializeTest} from "@uniswap/v4-core/src/test/PoolInitializeTest.sol";
 import {PoolModifyPositionTest} from "@uniswap/v4-core/src/test/PoolModifyPositionTest.sol";
 import {PoolSwapTest} from "@uniswap/v4-core/src/test/PoolSwapTest.sol";
 import {PoolDonateTest} from "@uniswap/v4-core/src/test/PoolDonateTest.sol";
 
+import {BalanceDelta} from "@uniswap/v4-core/src/types/BalanceDelta.sol";
 import {TestERC20} from "@uniswap/v4-core/src/test/TestERC20.sol";
 import {TickMath} from "@uniswap/v4-core/src/libraries/TickMath.sol";
 
@@ -17,12 +19,14 @@ import {TickMath} from "@uniswap/v4-core/src/libraries/TickMath.sol";
 /// @dev Minimal initialization. Inheriting contract should set up pools and provision liquidity
 contract HookTest is Test {
     PoolManager manager;
+    PoolInitializeTest initializeRouter;
     PoolModifyPositionTest modifyPositionRouter;
     PoolSwapTest swapRouter;
     PoolDonateTest donateRouter;
     TestERC20 token0;
     TestERC20 token1;
 
+    bytes constant ZERO_BYTES = new bytes(0);
     uint160 public constant MIN_PRICE_LIMIT = TickMath.MIN_SQRT_RATIO + 1;
     uint160 public constant MAX_PRICE_LIMIT = TickMath.MAX_SQRT_RATIO - 1;
 
@@ -43,6 +47,7 @@ contract HookTest is Test {
         manager = new PoolManager(500000);
 
         // Helpers for interacting with the pool
+        initializeRouter = new PoolInitializeTest(IPoolManager(address(manager)));
         modifyPositionRouter = new PoolModifyPositionTest(IPoolManager(address(manager)));
         swapRouter = new PoolSwapTest(IPoolManager(address(manager)));
         donateRouter = new PoolDonateTest(IPoolManager(address(manager)));
@@ -56,7 +61,10 @@ contract HookTest is Test {
         token1.approve(address(swapRouter), amount);
     }
 
-    function swap(PoolKey memory key, int256 amountSpecified, bool zeroForOne, bytes memory hookData) internal {
+    function swap(PoolKey memory key, int256 amountSpecified, bool zeroForOne, bytes memory hookData)
+        internal
+        returns (BalanceDelta swapDelta)
+    {
         IPoolManager.SwapParams memory params = IPoolManager.SwapParams({
             zeroForOne: zeroForOne,
             amountSpecified: amountSpecified,
@@ -66,6 +74,6 @@ contract HookTest is Test {
         PoolSwapTest.TestSettings memory testSettings =
             PoolSwapTest.TestSettings({withdrawTokens: true, settleUsingTransfer: true});
 
-        swapRouter.swap(key, params, testSettings, hookData);
+        swapDelta = swapRouter.swap(key, params, testSettings, hookData);
     }
 }

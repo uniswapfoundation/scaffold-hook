@@ -14,6 +14,20 @@ import {
 import { PrepareWriteContractResult, ReadContractResult, WriteContractMode } from 'wagmi/actions'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// BalanceDeltaLibrary
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const balanceDeltaLibraryABI = [
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'MAXIMUM_DELTA',
+    outputs: [{ name: '', internalType: 'BalanceDelta', type: 'int256' }],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BaseTestHooks
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -243,6 +257,67 @@ export const baseTestHooksABI = [
     ],
     name: 'beforeSwap',
     outputs: [{ name: '', internalType: 'bytes4', type: 'bytes4' }],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Claims
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const claimsABI = [
+  { type: 'error', inputs: [], name: 'InsufficientBalance' },
+  { type: 'error', inputs: [], name: 'InvalidAddress' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'Burn',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'Mint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'Transfer',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'currency', internalType: 'Currency', type: 'address' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'currency', internalType: 'Currency', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [],
   },
 ] as const
 
@@ -591,6 +666,7 @@ export const counterABI = [
           { name: 'afterSwap', internalType: 'bool', type: 'bool' },
           { name: 'beforeDonate', internalType: 'bool', type: 'bool' },
           { name: 'afterDonate', internalType: 'bool', type: 'bool' },
+          { name: 'noOp', internalType: 'bool', type: 'bool' },
         ],
       },
     ],
@@ -620,7 +696,7 @@ export const counterAddress = {
   5: '0x0000000000000000000000000000000000000000',
   420: '0x0000000000000000000000000000000000000000',
   1442: '0x0000000000000000000000000000000000000000',
-  31337: '0x3Ce72a2059524eC26219E6a7f9dBe387370ac1D8',
+  31337: '0x3c07Ac9bad30352D08A194985D650804C594f937',
   80001: '0x0000000000000000000000000000000000000000',
   84531: '0x0000000000000000000000000000000000000000',
   421613: '0x0000000000000000000000000000000000000000',
@@ -663,183 +739,7 @@ export const currencyLibraryABI = [
 // Deployers
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const deployersABI = [
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'manager', internalType: 'contract PoolManager', type: 'address' },
-      { name: 'hooks', internalType: 'contract IHooks', type: 'address' },
-      { name: 'fee', internalType: 'uint24', type: 'uint24' },
-      { name: 'sqrtPriceX96', internalType: 'uint160', type: 'uint160' },
-    ],
-    name: 'createAndInitPool',
-    outputs: [
-      {
-        name: 'key',
-        internalType: 'struct PoolKey',
-        type: 'tuple',
-        components: [
-          { name: 'currency0', internalType: 'Currency', type: 'address' },
-          { name: 'currency1', internalType: 'Currency', type: 'address' },
-          { name: 'fee', internalType: 'uint24', type: 'uint24' },
-          { name: 'tickSpacing', internalType: 'int24', type: 'int24' },
-          { name: 'hooks', internalType: 'contract IHooks', type: 'address' },
-        ],
-      },
-      { name: 'id', internalType: 'PoolId', type: 'bytes32' },
-    ],
-  },
-] as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ERC1155
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const erc1155ABI = [
-  {
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-    inputs: [{ name: 'uri_', internalType: 'string', type: 'string' }],
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address', indexed: true },
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
-    ],
-    name: 'ApprovalForAll',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
-      { name: 'values', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
-    ],
-    name: 'TransferBatch',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: false },
-      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
-    ],
-    name: 'TransferSingle',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'value', internalType: 'string', type: 'string', indexed: false },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
-    ],
-    name: 'URI',
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'balanceOf',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'accounts', internalType: 'address[]', type: 'address[]' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
-    ],
-    name: 'balanceOfBatch',
-    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'operator', internalType: 'address', type: 'address' },
-    ],
-    name: 'isApprovedForAll',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'safeBatchTransferFrom',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'safeTransferFrom',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address' },
-      { name: 'approved', internalType: 'bool', type: 'bool' },
-    ],
-    name: 'setApprovalForAll',
-    outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
-    name: 'supportsInterface',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'uri',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-] as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ERC165
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const erc165ABI = [
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
-    name: 'supportsInterface',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-] as const
+export const deployersABI = [{ stateMutability: 'payable', type: 'receive' }] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ERC20
@@ -1134,12 +1034,11 @@ export const hookMinerABI = [
     outputs: [{ name: 'hookAddress', internalType: 'address', type: 'address' }],
   },
   {
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: 'deployer', internalType: 'address', type: 'address' },
       { name: 'flags', internalType: 'uint160', type: 'uint160' },
-      { name: 'seed', internalType: 'uint256', type: 'uint256' },
       { name: 'creationCode', internalType: 'bytes', type: 'bytes' },
       { name: 'constructorArgs', internalType: 'bytes', type: 'bytes' },
     ],
@@ -1361,6 +1260,74 @@ export const hookTestABI = [
 export const hooksABI = [
   { type: 'error', inputs: [{ name: 'hooks', internalType: 'address', type: 'address' }], name: 'HookAddressNotValid' },
   { type: 'error', inputs: [], name: 'InvalidHookResponse' },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'NO_OP_SELECTOR',
+    outputs: [{ name: '', internalType: 'bytes4', type: 'bytes4' }],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IClaims
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iClaimsABI = [
+  { type: 'error', inputs: [], name: 'InsufficientBalance' },
+  { type: 'error', inputs: [], name: 'InvalidAddress' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'Burn',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'Mint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'Transfer',
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'currency', internalType: 'Currency', type: 'address' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'currency', internalType: 'Currency', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [],
+  },
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1388,416 +1355,6 @@ export const iDynamicFeeManagerABI = [
     ],
     name: 'getFee',
     outputs: [{ name: '', internalType: 'uint24', type: 'uint24' }],
-  },
-] as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC1155
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const ierc1155ABI = [
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address', indexed: true },
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
-    ],
-    name: 'ApprovalForAll',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
-      { name: 'values', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
-    ],
-    name: 'TransferBatch',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: false },
-      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
-    ],
-    name: 'TransferSingle',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'value', internalType: 'string', type: 'string', indexed: false },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
-    ],
-    name: 'URI',
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'balanceOf',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'accounts', internalType: 'address[]', type: 'address[]' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
-    ],
-    name: 'balanceOfBatch',
-    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'operator', internalType: 'address', type: 'address' },
-    ],
-    name: 'isApprovedForAll',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'safeBatchTransferFrom',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'safeTransferFrom',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address' },
-      { name: 'approved', internalType: 'bool', type: 'bool' },
-    ],
-    name: 'setApprovalForAll',
-    outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
-    name: 'supportsInterface',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-] as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC1155MetadataURI
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const ierc1155MetadataUriABI = [
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address', indexed: true },
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
-    ],
-    name: 'ApprovalForAll',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
-      { name: 'values', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
-    ],
-    name: 'TransferBatch',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: false },
-      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
-    ],
-    name: 'TransferSingle',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'value', internalType: 'string', type: 'string', indexed: false },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
-    ],
-    name: 'URI',
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'balanceOf',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'accounts', internalType: 'address[]', type: 'address[]' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
-    ],
-    name: 'balanceOfBatch',
-    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'operator', internalType: 'address', type: 'address' },
-    ],
-    name: 'isApprovedForAll',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'safeBatchTransferFrom',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'safeTransferFrom',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address' },
-      { name: 'approved', internalType: 'bool', type: 'bool' },
-    ],
-    name: 'setApprovalForAll',
-    outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
-    name: 'supportsInterface',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
-    name: 'uri',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-] as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC1155Receiver
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const ierc1155ReceiverABI = [
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address' },
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'values', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'onERC1155BatchReceived',
-    outputs: [{ name: '', internalType: 'bytes4', type: 'bytes4' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address' },
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
-      { name: 'value', internalType: 'uint256', type: 'uint256' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'onERC1155Received',
-    outputs: [{ name: '', internalType: 'bytes4', type: 'bytes4' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
-    name: 'supportsInterface',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-] as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC165
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const ierc165ABI = [
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
-    name: 'supportsInterface',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-] as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC20
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const ierc20ABI = [
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'owner', internalType: 'address', type: 'address', indexed: true },
-      { name: 'spender', internalType: 'address', type: 'address', indexed: true },
-      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
-    ],
-    name: 'Approval',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
-    ],
-    name: 'Transfer',
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'owner', internalType: 'address', type: 'address' },
-      { name: 'spender', internalType: 'address', type: 'address' },
-    ],
-    name: 'allowance',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'spender', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'approve',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
-    name: 'balanceOf',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'decimals',
-    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'name',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'symbol',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'totalSupply',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'transfer',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'transferFrom',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
   },
 ] as const
 
@@ -2194,13 +1751,16 @@ export const iLockCallbackABI = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const iPoolManagerABI = [
-  { type: 'error', inputs: [], name: 'CurrenciesInitializedOutOfOrder' },
+  { type: 'error', inputs: [], name: 'CurrenciesOutOfOrderOrEqual' },
   { type: 'error', inputs: [], name: 'CurrencyNotSettled' },
   { type: 'error', inputs: [], name: 'FeeNotDynamic' },
   { type: 'error', inputs: [], name: 'FeeTooLarge' },
+  { type: 'error', inputs: [], name: 'InsufficientBalance' },
+  { type: 'error', inputs: [], name: 'InvalidAddress' },
   { type: 'error', inputs: [{ name: 'locker', internalType: 'address', type: 'address' }], name: 'LockedBy' },
   { type: 'error', inputs: [], name: 'MaxCurrenciesTouched' },
   { type: 'error', inputs: [], name: 'NotPoolManagerToken' },
+  { type: 'error', inputs: [], name: 'PoolNotInitialized' },
   { type: 'error', inputs: [], name: 'ProtocolFeeCannotBeFetched' },
   { type: 'error', inputs: [], name: 'TickSpacingTooLarge' },
   { type: 'error', inputs: [], name: 'TickSpacingTooSmall' },
@@ -2208,11 +1768,11 @@ export const iPoolManagerABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      { name: 'account', internalType: 'address', type: 'address', indexed: true },
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
-    name: 'ApprovalForAll',
+    name: 'Burn',
   },
   {
     type: 'event',
@@ -2244,6 +1804,16 @@ export const iPoolManagerABI = [
       { name: 'hooks', internalType: 'contract IHooks', type: 'address', indexed: false },
     ],
     name: 'Initialize',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'Mint',
   },
   {
     type: 'event',
@@ -2291,34 +1861,12 @@ export const iPoolManagerABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
-      { name: 'values', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
-    name: 'TransferBatch',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: false },
-      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
-    ],
-    name: 'TransferSingle',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'value', internalType: 'string', type: 'string', indexed: false },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
-    ],
-    name: 'URI',
+    name: 'Transfer',
   },
   {
     stateMutability: 'view',
@@ -2342,24 +1890,24 @@ export const iPoolManagerABI = [
     outputs: [{ name: '', internalType: 'int24', type: 'int24' }],
   },
   {
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'currency', internalType: 'Currency', type: 'address' },
     ],
     name: 'balanceOf',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'accounts', internalType: 'address[]', type: 'address[]' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
+      { name: 'token', internalType: 'Currency', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
     ],
-    name: 'balanceOfBatch',
-    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+    name: 'burn',
+    outputs: [],
   },
   {
     stateMutability: 'view',
@@ -2440,6 +1988,20 @@ export const iPoolManagerABI = [
   {
     stateMutability: 'view',
     type: 'function',
+    inputs: [],
+    name: 'getLockLength',
+    outputs: [{ name: '_length', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getLockNonzeroDeltaCount',
+    outputs: [{ name: '_nonzeroDeltaCount', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32' },
       { name: 'owner', internalType: 'address', type: 'address' },
@@ -2505,31 +2067,11 @@ export const iPoolManagerABI = [
     outputs: [{ name: 'tick', internalType: 'int24', type: 'int24' }],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'operator', internalType: 'address', type: 'address' },
-    ],
-    name: 'isApprovedForAll',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'data', internalType: 'bytes', type: 'bytes' }],
     name: 'lock',
     outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'lockData',
-    outputs: [
-      { name: 'length', internalType: 'uint128', type: 'uint128' },
-      { name: 'nonzeroDeltaCount', internalType: 'uint128', type: 'uint128' },
-    ],
   },
   {
     stateMutability: 'nonpayable',
@@ -2591,42 +2133,6 @@ export const iPoolManagerABI = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'safeBatchTransferFrom',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'safeTransferFrom',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address' },
-      { name: 'approved', internalType: 'bool', type: 'bool' },
-    ],
-    name: 'setApprovalForAll',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
       {
         name: 'key',
         internalType: 'struct PoolKey',
@@ -2671,13 +2177,6 @@ export const iPoolManagerABI = [
     outputs: [{ name: 'paid', internalType: 'uint256', type: 'uint256' }],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
-    name: 'supportsInterface',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
@@ -2717,6 +2216,17 @@ export const iPoolManagerABI = [
       { name: 'amount', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'take',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'currency', internalType: 'Currency', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
     outputs: [],
   },
   {
@@ -3027,6 +2537,180 @@ export const poolDonateTestABI = [
   { type: 'error', inputs: [], name: 'ERC20TransferFailed' },
   { type: 'error', inputs: [], name: 'NativeTransferFailed' },
   {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
+    name: 'log',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'address', type: 'address', indexed: false }],
+    name: 'log_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'address[]', type: 'address[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
+    name: 'log_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes32', type: 'bytes32', indexed: false }],
+    name: 'log_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'int256', type: 'int256', indexed: false }],
+    name: 'log_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'log_named_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address[]', type: 'address[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'log_named_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'log_named_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_decimal_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_decimal_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+    ],
+    name: 'log_named_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log_named_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
+    name: 'log_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256', indexed: false }],
+    name: 'log_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
+    name: 'logs',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'IS_TEST',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
     stateMutability: 'payable',
     type: 'function',
     inputs: [
@@ -3048,6 +2732,13 @@ export const poolDonateTestABI = [
     ],
     name: 'donate',
     outputs: [{ name: 'delta', internalType: 'BalanceDelta', type: 'int256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'failed',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -3078,6 +2769,250 @@ export const poolDonateTestAddress = {
 export const poolDonateTestConfig = { address: poolDonateTestAddress, abi: poolDonateTestABI } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PoolInitializeTest
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ */
+export const poolInitializeTestABI = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+    inputs: [{ name: '_manager', internalType: 'contract IPoolManager', type: 'address' }],
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
+    name: 'log',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'address', type: 'address', indexed: false }],
+    name: 'log_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'address[]', type: 'address[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
+    name: 'log_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes32', type: 'bytes32', indexed: false }],
+    name: 'log_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'int256', type: 'int256', indexed: false }],
+    name: 'log_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'log_named_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address[]', type: 'address[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'log_named_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'log_named_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_decimal_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_decimal_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+    ],
+    name: 'log_named_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log_named_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
+    name: 'log_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256', indexed: false }],
+    name: 'log_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
+    name: 'logs',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'IS_TEST',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'failed',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      {
+        name: 'key',
+        internalType: 'struct PoolKey',
+        type: 'tuple',
+        components: [
+          { name: 'currency0', internalType: 'Currency', type: 'address' },
+          { name: 'currency1', internalType: 'Currency', type: 'address' },
+          { name: 'fee', internalType: 'uint24', type: 'uint24' },
+          { name: 'tickSpacing', internalType: 'int24', type: 'int24' },
+          { name: 'hooks', internalType: 'contract IHooks', type: 'address' },
+        ],
+      },
+      { name: 'sqrtPriceX96', internalType: 'uint160', type: 'uint160' },
+      { name: 'hookData', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'initialize',
+    outputs: [{ name: 'tick', internalType: 'int24', type: 'int24' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'rawData', internalType: 'bytes', type: 'bytes' }],
+    name: 'lockAcquired',
+    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'manager',
+    outputs: [{ name: '', internalType: 'contract IPoolManager', type: 'address' }],
+  },
+] as const
+
+/**
+ *
+ */
+export const poolInitializeTestAddress = {
+  31337: '0xFEB29bB43e36c0F8488F78bba2E8E94F0D829Fa1',
+} as const
+
+/**
+ *
+ */
+export const poolInitializeTestConfig = { address: poolInitializeTestAddress, abi: poolInitializeTestABI } as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PoolManager
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3100,23 +3035,29 @@ export const poolManagerABI = [
     inputs: [{ name: 'controllerGasLimit', internalType: 'uint256', type: 'uint256' }],
   },
   { type: 'error', inputs: [], name: 'CannotUpdateEmptyPosition' },
-  { type: 'error', inputs: [], name: 'CurrenciesInitializedOutOfOrder' },
+  { type: 'error', inputs: [], name: 'CurrenciesOutOfOrderOrEqual' },
   { type: 'error', inputs: [], name: 'CurrencyNotSettled' },
   { type: 'error', inputs: [], name: 'DelegateCallNotAllowed' },
   { type: 'error', inputs: [], name: 'ERC20TransferFailed' },
   { type: 'error', inputs: [], name: 'FeeNotDynamic' },
   { type: 'error', inputs: [], name: 'FeeTooLarge' },
   { type: 'error', inputs: [{ name: 'hooks', internalType: 'address', type: 'address' }], name: 'HookAddressNotValid' },
+  { type: 'error', inputs: [], name: 'InsufficientBalance' },
+  { type: 'error', inputs: [], name: 'InvalidAddress' },
   { type: 'error', inputs: [], name: 'InvalidCaller' },
   { type: 'error', inputs: [], name: 'InvalidHookResponse' },
+  { type: 'error', inputs: [], name: 'InvalidPrice' },
+  { type: 'error', inputs: [], name: 'InvalidPriceOrLiquidity' },
   { type: 'error', inputs: [], name: 'InvalidSqrtRatio' },
   { type: 'error', inputs: [], name: 'InvalidTick' },
   { type: 'error', inputs: [{ name: 'locker', internalType: 'address', type: 'address' }], name: 'LockedBy' },
   { type: 'error', inputs: [], name: 'MaxCurrenciesTouched' },
   { type: 'error', inputs: [], name: 'NativeTransferFailed' },
   { type: 'error', inputs: [], name: 'NoLiquidityToReceiveFees' },
+  { type: 'error', inputs: [], name: 'NotEnoughLiquidity' },
   { type: 'error', inputs: [], name: 'NotPoolManagerToken' },
   { type: 'error', inputs: [], name: 'PoolAlreadyInitialized' },
+  { type: 'error', inputs: [], name: 'PoolNotInitialized' },
   { type: 'error', inputs: [], name: 'PoolNotInitialized' },
   {
     type: 'error',
@@ -3131,7 +3072,9 @@ export const poolManagerABI = [
     inputs: [{ name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' }],
     name: 'PriceLimitOutOfBounds',
   },
+  { type: 'error', inputs: [], name: 'PriceOverflow' },
   { type: 'error', inputs: [], name: 'ProtocolFeeCannotBeFetched' },
+  { type: 'error', inputs: [], name: 'SafeCastOverflow' },
   { type: 'error', inputs: [], name: 'SwapAmountCannotBeZero' },
   { type: 'error', inputs: [{ name: 'tick', internalType: 'int24', type: 'int24' }], name: 'TickLiquidityOverflow' },
   {
@@ -3166,11 +3109,11 @@ export const poolManagerABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      { name: 'account', internalType: 'address', type: 'address', indexed: true },
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
-    name: 'ApprovalForAll',
+    name: 'Burn',
   },
   {
     type: 'event',
@@ -3202,6 +3145,16 @@ export const poolManagerABI = [
       { name: 'hooks', internalType: 'contract IHooks', type: 'address', indexed: false },
     ],
     name: 'Initialize',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'Mint',
   },
   {
     type: 'event',
@@ -3258,34 +3211,12 @@ export const poolManagerABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
       { name: 'from', internalType: 'address', type: 'address', indexed: true },
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
-      { name: 'values', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+      { name: 'currency', internalType: 'Currency', type: 'address', indexed: true },
+      { name: 'amount', internalType: 'uint256', type: 'uint256', indexed: false },
     ],
-    name: 'TransferBatch',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address', indexed: true },
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: false },
-      { name: 'value', internalType: 'uint256', type: 'uint256', indexed: false },
-    ],
-    name: 'TransferSingle',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'value', internalType: 'string', type: 'string', indexed: false },
-      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
-    ],
-    name: 'URI',
+    name: 'Transfer',
   },
   {
     stateMutability: 'view',
@@ -3320,20 +3251,20 @@ export const poolManagerABI = [
     type: 'function',
     inputs: [
       { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'currency', internalType: 'Currency', type: 'address' },
     ],
     name: 'balanceOf',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'accounts', internalType: 'address[]', type: 'address[]' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
+      { name: 'currency', internalType: 'Currency', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
     ],
-    name: 'balanceOfBatch',
-    outputs: [{ name: '', internalType: 'uint256[]', type: 'uint256[]' }],
+    name: 'burn',
+    outputs: [],
   },
   {
     stateMutability: 'nonpayable',
@@ -3436,6 +3367,20 @@ export const poolManagerABI = [
   {
     stateMutability: 'view',
     type: 'function',
+    inputs: [],
+    name: 'getLockLength',
+    outputs: [{ name: '_length', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getLockNonzeroDeltaCount',
+    outputs: [{ name: '_nonzeroDeltaCount', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     inputs: [
       { name: 'id', internalType: 'PoolId', type: 'bytes32' },
       { name: 'owner', internalType: 'address', type: 'address' },
@@ -3501,31 +3446,11 @@ export const poolManagerABI = [
     outputs: [{ name: 'tick', internalType: 'int24', type: 'int24' }],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'operator', internalType: 'address', type: 'address' },
-    ],
-    name: 'isApprovedForAll',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'data', internalType: 'bytes', type: 'bytes' }],
     name: 'lock',
     outputs: [{ name: 'result', internalType: 'bytes', type: 'bytes' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'lockData',
-    outputs: [
-      { name: 'length', internalType: 'uint128', type: 'uint128' },
-      { name: 'nonzeroDeltaCount', internalType: 'uint128', type: 'uint128' },
-    ],
   },
   {
     stateMutability: 'nonpayable',
@@ -3568,32 +3493,6 @@ export const poolManagerABI = [
     ],
     name: 'modifyPosition',
     outputs: [{ name: 'delta', internalType: 'BalanceDelta', type: 'int256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: '', internalType: 'address', type: 'address' },
-      { name: '', internalType: 'address', type: 'address' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'values', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: '', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'onERC1155BatchReceived',
-    outputs: [{ name: '', internalType: 'bytes4', type: 'bytes4' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: '', internalType: 'address', type: 'address' },
-      { name: '', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
-      { name: 'value', internalType: 'uint256', type: 'uint256' },
-      { name: '', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'onERC1155Received',
-    outputs: [{ name: '', internalType: 'bytes4', type: 'bytes4' }],
   },
   {
     stateMutability: 'view',
@@ -3645,42 +3544,6 @@ export const poolManagerABI = [
     inputs: [{ name: 'currency', internalType: 'Currency', type: 'address' }],
     name: 'reservesOf',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'ids', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'safeBatchTransferFrom',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'id', internalType: 'uint256', type: 'uint256' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'safeTransferFrom',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'operator', internalType: 'address', type: 'address' },
-      { name: 'approved', internalType: 'bool', type: 'bool' },
-    ],
-    name: 'setApprovalForAll',
-    outputs: [],
   },
   {
     stateMutability: 'nonpayable',
@@ -3744,13 +3607,6 @@ export const poolManagerABI = [
     outputs: [{ name: 'paid', internalType: 'uint256', type: 'uint256' }],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
-    name: 'supportsInterface',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
@@ -3796,6 +3652,17 @@ export const poolManagerABI = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'currency', internalType: 'Currency', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
       {
         name: 'key',
         internalType: 'struct PoolKey',
@@ -3811,13 +3678,6 @@ export const poolManagerABI = [
     ],
     name: 'updateDynamicSwapFee',
     outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'uri',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
   },
   { stateMutability: 'payable', type: 'receive' },
 ] as const
@@ -3885,6 +3745,187 @@ export const poolModifyPositionTestABI = [
   },
   { type: 'error', inputs: [], name: 'ERC20TransferFailed' },
   { type: 'error', inputs: [], name: 'NativeTransferFailed' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
+    name: 'log',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'address', type: 'address', indexed: false }],
+    name: 'log_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'address[]', type: 'address[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
+    name: 'log_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes32', type: 'bytes32', indexed: false }],
+    name: 'log_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'int256', type: 'int256', indexed: false }],
+    name: 'log_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'log_named_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address[]', type: 'address[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'log_named_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'log_named_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_decimal_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_decimal_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+    ],
+    name: 'log_named_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log_named_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
+    name: 'log_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256', indexed: false }],
+    name: 'log_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
+    name: 'logs',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'IS_TEST',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'failed',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
   {
     stateMutability: 'nonpayable',
     type: 'function',
@@ -4000,6 +4041,187 @@ export const poolSwapTestABI = [
   { type: 'error', inputs: [], name: 'NativeTransferFailed' },
   { type: 'error', inputs: [], name: 'NoSwapOccurred' },
   {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
+    name: 'log',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'address', type: 'address', indexed: false }],
+    name: 'log_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'address[]', type: 'address[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
+    name: 'log_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes32', type: 'bytes32', indexed: false }],
+    name: 'log_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'int256', type: 'int256', indexed: false }],
+    name: 'log_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'log_named_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address[]', type: 'address[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'log_named_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'log_named_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_decimal_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_decimal_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+    ],
+    name: 'log_named_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log_named_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
+    name: 'log_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256', indexed: false }],
+    name: 'log_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
+    name: 'logs',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'IS_TEST',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'failed',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'rawData', internalType: 'bytes', type: 'bytes' }],
@@ -4095,10 +4317,339 @@ export const poolSwapTestAddress = {
 export const poolSwapTestConfig = { address: poolSwapTestAddress, abi: poolSwapTestABI } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PoolTakeTest
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const poolTakeTestABI = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+    inputs: [{ name: '_manager', internalType: 'contract IPoolManager', type: 'address' }],
+  },
+  { type: 'error', inputs: [], name: 'SafeCastOverflow' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
+    name: 'log',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'address', type: 'address', indexed: false }],
+    name: 'log_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: 'val', internalType: 'address[]', type: 'address[]', indexed: false }],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
+    name: 'log_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes32', type: 'bytes32', indexed: false }],
+    name: 'log_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'int256', type: 'int256', indexed: false }],
+    name: 'log_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'log_named_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256[]', type: 'uint256[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256[]', type: 'int256[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address[]', type: 'address[]', indexed: false },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'log_named_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'log_named_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_decimal_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+      { name: 'decimals', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_decimal_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+    ],
+    name: 'log_named_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log_named_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'string', type: 'string', indexed: false }],
+    name: 'log_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256', indexed: false }],
+    name: 'log_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [{ name: '', internalType: 'bytes', type: 'bytes', indexed: false }],
+    name: 'logs',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'IS_TEST',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'failed',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'rawData', internalType: 'bytes', type: 'bytes' }],
+    name: 'lockAcquired',
+    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'manager',
+    outputs: [{ name: '', internalType: 'contract IPoolManager', type: 'address' }],
+  },
+  {
+    stateMutability: 'payable',
+    type: 'function',
+    inputs: [
+      {
+        name: 'key',
+        internalType: 'struct PoolKey',
+        type: 'tuple',
+        components: [
+          { name: 'currency0', internalType: 'Currency', type: 'address' },
+          { name: 'currency1', internalType: 'Currency', type: 'address' },
+          { name: 'fee', internalType: 'uint24', type: 'uint24' },
+          { name: 'tickSpacing', internalType: 'int24', type: 'int24' },
+          { name: 'hooks', internalType: 'contract IHooks', type: 'address' },
+        ],
+      },
+      { name: 'amount0', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount1', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'take',
+    outputs: [],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PoolTestBase
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const poolTestBaseABI = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'data', internalType: 'bytes', type: 'bytes' }],
+    name: 'lockAcquired',
+    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'manager',
+    outputs: [{ name: '', internalType: 'contract IPoolManager', type: 'address' }],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Position
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const positionABI = [{ type: 'error', inputs: [], name: 'CannotUpdateEmptyPosition' }] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ProtocolFeeControllerTest
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const protocolFeeControllerTestABI = [
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      {
+        name: 'key',
+        internalType: 'struct PoolKey',
+        type: 'tuple',
+        components: [
+          { name: 'currency0', internalType: 'Currency', type: 'address' },
+          { name: 'currency1', internalType: 'Currency', type: 'address' },
+          { name: 'fee', internalType: 'uint24', type: 'uint24' },
+          { name: 'tickSpacing', internalType: 'int24', type: 'int24' },
+          { name: 'hooks', internalType: 'contract IHooks', type: 'address' },
+        ],
+      },
+    ],
+    name: 'protocolFeesForPool',
+    outputs: [{ name: '', internalType: 'uint24', type: 'uint24' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'id', internalType: 'PoolId', type: 'bytes32' },
+      { name: 'fee', internalType: 'uint16', type: 'uint16' },
+    ],
+    name: 'setSwapFeeForPool',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'id', internalType: 'PoolId', type: 'bytes32' },
+      { name: 'fee', internalType: 'uint16', type: 'uint16' },
+    ],
+    name: 'setWithdrawFeeForPool',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'PoolId', type: 'bytes32' }],
+    name: 'swapFeeForPool',
+    outputs: [{ name: '', internalType: 'uint16', type: 'uint16' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'PoolId', type: 'bytes32' }],
+    name: 'withdrawFeeForPool',
+    outputs: [{ name: '', internalType: 'uint16', type: 'uint16' }],
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SafeCast
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const safeCastABI = [{ type: 'error', inputs: [], name: 'SafeCastOverflow' }] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SqrtPriceMath
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const sqrtPriceMathABI = [
+  { type: 'error', inputs: [], name: 'InvalidPrice' },
+  { type: 'error', inputs: [], name: 'InvalidPriceOrLiquidity' },
+  { type: 'error', inputs: [], name: 'NotEnoughLiquidity' },
+  { type: 'error', inputs: [], name: 'PriceOverflow' },
+] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TestERC20
@@ -4487,6 +5038,39 @@ export const token1Config = { address: token1Address, abi: token1ABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link balanceDeltaLibraryABI}__.
+ */
+export function useBalanceDeltaLibraryRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof balanceDeltaLibraryABI, TFunctionName>,
+>(config: Omit<UseContractReadConfig<typeof balanceDeltaLibraryABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: balanceDeltaLibraryABI, ...config } as UseContractReadConfig<
+    typeof balanceDeltaLibraryABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link balanceDeltaLibraryABI}__ and `functionName` set to `"MAXIMUM_DELTA"`.
+ */
+export function useBalanceDeltaLibraryMaximumDelta<
+  TFunctionName extends 'MAXIMUM_DELTA',
+  TSelectData = ReadContractResult<typeof balanceDeltaLibraryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof balanceDeltaLibraryABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: balanceDeltaLibraryABI,
+    functionName: 'MAXIMUM_DELTA',
+    ...config,
+  } as UseContractReadConfig<typeof balanceDeltaLibraryABI, TFunctionName, TSelectData>)
+}
+
+/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link baseTestHooksABI}__.
  */
 export function useBaseTestHooksWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
@@ -4814,6 +5398,145 @@ export function usePrepareBaseTestHooksBeforeSwap(
     functionName: 'beforeSwap',
     ...config,
   } as UsePrepareContractWriteConfig<typeof baseTestHooksABI, 'beforeSwap'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link claimsABI}__.
+ */
+export function useClaimsRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof claimsABI, TFunctionName>,
+>(config: Omit<UseContractReadConfig<typeof claimsABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: claimsABI, ...config } as UseContractReadConfig<
+    typeof claimsABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link claimsABI}__ and `functionName` set to `"balanceOf"`.
+ */
+export function useClaimsBalanceOf<
+  TFunctionName extends 'balanceOf',
+  TSelectData = ReadContractResult<typeof claimsABI, TFunctionName>,
+>(
+  config: Omit<UseContractReadConfig<typeof claimsABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
+) {
+  return useContractRead({ abi: claimsABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
+    typeof claimsABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link claimsABI}__.
+ */
+export function useClaimsWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof claimsABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof claimsABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof claimsABI, TFunctionName, TMode>({ abi: claimsABI, ...config } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link claimsABI}__ and `functionName` set to `"transfer"`.
+ */
+export function useClaimsTransfer<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof claimsABI, 'transfer'>['request']['abi'],
+        'transfer',
+        TMode
+      > & { functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof claimsABI, 'transfer', TMode> & {
+        abi?: never
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  return useContractWrite<typeof claimsABI, 'transfer', TMode>({
+    abi: claimsABI,
+    functionName: 'transfer',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link claimsABI}__.
+ */
+export function usePrepareClaimsWrite<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof claimsABI, TFunctionName>, 'abi'> = {} as any,
+) {
+  return usePrepareContractWrite({ abi: claimsABI, ...config } as UsePrepareContractWriteConfig<
+    typeof claimsABI,
+    TFunctionName
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link claimsABI}__ and `functionName` set to `"transfer"`.
+ */
+export function usePrepareClaimsTransfer(
+  config: Omit<UsePrepareContractWriteConfig<typeof claimsABI, 'transfer'>, 'abi' | 'functionName'> = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: claimsABI,
+    functionName: 'transfer',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof claimsABI, 'transfer'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link claimsABI}__.
+ */
+export function useClaimsEvent<TEventName extends string>(
+  config: Omit<UseContractEventConfig<typeof claimsABI, TEventName>, 'abi'> = {} as any,
+) {
+  return useContractEvent({ abi: claimsABI, ...config } as UseContractEventConfig<typeof claimsABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link claimsABI}__ and `eventName` set to `"Burn"`.
+ */
+export function useClaimsBurnEvent(
+  config: Omit<UseContractEventConfig<typeof claimsABI, 'Burn'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: claimsABI, eventName: 'Burn', ...config } as UseContractEventConfig<
+    typeof claimsABI,
+    'Burn'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link claimsABI}__ and `eventName` set to `"Mint"`.
+ */
+export function useClaimsMintEvent(
+  config: Omit<UseContractEventConfig<typeof claimsABI, 'Mint'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: claimsABI, eventName: 'Mint', ...config } as UseContractEventConfig<
+    typeof claimsABI,
+    'Mint'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link claimsABI}__ and `eventName` set to `"Transfer"`.
+ */
+export function useClaimsTransferEvent(
+  config: Omit<UseContractEventConfig<typeof claimsABI, 'Transfer'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: claimsABI, eventName: 'Transfer', ...config } as UseContractEventConfig<
+    typeof claimsABI,
+    'Transfer'
+  >)
 }
 
 /**
@@ -5858,412 +6581,6 @@ export function useCurrencyLibraryNative<
 ) {
   return useContractRead({ abi: currencyLibraryABI, functionName: 'NATIVE', ...config } as UseContractReadConfig<
     typeof currencyLibraryABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link deployersABI}__.
- */
-export function useDeployersWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof deployersABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      >
-    : UseContractWriteConfig<typeof deployersABI, TFunctionName, TMode> & {
-        abi?: never
-      } = {} as any,
-) {
-  return useContractWrite<typeof deployersABI, TFunctionName, TMode>({ abi: deployersABI, ...config } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link deployersABI}__ and `functionName` set to `"createAndInitPool"`.
- */
-export function useDeployersCreateAndInitPool<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof deployersABI, 'createAndInitPool'>['request']['abi'],
-        'createAndInitPool',
-        TMode
-      > & { functionName?: 'createAndInitPool' }
-    : UseContractWriteConfig<typeof deployersABI, 'createAndInitPool', TMode> & {
-        abi?: never
-        functionName?: 'createAndInitPool'
-      } = {} as any,
-) {
-  return useContractWrite<typeof deployersABI, 'createAndInitPool', TMode>({
-    abi: deployersABI,
-    functionName: 'createAndInitPool',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link deployersABI}__.
- */
-export function usePrepareDeployersWrite<TFunctionName extends string>(
-  config: Omit<UsePrepareContractWriteConfig<typeof deployersABI, TFunctionName>, 'abi'> = {} as any,
-) {
-  return usePrepareContractWrite({ abi: deployersABI, ...config } as UsePrepareContractWriteConfig<
-    typeof deployersABI,
-    TFunctionName
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link deployersABI}__ and `functionName` set to `"createAndInitPool"`.
- */
-export function usePrepareDeployersCreateAndInitPool(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof deployersABI, 'createAndInitPool'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: deployersABI,
-    functionName: 'createAndInitPool',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof deployersABI, 'createAndInitPool'>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link erc1155ABI}__.
- */
-export function useErc1155Read<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof erc1155ABI, TFunctionName>,
->(config: Omit<UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
-  return useContractRead({ abi: erc1155ABI, ...config } as UseContractReadConfig<
-    typeof erc1155ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"balanceOf"`.
- */
-export function useErc1155BalanceOf<
-  TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<typeof erc1155ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: erc1155ABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
-    typeof erc1155ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"balanceOfBatch"`.
- */
-export function useErc1155BalanceOfBatch<
-  TFunctionName extends 'balanceOfBatch',
-  TSelectData = ReadContractResult<typeof erc1155ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: erc1155ABI, functionName: 'balanceOfBatch', ...config } as UseContractReadConfig<
-    typeof erc1155ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"isApprovedForAll"`.
- */
-export function useErc1155IsApprovedForAll<
-  TFunctionName extends 'isApprovedForAll',
-  TSelectData = ReadContractResult<typeof erc1155ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: erc1155ABI, functionName: 'isApprovedForAll', ...config } as UseContractReadConfig<
-    typeof erc1155ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"supportsInterface"`.
- */
-export function useErc1155SupportsInterface<
-  TFunctionName extends 'supportsInterface',
-  TSelectData = ReadContractResult<typeof erc1155ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: erc1155ABI, functionName: 'supportsInterface', ...config } as UseContractReadConfig<
-    typeof erc1155ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"uri"`.
- */
-export function useErc1155Uri<
-  TFunctionName extends 'uri',
-  TSelectData = ReadContractResult<typeof erc1155ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof erc1155ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: erc1155ABI, functionName: 'uri', ...config } as UseContractReadConfig<
-    typeof erc1155ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link erc1155ABI}__.
- */
-export function useErc1155Write<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof erc1155ABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      >
-    : UseContractWriteConfig<typeof erc1155ABI, TFunctionName, TMode> & {
-        abi?: never
-      } = {} as any,
-) {
-  return useContractWrite<typeof erc1155ABI, TFunctionName, TMode>({ abi: erc1155ABI, ...config } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
- */
-export function useErc1155SafeBatchTransferFrom<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof erc1155ABI, 'safeBatchTransferFrom'>['request']['abi'],
-        'safeBatchTransferFrom',
-        TMode
-      > & { functionName?: 'safeBatchTransferFrom' }
-    : UseContractWriteConfig<typeof erc1155ABI, 'safeBatchTransferFrom', TMode> & {
-        abi?: never
-        functionName?: 'safeBatchTransferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof erc1155ABI, 'safeBatchTransferFrom', TMode>({
-    abi: erc1155ABI,
-    functionName: 'safeBatchTransferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"safeTransferFrom"`.
- */
-export function useErc1155SafeTransferFrom<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof erc1155ABI, 'safeTransferFrom'>['request']['abi'],
-        'safeTransferFrom',
-        TMode
-      > & { functionName?: 'safeTransferFrom' }
-    : UseContractWriteConfig<typeof erc1155ABI, 'safeTransferFrom', TMode> & {
-        abi?: never
-        functionName?: 'safeTransferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof erc1155ABI, 'safeTransferFrom', TMode>({
-    abi: erc1155ABI,
-    functionName: 'safeTransferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"setApprovalForAll"`.
- */
-export function useErc1155SetApprovalForAll<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof erc1155ABI, 'setApprovalForAll'>['request']['abi'],
-        'setApprovalForAll',
-        TMode
-      > & { functionName?: 'setApprovalForAll' }
-    : UseContractWriteConfig<typeof erc1155ABI, 'setApprovalForAll', TMode> & {
-        abi?: never
-        functionName?: 'setApprovalForAll'
-      } = {} as any,
-) {
-  return useContractWrite<typeof erc1155ABI, 'setApprovalForAll', TMode>({
-    abi: erc1155ABI,
-    functionName: 'setApprovalForAll',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link erc1155ABI}__.
- */
-export function usePrepareErc1155Write<TFunctionName extends string>(
-  config: Omit<UsePrepareContractWriteConfig<typeof erc1155ABI, TFunctionName>, 'abi'> = {} as any,
-) {
-  return usePrepareContractWrite({ abi: erc1155ABI, ...config } as UsePrepareContractWriteConfig<
-    typeof erc1155ABI,
-    TFunctionName
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
- */
-export function usePrepareErc1155SafeBatchTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof erc1155ABI, 'safeBatchTransferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: erc1155ABI,
-    functionName: 'safeBatchTransferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof erc1155ABI, 'safeBatchTransferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"safeTransferFrom"`.
- */
-export function usePrepareErc1155SafeTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof erc1155ABI, 'safeTransferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: erc1155ABI,
-    functionName: 'safeTransferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof erc1155ABI, 'safeTransferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link erc1155ABI}__ and `functionName` set to `"setApprovalForAll"`.
- */
-export function usePrepareErc1155SetApprovalForAll(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof erc1155ABI, 'setApprovalForAll'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: erc1155ABI,
-    functionName: 'setApprovalForAll',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof erc1155ABI, 'setApprovalForAll'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc1155ABI}__.
- */
-export function useErc1155Event<TEventName extends string>(
-  config: Omit<UseContractEventConfig<typeof erc1155ABI, TEventName>, 'abi'> = {} as any,
-) {
-  return useContractEvent({ abi: erc1155ABI, ...config } as UseContractEventConfig<typeof erc1155ABI, TEventName>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc1155ABI}__ and `eventName` set to `"ApprovalForAll"`.
- */
-export function useErc1155ApprovalForAllEvent(
-  config: Omit<UseContractEventConfig<typeof erc1155ABI, 'ApprovalForAll'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: erc1155ABI, eventName: 'ApprovalForAll', ...config } as UseContractEventConfig<
-    typeof erc1155ABI,
-    'ApprovalForAll'
-  >)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc1155ABI}__ and `eventName` set to `"TransferBatch"`.
- */
-export function useErc1155TransferBatchEvent(
-  config: Omit<UseContractEventConfig<typeof erc1155ABI, 'TransferBatch'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: erc1155ABI, eventName: 'TransferBatch', ...config } as UseContractEventConfig<
-    typeof erc1155ABI,
-    'TransferBatch'
-  >)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc1155ABI}__ and `eventName` set to `"TransferSingle"`.
- */
-export function useErc1155TransferSingleEvent(
-  config: Omit<UseContractEventConfig<typeof erc1155ABI, 'TransferSingle'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: erc1155ABI, eventName: 'TransferSingle', ...config } as UseContractEventConfig<
-    typeof erc1155ABI,
-    'TransferSingle'
-  >)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link erc1155ABI}__ and `eventName` set to `"URI"`.
- */
-export function useErc1155UriEvent(
-  config: Omit<UseContractEventConfig<typeof erc1155ABI, 'URI'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: erc1155ABI, eventName: 'URI', ...config } as UseContractEventConfig<
-    typeof erc1155ABI,
-    'URI'
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link erc165ABI}__.
- */
-export function useErc165Read<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof erc165ABI, TFunctionName>,
->(config: Omit<UseContractReadConfig<typeof erc165ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
-  return useContractRead({ abi: erc165ABI, ...config } as UseContractReadConfig<
-    typeof erc165ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link erc165ABI}__ and `functionName` set to `"supportsInterface"`.
- */
-export function useErc165SupportsInterface<
-  TFunctionName extends 'supportsInterface',
-  TSelectData = ReadContractResult<typeof erc165ABI, TFunctionName>,
->(
-  config: Omit<UseContractReadConfig<typeof erc165ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
-) {
-  return useContractRead({ abi: erc165ABI, functionName: 'supportsInterface', ...config } as UseContractReadConfig<
-    typeof erc165ABI,
     TFunctionName,
     TSelectData
   >)
@@ -7451,6 +7768,180 @@ export function useHookTestLogsEvent(
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link hooksABI}__.
+ */
+export function useHooksRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof hooksABI, TFunctionName>,
+>(config: Omit<UseContractReadConfig<typeof hooksABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: hooksABI, ...config } as UseContractReadConfig<
+    typeof hooksABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link hooksABI}__ and `functionName` set to `"NO_OP_SELECTOR"`.
+ */
+export function useHooksNoOpSelector<
+  TFunctionName extends 'NO_OP_SELECTOR',
+  TSelectData = ReadContractResult<typeof hooksABI, TFunctionName>,
+>(
+  config: Omit<UseContractReadConfig<typeof hooksABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
+) {
+  return useContractRead({ abi: hooksABI, functionName: 'NO_OP_SELECTOR', ...config } as UseContractReadConfig<
+    typeof hooksABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iClaimsABI}__.
+ */
+export function useIClaimsWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof iClaimsABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof iClaimsABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof iClaimsABI, TFunctionName, TMode>({ abi: iClaimsABI, ...config } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iClaimsABI}__ and `functionName` set to `"balanceOf"`.
+ */
+export function useIClaimsBalanceOf<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof iClaimsABI, 'balanceOf'>['request']['abi'],
+        'balanceOf',
+        TMode
+      > & { functionName?: 'balanceOf' }
+    : UseContractWriteConfig<typeof iClaimsABI, 'balanceOf', TMode> & {
+        abi?: never
+        functionName?: 'balanceOf'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iClaimsABI, 'balanceOf', TMode>({
+    abi: iClaimsABI,
+    functionName: 'balanceOf',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iClaimsABI}__ and `functionName` set to `"transfer"`.
+ */
+export function useIClaimsTransfer<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof iClaimsABI, 'transfer'>['request']['abi'],
+        'transfer',
+        TMode
+      > & { functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof iClaimsABI, 'transfer', TMode> & {
+        abi?: never
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iClaimsABI, 'transfer', TMode>({
+    abi: iClaimsABI,
+    functionName: 'transfer',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iClaimsABI}__.
+ */
+export function usePrepareIClaimsWrite<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof iClaimsABI, TFunctionName>, 'abi'> = {} as any,
+) {
+  return usePrepareContractWrite({ abi: iClaimsABI, ...config } as UsePrepareContractWriteConfig<
+    typeof iClaimsABI,
+    TFunctionName
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iClaimsABI}__ and `functionName` set to `"balanceOf"`.
+ */
+export function usePrepareIClaimsBalanceOf(
+  config: Omit<UsePrepareContractWriteConfig<typeof iClaimsABI, 'balanceOf'>, 'abi' | 'functionName'> = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iClaimsABI,
+    functionName: 'balanceOf',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iClaimsABI, 'balanceOf'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iClaimsABI}__ and `functionName` set to `"transfer"`.
+ */
+export function usePrepareIClaimsTransfer(
+  config: Omit<UsePrepareContractWriteConfig<typeof iClaimsABI, 'transfer'>, 'abi' | 'functionName'> = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iClaimsABI,
+    functionName: 'transfer',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iClaimsABI, 'transfer'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iClaimsABI}__.
+ */
+export function useIClaimsEvent<TEventName extends string>(
+  config: Omit<UseContractEventConfig<typeof iClaimsABI, TEventName>, 'abi'> = {} as any,
+) {
+  return useContractEvent({ abi: iClaimsABI, ...config } as UseContractEventConfig<typeof iClaimsABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iClaimsABI}__ and `eventName` set to `"Burn"`.
+ */
+export function useIClaimsBurnEvent(
+  config: Omit<UseContractEventConfig<typeof iClaimsABI, 'Burn'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: iClaimsABI, eventName: 'Burn', ...config } as UseContractEventConfig<
+    typeof iClaimsABI,
+    'Burn'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iClaimsABI}__ and `eventName` set to `"Mint"`.
+ */
+export function useIClaimsMintEvent(
+  config: Omit<UseContractEventConfig<typeof iClaimsABI, 'Mint'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: iClaimsABI, eventName: 'Mint', ...config } as UseContractEventConfig<
+    typeof iClaimsABI,
+    'Mint'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iClaimsABI}__ and `eventName` set to `"Transfer"`.
+ */
+export function useIClaimsTransferEvent(
+  config: Omit<UseContractEventConfig<typeof iClaimsABI, 'Transfer'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: iClaimsABI, eventName: 'Transfer', ...config } as UseContractEventConfig<
+    typeof iClaimsABI,
+    'Transfer'
+  >)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link iDynamicFeeManagerABI}__.
  */
 export function useIDynamicFeeManagerRead<
@@ -7480,1071 +7971,6 @@ export function useIDynamicFeeManagerGetFee<
     typeof iDynamicFeeManagerABI,
     TFunctionName,
     TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155ABI}__.
- */
-export function useIerc1155Read<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof ierc1155ABI, TFunctionName>,
->(config: Omit<UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
-  return useContractRead({ abi: ierc1155ABI, ...config } as UseContractReadConfig<
-    typeof ierc1155ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"balanceOf"`.
- */
-export function useIerc1155BalanceOf<
-  TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<typeof ierc1155ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: ierc1155ABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
-    typeof ierc1155ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"balanceOfBatch"`.
- */
-export function useIerc1155BalanceOfBatch<
-  TFunctionName extends 'balanceOfBatch',
-  TSelectData = ReadContractResult<typeof ierc1155ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: ierc1155ABI, functionName: 'balanceOfBatch', ...config } as UseContractReadConfig<
-    typeof ierc1155ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"isApprovedForAll"`.
- */
-export function useIerc1155IsApprovedForAll<
-  TFunctionName extends 'isApprovedForAll',
-  TSelectData = ReadContractResult<typeof ierc1155ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: ierc1155ABI, functionName: 'isApprovedForAll', ...config } as UseContractReadConfig<
-    typeof ierc1155ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"supportsInterface"`.
- */
-export function useIerc1155SupportsInterface<
-  TFunctionName extends 'supportsInterface',
-  TSelectData = ReadContractResult<typeof ierc1155ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc1155ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: ierc1155ABI, functionName: 'supportsInterface', ...config } as UseContractReadConfig<
-    typeof ierc1155ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ABI}__.
- */
-export function useIerc1155Write<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc1155ABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      >
-    : UseContractWriteConfig<typeof ierc1155ABI, TFunctionName, TMode> & {
-        abi?: never
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc1155ABI, TFunctionName, TMode>({ abi: ierc1155ABI, ...config } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
- */
-export function useIerc1155SafeBatchTransferFrom<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc1155ABI, 'safeBatchTransferFrom'>['request']['abi'],
-        'safeBatchTransferFrom',
-        TMode
-      > & { functionName?: 'safeBatchTransferFrom' }
-    : UseContractWriteConfig<typeof ierc1155ABI, 'safeBatchTransferFrom', TMode> & {
-        abi?: never
-        functionName?: 'safeBatchTransferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc1155ABI, 'safeBatchTransferFrom', TMode>({
-    abi: ierc1155ABI,
-    functionName: 'safeBatchTransferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"safeTransferFrom"`.
- */
-export function useIerc1155SafeTransferFrom<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc1155ABI, 'safeTransferFrom'>['request']['abi'],
-        'safeTransferFrom',
-        TMode
-      > & { functionName?: 'safeTransferFrom' }
-    : UseContractWriteConfig<typeof ierc1155ABI, 'safeTransferFrom', TMode> & {
-        abi?: never
-        functionName?: 'safeTransferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc1155ABI, 'safeTransferFrom', TMode>({
-    abi: ierc1155ABI,
-    functionName: 'safeTransferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"setApprovalForAll"`.
- */
-export function useIerc1155SetApprovalForAll<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc1155ABI, 'setApprovalForAll'>['request']['abi'],
-        'setApprovalForAll',
-        TMode
-      > & { functionName?: 'setApprovalForAll' }
-    : UseContractWriteConfig<typeof ierc1155ABI, 'setApprovalForAll', TMode> & {
-        abi?: never
-        functionName?: 'setApprovalForAll'
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc1155ABI, 'setApprovalForAll', TMode>({
-    abi: ierc1155ABI,
-    functionName: 'setApprovalForAll',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155ABI}__.
- */
-export function usePrepareIerc1155Write<TFunctionName extends string>(
-  config: Omit<UsePrepareContractWriteConfig<typeof ierc1155ABI, TFunctionName>, 'abi'> = {} as any,
-) {
-  return usePrepareContractWrite({ abi: ierc1155ABI, ...config } as UsePrepareContractWriteConfig<
-    typeof ierc1155ABI,
-    TFunctionName
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
- */
-export function usePrepareIerc1155SafeBatchTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc1155ABI, 'safeBatchTransferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: ierc1155ABI,
-    functionName: 'safeBatchTransferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc1155ABI, 'safeBatchTransferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"safeTransferFrom"`.
- */
-export function usePrepareIerc1155SafeTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc1155ABI, 'safeTransferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: ierc1155ABI,
-    functionName: 'safeTransferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc1155ABI, 'safeTransferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155ABI}__ and `functionName` set to `"setApprovalForAll"`.
- */
-export function usePrepareIerc1155SetApprovalForAll(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc1155ABI, 'setApprovalForAll'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: ierc1155ABI,
-    functionName: 'setApprovalForAll',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc1155ABI, 'setApprovalForAll'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155ABI}__.
- */
-export function useIerc1155Event<TEventName extends string>(
-  config: Omit<UseContractEventConfig<typeof ierc1155ABI, TEventName>, 'abi'> = {} as any,
-) {
-  return useContractEvent({ abi: ierc1155ABI, ...config } as UseContractEventConfig<typeof ierc1155ABI, TEventName>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155ABI}__ and `eventName` set to `"ApprovalForAll"`.
- */
-export function useIerc1155ApprovalForAllEvent(
-  config: Omit<UseContractEventConfig<typeof ierc1155ABI, 'ApprovalForAll'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: ierc1155ABI, eventName: 'ApprovalForAll', ...config } as UseContractEventConfig<
-    typeof ierc1155ABI,
-    'ApprovalForAll'
-  >)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155ABI}__ and `eventName` set to `"TransferBatch"`.
- */
-export function useIerc1155TransferBatchEvent(
-  config: Omit<UseContractEventConfig<typeof ierc1155ABI, 'TransferBatch'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: ierc1155ABI, eventName: 'TransferBatch', ...config } as UseContractEventConfig<
-    typeof ierc1155ABI,
-    'TransferBatch'
-  >)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155ABI}__ and `eventName` set to `"TransferSingle"`.
- */
-export function useIerc1155TransferSingleEvent(
-  config: Omit<UseContractEventConfig<typeof ierc1155ABI, 'TransferSingle'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: ierc1155ABI, eventName: 'TransferSingle', ...config } as UseContractEventConfig<
-    typeof ierc1155ABI,
-    'TransferSingle'
-  >)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155ABI}__ and `eventName` set to `"URI"`.
- */
-export function useIerc1155UriEvent(
-  config: Omit<UseContractEventConfig<typeof ierc1155ABI, 'URI'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: ierc1155ABI, eventName: 'URI', ...config } as UseContractEventConfig<
-    typeof ierc1155ABI,
-    'URI'
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155MetadataUriABI}__.
- */
-export function useIerc1155MetadataUriRead<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
->(config: Omit<UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
-  return useContractRead({ abi: ierc1155MetadataUriABI, ...config } as UseContractReadConfig<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"balanceOf"`.
- */
-export function useIerc1155MetadataUriBalanceOf<
-  TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: ierc1155MetadataUriABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"balanceOfBatch"`.
- */
-export function useIerc1155MetadataUriBalanceOfBatch<
-  TFunctionName extends 'balanceOfBatch',
-  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: ierc1155MetadataUriABI,
-    functionName: 'balanceOfBatch',
-    ...config,
-  } as UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"isApprovedForAll"`.
- */
-export function useIerc1155MetadataUriIsApprovedForAll<
-  TFunctionName extends 'isApprovedForAll',
-  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: ierc1155MetadataUriABI,
-    functionName: 'isApprovedForAll',
-    ...config,
-  } as UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"supportsInterface"`.
- */
-export function useIerc1155MetadataUriSupportsInterface<
-  TFunctionName extends 'supportsInterface',
-  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: ierc1155MetadataUriABI,
-    functionName: 'supportsInterface',
-    ...config,
-  } as UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"uri"`.
- */
-export function useIerc1155MetadataUriUri<
-  TFunctionName extends 'uri',
-  TSelectData = ReadContractResult<typeof ierc1155MetadataUriABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc1155MetadataUriABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: ierc1155MetadataUriABI, functionName: 'uri', ...config } as UseContractReadConfig<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__.
- */
-export function useIerc1155MetadataUriWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc1155MetadataUriABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      >
-    : UseContractWriteConfig<typeof ierc1155MetadataUriABI, TFunctionName, TMode> & {
-        abi?: never
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc1155MetadataUriABI, TFunctionName, TMode>({
-    abi: ierc1155MetadataUriABI,
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
- */
-export function useIerc1155MetadataUriSafeBatchTransferFrom<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc1155MetadataUriABI, 'safeBatchTransferFrom'>['request']['abi'],
-        'safeBatchTransferFrom',
-        TMode
-      > & { functionName?: 'safeBatchTransferFrom' }
-    : UseContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeBatchTransferFrom', TMode> & {
-        abi?: never
-        functionName?: 'safeBatchTransferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc1155MetadataUriABI, 'safeBatchTransferFrom', TMode>({
-    abi: ierc1155MetadataUriABI,
-    functionName: 'safeBatchTransferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"safeTransferFrom"`.
- */
-export function useIerc1155MetadataUriSafeTransferFrom<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc1155MetadataUriABI, 'safeTransferFrom'>['request']['abi'],
-        'safeTransferFrom',
-        TMode
-      > & { functionName?: 'safeTransferFrom' }
-    : UseContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeTransferFrom', TMode> & {
-        abi?: never
-        functionName?: 'safeTransferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc1155MetadataUriABI, 'safeTransferFrom', TMode>({
-    abi: ierc1155MetadataUriABI,
-    functionName: 'safeTransferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"setApprovalForAll"`.
- */
-export function useIerc1155MetadataUriSetApprovalForAll<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc1155MetadataUriABI, 'setApprovalForAll'>['request']['abi'],
-        'setApprovalForAll',
-        TMode
-      > & { functionName?: 'setApprovalForAll' }
-    : UseContractWriteConfig<typeof ierc1155MetadataUriABI, 'setApprovalForAll', TMode> & {
-        abi?: never
-        functionName?: 'setApprovalForAll'
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc1155MetadataUriABI, 'setApprovalForAll', TMode>({
-    abi: ierc1155MetadataUriABI,
-    functionName: 'setApprovalForAll',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__.
- */
-export function usePrepareIerc1155MetadataUriWrite<TFunctionName extends string>(
-  config: Omit<UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, TFunctionName>, 'abi'> = {} as any,
-) {
-  return usePrepareContractWrite({ abi: ierc1155MetadataUriABI, ...config } as UsePrepareContractWriteConfig<
-    typeof ierc1155MetadataUriABI,
-    TFunctionName
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
- */
-export function usePrepareIerc1155MetadataUriSafeBatchTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeBatchTransferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: ierc1155MetadataUriABI,
-    functionName: 'safeBatchTransferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeBatchTransferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"safeTransferFrom"`.
- */
-export function usePrepareIerc1155MetadataUriSafeTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeTransferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: ierc1155MetadataUriABI,
-    functionName: 'safeTransferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'safeTransferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `functionName` set to `"setApprovalForAll"`.
- */
-export function usePrepareIerc1155MetadataUriSetApprovalForAll(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'setApprovalForAll'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: ierc1155MetadataUriABI,
-    functionName: 'setApprovalForAll',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc1155MetadataUriABI, 'setApprovalForAll'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155MetadataUriABI}__.
- */
-export function useIerc1155MetadataUriEvent<TEventName extends string>(
-  config: Omit<UseContractEventConfig<typeof ierc1155MetadataUriABI, TEventName>, 'abi'> = {} as any,
-) {
-  return useContractEvent({ abi: ierc1155MetadataUriABI, ...config } as UseContractEventConfig<
-    typeof ierc1155MetadataUriABI,
-    TEventName
-  >)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `eventName` set to `"ApprovalForAll"`.
- */
-export function useIerc1155MetadataUriApprovalForAllEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc1155MetadataUriABI, 'ApprovalForAll'>,
-    'abi' | 'eventName'
-  > = {} as any,
-) {
-  return useContractEvent({
-    abi: ierc1155MetadataUriABI,
-    eventName: 'ApprovalForAll',
-    ...config,
-  } as UseContractEventConfig<typeof ierc1155MetadataUriABI, 'ApprovalForAll'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `eventName` set to `"TransferBatch"`.
- */
-export function useIerc1155MetadataUriTransferBatchEvent(
-  config: Omit<UseContractEventConfig<typeof ierc1155MetadataUriABI, 'TransferBatch'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({
-    abi: ierc1155MetadataUriABI,
-    eventName: 'TransferBatch',
-    ...config,
-  } as UseContractEventConfig<typeof ierc1155MetadataUriABI, 'TransferBatch'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `eventName` set to `"TransferSingle"`.
- */
-export function useIerc1155MetadataUriTransferSingleEvent(
-  config: Omit<
-    UseContractEventConfig<typeof ierc1155MetadataUriABI, 'TransferSingle'>,
-    'abi' | 'eventName'
-  > = {} as any,
-) {
-  return useContractEvent({
-    abi: ierc1155MetadataUriABI,
-    eventName: 'TransferSingle',
-    ...config,
-  } as UseContractEventConfig<typeof ierc1155MetadataUriABI, 'TransferSingle'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc1155MetadataUriABI}__ and `eventName` set to `"URI"`.
- */
-export function useIerc1155MetadataUriUriEvent(
-  config: Omit<UseContractEventConfig<typeof ierc1155MetadataUriABI, 'URI'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: ierc1155MetadataUriABI, eventName: 'URI', ...config } as UseContractEventConfig<
-    typeof ierc1155MetadataUriABI,
-    'URI'
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155ReceiverABI}__.
- */
-export function useIerc1155ReceiverRead<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof ierc1155ReceiverABI, TFunctionName>,
->(config: Omit<UseContractReadConfig<typeof ierc1155ReceiverABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
-  return useContractRead({ abi: ierc1155ReceiverABI, ...config } as UseContractReadConfig<
-    typeof ierc1155ReceiverABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc1155ReceiverABI}__ and `functionName` set to `"supportsInterface"`.
- */
-export function useIerc1155ReceiverSupportsInterface<
-  TFunctionName extends 'supportsInterface',
-  TSelectData = ReadContractResult<typeof ierc1155ReceiverABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc1155ReceiverABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: ierc1155ReceiverABI,
-    functionName: 'supportsInterface',
-    ...config,
-  } as UseContractReadConfig<typeof ierc1155ReceiverABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ReceiverABI}__.
- */
-export function useIerc1155ReceiverWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc1155ReceiverABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      >
-    : UseContractWriteConfig<typeof ierc1155ReceiverABI, TFunctionName, TMode> & {
-        abi?: never
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc1155ReceiverABI, TFunctionName, TMode>({
-    abi: ierc1155ReceiverABI,
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ReceiverABI}__ and `functionName` set to `"onERC1155BatchReceived"`.
- */
-export function useIerc1155ReceiverOnErc1155BatchReceived<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc1155ReceiverABI, 'onERC1155BatchReceived'>['request']['abi'],
-        'onERC1155BatchReceived',
-        TMode
-      > & { functionName?: 'onERC1155BatchReceived' }
-    : UseContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155BatchReceived', TMode> & {
-        abi?: never
-        functionName?: 'onERC1155BatchReceived'
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc1155ReceiverABI, 'onERC1155BatchReceived', TMode>({
-    abi: ierc1155ReceiverABI,
-    functionName: 'onERC1155BatchReceived',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc1155ReceiverABI}__ and `functionName` set to `"onERC1155Received"`.
- */
-export function useIerc1155ReceiverOnErc1155Received<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc1155ReceiverABI, 'onERC1155Received'>['request']['abi'],
-        'onERC1155Received',
-        TMode
-      > & { functionName?: 'onERC1155Received' }
-    : UseContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155Received', TMode> & {
-        abi?: never
-        functionName?: 'onERC1155Received'
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc1155ReceiverABI, 'onERC1155Received', TMode>({
-    abi: ierc1155ReceiverABI,
-    functionName: 'onERC1155Received',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155ReceiverABI}__.
- */
-export function usePrepareIerc1155ReceiverWrite<TFunctionName extends string>(
-  config: Omit<UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, TFunctionName>, 'abi'> = {} as any,
-) {
-  return usePrepareContractWrite({ abi: ierc1155ReceiverABI, ...config } as UsePrepareContractWriteConfig<
-    typeof ierc1155ReceiverABI,
-    TFunctionName
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155ReceiverABI}__ and `functionName` set to `"onERC1155BatchReceived"`.
- */
-export function usePrepareIerc1155ReceiverOnErc1155BatchReceived(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155BatchReceived'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: ierc1155ReceiverABI,
-    functionName: 'onERC1155BatchReceived',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155BatchReceived'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc1155ReceiverABI}__ and `functionName` set to `"onERC1155Received"`.
- */
-export function usePrepareIerc1155ReceiverOnErc1155Received(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155Received'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: ierc1155ReceiverABI,
-    functionName: 'onERC1155Received',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc1155ReceiverABI, 'onERC1155Received'>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc165ABI}__.
- */
-export function useIerc165Read<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof ierc165ABI, TFunctionName>,
->(config: Omit<UseContractReadConfig<typeof ierc165ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
-  return useContractRead({ abi: ierc165ABI, ...config } as UseContractReadConfig<
-    typeof ierc165ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc165ABI}__ and `functionName` set to `"supportsInterface"`.
- */
-export function useIerc165SupportsInterface<
-  TFunctionName extends 'supportsInterface',
-  TSelectData = ReadContractResult<typeof ierc165ABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof ierc165ABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: ierc165ABI, functionName: 'supportsInterface', ...config } as UseContractReadConfig<
-    typeof ierc165ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__.
- */
-export function useIerc20Read<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
->(config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
-  return useContractRead({ abi: ierc20ABI, ...config } as UseContractReadConfig<
-    typeof ierc20ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"allowance"`.
- */
-export function useIerc20Allowance<
-  TFunctionName extends 'allowance',
-  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
->(
-  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
-) {
-  return useContractRead({ abi: ierc20ABI, functionName: 'allowance', ...config } as UseContractReadConfig<
-    typeof ierc20ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"balanceOf"`.
- */
-export function useIerc20BalanceOf<
-  TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
->(
-  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
-) {
-  return useContractRead({ abi: ierc20ABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
-    typeof ierc20ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"decimals"`.
- */
-export function useIerc20Decimals<
-  TFunctionName extends 'decimals',
-  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
->(
-  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
-) {
-  return useContractRead({ abi: ierc20ABI, functionName: 'decimals', ...config } as UseContractReadConfig<
-    typeof ierc20ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"name"`.
- */
-export function useIerc20Name<
-  TFunctionName extends 'name',
-  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
->(
-  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
-) {
-  return useContractRead({ abi: ierc20ABI, functionName: 'name', ...config } as UseContractReadConfig<
-    typeof ierc20ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"symbol"`.
- */
-export function useIerc20Symbol<
-  TFunctionName extends 'symbol',
-  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
->(
-  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
-) {
-  return useContractRead({ abi: ierc20ABI, functionName: 'symbol', ...config } as UseContractReadConfig<
-    typeof ierc20ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"totalSupply"`.
- */
-export function useIerc20TotalSupply<
-  TFunctionName extends 'totalSupply',
-  TSelectData = ReadContractResult<typeof ierc20ABI, TFunctionName>,
->(
-  config: Omit<UseContractReadConfig<typeof ierc20ABI, TFunctionName, TSelectData>, 'abi' | 'functionName'> = {} as any,
-) {
-  return useContractRead({ abi: ierc20ABI, functionName: 'totalSupply', ...config } as UseContractReadConfig<
-    typeof ierc20ABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20ABI}__.
- */
-export function useIerc20Write<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc20ABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      >
-    : UseContractWriteConfig<typeof ierc20ABI, TFunctionName, TMode> & {
-        abi?: never
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc20ABI, TFunctionName, TMode>({ abi: ierc20ABI, ...config } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"approve"`.
- */
-export function useIerc20Approve<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc20ABI, 'approve'>['request']['abi'],
-        'approve',
-        TMode
-      > & { functionName?: 'approve' }
-    : UseContractWriteConfig<typeof ierc20ABI, 'approve', TMode> & {
-        abi?: never
-        functionName?: 'approve'
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc20ABI, 'approve', TMode>({
-    abi: ierc20ABI,
-    functionName: 'approve',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"transfer"`.
- */
-export function useIerc20Transfer<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc20ABI, 'transfer'>['request']['abi'],
-        'transfer',
-        TMode
-      > & { functionName?: 'transfer' }
-    : UseContractWriteConfig<typeof ierc20ABI, 'transfer', TMode> & {
-        abi?: never
-        functionName?: 'transfer'
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc20ABI, 'transfer', TMode>({
-    abi: ierc20ABI,
-    functionName: 'transfer',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"transferFrom"`.
- */
-export function useIerc20TransferFrom<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof ierc20ABI, 'transferFrom'>['request']['abi'],
-        'transferFrom',
-        TMode
-      > & { functionName?: 'transferFrom' }
-    : UseContractWriteConfig<typeof ierc20ABI, 'transferFrom', TMode> & {
-        abi?: never
-        functionName?: 'transferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof ierc20ABI, 'transferFrom', TMode>({
-    abi: ierc20ABI,
-    functionName: 'transferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__.
- */
-export function usePrepareIerc20Write<TFunctionName extends string>(
-  config: Omit<UsePrepareContractWriteConfig<typeof ierc20ABI, TFunctionName>, 'abi'> = {} as any,
-) {
-  return usePrepareContractWrite({ abi: ierc20ABI, ...config } as UsePrepareContractWriteConfig<
-    typeof ierc20ABI,
-    TFunctionName
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"approve"`.
- */
-export function usePrepareIerc20Approve(
-  config: Omit<UsePrepareContractWriteConfig<typeof ierc20ABI, 'approve'>, 'abi' | 'functionName'> = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: ierc20ABI,
-    functionName: 'approve',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc20ABI, 'approve'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"transfer"`.
- */
-export function usePrepareIerc20Transfer(
-  config: Omit<UsePrepareContractWriteConfig<typeof ierc20ABI, 'transfer'>, 'abi' | 'functionName'> = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: ierc20ABI,
-    functionName: 'transfer',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc20ABI, 'transfer'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link ierc20ABI}__ and `functionName` set to `"transferFrom"`.
- */
-export function usePrepareIerc20TransferFrom(
-  config: Omit<UsePrepareContractWriteConfig<typeof ierc20ABI, 'transferFrom'>, 'abi' | 'functionName'> = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: ierc20ABI,
-    functionName: 'transferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof ierc20ABI, 'transferFrom'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20ABI}__.
- */
-export function useIerc20Event<TEventName extends string>(
-  config: Omit<UseContractEventConfig<typeof ierc20ABI, TEventName>, 'abi'> = {} as any,
-) {
-  return useContractEvent({ abi: ierc20ABI, ...config } as UseContractEventConfig<typeof ierc20ABI, TEventName>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20ABI}__ and `eventName` set to `"Approval"`.
- */
-export function useIerc20ApprovalEvent(
-  config: Omit<UseContractEventConfig<typeof ierc20ABI, 'Approval'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: ierc20ABI, eventName: 'Approval', ...config } as UseContractEventConfig<
-    typeof ierc20ABI,
-    'Approval'
-  >)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link ierc20ABI}__ and `eventName` set to `"Transfer"`.
- */
-export function useIerc20TransferEvent(
-  config: Omit<UseContractEventConfig<typeof ierc20ABI, 'Transfer'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: ierc20ABI, eventName: 'Transfer', ...config } as UseContractEventConfig<
-    typeof ierc20ABI,
-    'Transfer'
   >)
 }
 
@@ -9347,44 +8773,6 @@ export function useIPoolManagerMinTickSpacing<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"balanceOf"`.
- */
-export function useIPoolManagerBalanceOf<
-  TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<typeof iPoolManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: iPoolManagerABI, functionName: 'balanceOf', ...config } as UseContractReadConfig<
-    typeof iPoolManagerABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"balanceOfBatch"`.
- */
-export function useIPoolManagerBalanceOfBatch<
-  TFunctionName extends 'balanceOfBatch',
-  TSelectData = ReadContractResult<typeof iPoolManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: iPoolManagerABI, functionName: 'balanceOfBatch', ...config } as UseContractReadConfig<
-    typeof iPoolManagerABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"currencyDelta"`.
  */
 export function useIPoolManagerCurrencyDelta<
@@ -9461,6 +8849,44 @@ export function useIPoolManagerGetLock<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"getLockLength"`.
+ */
+export function useIPoolManagerGetLockLength<
+  TFunctionName extends 'getLockLength',
+  TSelectData = ReadContractResult<typeof iPoolManagerABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({ abi: iPoolManagerABI, functionName: 'getLockLength', ...config } as UseContractReadConfig<
+    typeof iPoolManagerABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"getLockNonzeroDeltaCount"`.
+ */
+export function useIPoolManagerGetLockNonzeroDeltaCount<
+  TFunctionName extends 'getLockNonzeroDeltaCount',
+  TSelectData = ReadContractResult<typeof iPoolManagerABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: iPoolManagerABI,
+    functionName: 'getLockNonzeroDeltaCount',
+    ...config,
+  } as UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"getPosition"`.
  */
 export function useIPoolManagerGetPosition<
@@ -9518,44 +8944,6 @@ export function useIPoolManagerHookFeesAccrued<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"isApprovedForAll"`.
- */
-export function useIPoolManagerIsApprovedForAll<
-  TFunctionName extends 'isApprovedForAll',
-  TSelectData = ReadContractResult<typeof iPoolManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: iPoolManagerABI, functionName: 'isApprovedForAll', ...config } as UseContractReadConfig<
-    typeof iPoolManagerABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"lockData"`.
- */
-export function useIPoolManagerLockData<
-  TFunctionName extends 'lockData',
-  TSelectData = ReadContractResult<typeof iPoolManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({ abi: iPoolManagerABI, functionName: 'lockData', ...config } as UseContractReadConfig<
-    typeof iPoolManagerABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"protocolFeesAccrued"`.
  */
 export function useIPoolManagerProtocolFeesAccrued<
@@ -9594,25 +8982,6 @@ export function useIPoolManagerReservesOf<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"supportsInterface"`.
- */
-export function useIPoolManagerSupportsInterface<
-  TFunctionName extends 'supportsInterface',
-  TSelectData = ReadContractResult<typeof iPoolManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return useContractRead({
-    abi: iPoolManagerABI,
-    functionName: 'supportsInterface',
-    ...config,
-  } as UseContractReadConfig<typeof iPoolManagerABI, TFunctionName, TSelectData>)
-}
-
-/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__.
  */
 export function useIPoolManagerWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
@@ -9627,6 +8996,50 @@ export function useIPoolManagerWrite<TFunctionName extends string, TMode extends
       } = {} as any,
 ) {
   return useContractWrite<typeof iPoolManagerABI, TFunctionName, TMode>({ abi: iPoolManagerABI, ...config } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"balanceOf"`.
+ */
+export function useIPoolManagerBalanceOf<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'balanceOf'>['request']['abi'],
+        'balanceOf',
+        TMode
+      > & { functionName?: 'balanceOf' }
+    : UseContractWriteConfig<typeof iPoolManagerABI, 'balanceOf', TMode> & {
+        abi?: never
+        functionName?: 'balanceOf'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iPoolManagerABI, 'balanceOf', TMode>({
+    abi: iPoolManagerABI,
+    functionName: 'balanceOf',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"burn"`.
+ */
+export function useIPoolManagerBurn<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'burn'>['request']['abi'],
+        'burn',
+        TMode
+      > & { functionName?: 'burn' }
+    : UseContractWriteConfig<typeof iPoolManagerABI, 'burn', TMode> & {
+        abi?: never
+        functionName?: 'burn'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iPoolManagerABI, 'burn', TMode>({
+    abi: iPoolManagerABI,
+    functionName: 'burn',
+    ...config,
+  } as any)
 }
 
 /**
@@ -9735,72 +9148,6 @@ export function useIPoolManagerModifyPosition<TMode extends WriteContractMode = 
   return useContractWrite<typeof iPoolManagerABI, 'modifyPosition', TMode>({
     abi: iPoolManagerABI,
     functionName: 'modifyPosition',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
- */
-export function useIPoolManagerSafeBatchTransferFrom<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof iPoolManagerABI, 'safeBatchTransferFrom'>['request']['abi'],
-        'safeBatchTransferFrom',
-        TMode
-      > & { functionName?: 'safeBatchTransferFrom' }
-    : UseContractWriteConfig<typeof iPoolManagerABI, 'safeBatchTransferFrom', TMode> & {
-        abi?: never
-        functionName?: 'safeBatchTransferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof iPoolManagerABI, 'safeBatchTransferFrom', TMode>({
-    abi: iPoolManagerABI,
-    functionName: 'safeBatchTransferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"safeTransferFrom"`.
- */
-export function useIPoolManagerSafeTransferFrom<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof iPoolManagerABI, 'safeTransferFrom'>['request']['abi'],
-        'safeTransferFrom',
-        TMode
-      > & { functionName?: 'safeTransferFrom' }
-    : UseContractWriteConfig<typeof iPoolManagerABI, 'safeTransferFrom', TMode> & {
-        abi?: never
-        functionName?: 'safeTransferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof iPoolManagerABI, 'safeTransferFrom', TMode>({
-    abi: iPoolManagerABI,
-    functionName: 'safeTransferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"setApprovalForAll"`.
- */
-export function useIPoolManagerSetApprovalForAll<TMode extends WriteContractMode = undefined>(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof iPoolManagerABI, 'setApprovalForAll'>['request']['abi'],
-        'setApprovalForAll',
-        TMode
-      > & { functionName?: 'setApprovalForAll' }
-    : UseContractWriteConfig<typeof iPoolManagerABI, 'setApprovalForAll', TMode> & {
-        abi?: never
-        functionName?: 'setApprovalForAll'
-      } = {} as any,
-) {
-  return useContractWrite<typeof iPoolManagerABI, 'setApprovalForAll', TMode>({
-    abi: iPoolManagerABI,
-    functionName: 'setApprovalForAll',
     ...config,
   } as any)
 }
@@ -9916,6 +9263,28 @@ export function useIPoolManagerTake<TMode extends WriteContractMode = undefined>
 }
 
 /**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"transfer"`.
+ */
+export function useIPoolManagerTransfer<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof iPoolManagerABI, 'transfer'>['request']['abi'],
+        'transfer',
+        TMode
+      > & { functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof iPoolManagerABI, 'transfer', TMode> & {
+        abi?: never
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  return useContractWrite<typeof iPoolManagerABI, 'transfer', TMode>({
+    abi: iPoolManagerABI,
+    functionName: 'transfer',
+    ...config,
+  } as any)
+}
+
+/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"updateDynamicSwapFee"`.
  */
 export function useIPoolManagerUpdateDynamicSwapFee<TMode extends WriteContractMode = undefined>(
@@ -9947,6 +9316,32 @@ export function usePrepareIPoolManagerWrite<TFunctionName extends string>(
     typeof iPoolManagerABI,
     TFunctionName
   >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"balanceOf"`.
+ */
+export function usePrepareIPoolManagerBalanceOf(
+  config: Omit<UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'balanceOf'>, 'abi' | 'functionName'> = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iPoolManagerABI,
+    functionName: 'balanceOf',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'balanceOf'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"burn"`.
+ */
+export function usePrepareIPoolManagerBurn(
+  config: Omit<UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'burn'>, 'abi' | 'functionName'> = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iPoolManagerABI,
+    functionName: 'burn',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'burn'>)
 }
 
 /**
@@ -10015,54 +9410,6 @@ export function usePrepareIPoolManagerModifyPosition(
     functionName: 'modifyPosition',
     ...config,
   } as UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'modifyPosition'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
- */
-export function usePrepareIPoolManagerSafeBatchTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'safeBatchTransferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: iPoolManagerABI,
-    functionName: 'safeBatchTransferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'safeBatchTransferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"safeTransferFrom"`.
- */
-export function usePrepareIPoolManagerSafeTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'safeTransferFrom'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: iPoolManagerABI,
-    functionName: 'safeTransferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'safeTransferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"setApprovalForAll"`.
- */
-export function usePrepareIPoolManagerSetApprovalForAll(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'setApprovalForAll'>,
-    'abi' | 'functionName'
-  > = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: iPoolManagerABI,
-    functionName: 'setApprovalForAll',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'setApprovalForAll'>)
 }
 
 /**
@@ -10137,6 +9484,19 @@ export function usePrepareIPoolManagerTake(
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"transfer"`.
+ */
+export function usePrepareIPoolManagerTransfer(
+  config: Omit<UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'transfer'>, 'abi' | 'functionName'> = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: iPoolManagerABI,
+    functionName: 'transfer',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof iPoolManagerABI, 'transfer'>)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link iPoolManagerABI}__ and `functionName` set to `"updateDynamicSwapFee"`.
  */
 export function usePrepareIPoolManagerUpdateDynamicSwapFee(
@@ -10165,14 +9525,14 @@ export function useIPoolManagerEvent<TEventName extends string>(
 }
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"ApprovalForAll"`.
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"Burn"`.
  */
-export function useIPoolManagerApprovalForAllEvent(
-  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'ApprovalForAll'>, 'abi' | 'eventName'> = {} as any,
+export function useIPoolManagerBurnEvent(
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'Burn'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({ abi: iPoolManagerABI, eventName: 'ApprovalForAll', ...config } as UseContractEventConfig<
+  return useContractEvent({ abi: iPoolManagerABI, eventName: 'Burn', ...config } as UseContractEventConfig<
     typeof iPoolManagerABI,
-    'ApprovalForAll'
+    'Burn'
   >)
 }
 
@@ -10213,6 +9573,18 @@ export function useIPoolManagerInitializeEvent(
   return useContractEvent({ abi: iPoolManagerABI, eventName: 'Initialize', ...config } as UseContractEventConfig<
     typeof iPoolManagerABI,
     'Initialize'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"Mint"`.
+ */
+export function useIPoolManagerMintEvent(
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'Mint'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: iPoolManagerABI, eventName: 'Mint', ...config } as UseContractEventConfig<
+    typeof iPoolManagerABI,
+    'Mint'
   >)
 }
 
@@ -10270,38 +9642,14 @@ export function useIPoolManagerSwapEvent(
 }
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"TransferBatch"`.
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"Transfer"`.
  */
-export function useIPoolManagerTransferBatchEvent(
-  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'TransferBatch'>, 'abi' | 'eventName'> = {} as any,
+export function useIPoolManagerTransferEvent(
+  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'Transfer'>, 'abi' | 'eventName'> = {} as any,
 ) {
-  return useContractEvent({ abi: iPoolManagerABI, eventName: 'TransferBatch', ...config } as UseContractEventConfig<
+  return useContractEvent({ abi: iPoolManagerABI, eventName: 'Transfer', ...config } as UseContractEventConfig<
     typeof iPoolManagerABI,
-    'TransferBatch'
-  >)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"TransferSingle"`.
- */
-export function useIPoolManagerTransferSingleEvent(
-  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'TransferSingle'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: iPoolManagerABI, eventName: 'TransferSingle', ...config } as UseContractEventConfig<
-    typeof iPoolManagerABI,
-    'TransferSingle'
-  >)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link iPoolManagerABI}__ and `eventName` set to `"URI"`.
- */
-export function useIPoolManagerUriEvent(
-  config: Omit<UseContractEventConfig<typeof iPoolManagerABI, 'URI'>, 'abi' | 'eventName'> = {} as any,
-) {
-  return useContractEvent({ abi: iPoolManagerABI, eventName: 'URI', ...config } as UseContractEventConfig<
-    typeof iPoolManagerABI,
-    'URI'
+    'Transfer'
   >)
 }
 
@@ -10914,6 +10262,28 @@ export function usePoolDonateTestRead<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolDonateTestABI}__ and `functionName` set to `"IS_TEST"`.
+ *
+ *
+ */
+export function usePoolDonateTestIsTest<
+  TFunctionName extends 'IS_TEST',
+  TSelectData = ReadContractResult<typeof poolDonateTestABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof poolDonateTestABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolDonateTestAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    functionName: 'IS_TEST',
+    ...config,
+  } as UseContractReadConfig<typeof poolDonateTestABI, TFunctionName, TSelectData>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolDonateTestABI}__ and `functionName` set to `"manager"`.
  *
  *
@@ -10995,6 +10365,36 @@ export function usePoolDonateTestDonate<
 }
 
 /**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolDonateTestABI}__ and `functionName` set to `"failed"`.
+ *
+ *
+ */
+export function usePoolDonateTestFailed<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolDonateTestAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolDonateTestABI, 'failed'>['request']['abi'],
+        'failed',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'failed' }
+    : UseContractWriteConfig<typeof poolDonateTestABI, 'failed', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'failed'
+      } = {} as any,
+) {
+  return useContractWrite<typeof poolDonateTestABI, 'failed', TMode>({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    functionName: 'failed',
+    ...config,
+  } as any)
+}
+
+/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolDonateTestABI}__ and `functionName` set to `"lockAcquired"`.
  *
  *
@@ -11061,6 +10461,25 @@ export function usePreparePoolDonateTestDonate(
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolDonateTestABI}__ and `functionName` set to `"failed"`.
+ *
+ *
+ */
+export function usePreparePoolDonateTestFailed(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof poolDonateTestABI, 'failed'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolDonateTestAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    functionName: 'failed',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolDonateTestABI, 'failed'>)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolDonateTestABI}__ and `functionName` set to `"lockAcquired"`.
  *
  *
@@ -11077,6 +10496,959 @@ export function usePreparePoolDonateTestLockAcquired(
     functionName: 'lockAcquired',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolDonateTestABI, 'lockAcquired'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__.
+ *
+ *
+ */
+export function usePoolDonateTestEvent<TEventName extends string>(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, TEventName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_address"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogAddressEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log_address'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_address',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_address'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_array"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogArrayEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log_array'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_array',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_array'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_bytes"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogBytesEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log_bytes'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_bytes',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_bytes'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_bytes32"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogBytes32Event(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log_bytes32'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_bytes32',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_bytes32'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_int"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogIntEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log_int'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_named_address"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogNamedAddressEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolDonateTestABI, 'log_named_address'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolDonateTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_named_address',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_named_address'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_named_array"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogNamedArrayEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log_named_array'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_named_array',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_named_array'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_named_bytes"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogNamedBytesEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log_named_bytes'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_named_bytes',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_named_bytes'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_named_bytes32"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogNamedBytes32Event(
+  config: Omit<
+    UseContractEventConfig<typeof poolDonateTestABI, 'log_named_bytes32'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolDonateTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_named_bytes32',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_named_bytes32'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_named_decimal_int"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogNamedDecimalIntEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolDonateTestABI, 'log_named_decimal_int'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolDonateTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_named_decimal_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_named_decimal_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_named_decimal_uint"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogNamedDecimalUintEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolDonateTestABI, 'log_named_decimal_uint'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolDonateTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_named_decimal_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_named_decimal_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_named_int"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogNamedIntEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log_named_int'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_named_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_named_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_named_string"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogNamedStringEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolDonateTestABI, 'log_named_string'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolDonateTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_named_string',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_named_string'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_named_uint"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogNamedUintEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log_named_uint'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_named_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_named_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_string"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogStringEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log_string'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_string',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_string'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"log_uint"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogUintEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'log_uint'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'log_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'log_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolDonateTestABI}__ and `eventName` set to `"logs"`.
+ *
+ *
+ */
+export function usePoolDonateTestLogsEvent(
+  config: Omit<UseContractEventConfig<typeof poolDonateTestABI, 'logs'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolDonateTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolDonateTestABI,
+    address: poolDonateTestAddress[31337],
+    eventName: 'logs',
+    ...config,
+  } as UseContractEventConfig<typeof poolDonateTestABI, 'logs'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolInitializeTestABI}__.
+ *
+ *
+ */
+export function usePoolInitializeTestRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof poolInitializeTestABI, TFunctionName>,
+>(
+  config: Omit<UseContractReadConfig<typeof poolInitializeTestABI, TFunctionName, TSelectData>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return useContractRead({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    ...config,
+  } as UseContractReadConfig<typeof poolInitializeTestABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolInitializeTestABI}__ and `functionName` set to `"IS_TEST"`.
+ *
+ *
+ */
+export function usePoolInitializeTestIsTest<
+  TFunctionName extends 'IS_TEST',
+  TSelectData = ReadContractResult<typeof poolInitializeTestABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof poolInitializeTestABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    functionName: 'IS_TEST',
+    ...config,
+  } as UseContractReadConfig<typeof poolInitializeTestABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolInitializeTestABI}__ and `functionName` set to `"manager"`.
+ *
+ *
+ */
+export function usePoolInitializeTestManager<
+  TFunctionName extends 'manager',
+  TSelectData = ReadContractResult<typeof poolInitializeTestABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof poolInitializeTestABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    functionName: 'manager',
+    ...config,
+  } as UseContractReadConfig<typeof poolInitializeTestABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolInitializeTestABI}__.
+ *
+ *
+ */
+export function usePoolInitializeTestWrite<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolInitializeTestAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolInitializeTestABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      > & { address?: Address; chainId?: TChainId }
+    : UseContractWriteConfig<typeof poolInitializeTestABI, TFunctionName, TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+      } = {} as any,
+) {
+  return useContractWrite<typeof poolInitializeTestABI, TFunctionName, TMode>({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolInitializeTestABI}__ and `functionName` set to `"failed"`.
+ *
+ *
+ */
+export function usePoolInitializeTestFailed<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolInitializeTestAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolInitializeTestABI, 'failed'>['request']['abi'],
+        'failed',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'failed' }
+    : UseContractWriteConfig<typeof poolInitializeTestABI, 'failed', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'failed'
+      } = {} as any,
+) {
+  return useContractWrite<typeof poolInitializeTestABI, 'failed', TMode>({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    functionName: 'failed',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolInitializeTestABI}__ and `functionName` set to `"initialize"`.
+ *
+ *
+ */
+export function usePoolInitializeTestInitialize<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolInitializeTestAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolInitializeTestABI, 'initialize'>['request']['abi'],
+        'initialize',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'initialize' }
+    : UseContractWriteConfig<typeof poolInitializeTestABI, 'initialize', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'initialize'
+      } = {} as any,
+) {
+  return useContractWrite<typeof poolInitializeTestABI, 'initialize', TMode>({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    functionName: 'initialize',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolInitializeTestABI}__ and `functionName` set to `"lockAcquired"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLockAcquired<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolInitializeTestAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolInitializeTestABI, 'lockAcquired'>['request']['abi'],
+        'lockAcquired',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'lockAcquired' }
+    : UseContractWriteConfig<typeof poolInitializeTestABI, 'lockAcquired', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'lockAcquired'
+      } = {} as any,
+) {
+  return useContractWrite<typeof poolInitializeTestABI, 'lockAcquired', TMode>({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    functionName: 'lockAcquired',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolInitializeTestABI}__.
+ *
+ *
+ */
+export function usePreparePoolInitializeTestWrite<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof poolInitializeTestABI, TFunctionName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolInitializeTestABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolInitializeTestABI}__ and `functionName` set to `"failed"`.
+ *
+ *
+ */
+export function usePreparePoolInitializeTestFailed(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof poolInitializeTestABI, 'failed'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    functionName: 'failed',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolInitializeTestABI, 'failed'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolInitializeTestABI}__ and `functionName` set to `"initialize"`.
+ *
+ *
+ */
+export function usePreparePoolInitializeTestInitialize(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof poolInitializeTestABI, 'initialize'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    functionName: 'initialize',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolInitializeTestABI, 'initialize'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolInitializeTestABI}__ and `functionName` set to `"lockAcquired"`.
+ *
+ *
+ */
+export function usePreparePoolInitializeTestLockAcquired(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof poolInitializeTestABI, 'lockAcquired'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    functionName: 'lockAcquired',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolInitializeTestABI, 'lockAcquired'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__.
+ *
+ *
+ */
+export function usePoolInitializeTestEvent<TEventName extends string>(
+  config: Omit<UseContractEventConfig<typeof poolInitializeTestABI, TEventName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogEvent(
+  config: Omit<UseContractEventConfig<typeof poolInitializeTestABI, 'log'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_address"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogAddressEvent(
+  config: Omit<UseContractEventConfig<typeof poolInitializeTestABI, 'log_address'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_address',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_address'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_array"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogArrayEvent(
+  config: Omit<UseContractEventConfig<typeof poolInitializeTestABI, 'log_array'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_array',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_array'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_bytes"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogBytesEvent(
+  config: Omit<UseContractEventConfig<typeof poolInitializeTestABI, 'log_bytes'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_bytes',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_bytes'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_bytes32"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogBytes32Event(
+  config: Omit<UseContractEventConfig<typeof poolInitializeTestABI, 'log_bytes32'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_bytes32',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_bytes32'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_int"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogIntEvent(
+  config: Omit<UseContractEventConfig<typeof poolInitializeTestABI, 'log_int'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_named_address"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogNamedAddressEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_address'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_named_address',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_address'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_named_array"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogNamedArrayEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_array'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_named_array',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_array'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_named_bytes"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogNamedBytesEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_bytes'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_named_bytes',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_bytes'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_named_bytes32"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogNamedBytes32Event(
+  config: Omit<
+    UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_bytes32'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_named_bytes32',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_bytes32'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_named_decimal_int"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogNamedDecimalIntEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_decimal_int'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_named_decimal_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_decimal_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_named_decimal_uint"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogNamedDecimalUintEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_decimal_uint'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_named_decimal_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_decimal_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_named_int"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogNamedIntEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_int'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_named_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_named_string"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogNamedStringEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_string'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_named_string',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_string'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_named_uint"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogNamedUintEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_uint'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolInitializeTestAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_named_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_named_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_string"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogStringEvent(
+  config: Omit<UseContractEventConfig<typeof poolInitializeTestABI, 'log_string'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_string',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_string'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"log_uint"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogUintEvent(
+  config: Omit<UseContractEventConfig<typeof poolInitializeTestABI, 'log_uint'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'log_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'log_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolInitializeTestABI}__ and `eventName` set to `"logs"`.
+ *
+ *
+ */
+export function usePoolInitializeTestLogsEvent(
+  config: Omit<UseContractEventConfig<typeof poolInitializeTestABI, 'logs'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolInitializeTestAddress
+  } = {} as any,
+) {
+  return useContractEvent({
+    abi: poolInitializeTestABI,
+    address: poolInitializeTestAddress[31337],
+    eventName: 'logs',
+    ...config,
+  } as UseContractEventConfig<typeof poolInitializeTestABI, 'logs'>)
 }
 
 /**
@@ -11282,40 +11654,6 @@ export function usePoolManagerBalanceOf<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"balanceOfBatch"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerBalanceOfBatch<
-  TFunctionName extends 'balanceOfBatch',
-  TSelectData = ReadContractResult<typeof poolManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'balanceOfBatch',
-    ...config,
-  } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
-}
-
-/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"currencyDelta"`.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
@@ -11452,6 +11790,74 @@ export function usePoolManagerGetLock<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"getLockLength"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
+ */
+export function usePoolManagerGetLockLength<
+  TFunctionName extends 'getLockLength',
+  TSelectData = ReadContractResult<typeof poolManagerABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: poolManagerABI,
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
+    functionName: 'getLockLength',
+    ...config,
+  } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"getLockNonzeroDeltaCount"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
+ */
+export function usePoolManagerGetLockNonzeroDeltaCount<
+  TFunctionName extends 'getLockNonzeroDeltaCount',
+  TSelectData = ReadContractResult<typeof poolManagerABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: poolManagerABI,
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
+    functionName: 'getLockNonzeroDeltaCount',
+    ...config,
+  } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"getPosition"`.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
@@ -11549,74 +11955,6 @@ export function usePoolManagerHookFeesAccrued<
     abi: poolManagerABI,
     address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     functionName: 'hookFeesAccrued',
-    ...config,
-  } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"isApprovedForAll"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerIsApprovedForAll<
-  TFunctionName extends 'isApprovedForAll',
-  TSelectData = ReadContractResult<typeof poolManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'isApprovedForAll',
-    ...config,
-  } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"lockData"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerLockData<
-  TFunctionName extends 'lockData',
-  TSelectData = ReadContractResult<typeof poolManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'lockData',
     ...config,
   } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
 }
@@ -11792,74 +12130,6 @@ export function usePoolManagerReservesOf<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"supportsInterface"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerSupportsInterface<
-  TFunctionName extends 'supportsInterface',
-  TSelectData = ReadContractResult<typeof poolManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'supportsInterface',
-    ...config,
-  } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"uri"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerUri<
-  TFunctionName extends 'uri',
-  TSelectData = ReadContractResult<typeof poolManagerABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'uri',
-    ...config,
-  } as UseContractReadConfig<typeof poolManagerABI, TFunctionName, TSelectData>)
-}
-
-/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
@@ -11896,6 +12166,48 @@ export function usePoolManagerWrite<
   return useContractWrite<typeof poolManagerABI, TFunctionName, TMode>({
     abi: poolManagerABI,
     address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"burn"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
+ */
+export function usePoolManagerBurn<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolManagerABI, 'burn'>['request']['abi'],
+        'burn',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'burn' }
+    : UseContractWriteConfig<typeof poolManagerABI, 'burn', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'burn'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof poolManagerABI, 'burn', TMode>({
+    abi: poolManagerABI,
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
+    functionName: 'burn',
     ...config,
   } as any)
 }
@@ -12195,216 +12507,6 @@ export function usePoolManagerModifyPosition<
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155BatchReceived"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerOnErc1155BatchReceived<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof poolManagerAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof poolManagerABI, 'onERC1155BatchReceived'>['request']['abi'],
-        'onERC1155BatchReceived',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'onERC1155BatchReceived' }
-    : UseContractWriteConfig<typeof poolManagerABI, 'onERC1155BatchReceived', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'onERC1155BatchReceived'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof poolManagerABI, 'onERC1155BatchReceived', TMode>({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'onERC1155BatchReceived',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155Received"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerOnErc1155Received<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof poolManagerAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof poolManagerABI, 'onERC1155Received'>['request']['abi'],
-        'onERC1155Received',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'onERC1155Received' }
-    : UseContractWriteConfig<typeof poolManagerABI, 'onERC1155Received', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'onERC1155Received'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof poolManagerABI, 'onERC1155Received', TMode>({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'onERC1155Received',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerSafeBatchTransferFrom<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof poolManagerAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof poolManagerABI, 'safeBatchTransferFrom'>['request']['abi'],
-        'safeBatchTransferFrom',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'safeBatchTransferFrom' }
-    : UseContractWriteConfig<typeof poolManagerABI, 'safeBatchTransferFrom', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'safeBatchTransferFrom'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof poolManagerABI, 'safeBatchTransferFrom', TMode>({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'safeBatchTransferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeTransferFrom"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerSafeTransferFrom<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof poolManagerAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof poolManagerABI, 'safeTransferFrom'>['request']['abi'],
-        'safeTransferFrom',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'safeTransferFrom' }
-    : UseContractWriteConfig<typeof poolManagerABI, 'safeTransferFrom', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'safeTransferFrom'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof poolManagerABI, 'safeTransferFrom', TMode>({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'safeTransferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setApprovalForAll"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerSetApprovalForAll<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof poolManagerAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof poolManagerABI, 'setApprovalForAll'>['request']['abi'],
-        'setApprovalForAll',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'setApprovalForAll' }
-    : UseContractWriteConfig<typeof poolManagerABI, 'setApprovalForAll', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setApprovalForAll'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof poolManagerABI, 'setApprovalForAll', TMode>({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'setApprovalForAll',
-    ...config,
-  } as any)
-}
-
-/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setHookFees"`.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
@@ -12699,6 +12801,48 @@ export function usePoolManagerTake<
 }
 
 /**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"transfer"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
+ */
+export function usePoolManagerTransfer<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolManagerAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolManagerABI, 'transfer'>['request']['abi'],
+        'transfer',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof poolManagerABI, 'transfer', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof poolManagerABI, 'transfer', TMode>({
+    abi: poolManagerABI,
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
+    functionName: 'transfer',
+    ...config,
+  } as any)
+}
+
+/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"updateDynamicSwapFee"`.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
@@ -12767,6 +12911,36 @@ export function usePreparePoolManagerWrite<TFunctionName extends string>(
     address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolManagerABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"burn"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
+ */
+export function usePreparePoolManagerBurn(
+  config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'burn'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: poolManagerABI,
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
+    functionName: 'burn',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'burn'>)
 }
 
 /**
@@ -12984,161 +13158,6 @@ export function usePreparePoolManagerModifyPosition(
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155BatchReceived"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePreparePoolManagerOnErc1155BatchReceived(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'onERC1155BatchReceived'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'onERC1155BatchReceived',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'onERC1155BatchReceived'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"onERC1155Received"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePreparePoolManagerOnErc1155Received(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'onERC1155Received'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'onERC1155Received',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'onERC1155Received'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeBatchTransferFrom"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePreparePoolManagerSafeBatchTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'safeBatchTransferFrom'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'safeBatchTransferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'safeBatchTransferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"safeTransferFrom"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePreparePoolManagerSafeTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'safeTransferFrom'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'safeTransferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'safeTransferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setApprovalForAll"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePreparePoolManagerSetApprovalForAll(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof poolManagerABI, 'setApprovalForAll'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof poolManagerAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    functionName: 'setApprovalForAll',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'setApprovalForAll'>)
-}
-
-/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"setHookFees"`.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
@@ -13352,6 +13371,36 @@ export function usePreparePoolManagerTake(
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"transfer"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
+ */
+export function usePreparePoolManagerTransfer(
+  config: Omit<UsePrepareContractWriteConfig<typeof poolManagerABI, 'transfer'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: poolManagerABI,
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
+    functionName: 'transfer',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolManagerABI, 'transfer'>)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolManagerABI}__ and `functionName` set to `"updateDynamicSwapFee"`.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
@@ -13412,7 +13461,7 @@ export function usePoolManagerEvent<TEventName extends string>(
 }
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"ApprovalForAll"`.
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"Burn"`.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
  * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
@@ -13425,8 +13474,8 @@ export function usePoolManagerEvent<TEventName extends string>(
  * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
  */
-export function usePoolManagerApprovalForAllEvent(
-  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'ApprovalForAll'>, 'abi' | 'address' | 'eventName'> & {
+export function usePoolManagerBurnEvent(
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'Burn'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
@@ -13436,9 +13485,9 @@ export function usePoolManagerApprovalForAllEvent(
   return useContractEvent({
     abi: poolManagerABI,
     address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    eventName: 'ApprovalForAll',
+    eventName: 'Burn',
     ...config,
-  } as UseContractEventConfig<typeof poolManagerABI, 'ApprovalForAll'>)
+  } as UseContractEventConfig<typeof poolManagerABI, 'Burn'>)
 }
 
 /**
@@ -13530,6 +13579,36 @@ export function usePoolManagerInitializeEvent(
     eventName: 'Initialize',
     ...config,
   } as UseContractEventConfig<typeof poolManagerABI, 'Initialize'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"Mint"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
+ */
+export function usePoolManagerMintEvent(
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'Mint'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolManagerAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolManagerABI,
+    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
+    eventName: 'Mint',
+    ...config,
+  } as UseContractEventConfig<typeof poolManagerABI, 'Mint'>)
 }
 
 /**
@@ -13684,7 +13763,7 @@ export function usePoolManagerSwapEvent(
 }
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"TransferBatch"`.
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"Transfer"`.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
  * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
@@ -13697,8 +13776,8 @@ export function usePoolManagerSwapEvent(
  * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
  */
-export function usePoolManagerTransferBatchEvent(
-  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'TransferBatch'>, 'abi' | 'address' | 'eventName'> & {
+export function usePoolManagerTransferEvent(
+  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'Transfer'>, 'abi' | 'address' | 'eventName'> & {
     chainId?: keyof typeof poolManagerAddress
   } = {} as any,
 ) {
@@ -13708,69 +13787,9 @@ export function usePoolManagerTransferBatchEvent(
   return useContractEvent({
     abi: poolManagerABI,
     address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    eventName: 'TransferBatch',
+    eventName: 'Transfer',
     ...config,
-  } as UseContractEventConfig<typeof poolManagerABI, 'TransferBatch'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"TransferSingle"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerTransferSingleEvent(
-  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'TransferSingle'>, 'abi' | 'address' | 'eventName'> & {
-    chainId?: keyof typeof poolManagerAddress
-  } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractEvent({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    eventName: 'TransferSingle',
-    ...config,
-  } as UseContractEventConfig<typeof poolManagerABI, 'TransferSingle'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolManagerABI}__ and `eventName` set to `"URI"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * -
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x84642fEf6ef575e3B2f4d7C72022F24AB9C9Ffa6)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x0Bf5c45Bc0419229FB512bb00366A612877ffF2D)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xC94a4C0a89937E278a0d427bb393134E68d5ec09)
- * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0xb673AE03413860776497B8C9b3E3F8d4D8745cB3)
- * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7B2B5A2c377B34079589DDbCeA20427cdb7C8219)
- */
-export function usePoolManagerUriEvent(
-  config: Omit<UseContractEventConfig<typeof poolManagerABI, 'URI'>, 'abi' | 'address' | 'eventName'> & {
-    chainId?: keyof typeof poolManagerAddress
-  } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractEvent({
-    abi: poolManagerABI,
-    address: poolManagerAddress[chainId as keyof typeof poolManagerAddress],
-    eventName: 'URI',
-    ...config,
-  } as UseContractEventConfig<typeof poolManagerABI, 'URI'>)
+  } as UseContractEventConfig<typeof poolManagerABI, 'Transfer'>)
 }
 
 /**
@@ -13802,6 +13821,40 @@ export function usePoolModifyPositionTestRead<
   return useContractRead({
     abi: poolModifyPositionTestABI,
     address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    ...config,
+  } as UseContractReadConfig<typeof poolModifyPositionTestABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"IS_TEST"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestIsTest<
+  TFunctionName extends 'IS_TEST',
+  TSelectData = ReadContractResult<typeof poolModifyPositionTestABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof poolModifyPositionTestABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    functionName: 'IS_TEST',
     ...config,
   } as UseContractReadConfig<typeof poolModifyPositionTestABI, TFunctionName, TSelectData>)
 }
@@ -13877,6 +13930,48 @@ export function usePoolModifyPositionTestWrite<
   return useContractWrite<typeof poolModifyPositionTestABI, TFunctionName, TMode>({
     abi: poolModifyPositionTestABI,
     address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"failed"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestFailed<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolModifyPositionTestAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolModifyPositionTestABI, 'failed'>['request']['abi'],
+        'failed',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'failed' }
+    : UseContractWriteConfig<typeof poolModifyPositionTestABI, 'failed', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'failed'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof poolModifyPositionTestABI, 'failed', TMode>({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    functionName: 'failed',
     ...config,
   } as any)
 }
@@ -13995,6 +14090,37 @@ export function usePreparePoolModifyPositionTestWrite<TFunctionName extends stri
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"failed"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePreparePoolModifyPositionTestFailed(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, 'failed'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    functionName: 'failed',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolModifyPositionTestABI, 'failed'>)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `functionName` set to `"lockAcquired"`.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
@@ -14057,6 +14183,590 @@ export function usePreparePoolModifyPositionTestModifyPosition(
 }
 
 /**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestEvent<TEventName extends string>(
+  config: Omit<UseContractEventConfig<typeof poolModifyPositionTestABI, TEventName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolModifyPositionTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogEvent(
+  config: Omit<UseContractEventConfig<typeof poolModifyPositionTestABI, 'log'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolModifyPositionTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_address"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogAddressEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_address'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_address',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_address'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_array"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogArrayEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_array'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_array',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_array'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_bytes"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogBytesEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_bytes'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_bytes',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_bytes'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_bytes32"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogBytes32Event(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_bytes32'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_bytes32',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_bytes32'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_int"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogIntEvent(
+  config: Omit<UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_int'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolModifyPositionTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_named_address"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogNamedAddressEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_address'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_named_address',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_address'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_named_array"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogNamedArrayEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_array'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_named_array',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_array'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_named_bytes"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogNamedBytesEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_bytes'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_named_bytes',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_bytes'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_named_bytes32"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogNamedBytes32Event(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_bytes32'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_named_bytes32',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_bytes32'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_named_decimal_int"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogNamedDecimalIntEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_decimal_int'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_named_decimal_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_decimal_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_named_decimal_uint"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogNamedDecimalUintEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_decimal_uint'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_named_decimal_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_decimal_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_named_int"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogNamedIntEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_int'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_named_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_named_string"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogNamedStringEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_string'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_named_string',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_string'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_named_uint"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogNamedUintEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_uint'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_named_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_named_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_string"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogStringEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_string'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_string',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_string'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"log_uint"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogUintEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_uint'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolModifyPositionTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'log_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'log_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolModifyPositionTestABI}__ and `eventName` set to `"logs"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x83feDBeD11B3667f40263a88e8435fca51A03F8C)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB7b74B407E9bA6c070C5B5CC7E6B8E59e4642763)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xaFB341c8a50e4Bdec4E419Be7F3a6127E3BD6710)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xeb1aAdAC0a10Ac2eDFCbE496C3BCBc1dea4F994b)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x30654C69B212AD057E817EcA26da6c5edA32E2E7)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xeb4708989b42f0cd327A6Bd8f76a931429137fd7)
+ */
+export function usePoolModifyPositionTestLogsEvent(
+  config: Omit<UseContractEventConfig<typeof poolModifyPositionTestABI, 'logs'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolModifyPositionTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolModifyPositionTestABI,
+    address: poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+    eventName: 'logs',
+    ...config,
+  } as UseContractEventConfig<typeof poolModifyPositionTestABI, 'logs'>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolSwapTestABI}__.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
@@ -14084,6 +14794,40 @@ export function usePoolSwapTestRead<
   return useContractRead({
     abi: poolSwapTestABI,
     address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    ...config,
+  } as UseContractReadConfig<typeof poolSwapTestABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolSwapTestABI}__ and `functionName` set to `"IS_TEST"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestIsTest<
+  TFunctionName extends 'IS_TEST',
+  TSelectData = ReadContractResult<typeof poolSwapTestABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof poolSwapTestABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof poolSwapTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    functionName: 'IS_TEST',
     ...config,
   } as UseContractReadConfig<typeof poolSwapTestABI, TFunctionName, TSelectData>)
 }
@@ -14159,6 +14903,48 @@ export function usePoolSwapTestWrite<
   return useContractWrite<typeof poolSwapTestABI, TFunctionName, TMode>({
     abi: poolSwapTestABI,
     address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolSwapTestABI}__ and `functionName` set to `"failed"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestFailed<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof poolSwapTestAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolSwapTestABI, 'failed'>['request']['abi'],
+        'failed',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'failed' }
+    : UseContractWriteConfig<typeof poolSwapTestABI, 'failed', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'failed'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof poolSwapTestABI, 'failed', TMode>({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    functionName: 'failed',
     ...config,
   } as any)
 }
@@ -14277,6 +15063,36 @@ export function usePreparePoolSwapTestWrite<TFunctionName extends string>(
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolSwapTestABI}__ and `functionName` set to `"failed"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePreparePoolSwapTestFailed(
+  config: Omit<UsePrepareContractWriteConfig<typeof poolSwapTestABI, 'failed'>, 'abi' | 'address' | 'functionName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    functionName: 'failed',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolSwapTestABI, 'failed'>)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolSwapTestABI}__ and `functionName` set to `"lockAcquired"`.
  *
  * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
@@ -14335,6 +15151,1289 @@ export function usePreparePoolSwapTestSwap(
     functionName: 'swap',
     ...config,
   } as UsePrepareContractWriteConfig<typeof poolSwapTestABI, 'swap'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestEvent<TEventName extends string>(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, TEventName>, 'abi' | 'address'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_address"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogAddressEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_address'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_address',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_address'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_array"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogArrayEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_array'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_array',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_array'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_bytes"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogBytesEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_bytes'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_bytes',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_bytes'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_bytes32"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogBytes32Event(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_bytes32'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_bytes32',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_bytes32'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_int"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogIntEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_int'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_named_address"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogNamedAddressEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_named_address'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_named_address',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_named_address'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_named_array"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogNamedArrayEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_named_array'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_named_array',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_named_array'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_named_bytes"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogNamedBytesEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_named_bytes'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_named_bytes',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_named_bytes'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_named_bytes32"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogNamedBytes32Event(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_named_bytes32'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_named_bytes32',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_named_bytes32'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_named_decimal_int"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogNamedDecimalIntEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolSwapTestABI, 'log_named_decimal_int'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolSwapTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_named_decimal_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_named_decimal_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_named_decimal_uint"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogNamedDecimalUintEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolSwapTestABI, 'log_named_decimal_uint'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof poolSwapTestAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_named_decimal_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_named_decimal_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_named_int"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogNamedIntEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_named_int'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_named_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_named_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_named_string"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogNamedStringEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_named_string'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_named_string',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_named_string'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_named_uint"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogNamedUintEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_named_uint'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_named_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_named_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_string"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogStringEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_string'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_string',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_string'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"log_uint"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogUintEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'log_uint'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'log_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'log_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolSwapTestABI}__ and `eventName` set to `"logs"`.
+ *
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF8AADC65Bf1Ec1645ef931317fD48ffa734a185c)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * -
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6550fa0D92B38F52C37D32d71084A7B270226Ba5)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xe99395035e1a89b6da10a73821Fc60158d5e59E9)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io/address/0xa26b026581Fa923CFf3084119bf2d14060945a63)
+ * - [__View Contract on Arbitrum Sepolia Blockscout__](https://sepolia-explorer.arbitrum.io/address/0x24C731645ee1e35C3219153d370EBd79784D1E91)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49)
+ */
+export function usePoolSwapTestLogsEvent(
+  config: Omit<UseContractEventConfig<typeof poolSwapTestABI, 'logs'>, 'abi' | 'address' | 'eventName'> & {
+    chainId?: keyof typeof poolSwapTestAddress
+  } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: poolSwapTestABI,
+    address: poolSwapTestAddress[chainId as keyof typeof poolSwapTestAddress],
+    eventName: 'logs',
+    ...config,
+  } as UseContractEventConfig<typeof poolSwapTestABI, 'logs'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolTakeTestABI}__.
+ */
+export function usePoolTakeTestRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof poolTakeTestABI, TFunctionName>,
+>(config: Omit<UseContractReadConfig<typeof poolTakeTestABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: poolTakeTestABI, ...config } as UseContractReadConfig<
+    typeof poolTakeTestABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolTakeTestABI}__ and `functionName` set to `"IS_TEST"`.
+ */
+export function usePoolTakeTestIsTest<
+  TFunctionName extends 'IS_TEST',
+  TSelectData = ReadContractResult<typeof poolTakeTestABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof poolTakeTestABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({ abi: poolTakeTestABI, functionName: 'IS_TEST', ...config } as UseContractReadConfig<
+    typeof poolTakeTestABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolTakeTestABI}__ and `functionName` set to `"manager"`.
+ */
+export function usePoolTakeTestManager<
+  TFunctionName extends 'manager',
+  TSelectData = ReadContractResult<typeof poolTakeTestABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof poolTakeTestABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({ abi: poolTakeTestABI, functionName: 'manager', ...config } as UseContractReadConfig<
+    typeof poolTakeTestABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolTakeTestABI}__.
+ */
+export function usePoolTakeTestWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolTakeTestABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof poolTakeTestABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof poolTakeTestABI, TFunctionName, TMode>({ abi: poolTakeTestABI, ...config } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolTakeTestABI}__ and `functionName` set to `"failed"`.
+ */
+export function usePoolTakeTestFailed<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolTakeTestABI, 'failed'>['request']['abi'],
+        'failed',
+        TMode
+      > & { functionName?: 'failed' }
+    : UseContractWriteConfig<typeof poolTakeTestABI, 'failed', TMode> & {
+        abi?: never
+        functionName?: 'failed'
+      } = {} as any,
+) {
+  return useContractWrite<typeof poolTakeTestABI, 'failed', TMode>({
+    abi: poolTakeTestABI,
+    functionName: 'failed',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolTakeTestABI}__ and `functionName` set to `"lockAcquired"`.
+ */
+export function usePoolTakeTestLockAcquired<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolTakeTestABI, 'lockAcquired'>['request']['abi'],
+        'lockAcquired',
+        TMode
+      > & { functionName?: 'lockAcquired' }
+    : UseContractWriteConfig<typeof poolTakeTestABI, 'lockAcquired', TMode> & {
+        abi?: never
+        functionName?: 'lockAcquired'
+      } = {} as any,
+) {
+  return useContractWrite<typeof poolTakeTestABI, 'lockAcquired', TMode>({
+    abi: poolTakeTestABI,
+    functionName: 'lockAcquired',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolTakeTestABI}__ and `functionName` set to `"take"`.
+ */
+export function usePoolTakeTestTake<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolTakeTestABI, 'take'>['request']['abi'],
+        'take',
+        TMode
+      > & { functionName?: 'take' }
+    : UseContractWriteConfig<typeof poolTakeTestABI, 'take', TMode> & {
+        abi?: never
+        functionName?: 'take'
+      } = {} as any,
+) {
+  return useContractWrite<typeof poolTakeTestABI, 'take', TMode>({
+    abi: poolTakeTestABI,
+    functionName: 'take',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolTakeTestABI}__.
+ */
+export function usePreparePoolTakeTestWrite<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof poolTakeTestABI, TFunctionName>, 'abi'> = {} as any,
+) {
+  return usePrepareContractWrite({ abi: poolTakeTestABI, ...config } as UsePrepareContractWriteConfig<
+    typeof poolTakeTestABI,
+    TFunctionName
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolTakeTestABI}__ and `functionName` set to `"failed"`.
+ */
+export function usePreparePoolTakeTestFailed(
+  config: Omit<UsePrepareContractWriteConfig<typeof poolTakeTestABI, 'failed'>, 'abi' | 'functionName'> = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: poolTakeTestABI,
+    functionName: 'failed',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolTakeTestABI, 'failed'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolTakeTestABI}__ and `functionName` set to `"lockAcquired"`.
+ */
+export function usePreparePoolTakeTestLockAcquired(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof poolTakeTestABI, 'lockAcquired'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: poolTakeTestABI,
+    functionName: 'lockAcquired',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolTakeTestABI, 'lockAcquired'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolTakeTestABI}__ and `functionName` set to `"take"`.
+ */
+export function usePreparePoolTakeTestTake(
+  config: Omit<UsePrepareContractWriteConfig<typeof poolTakeTestABI, 'take'>, 'abi' | 'functionName'> = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: poolTakeTestABI,
+    functionName: 'take',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolTakeTestABI, 'take'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__.
+ */
+export function usePoolTakeTestEvent<TEventName extends string>(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, TEventName>, 'abi'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    TEventName
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log"`.
+ */
+export function usePoolTakeTestLogEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_address"`.
+ */
+export function usePoolTakeTestLogAddressEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_address'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_address', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_address'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_array"`.
+ */
+export function usePoolTakeTestLogArrayEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_array'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_array', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_array'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_bytes"`.
+ */
+export function usePoolTakeTestLogBytesEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_bytes'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_bytes', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_bytes'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_bytes32"`.
+ */
+export function usePoolTakeTestLogBytes32Event(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_bytes32'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_bytes32', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_bytes32'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_int"`.
+ */
+export function usePoolTakeTestLogIntEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_int'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_int', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_int'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_named_address"`.
+ */
+export function usePoolTakeTestLogNamedAddressEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_named_address'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_named_address', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_named_address'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_named_array"`.
+ */
+export function usePoolTakeTestLogNamedArrayEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_named_array'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_named_array', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_named_array'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_named_bytes"`.
+ */
+export function usePoolTakeTestLogNamedBytesEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_named_bytes'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_named_bytes', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_named_bytes'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_named_bytes32"`.
+ */
+export function usePoolTakeTestLogNamedBytes32Event(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_named_bytes32'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_named_bytes32', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_named_bytes32'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_named_decimal_int"`.
+ */
+export function usePoolTakeTestLogNamedDecimalIntEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolTakeTestABI, 'log_named_decimal_int'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: poolTakeTestABI,
+    eventName: 'log_named_decimal_int',
+    ...config,
+  } as UseContractEventConfig<typeof poolTakeTestABI, 'log_named_decimal_int'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_named_decimal_uint"`.
+ */
+export function usePoolTakeTestLogNamedDecimalUintEvent(
+  config: Omit<
+    UseContractEventConfig<typeof poolTakeTestABI, 'log_named_decimal_uint'>,
+    'abi' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: poolTakeTestABI,
+    eventName: 'log_named_decimal_uint',
+    ...config,
+  } as UseContractEventConfig<typeof poolTakeTestABI, 'log_named_decimal_uint'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_named_int"`.
+ */
+export function usePoolTakeTestLogNamedIntEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_named_int'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_named_int', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_named_int'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_named_string"`.
+ */
+export function usePoolTakeTestLogNamedStringEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_named_string'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_named_string', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_named_string'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_named_uint"`.
+ */
+export function usePoolTakeTestLogNamedUintEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_named_uint'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_named_uint', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_named_uint'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_string"`.
+ */
+export function usePoolTakeTestLogStringEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_string'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_string', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_string'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"log_uint"`.
+ */
+export function usePoolTakeTestLogUintEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'log_uint'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'log_uint', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'log_uint'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link poolTakeTestABI}__ and `eventName` set to `"logs"`.
+ */
+export function usePoolTakeTestLogsEvent(
+  config: Omit<UseContractEventConfig<typeof poolTakeTestABI, 'logs'>, 'abi' | 'eventName'> = {} as any,
+) {
+  return useContractEvent({ abi: poolTakeTestABI, eventName: 'logs', ...config } as UseContractEventConfig<
+    typeof poolTakeTestABI,
+    'logs'
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolTestBaseABI}__.
+ */
+export function usePoolTestBaseRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof poolTestBaseABI, TFunctionName>,
+>(config: Omit<UseContractReadConfig<typeof poolTestBaseABI, TFunctionName, TSelectData>, 'abi'> = {} as any) {
+  return useContractRead({ abi: poolTestBaseABI, ...config } as UseContractReadConfig<
+    typeof poolTestBaseABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link poolTestBaseABI}__ and `functionName` set to `"manager"`.
+ */
+export function usePoolTestBaseManager<
+  TFunctionName extends 'manager',
+  TSelectData = ReadContractResult<typeof poolTestBaseABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof poolTestBaseABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({ abi: poolTestBaseABI, functionName: 'manager', ...config } as UseContractReadConfig<
+    typeof poolTestBaseABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolTestBaseABI}__.
+ */
+export function usePoolTestBaseWrite<TFunctionName extends string, TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolTestBaseABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof poolTestBaseABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof poolTestBaseABI, TFunctionName, TMode>({ abi: poolTestBaseABI, ...config } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link poolTestBaseABI}__ and `functionName` set to `"lockAcquired"`.
+ */
+export function usePoolTestBaseLockAcquired<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof poolTestBaseABI, 'lockAcquired'>['request']['abi'],
+        'lockAcquired',
+        TMode
+      > & { functionName?: 'lockAcquired' }
+    : UseContractWriteConfig<typeof poolTestBaseABI, 'lockAcquired', TMode> & {
+        abi?: never
+        functionName?: 'lockAcquired'
+      } = {} as any,
+) {
+  return useContractWrite<typeof poolTestBaseABI, 'lockAcquired', TMode>({
+    abi: poolTestBaseABI,
+    functionName: 'lockAcquired',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolTestBaseABI}__.
+ */
+export function usePreparePoolTestBaseWrite<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof poolTestBaseABI, TFunctionName>, 'abi'> = {} as any,
+) {
+  return usePrepareContractWrite({ abi: poolTestBaseABI, ...config } as UsePrepareContractWriteConfig<
+    typeof poolTestBaseABI,
+    TFunctionName
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link poolTestBaseABI}__ and `functionName` set to `"lockAcquired"`.
+ */
+export function usePreparePoolTestBaseLockAcquired(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof poolTestBaseABI, 'lockAcquired'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: poolTestBaseABI,
+    functionName: 'lockAcquired',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof poolTestBaseABI, 'lockAcquired'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link protocolFeeControllerTestABI}__.
+ */
+export function useProtocolFeeControllerTestRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof protocolFeeControllerTestABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof protocolFeeControllerTestABI, TFunctionName, TSelectData>,
+    'abi'
+  > = {} as any,
+) {
+  return useContractRead({ abi: protocolFeeControllerTestABI, ...config } as UseContractReadConfig<
+    typeof protocolFeeControllerTestABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link protocolFeeControllerTestABI}__ and `functionName` set to `"protocolFeesForPool"`.
+ */
+export function useProtocolFeeControllerTestProtocolFeesForPool<
+  TFunctionName extends 'protocolFeesForPool',
+  TSelectData = ReadContractResult<typeof protocolFeeControllerTestABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof protocolFeeControllerTestABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: protocolFeeControllerTestABI,
+    functionName: 'protocolFeesForPool',
+    ...config,
+  } as UseContractReadConfig<typeof protocolFeeControllerTestABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link protocolFeeControllerTestABI}__ and `functionName` set to `"swapFeeForPool"`.
+ */
+export function useProtocolFeeControllerTestSwapFeeForPool<
+  TFunctionName extends 'swapFeeForPool',
+  TSelectData = ReadContractResult<typeof protocolFeeControllerTestABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof protocolFeeControllerTestABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: protocolFeeControllerTestABI,
+    functionName: 'swapFeeForPool',
+    ...config,
+  } as UseContractReadConfig<typeof protocolFeeControllerTestABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link protocolFeeControllerTestABI}__ and `functionName` set to `"withdrawFeeForPool"`.
+ */
+export function useProtocolFeeControllerTestWithdrawFeeForPool<
+  TFunctionName extends 'withdrawFeeForPool',
+  TSelectData = ReadContractResult<typeof protocolFeeControllerTestABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof protocolFeeControllerTestABI, TFunctionName, TSelectData>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: protocolFeeControllerTestABI,
+    functionName: 'withdrawFeeForPool',
+    ...config,
+  } as UseContractReadConfig<typeof protocolFeeControllerTestABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link protocolFeeControllerTestABI}__.
+ */
+export function useProtocolFeeControllerTestWrite<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof protocolFeeControllerTestABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      >
+    : UseContractWriteConfig<typeof protocolFeeControllerTestABI, TFunctionName, TMode> & {
+        abi?: never
+      } = {} as any,
+) {
+  return useContractWrite<typeof protocolFeeControllerTestABI, TFunctionName, TMode>({
+    abi: protocolFeeControllerTestABI,
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link protocolFeeControllerTestABI}__ and `functionName` set to `"setSwapFeeForPool"`.
+ */
+export function useProtocolFeeControllerTestSetSwapFeeForPool<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof protocolFeeControllerTestABI, 'setSwapFeeForPool'>['request']['abi'],
+        'setSwapFeeForPool',
+        TMode
+      > & { functionName?: 'setSwapFeeForPool' }
+    : UseContractWriteConfig<typeof protocolFeeControllerTestABI, 'setSwapFeeForPool', TMode> & {
+        abi?: never
+        functionName?: 'setSwapFeeForPool'
+      } = {} as any,
+) {
+  return useContractWrite<typeof protocolFeeControllerTestABI, 'setSwapFeeForPool', TMode>({
+    abi: protocolFeeControllerTestABI,
+    functionName: 'setSwapFeeForPool',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link protocolFeeControllerTestABI}__ and `functionName` set to `"setWithdrawFeeForPool"`.
+ */
+export function useProtocolFeeControllerTestSetWithdrawFeeForPool<TMode extends WriteContractMode = undefined>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof protocolFeeControllerTestABI, 'setWithdrawFeeForPool'>['request']['abi'],
+        'setWithdrawFeeForPool',
+        TMode
+      > & { functionName?: 'setWithdrawFeeForPool' }
+    : UseContractWriteConfig<typeof protocolFeeControllerTestABI, 'setWithdrawFeeForPool', TMode> & {
+        abi?: never
+        functionName?: 'setWithdrawFeeForPool'
+      } = {} as any,
+) {
+  return useContractWrite<typeof protocolFeeControllerTestABI, 'setWithdrawFeeForPool', TMode>({
+    abi: protocolFeeControllerTestABI,
+    functionName: 'setWithdrawFeeForPool',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link protocolFeeControllerTestABI}__.
+ */
+export function usePrepareProtocolFeeControllerTestWrite<TFunctionName extends string>(
+  config: Omit<UsePrepareContractWriteConfig<typeof protocolFeeControllerTestABI, TFunctionName>, 'abi'> = {} as any,
+) {
+  return usePrepareContractWrite({ abi: protocolFeeControllerTestABI, ...config } as UsePrepareContractWriteConfig<
+    typeof protocolFeeControllerTestABI,
+    TFunctionName
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link protocolFeeControllerTestABI}__ and `functionName` set to `"setSwapFeeForPool"`.
+ */
+export function usePrepareProtocolFeeControllerTestSetSwapFeeForPool(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof protocolFeeControllerTestABI, 'setSwapFeeForPool'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: protocolFeeControllerTestABI,
+    functionName: 'setSwapFeeForPool',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof protocolFeeControllerTestABI, 'setSwapFeeForPool'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link protocolFeeControllerTestABI}__ and `functionName` set to `"setWithdrawFeeForPool"`.
+ */
+export function usePrepareProtocolFeeControllerTestSetWithdrawFeeForPool(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof protocolFeeControllerTestABI, 'setWithdrawFeeForPool'>,
+    'abi' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: protocolFeeControllerTestABI,
+    functionName: 'setWithdrawFeeForPool',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof protocolFeeControllerTestABI, 'setWithdrawFeeForPool'>)
 }
 
 /**

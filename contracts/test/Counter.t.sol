@@ -9,12 +9,14 @@ import {IPoolManager} from "@uniswap/v4-core/src/interfaces/IPoolManager.sol";
 import {PoolKey} from "@uniswap/v4-core/src/types/PoolKey.sol";
 import {PoolId, PoolIdLibrary} from "@uniswap/v4-core/src/types/PoolId.sol";
 import {Deployers} from "@uniswap/v4-core/test/utils/Deployers.sol";
+import {BalanceDelta} from "@uniswap/v4-core/src/types/BalanceDelta.sol";
 import {CurrencyLibrary, Currency} from "@uniswap/v4-core/src/types/Currency.sol";
+import {Constants} from "@uniswap/v4-core/test/utils/Constants.sol";
 import {HookTest} from "./utils/HookTest.sol";
 import {Counter} from "../src/Counter.sol";
 import {HookMiner} from "./utils/HookMiner.sol";
 
-contract CounterTest is HookTest, Deployers {
+contract CounterTest is HookTest {
     using PoolIdLibrary for PoolKey;
     using CurrencyLibrary for Currency;
 
@@ -32,14 +34,14 @@ contract CounterTest is HookTest, Deployers {
                 | Hooks.AFTER_MODIFY_POSITION_FLAG
         );
         (address hookAddress, bytes32 salt) =
-            HookMiner.find(address(this), flags, 0, type(Counter).creationCode, abi.encode(address(manager)));
+            HookMiner.find(address(this), flags, type(Counter).creationCode, abi.encode(address(manager)));
         counter = new Counter{salt: salt}(IPoolManager(address(manager)));
         require(address(counter) == hookAddress, "CounterTest: hook address mismatch");
 
         // Create the pool
         poolKey = PoolKey(Currency.wrap(address(token0)), Currency.wrap(address(token1)), 3000, 60, IHooks(counter));
         poolId = poolKey.toId();
-        manager.initialize(poolKey, SQRT_RATIO_1_1, ZERO_BYTES);
+        initializeRouter.initialize(poolKey, Constants.SQRT_RATIO_1_1, ZERO_BYTES);
 
         // Provide liquidity to the pool
         modifyPositionRouter.modifyPosition(poolKey, IPoolManager.ModifyPositionParams(-60, 60, 10 ether), ZERO_BYTES);
@@ -62,8 +64,10 @@ contract CounterTest is HookTest, Deployers {
         // Perform a test swap //
         int256 amount = 100;
         bool zeroForOne = true;
-        swap(poolKey, amount, zeroForOne, ZERO_BYTES);
+        BalanceDelta swapDelta = swap(poolKey, amount, zeroForOne, ZERO_BYTES);
         // ------------------- //
+
+        assertEq(int256(swapDelta.amount0()), amount);
 
         assertEq(counter.beforeSwapCount(poolId), 1);
         assertEq(counter.afterSwapCount(poolId), 1);

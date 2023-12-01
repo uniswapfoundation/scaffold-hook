@@ -3,7 +3,7 @@ import { NumericInput } from "../base/numeric-input";
 import { TokenDropdown } from "../base/token-dropdown";
 import { useChainId, useToken } from "wagmi";
 import { FetchTokenResult } from "wagmi/dist/actions";
-import { counterAddress, usePoolManagerInitialize } from "~~/generated/generated";
+import { counterAddress, usePoolInitializeTestInitialize } from "~~/generated/generated";
 import { TOKEN_ADDRESSES } from "~~/utils/config";
 import { BLANK_TOKEN } from "~~/utils/constants";
 import { notification } from "~~/utils/scaffold-eth";
@@ -53,7 +53,7 @@ function InitializeComponent() {
     isError: isErrorInitialize,
     error: errorInitialize,
     data: dataInitialize,
-  } = usePoolManagerInitialize({
+  } = usePoolInitializeTestInitialize({
     onError: (error: { message: any }) => {
       notification.error(
         <div className="text-left">
