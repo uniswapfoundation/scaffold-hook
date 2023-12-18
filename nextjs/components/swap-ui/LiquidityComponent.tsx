@@ -6,11 +6,11 @@ import { formatEther, parseEther } from "viem";
 import { useAccount, useChainId } from "wagmi";
 import {
   counterAddress,
-  poolModifyPositionTestAddress,
+  poolModifyLiquidityTestAddress,
   useErc20Allowance,
   useErc20Approve,
   usePoolManagerGetLiquidity,
-  usePoolModifyPositionTestModifyPosition,
+  usePoolModifyLiquidityTestModifyLiquidity,
 } from "~~/generated/generated";
 import { TOKEN_ADDRESSES } from "~~/utils/config";
 import { MAX_UINT, ZERO_ADDR } from "~~/utils/constants";
@@ -25,7 +25,7 @@ function LiquidityComponent() {
   // TODO: allow users to select tokens?
   const token0Addr = TOKEN_ADDRESSES[0][chainId as keyof (typeof TOKEN_ADDRESSES)[0]];
   const token1Addr = TOKEN_ADDRESSES[1][chainId as keyof (typeof TOKEN_ADDRESSES)[1]];
-  const lpRouterAddress = poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress];
+  const lpRouterAddress = poolModifyLiquidityTestAddress[chainId as keyof typeof poolModifyLiquidityTestAddress];
 
   // State Variables
   const [swapFee, setSwapFee] = useState(3000n);
@@ -89,23 +89,23 @@ function LiquidityComponent() {
   } = usePoolManagerGetLiquidity({
     args: [
       poolId,
-      poolModifyPositionTestAddress[chainId as keyof typeof poolModifyPositionTestAddress],
+      poolModifyLiquidityTestAddress[chainId as keyof typeof poolModifyLiquidityTestAddress],
       Number(tickLower),
       Number(tickUpper),
     ],
   });
 
   const {
-    writeAsync: writeModifyPosition,
+    writeAsync: writeModifyLiquidity,
     data: dataModifyPos,
-    error: errorModifyPosition,
+    error: errorModifyLiquidity,
     isError: isErrorModifyPos,
     isLoading: isLoadingModifyPos,
-  } = usePoolModifyPositionTestModifyPosition();
+  } = usePoolModifyLiquidityTestModifyLiquidity();
 
   const handleInitializeAdd = async () => {
     try {
-      await writeModifyPosition({
+      await writeModifyLiquidity({
         args: [
           {
             currency0: token0Addr < token1Addr ? token0Addr : token1Addr,
@@ -134,7 +134,7 @@ function LiquidityComponent() {
       notification.error(
         <div className="text-left">
           Error Provisioning Liquidity
-          {errorModifyPosition?.message}
+          {errorModifyLiquidity?.message}
           {error?.message}
         </div>,
       );
@@ -143,7 +143,7 @@ function LiquidityComponent() {
 
   const handleInitializeRemove = async () => {
     try {
-      await writeModifyPosition({
+      await writeModifyLiquidity({
         args: [
           {
             currency0: token0Addr < token1Addr ? token0Addr : token1Addr,
@@ -172,7 +172,7 @@ function LiquidityComponent() {
       notification.error(
         <div className="text-left">
           Error Provisioning Liquidity
-          {errorModifyPosition?.message}
+          {errorModifyLiquidity?.message}
           {error?.message}
         </div>,
       );
