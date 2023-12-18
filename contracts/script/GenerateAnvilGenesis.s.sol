@@ -9,7 +9,7 @@ import {PoolManager} from "@uniswap/v4-core/src/PoolManager.sol";
 import {IPoolManager} from "@uniswap/v4-core/src/interfaces/IPoolManager.sol";
 import {IHooks} from "@uniswap/v4-core/src/interfaces/IHooks.sol";
 import {PoolInitializeTest} from "@uniswap/v4-core/src/test/PoolInitializeTest.sol";
-import {PoolModifyPositionTest} from "@uniswap/v4-core/src/test/PoolModifyPositionTest.sol";
+import {PoolModifyLiquidityTest} from "@uniswap/v4-core/src/test/PoolModifyLiquidityTest.sol";
 import {PoolSwapTest} from "@uniswap/v4-core/src/test/PoolSwapTest.sol";
 import {PoolDonateTest} from "@uniswap/v4-core/src/test/PoolDonateTest.sol";
 import {MockERC20} from "solmate/test/utils/mocks/MockERC20.sol";
@@ -17,7 +17,7 @@ import {IERC20} from "forge-std/interfaces/IERC20.sol";
 
 contract GenerateAnvilGenesisScript is Script {
     
-    // RECENT DEPLOYMENT: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+    // RECENT DEPLOYMENT: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
     // PoolManager cannot be hardcoded because of NoDelegateCall.sol
     address MANAGER;
 
@@ -53,7 +53,7 @@ contract GenerateAnvilGenesisScript is Script {
         vm.startBroadcast();
         PoolInitializeTest initRouter = new PoolInitializeTest(IPoolManager(MANAGER));
         PoolSwapTest swapRouter = new PoolSwapTest(IPoolManager(MANAGER));
-        PoolModifyPositionTest lpRouter = new PoolModifyPositionTest(IPoolManager(MANAGER));
+        PoolModifyLiquidityTest lpRouter = new PoolModifyLiquidityTest(IPoolManager(MANAGER));
         PoolDonateTest donateRouter = new PoolDonateTest(IPoolManager(MANAGER));
         vm.stopBroadcast();
 
@@ -170,7 +170,7 @@ contract GenerateAnvilGenesisScript is Script {
         MockERC20 t0 = MockERC20(TOKEN0);
         MockERC20 t1 = MockERC20(TOKEN1);
         PoolInitializeTest initRouter = PoolInitializeTest(INITROUTER);
-        PoolModifyPositionTest lpm = PoolModifyPositionTest(LPROUTER);
+        PoolModifyLiquidityTest lpm = PoolModifyLiquidityTest(LPROUTER);
         PoolSwapTest swapper = PoolSwapTest(SWAPROUTER);
         
         vm.startBroadcast();
@@ -189,7 +189,7 @@ contract GenerateAnvilGenesisScript is Script {
             hooks: IHooks(address(0x0))
         });
         initRouter.initialize(key, 79228162514264337593543950336, new bytes(0));
-        lpm.modifyPosition(key, IPoolManager.ModifyPositionParams({
+        lpm.modifyLiquidity(key, IPoolManager.ModifyLiquidityParams({
             tickLower: -600,
             tickUpper: 600,
             liquidityDelta: 10e18
@@ -202,7 +202,7 @@ contract GenerateAnvilGenesisScript is Script {
         });
 
         PoolSwapTest.TestSettings memory testSettings =
-            PoolSwapTest.TestSettings({withdrawTokens: true, settleUsingTransfer: true});
+            PoolSwapTest.TestSettings({withdrawTokens: true, settleUsingTransfer: true, currencyAlreadySent: false});
 
         swapper.swap(key, params, testSettings, new bytes(0));
         vm.stopBroadcast();

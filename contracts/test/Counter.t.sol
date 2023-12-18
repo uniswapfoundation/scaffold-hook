@@ -12,11 +12,12 @@ import {Deployers} from "@uniswap/v4-core/test/utils/Deployers.sol";
 import {BalanceDelta} from "@uniswap/v4-core/src/types/BalanceDelta.sol";
 import {CurrencyLibrary, Currency} from "@uniswap/v4-core/src/types/Currency.sol";
 import {Constants} from "@uniswap/v4-core/test/utils/Constants.sol";
-import {HookTest} from "./utils/HookTest.sol";
 import {Counter} from "../src/Counter.sol";
 import {HookMiner} from "./utils/HookMiner.sol";
+import {Deployers} from "@uniswap/v4-core/test/utils/Deployers.sol";
+import {PoolSwapTest} from "@uniswap/v4-core/src/test/PoolSwapTest.sol";
 
-contract CounterTest is HookTest {
+contract CounterTest is Test, Deployers {
     using PoolIdLibrary for PoolKey;
     using CurrencyLibrary for Currency;
 
@@ -26,12 +27,13 @@ contract CounterTest is HookTest {
 
     function setUp() public {
         // creates the pool manager, test tokens, and other utility routers
-        HookTest.initHookTestEnv();
+        Deployers.deployFreshManagerAndRouters();
+        (currency0, currency1) = Deployers.deployMintAndApprove2Currencies();
 
         // Deploy the hook to an address with the correct flags
         uint160 flags = uint160(
-            Hooks.BEFORE_SWAP_FLAG | Hooks.AFTER_SWAP_FLAG | Hooks.BEFORE_MODIFY_POSITION_FLAG
-                | Hooks.AFTER_MODIFY_POSITION_FLAG
+            Hooks.BEFORE_SWAP_FLAG | Hooks.AFTER_SWAP_FLAG | Hooks.BEFORE_ADD_LIQUIDITY_FLAG
+                | Hooks.AFTER_ADD_LIQUIDITY_FLAG
         );
         (address hookAddress, bytes32 salt) =
             HookMiner.find(address(this), flags, type(Counter).creationCode, abi.encode(address(manager)));
@@ -39,24 +41,28 @@ contract CounterTest is HookTest {
         require(address(counter) == hookAddress, "CounterTest: hook address mismatch");
 
         // Create the pool
-        poolKey = PoolKey(Currency.wrap(address(token0)), Currency.wrap(address(token1)), 3000, 60, IHooks(counter));
+        poolKey = PoolKey(currency0, currency1, 3000, 60, IHooks(counter));
         poolId = poolKey.toId();
         initializeRouter.initialize(poolKey, Constants.SQRT_RATIO_1_1, ZERO_BYTES);
 
         // Provide liquidity to the pool
-        modifyPositionRouter.modifyPosition(poolKey, IPoolManager.ModifyPositionParams(-60, 60, 10 ether), ZERO_BYTES);
-        modifyPositionRouter.modifyPosition(poolKey, IPoolManager.ModifyPositionParams(-120, 120, 10 ether), ZERO_BYTES);
-        modifyPositionRouter.modifyPosition(
+        modifyLiquidityRouter.modifyLiquidity(
+            poolKey, IPoolManager.ModifyLiquidityParams(-60, 60, 10 ether), ZERO_BYTES
+        );
+        modifyLiquidityRouter.modifyLiquidity(
+            poolKey, IPoolManager.ModifyLiquidityParams(-120, 120, 10 ether), ZERO_BYTES
+        );
+        modifyLiquidityRouter.modifyLiquidity(
             poolKey,
-            IPoolManager.ModifyPositionParams(TickMath.minUsableTick(60), TickMath.maxUsableTick(60), 10 ether),
+            IPoolManager.ModifyLiquidityParams(TickMath.minUsableTick(60), TickMath.maxUsableTick(60), 10 ether),
             ZERO_BYTES
         );
     }
 
     function testCounterHooks() public {
         // positions were created in setup()
-        assertEq(counter.beforeModifyPositionCount(poolId), 3);
-        assertEq(counter.afterModifyPositionCount(poolId), 3);
+        assertEq(counter.beforeAddLiquidityCount(poolId), 3);
+        assertEq(counter.afterAddLiquidityCount(poolId), 3);
 
         assertEq(counter.beforeSwapCount(poolId), 0);
         assertEq(counter.afterSwapCount(poolId), 0);
@@ -71,5 +77,22 @@ contract CounterTest is HookTest {
 
         assertEq(counter.beforeSwapCount(poolId), 1);
         assertEq(counter.afterSwapCount(poolId), 1);
+    }
+
+    // --- Util Helper --- //
+    function swap(PoolKey memory key, int256 amountSpecified, bool zeroForOne, bytes memory hookData)
+        internal
+        returns (BalanceDelta swapDelta)
+    {
+        IPoolManager.SwapParams memory params = IPoolManager.SwapParams({
+            zeroForOne: zeroForOne,
+            amountSpecified: amountSpecified,
+            sqrtPriceLimitX96: zeroForOne ? TickMath.MIN_SQRT_RATIO + 1 : TickMath.MAX_SQRT_RATIO - 1 // unlimited impact
+        });
+
+        PoolSwapTest.TestSettings memory testSettings =
+            PoolSwapTest.TestSettings({withdrawTokens: true, settleUsingTransfer: true, currencyAlreadySent: false});
+
+        swapDelta = swapRouter.swap(key, params, testSettings, hookData);
     }
 }

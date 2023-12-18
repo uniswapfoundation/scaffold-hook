@@ -15,7 +15,7 @@ export default defineConfig({
         // 👉 Update the address with your deployed hook 👈
         // --------------------------------------------------
         Counter: {
-          31337: "0x3c07Ac9bad30352D08A194985D650804C594f937",
+          31337: "0x330ae74DAA74d90FAc17045EbBa5bA7d233f69D9",
           5: "0x0000000000000000000000000000000000000000", // goerli
           420: "0x0000000000000000000000000000000000000000", // optimism goerli
           1442: "0x0000000000000000000000000000000000000000", // polygon zkevm testnet
@@ -31,7 +31,7 @@ export default defineConfig({
         // Do not change
         // --------------------------------------------------
         PoolManager: {
-          31337: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+          31337: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
           5: "0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b",
           420: "0xb673AE03413860776497B8C9b3E3F8d4D8745cB3",
           1442: "0xb673AE03413860776497B8C9b3E3F8d4D8745cB3",
@@ -57,7 +57,7 @@ export default defineConfig({
           534351: "0x3A0c2cF7c40A7B417AE9aB6ccBF60e86d8437395",
           11155111: "0x5Bf9FAbb0d56515658b7d5CC4B1F5c4EaED09e49",
         },
-        PoolModifyPositionTest: {
+        PoolModifyLiquidityTest: {
           31337: "0x3079c0319f8734239eb06765666468f7b76eb505",
           5: "0x83feDBeD11B3667f40263a88e8435fca51A03F8C",
           420: "0x30654C69B212AD057E817EcA26da6c5edA32E2E7",

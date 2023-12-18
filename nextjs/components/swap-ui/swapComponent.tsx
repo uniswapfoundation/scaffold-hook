@@ -85,6 +85,7 @@ function SwapComponent() {
           {
             withdrawTokens: true,
             settleUsingTransfer: true,
+            currencyAlreadySent: false
           },
           hookData as `0x${string}`,
         ],

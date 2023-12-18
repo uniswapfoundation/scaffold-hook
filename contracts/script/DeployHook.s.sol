@@ -45,14 +45,20 @@ contract DeployHookScript is Script {
         if (vm.envBool("BEFORE_SWAP")) flags |= Hooks.BEFORE_SWAP_FLAG;
         if (vm.envBool("AFTER_SWAP")) flags |= Hooks.AFTER_SWAP_FLAG;
 
-        if (vm.envBool("BEFORE_MODIFY_POSITION")) flags |= Hooks.BEFORE_MODIFY_POSITION_FLAG;
-        if (vm.envBool("AFTER_MODIFY_POSITION")) flags |= Hooks.AFTER_MODIFY_POSITION_FLAG;
+        if (vm.envBool("BEFORE_ADD_LIQUIDITY")) flags |= Hooks.BEFORE_ADD_LIQUIDITY_FLAG;
+        if (vm.envBool("AFTER_ADD_LIQUIDITY")) flags |= Hooks.AFTER_ADD_LIQUIDITY_FLAG;
+        if (vm.envBool("BEFORE_REMOVE_LIQUIDITY")) flags |= Hooks.BEFORE_REMOVE_LIQUIDITY_FLAG;
+        if (vm.envBool("AFTER_REMOVE_LIQUIDITY")) flags |= Hooks.AFTER_REMOVE_LIQUIDITY_FLAG;
 
         if (vm.envBool("BEFORE_INITIALIZE")) flags |= Hooks.BEFORE_INITIALIZE_FLAG;
         if (vm.envBool("AFTER_INITIALIZE")) flags |= Hooks.AFTER_INITIALIZE_FLAG;
 
         if (vm.envBool("BEFORE_DONATE")) flags |= Hooks.BEFORE_DONATE_FLAG;
         if (vm.envBool("AFTER_DONATE")) flags |= Hooks.AFTER_DONATE_FLAG;
+
+        if (vm.envBool("NO_OP")) flags |= Hooks.NO_OP_FLAG;
+        if (vm.envBool("ACCESS_LOCK")) flags |= Hooks.ACCESS_LOCK_FLAG;
+
         return uint160(flags);
     }
 }

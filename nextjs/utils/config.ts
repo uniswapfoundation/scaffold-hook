@@ -1,7 +1,7 @@
 import {
   counterConfig,
   poolManagerConfig,
-  poolModifyPositionTestConfig,
+  poolModifyLiquidityTestConfig,
   poolSwapTestConfig,
   token0Address,
   token1Address,
@@ -12,6 +12,6 @@ export const TOKEN_ADDRESSES = [token0Address, token1Address];
 export const DEBUGGABLE_ADDRESSES = [
   { ...counterConfig, name: "Counter" },
   { ...poolManagerConfig, name: "PoolManager" },
-  { ...poolModifyPositionTestConfig, name: "PoolModifyPositionTest" },
+  { ...poolModifyLiquidityTestConfig, name: "PoolModifyLiquidityTest" },
   { ...poolSwapTestConfig, name: "PoolSwapTest" },
 ];

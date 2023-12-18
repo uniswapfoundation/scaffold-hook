@@ -1,4 +1,4 @@
-import { counterABI, hookMinerABI, poolManagerABI, poolModifyPositionTestABI, poolSwapTestABI } from "./generated";
+import { counterABI, hookMinerABI, poolManagerABI, poolModifyLiquidityTestABI, poolSwapTestABI } from "./generated";
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 export const deployedContracts: GenericContractsDeclaration = {
@@ -19,9 +19,9 @@ export const deployedContracts: GenericContractsDeclaration = {
           address: "0x32cd5ecdA7f2B8633C00A0434DE28Db111E60636",
           abi: hookMinerABI,
         },
-        PoolModifyPositionTest: {
+        PoolModifyLiquityTest: {
           address: "0x3079c0319f8734239eb06765666468f7b76eb505",
-          abi: poolModifyPositionTestABI,
+          abi: poolModifyLiquidityTestABI,
         },
         PoolSwapTest: {
           address: "0xaf7ccf0ff7ef054a1db43330f5431958ab4a9441",

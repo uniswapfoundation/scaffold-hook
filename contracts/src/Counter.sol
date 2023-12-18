@@ -20,8 +20,8 @@ contract Counter is BaseTestHooks {
     mapping(PoolId => uint256 count) public beforeSwapCount;
     mapping(PoolId => uint256 count) public afterSwapCount;
 
-    mapping(PoolId => uint256 count) public beforeModifyPositionCount;
-    mapping(PoolId => uint256 count) public afterModifyPositionCount;
+    mapping(PoolId => uint256 count) public beforeAddLiquidityCount;
+    mapping(PoolId => uint256 count) public afterAddLiquidityCount;
 
     IPoolManager public immutable poolManager;
 
@@ -34,8 +34,10 @@ contract Counter is BaseTestHooks {
         return Hooks.Permissions({
             beforeInitialize: false,
             afterInitialize: false,
-            beforeModifyPosition: true,
-            afterModifyPosition: true,
+            beforeAddLiquidity: true,
+            afterAddLiquidity: true,
+            beforeRemoveLiquidity: false,
+            afterRemoveLiquidity: false,
             beforeSwap: true,
             afterSwap: true,
             beforeDonate: false,
@@ -67,24 +69,24 @@ contract Counter is BaseTestHooks {
         return BaseTestHooks.afterSwap.selector;
     }
 
-    function beforeModifyPosition(
+    function beforeAddLiquidity(
         address,
         PoolKey calldata key,
-        IPoolManager.ModifyPositionParams calldata,
+        IPoolManager.ModifyLiquidityParams calldata,
         bytes calldata
     ) external override returns (bytes4) {
-        beforeModifyPositionCount[key.toId()]++;
-        return BaseTestHooks.beforeModifyPosition.selector;
+        beforeAddLiquidityCount[key.toId()]++;
+        return BaseTestHooks.beforeAddLiquidity.selector;
     }
 
-    function afterModifyPosition(
+    function afterAddLiquidity(
         address,
         PoolKey calldata key,
-        IPoolManager.ModifyPositionParams calldata,
+        IPoolManager.ModifyLiquidityParams calldata,
         BalanceDelta,
         bytes calldata
     ) external override returns (bytes4) {
-        afterModifyPositionCount[key.toId()]++;
-        return BaseTestHooks.afterModifyPosition.selector;
+        afterAddLiquidityCount[key.toId()]++;
+        return BaseTestHooks.afterAddLiquidity.selector;
     }
 }
